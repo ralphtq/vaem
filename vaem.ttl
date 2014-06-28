@@ -257,7 +257,7 @@ vaem:dateUnion
   rdfs:label "date union"^^xsd:string ;
   rdfs:subClassOf rdfs:Resource ;
   owl:equivalentClass [
-      rdf:type owl:Class ;
+      rdf:type rdfs:Datatype ;
       owl:unionOf (
           xsd:date
           xsd:dateTime
