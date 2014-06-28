@@ -1,0 +1,202 @@
+# Saved by TopBraid on Mon Aug 29 01:34:33 PDT 2011
+# baseURI: http://www.linkedmodel.org/1.2/scripts/htmlgenerator
+# imports: http://voag.linkedmodel.org/1.0/schema/voag
+# imports: http://topbraid.org/sparqlmotionfunctions
+# imports: http://topbraid.org/sparqlmotionlib-tbc
+
+@prefix fn:      <http://www.w3.org/2005/xpath-functions#> .
+@prefix htmlgenerator:  <http://www.linkedmodel.org/1.2/scripts/htmlgenerator#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sm:      <http://topbraid.org/sparqlmotion#> .
+@prefix smf:     <http://topbraid.org/sparqlmotionfunctions#> .
+@prefix sml:     <http://topbraid.org/sparqlmotionlib#> .
+@prefix sp:      <http://spinrdf.org/sp#> .
+@prefix spif:    <http://spinrdf.org/spif#> .
+@prefix spin:    <http://spinrdf.org/spin#> .
+@prefix spl:     <http://spinrdf.org/spl#> .
+@prefix vaem:    <http://www.linkedmodel.org/schema/vaem#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.linkedmodel.org/1.2/scripts/htmlgenerator>
+      rdf:type owl:Ontology ;
+      vaem:description """Defaults to LM CORE with:
+
+http://localhost:8083/tbl/actions?action=sparqlmotion&id=htmlgenerator:generateOntologiesCatalog"""^^xsd:string ;
+      owl:imports <http://voag.linkedmodel.org/1.0/schema/voag> , <http://topbraid.org/sparqlmotionlib-tbc> , <http://topbraid.org/sparqlmotionfunctions> ;
+      owl:versionInfo "Created with TopBraid Composer"^^xsd:string .
+
+htmlgenerator:Construct_Graph_URI
+      rdf:type sml:BindBySelect ;
+      rdfs:label "Construct Graph URI"^^xsd:string ;
+      sm:next htmlgenerator:Import_Graph ;
+      sml:selectQuery
+              [ rdf:type sp:Select ;
+                sp:resultVariables (_:b1) ;
+                sp:where ([ rdf:type sp:TriplePath ;
+                            sp:object <http://voag.linkedmodel.org/schema/voag#Graph> ;
+                            sp:path [ rdf:type sp:ModPath ;
+                                      sp:modMax -2 ;
+                                      sp:modMin 0 ;
+                                      sp:subPath rdfs:subClassOf
+                                    ] ;
+                            sp:subject _:b2
+                          ] [ sp:object _:b2 ;
+                            sp:predicate rdf:type ;
+                            sp:subject _:b3
+                          ] [ sp:object
+                                    [ sp:varName "prefix"^^xsd:string
+                                    ] ;
+                            sp:predicate vaem:namespacePrefix ;
+                            sp:subject _:b3
+                          ] [ sp:object _:b1 ;
+                            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
+                            sp:subject _:b3
+                          ])
+              ] .
+
+htmlgenerator:Encode_Catalog_base_URI
+      rdf:type spif:encodeURL ;
+      rdfs:label "Encode Catalog base URI"^^xsd:string ;
+      sp:arg1 [ sp:varName "baseURI"^^xsd:string
+              ] ;
+      sp:arg2 "UTF-8"^^xsd:string ;
+      sm:next htmlgenerator:Iterate_Over_Catalog_Entries ;
+      sm:outputVariable "encodedBaseURI"^^xsd:string .
+
+htmlgenerator:ExportToTextFile_1
+      rdf:type sml:ExportToTextFile ;
+      rdfs:label "Export to text file"^^xsd:string ;
+      sml:replace "true"^^xsd:boolean ;
+      sml:targetFilePath "/www.linkedmodel.org/doc/{?prefix}/{?version}/index.html"^^xsd:string .
+
+htmlgenerator:Get_Catalog
+      rdf:type sml:BindBySelect ;
+      rdfs:label "Get Catalog"^^xsd:string ;
+      sm:next htmlgenerator:Iterate_Over_Catalog_Entries ;
+      sml:selectQuery
+              [ rdf:type sp:Select ;
+                sp:resultVariables (_:b4) ;
+                sp:where ([ sp:object <http://voag.linkedmodel.org/schema/voag#LinkedModelCatalog> ;
+                            sp:predicate rdf:type ;
+                            sp:subject _:b4
+                          ])
+              ] .
+
+htmlgenerator:ImportCatalogLocal
+      rdf:type sml:ImportRDFFromWorkspace ;
+      rdfs:label "Import catalog local"^^xsd:string ;
+      sm:next htmlgenerator:Get_Catalog ;
+      sml:ignoreImports "true"^^xsd:boolean .
+
+htmlgenerator:ImportTextFromURL_1
+      rdf:type sml:ImportTextFromURL ;
+      rdfs:label "Import text from URL 1"^^xsd:string ;
+      sm:next htmlgenerator:ExportToTextFile_1 ;
+      sm:outputVariable "text"^^xsd:string ;
+      sml:url [ rdf:type fn:concat ;
+                sp:arg1 "http://localhost:8083/tbl/1.2/swp/html/GenerateGraphSummary.swp?prefix=" ;
+                sp:arg2 [ sp:varName "prefix"^^xsd:string
+                        ] ;
+                sp:arg3 "&catalogURI=" ;
+                sp:arg4 [ sp:varName "encodedBaseURI"^^xsd:string
+                        ]
+              ] .
+
+htmlgenerator:Import_Catalog
+      rdf:type sml:ImportRDFFromWorkspace ;
+      rdfs:label "Import Catalog"^^xsd:string ;
+      sm:next htmlgenerator:Iterate_Over_Catalog_Entries ;
+      sml:ignoreImports "false"^^xsd:boolean .
+
+htmlgenerator:Import_Graph
+      rdf:type sml:ImportRDFFromWorkspace ;
+      rdfs:label "Import Graph"^^xsd:string ;
+      sm:next htmlgenerator:Trace_Processing ;
+      sml:baseURI
+              [ sp:varName "ontology"^^xsd:string
+              ] ;
+      sml:ignoreImports "false"^^xsd:boolean .
+
+htmlgenerator:Iterate_Over_Catalog_Entries
+      rdf:type sml:IterateOverSelect ;
+      rdfs:label "Iterate Over Catalog Entries"^^xsd:string ;
+      sm:body htmlgenerator:Construct_Graph_URI ;
+      sm:next htmlgenerator:ReturnFromGeneratedCatalog ;
+      sml:selectQuery
+              [ rdf:type sp:Select ;
+                sp:resultVariables (_:b5 _:b6) ;
+                sp:where ([ sp:object _:b7 ;
+                            sp:predicate vaem:hasCatalogEntry ;
+                            sp:subject
+                                    [ sp:varName "catalog"^^xsd:string
+                                    ]
+                          ] [ sp:object _:b5 ;
+                            sp:predicate vaem:namespacePrefix ;
+                            sp:subject _:b7
+                          ] [ sp:object _:b8 ;
+                            sp:predicate <http://voag.linkedmodel.org/schema/voag#hasProvenance> ;
+                            sp:subject _:b7
+                          ] [ sp:object _:b6 ;
+                            sp:predicate vaem:revision ;
+                            sp:subject _:b8
+                          ])
+              ] .
+
+htmlgenerator:ReturnFromGeneratedCatalog
+      rdf:type sml:ReturnText ;
+      rdfs:label "Return from generated catalog"^^xsd:string ;
+      sml:mimeType "text"^^xsd:string ;
+      sml:text "Finished"^^xsd:string .
+
+htmlgenerator:Trace_Processing
+      rdf:type sml:BindBySelect ;
+      rdfs:label "Trace Processing"^^xsd:string ;
+      sm:next htmlgenerator:ImportTextFromURL_1 ;
+      sml:selectQuery
+              [ rdf:type sp:Select ;
+                sp:where ([ rdf:type sp:Bind ;
+                            sp:expression
+                                    [ rdf:type smf:trace ;
+                                      sp:arg1 "Generating HTML from Graph with Prefix {?prefix}"
+                                    ] ;
+                            sp:variable
+                                    [ sp:varName "trace"^^xsd:string
+                                    ]
+                          ])
+              ] .
+
+htmlgenerator:baseURI
+      rdf:type owl:DatatypeProperty ;
+      rdfs:label "base URI"^^xsd:string ;
+      rdfs:range xsd:string .
+
+htmlgenerator:generateOntologiesCatalog
+      rdf:type sm:Function ;
+      rdfs:subClassOf sm:Functions ;
+      spin:constraint
+              [ rdf:type spl:Argument ;
+                spl:defaultValue "http://www.linkedmodel.org/1.2/catalog/lm"^^xsd:string ;
+                spl:predicate htmlgenerator:baseURI ;
+                spl:valueType xsd:string ;
+                sm:next htmlgenerator:Encode_Catalog_base_URI , htmlgenerator:Import_Catalog , htmlgenerator:ImportCatalogLocal
+              ] ;
+      spin:returnType xsd:string ;
+      sm:returnModule htmlgenerator:ReturnFromGeneratedCatalog .
+
+_:b2  sp:varName "graphType"^^xsd:string .
+
+_:b3  sp:varName "entry"^^xsd:string .
+
+_:b1  sp:varName "ontology"^^xsd:string .
+
+_:b4  sp:varName "catalog"^^xsd:string .
+
+_:b5  sp:varName "prefix"^^xsd:string .
+
+_:b6  sp:varName "version"^^xsd:string .
+
+_:b7  sp:varName "entry"^^xsd:string .
+
+_:b8  sp:varName "provenance"^^xsd:string .
