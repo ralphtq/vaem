@@ -66,6 +66,7 @@ dct:title
   vaem:hasGraphRole vaem:SchemaGraph ;
   vaem:intent "The purpose of VAEM is to provide, by import, a foundation for commonly needed resources for metadata on an ontology."^^xsd:string ;
   vaem:lastUpdated "2014-06-28"^^vaem:dateUnion ;
+  vaem:logo "http://linkedmodel.org/lib/lm/images/logos/TopBraid-RDM-Graph-Logo.png"^^xsd:anyURI ;
   vaem:name "VAEM"^^xsd:string ;
   vaem:namespace "http://www.linkedmodel.org/schema/vaem#"^^xsd:anyURI ;
   vaem:namespacePrefix "vaem"^^xsd:string ;
@@ -277,16 +278,17 @@ vaem:dateCreated
 .
 vaem:dateUnion
   rdf:type rdfs:Datatype ;
-  dct:description "A date union is a datatype that allows a value to be expressed either as an xsd:date, xsd:datetime or xsd:gYear"^^xsd:string ;
+  dct:description "A date union is a datatype that allows a value to be expressed either as an xsd:date, xsd:datetime, xsd:gYearMonth or xsd:gYear"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "date union"^^xsd:string ;
   rdfs:subClassOf rdfs:Resource ;
   owl:equivalentClass [
-      rdf:type rdfs:Datatype ;
+      rdf:type owl:Class ;
       owl:unionOf (
           xsd:date
           xsd:dateTime
+          xsd:gYearMonth
           xsd:gYear
         ) ;
     ] ;
@@ -418,6 +420,13 @@ vaem:lastUpdated
   rdfs:label "last updated"^^xsd:string ;
   rdfs:range vaem:dateUnion ;
   rdfs:subPropertyOf vaem:date ;
+.
+vaem:logo
+  rdf:type owl:AnnotationProperty ;
+  dct:description "The property \"vaem:logo\" is a reference to an image that is used for publishinh the ontology"^^xsd:string ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:range xsd:anyURI ;
 .
 vaem:name
   rdf:type owl:DatatypeProperty ;
