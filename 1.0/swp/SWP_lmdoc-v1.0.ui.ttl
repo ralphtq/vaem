@@ -1475,7 +1475,7 @@ lmdoc:OntologyView
                         ] ;
                       ui:childIndex 0 ;
                     ] ;
-                  ui:childIndex 1 ;
+                  ui:childIndex 2 ;
                 ] ;
               ui:child [
                   rdf:type html:H1 ;
@@ -1495,8 +1495,18 @@ lmdoc:OntologyView
                   ui:childIndex 0 ;
                 ] ;
               ui:child [
+                  rdf:type html:H2 ;
+                  html:id "h2_synopsis"^^xsd:string ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "Synopsis"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
                   rdf:type lmdoc:CopyrightSection ;
-                  ui:childIndex 2 ;
+                  ui:childIndex 3 ;
                 ] ;
               ui:childIndex 1 ;
             ] ;
