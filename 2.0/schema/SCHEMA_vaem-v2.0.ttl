@@ -183,10 +183,10 @@ vaem:GMD_VAEM
   vaem:namespacePrefix "vaem"^^xsd:string ;
   vaem:owner "TopQuadrant, Inc."^^xsd:string ;
   vaem:previousPublishedVersion "http://linkedmodel.org/doc/vaem/1.2/"^^xsd:anyURI ;
-  vaem:rdfxmlFileURL "http://www.linkedmodel.org/2.0/SCHEMA_vaem-v2.0.rdf"^^xsd:anyURI ;
+  vaem:rdfxmlFileURL "http://www.linkedmodel.org/2.0/schema/SCHEMA_vaem-v2.0.rdf"^^xsd:anyURI ;
   vaem:revision "2.0"^^xsd:string ;
   vaem:title "Vocabulary for Attaching Essential Metadata (VAEM) - Version 2.0"^^xsd:string ;
-  vaem:turtleFileURL "http://www.linkedmodel.org/2.0/SCHEMA_vaem-v2.0.ttl"^^xsd:anyURI ;
+  vaem:turtleFileURL "http://www.linkedmodel.org/2.0/schema/SCHEMA_vaem-v2.0.ttl"^^xsd:anyURI ;
   vaem:usesNonImportedResource dct:abstract ;
   vaem:usesNonImportedResource dct:author ;
   vaem:usesNonImportedResource dct:created ;
