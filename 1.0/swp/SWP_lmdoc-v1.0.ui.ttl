@@ -500,94 +500,104 @@ lmdoc:ClassesSection
               ui:child [
                   rdf:type ui:forEach ;
                   ui:child [
-                      rdf:type ui:call ;
-                      arg:subject [
-                          sp:varName "class"^^xsd:string ;
-                        ] ;
+                      rdf:type html:Div ;
+                      html:class "resource-box"^^xsd:string ;
                       ui:child [
-                          rdf:type html:Div ;
-                          html:class "header-box"^^xsd:string ;
-                          ui:child [
-                              rdf:type lmdoc:ResourceDocAnchor ;
-                              arg:node [
-                                  sp:varName "class"^^xsd:string ;
-                                ] ;
-                              arg:typeLabel "Class "^^xsd:string ;
-                              ui:childIndex 0 ;
+                          rdf:type ui:call ;
+                          arg:subject [
+                              sp:varName "class"^^xsd:string ;
                             ] ;
-                          ui:childIndex 1 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:P ;
                           ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text [
-                                  rdf:type lmdoc:getDescription ;
-                                  arg:resource [
+                              rdf:type html:Div ;
+                              html:class "header-box"^^xsd:string ;
+                              ui:child [
+                                  rdf:type lmdoc:ResourceDocAnchor ;
+                                  arg:node [
                                       sp:varName "class"^^xsd:string ;
                                     ] ;
+                                  arg:typeLabel "Class "^^xsd:string ;
+                                  ui:childIndex 0 ;
                                 ] ;
+                              ui:childIndex 1 ;
                             ] ;
-                          ui:childIndex 2 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:ObjectsGroup ;
-                          arg:filterFunction swa:isAnnotationProperty ;
-                          arg:graph [
-                              sp:varName "resource"^^xsd:string ;
+                          ui:child [
+                              rdf:type html:P ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      rdf:type lmdoc:getDescription ;
+                                      arg:resource [
+                                          sp:varName "class"^^xsd:string ;
+                                        ] ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 2 ;
                             ] ;
-                          arg:label "Annotations"^^xsd:string ;
-                          arg:predicates [
-                              sp:varName "rs"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:ObjectsGroup ;
+                              arg:filterFunction swa:isAnnotationProperty ;
+                              arg:graph [
+                                  sp:varName "resource"^^xsd:string ;
+                                ] ;
+                              arg:label "Annotations"^^xsd:string ;
+                              arg:predicates [
+                                  sp:varName "rs"^^xsd:string ;
+                                ] ;
+                              arg:subject [
+                                  sp:varName "class"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 3 ;
                             ] ;
-                          arg:subject [
-                              sp:varName "class"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:ObjectsGroup ;
+                              arg:filterFunction swa:isNonAnnotationProperty ;
+                              arg:graph [
+                                  sp:varName "resource"^^xsd:string ;
+                                ] ;
+                              arg:label "Properties"^^xsd:string ;
+                              arg:predicates [
+                                  sp:varName "rs"^^xsd:string ;
+                                ] ;
+                              arg:subject [
+                                  sp:varName "class"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 5 ;
                             ] ;
-                          ui:childIndex 3 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:ObjectsGroup ;
-                          arg:filterFunction swa:isNonAnnotationProperty ;
-                          arg:graph [
-                              sp:varName "resource"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:ResourceFooter ;
+                              arg:resource [
+                                  sp:varName "class"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 7 ;
                             ] ;
-                          arg:label "Properties"^^xsd:string ;
-                          arg:predicates [
-                              sp:varName "rs"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:VSpace ;
+                              arg:margin "20px;"^^xsd:string ;
+                              ui:childIndex 0 ;
                             ] ;
-                          arg:subject [
-                              sp:varName "class"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:VSpace ;
+                              arg:margin "30px;"^^xsd:string ;
+                              ui:childIndex 4 ;
                             ] ;
-                          ui:childIndex 5 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:ResourceFooter ;
-                          arg:resource [
-                              sp:varName "class"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:VSpace ;
+                              arg:margin "40px;"^^xsd:string ;
+                              ui:childIndex 6 ;
                             ] ;
-                          ui:childIndex 7 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:VSpace ;
-                          arg:margin "30px;"^^xsd:string ;
-                          ui:childIndex 4 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:VSpace ;
-                          arg:margin "40px;"^^xsd:string ;
                           ui:childIndex 0 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:VSpace ;
-                          arg:margin "40px;"^^xsd:string ;
-                          ui:childIndex 6 ;
+                          ui:template [
+                              rdf:type swa:modeProperty ;
+                              arg:predicate swa:formObjectPredicateSelectionTemplate ;
+                            ] ;
                         ] ;
                       ui:childIndex 0 ;
-                      ui:template [
-                          rdf:type swa:modeProperty ;
-                          arg:predicate swa:formObjectPredicateSelectionTemplate ;
-                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:VSpace ;
+                      arg:margin "40px;"^^xsd:string ;
+                      ui:childIndex 1 ;
                     ] ;
                   ui:childIndex 0 ;
                   ui:resultSet [
@@ -1802,94 +1812,104 @@ lmdoc:InstancesSection
               ui:child [
                   rdf:type ui:forEach ;
                   ui:child [
-                      rdf:type ui:call ;
-                      arg:subject [
-                          sp:varName "instance"^^xsd:string ;
-                        ] ;
+                      rdf:type html:Div ;
+                      html:class "resource-box"^^xsd:string ;
                       ui:child [
-                          rdf:type html:Div ;
-                          html:class "header-box"^^xsd:string ;
-                          ui:child [
-                              rdf:type lmdoc:ResourceDocAnchor ;
-                              arg:node [
-                                  sp:varName "instance"^^xsd:string ;
-                                ] ;
-                              arg:typeLabel "Instance "^^xsd:string ;
-                              ui:childIndex 0 ;
+                          rdf:type ui:call ;
+                          arg:subject [
+                              sp:varName "instance"^^xsd:string ;
                             ] ;
-                          ui:childIndex 1 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:P ;
                           ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text [
-                                  rdf:type lmdoc:getDescription ;
-                                  arg:resource [
+                              rdf:type html:Div ;
+                              html:class "header-box"^^xsd:string ;
+                              ui:child [
+                                  rdf:type lmdoc:ResourceDocAnchor ;
+                                  arg:node [
                                       sp:varName "instance"^^xsd:string ;
                                     ] ;
+                                  arg:typeLabel "Instance "^^xsd:string ;
+                                  ui:childIndex 0 ;
                                 ] ;
+                              ui:childIndex 1 ;
                             ] ;
-                          ui:childIndex 2 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:ObjectsGroup ;
-                          arg:filterFunction swa:isAnnotationProperty ;
-                          arg:graph [
-                              sp:varName "resource"^^xsd:string ;
+                          ui:child [
+                              rdf:type html:P ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      rdf:type lmdoc:getDescription ;
+                                      arg:resource [
+                                          sp:varName "instance"^^xsd:string ;
+                                        ] ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 2 ;
                             ] ;
-                          arg:label "Annotations"^^xsd:string ;
-                          arg:predicates [
-                              sp:varName "rs"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:ObjectsGroup ;
+                              arg:filterFunction swa:isAnnotationProperty ;
+                              arg:graph [
+                                  sp:varName "resource"^^xsd:string ;
+                                ] ;
+                              arg:label "Annotations"^^xsd:string ;
+                              arg:predicates [
+                                  sp:varName "rs"^^xsd:string ;
+                                ] ;
+                              arg:subject [
+                                  sp:varName "instance"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 3 ;
                             ] ;
-                          arg:subject [
-                              sp:varName "instance"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:ObjectsGroup ;
+                              arg:filterFunction swa:isNonAnnotationProperty ;
+                              arg:graph [
+                                  sp:varName "resource"^^xsd:string ;
+                                ] ;
+                              arg:label "Properties"^^xsd:string ;
+                              arg:predicates [
+                                  sp:varName "rs"^^xsd:string ;
+                                ] ;
+                              arg:subject [
+                                  sp:varName "instance"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 5 ;
                             ] ;
-                          ui:childIndex 3 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:ObjectsGroup ;
-                          arg:filterFunction swa:isNonAnnotationProperty ;
-                          arg:graph [
-                              sp:varName "resource"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:ResourceFooter ;
+                              arg:resource [
+                                  sp:varName "instance"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 7 ;
                             ] ;
-                          arg:label "Properties"^^xsd:string ;
-                          arg:predicates [
-                              sp:varName "rs"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:VSpace ;
+                              arg:margin "20px;"^^xsd:string ;
+                              ui:childIndex 0 ;
                             ] ;
-                          arg:subject [
-                              sp:varName "instance"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:VSpace ;
+                              arg:margin "30px;"^^xsd:string ;
+                              ui:childIndex 4 ;
                             ] ;
-                          ui:childIndex 5 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:ResourceFooter ;
-                          arg:resource [
-                              sp:varName "instance"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:VSpace ;
+                              arg:margin "40px;"^^xsd:string ;
+                              ui:childIndex 6 ;
                             ] ;
-                          ui:childIndex 7 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:VSpace ;
-                          arg:margin "30px;"^^xsd:string ;
-                          ui:childIndex 4 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:VSpace ;
-                          arg:margin "40px;"^^xsd:string ;
                           ui:childIndex 0 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:VSpace ;
-                          arg:margin "40px;"^^xsd:string ;
-                          ui:childIndex 6 ;
+                          ui:template [
+                              rdf:type swa:modeProperty ;
+                              arg:predicate swa:formObjectPredicateSelectionTemplate ;
+                            ] ;
                         ] ;
                       ui:childIndex 0 ;
-                      ui:template [
-                          rdf:type swa:modeProperty ;
-                          arg:predicate swa:formObjectPredicateSelectionTemplate ;
-                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:VSpace ;
+                      arg:margin "40px;"^^xsd:string ;
+                      ui:childIndex 1 ;
                     ] ;
                   ui:childIndex 0 ;
                   ui:resultSet [
@@ -4176,94 +4196,104 @@ lmdoc:PropertiesSection
               ui:child [
                   rdf:type ui:forEach ;
                   ui:child [
-                      rdf:type ui:call ;
-                      arg:subject [
-                          sp:varName "property"^^xsd:string ;
-                        ] ;
+                      rdf:type html:Div ;
+                      html:class "resource-box"^^xsd:string ;
                       ui:child [
-                          rdf:type html:Div ;
-                          html:class "header-box"^^xsd:string ;
-                          ui:child [
-                              rdf:type lmdoc:ResourceDocAnchor ;
-                              arg:node [
-                                  sp:varName "property"^^xsd:string ;
-                                ] ;
-                              arg:typeLabel "Property "^^xsd:string ;
-                              ui:childIndex 0 ;
+                          rdf:type ui:call ;
+                          arg:subject [
+                              sp:varName "property"^^xsd:string ;
                             ] ;
-                          ui:childIndex 1 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:P ;
                           ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text [
-                                  rdf:type lmdoc:getDescription ;
-                                  arg:resource [
+                              rdf:type html:Div ;
+                              html:class "header-box"^^xsd:string ;
+                              ui:child [
+                                  rdf:type lmdoc:ResourceDocAnchor ;
+                                  arg:node [
                                       sp:varName "property"^^xsd:string ;
                                     ] ;
+                                  arg:typeLabel "Property "^^xsd:string ;
+                                  ui:childIndex 0 ;
                                 ] ;
+                              ui:childIndex 1 ;
                             ] ;
-                          ui:childIndex 2 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:ObjectsGroup ;
-                          arg:filterFunction swa:isAnnotationProperty ;
-                          arg:graph [
-                              sp:varName "resource"^^xsd:string ;
+                          ui:child [
+                              rdf:type html:P ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      rdf:type lmdoc:getDescription ;
+                                      arg:resource [
+                                          sp:varName "property"^^xsd:string ;
+                                        ] ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 2 ;
                             ] ;
-                          arg:label "Annotations"^^xsd:string ;
-                          arg:predicates [
-                              sp:varName "rs"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:ObjectsGroup ;
+                              arg:filterFunction swa:isAnnotationProperty ;
+                              arg:graph [
+                                  sp:varName "resource"^^xsd:string ;
+                                ] ;
+                              arg:label "Annotations"^^xsd:string ;
+                              arg:predicates [
+                                  sp:varName "rs"^^xsd:string ;
+                                ] ;
+                              arg:subject [
+                                  sp:varName "property"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 3 ;
                             ] ;
-                          arg:subject [
-                              sp:varName "property"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:ObjectsGroup ;
+                              arg:filterFunction swa:isNonAnnotationProperty ;
+                              arg:graph [
+                                  sp:varName "resource"^^xsd:string ;
+                                ] ;
+                              arg:label "Properties"^^xsd:string ;
+                              arg:predicates [
+                                  sp:varName "rs"^^xsd:string ;
+                                ] ;
+                              arg:subject [
+                                  sp:varName "property"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 5 ;
                             ] ;
-                          ui:childIndex 3 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:ObjectsGroup ;
-                          arg:filterFunction swa:isNonAnnotationProperty ;
-                          arg:graph [
-                              sp:varName "resource"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:ResourceFooter ;
+                              arg:resource [
+                                  sp:varName "property"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 7 ;
                             ] ;
-                          arg:label "Properties"^^xsd:string ;
-                          arg:predicates [
-                              sp:varName "rs"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:VSpace ;
+                              arg:margin "20px;"^^xsd:string ;
+                              ui:childIndex 0 ;
                             ] ;
-                          arg:subject [
-                              sp:varName "property"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:VSpace ;
+                              arg:margin "30px;"^^xsd:string ;
+                              ui:childIndex 4 ;
                             ] ;
-                          ui:childIndex 5 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:ResourceFooter ;
-                          arg:resource [
-                              sp:varName "property"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:VSpace ;
+                              arg:margin "40px;"^^xsd:string ;
+                              ui:childIndex 6 ;
                             ] ;
-                          ui:childIndex 7 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:VSpace ;
-                          arg:margin "30px;"^^xsd:string ;
-                          ui:childIndex 4 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:VSpace ;
-                          arg:margin "40px;"^^xsd:string ;
                           ui:childIndex 0 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:VSpace ;
-                          arg:margin "40px;"^^xsd:string ;
-                          ui:childIndex 6 ;
+                          ui:template [
+                              rdf:type swa:modeProperty ;
+                              arg:predicate swa:formObjectPredicateSelectionTemplate ;
+                            ] ;
                         ] ;
                       ui:childIndex 0 ;
-                      ui:template [
-                          rdf:type swa:modeProperty ;
-                          arg:predicate swa:formObjectPredicateSelectionTemplate ;
-                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:VSpace ;
+                      arg:margin "40px;"^^xsd:string ;
+                      ui:childIndex 1 ;
                     ] ;
                   ui:childIndex 0 ;
                   ui:resultSet [

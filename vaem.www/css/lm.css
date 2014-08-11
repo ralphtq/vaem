@@ -208,6 +208,13 @@ table.simple {
     margin-bottom:  0;
 }
 
+div.resource-box {
+    border: 2px solid #a1a1a1;
+    padding: 10px 40px; 
+    background: #ffffff;
+    border-radius: 15px;
+}
+
 div.header-box {
     width: 320px;
     padding: 10px;
