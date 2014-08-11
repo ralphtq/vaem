@@ -505,16 +505,31 @@ lmdoc:ClassesSection
                           sp:varName "class"^^xsd:string ;
                         ] ;
                       ui:child [
-                          rdf:type html:H3 ;
+                          rdf:type html:Div ;
+                          html:class "header-box"^^xsd:string ;
                           ui:child [
                               rdf:type lmdoc:ResourceDocAnchor ;
                               arg:node [
                                   sp:varName "class"^^xsd:string ;
                                 ] ;
-                              arg:typeLabel "Class: "^^xsd:string ;
+                              arg:typeLabel "Class "^^xsd:string ;
                               ui:childIndex 0 ;
                             ] ;
-                          ui:childIndex 0 ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:P ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text [
+                                  rdf:type lmdoc:getDescription ;
+                                  arg:resource [
+                                      sp:varName "class"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 2 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:ObjectsGroup ;
@@ -529,7 +544,7 @@ lmdoc:ClassesSection
                           arg:subject [
                               sp:varName "class"^^xsd:string ;
                             ] ;
-                          ui:childIndex 1 ;
+                          ui:childIndex 3 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:ObjectsGroup ;
@@ -544,24 +559,29 @@ lmdoc:ClassesSection
                           arg:subject [
                               sp:varName "class"^^xsd:string ;
                             ] ;
-                          ui:childIndex 3 ;
+                          ui:childIndex 5 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:ResourceFooter ;
                           arg:resource [
                               sp:varName "class"^^xsd:string ;
                             ] ;
-                          ui:childIndex 5 ;
+                          ui:childIndex 7 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:VSpace ;
                           arg:margin "30px;"^^xsd:string ;
-                          ui:childIndex 2 ;
+                          ui:childIndex 4 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:VSpace ;
                           arg:margin "40px;"^^xsd:string ;
-                          ui:childIndex 4 ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:VSpace ;
+                          arg:margin "40px;"^^xsd:string ;
+                          ui:childIndex 6 ;
                         ] ;
                       ui:childIndex 0 ;
                       ui:template [
@@ -680,220 +700,14 @@ lmdoc:Elements
       rdf:type ui:group ;
       ui:child [
           rdf:type html:Link ;
-          html:href "http://qudt.org/css/lm.css"^^xsd:string ;
-          html:rel "stylesheet"^^xsd:string ;
-          html:type "text/css"^^xsd:string ;
-          ui:childIndex 1 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href "http://qudt.org/css/qudt.css"^^xsd:string ;
+          html:href "http://www.linkedmodel.org/css/lm.css"^^xsd:string ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
           ui:childIndex 0 ;
         ] ;
       ui:child [
-          rdf:type html:Link ;
-          html:href [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/css/jquery.contextmenu.css"^^xsd:string ;
-            ] ;
-          html:rel "stylesheet"^^xsd:string ;
-          html:type "text/css"^^xsd:string ;
-          ui:childIndex 4 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/css/jquery.jqplot.min.css"^^xsd:string ;
-            ] ;
-          html:rel "stylesheet"^^xsd:string ;
-          html:type "text/css"^^xsd:string ;
-          ui:childIndex 17 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/css/smoothness/jquery-ui.css"^^xsd:string ;
-            ] ;
-          html:rel "stylesheet"^^xsd:string ;
-          html:type "text/css"^^xsd:string ;
-          ui:childIndex 3 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/css/ui.jqgrid.css"^^xsd:string ;
-            ] ;
-          html:rel "stylesheet"^^xsd:string ;
-          html:type "text/css"^^xsd:string ;
-          ui:childIndex 5 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:language "javascript"^^xsd:string ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/js/jquery.jqplot.min.js"^^xsd:string ;
-            ] ;
-          html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 16 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/js/i18n/grid.locale-en.js"^^xsd:string ;
-            ] ;
-          html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 8 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/js/jquery-ui.js"^^xsd:string ;
-            ] ;
-          html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 7 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/js/jquery.contextmenu.js"^^xsd:string ;
-            ] ;
-          html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 10 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/js/jquery.cookie.js"^^xsd:string ;
-            ] ;
-          html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 11 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/js/jquery.hotkeys.js"^^xsd:string ;
-            ] ;
-          html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 12 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/js/jquery.jqGrid.min.js"^^xsd:string ;
-            ] ;
-          html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 9 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/js/jquery.js"^^xsd:string ;
-            ] ;
-          html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 6 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/js/jquery.jstree.js"^^xsd:string ;
-            ] ;
-          html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 14 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/jquery/js/jquery.layout.js"^^xsd:string ;
-            ] ;
-          html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 13 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/swa/js/swa.js"^^xsd:string ;
-            ] ;
-          html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 19 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          ui:child [
-              rdf:type ui:TextNode ;
-              ui:childIndex 0 ;
-              ui:text "$.jqplot.config.enablePlugins = true;"^^xsd:string ;
-            ] ;
-          ui:childIndex 18 ;
-        ] ;
-      ui:child [
           rdf:type ui:CommentNode ;
-          ui:childIndex 15 ;
-          rdfs:comment "[if lt IE 9]><script language=\"javascript\" type=\"text/javascript\" src=\"{= ui:lib() }/jquery/js/excanvas.min.js\"></script><![endif]"^^xsd:string ;
-        ] ;
-      ui:child [
-          rdf:type ui:CommentNode ;
-          ui:childIndex 2 ;
+          ui:childIndex 1 ;
           rdfs:comment "[if lt IE 9]><script src='https://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]"^^xsd:string ;
         ] ;
     ] ;
@@ -1365,7 +1179,7 @@ lmdoc:GraphMetadataView
           ui:child [
               rdf:type lmdoc:ImportedNamespaces ;
               arg:resource [
-                  sp:varName "myGraphMetadata"^^xsd:string ;
+                  sp:varName "resource"^^xsd:string ;
                 ] ;
               arg:sectionHeading "Imported Graphs"^^xsd:string ;
               ui:childIndex 0 ;
@@ -1464,7 +1278,11 @@ lmdoc:ImportedNamespaces
       let:ns [
           rdf:type spl:object ;
           sp:arg1 [
-              sp:varName "resource"^^xsd:string ;
+              rdf:type spl:object ;
+              sp:arg1 [
+                  sp:varName "resource"^^xsd:string ;
+                ] ;
+              sp:arg2 vaem:hasGraphMetadata ;
             ] ;
           sp:arg2 vaem:namespace ;
         ] ;
@@ -1484,11 +1302,19 @@ lmdoc:ImportedNamespaces
                 ) ;
               sp:where (
                   [
-                    sp:object [
-                        sp:varName "graph"^^xsd:string ;
-                      ] ;
-                    sp:predicate owl:imports ;
-                    sp:subject [
+                    rdf:type sp:NamedGraph ;
+                    sp:elements (
+                        [
+                          sp:object [
+                              sp:varName "graph"^^xsd:string ;
+                            ] ;
+                          sp:predicate owl:imports ;
+                          sp:subject [
+                              sp:varName "resource"^^xsd:string ;
+                            ] ;
+                        ]
+                      ) ;
+                    sp:graphNameNode [
                         sp:varName "resource"^^xsd:string ;
                       ] ;
                   ]
@@ -1981,16 +1807,31 @@ lmdoc:InstancesSection
                           sp:varName "instance"^^xsd:string ;
                         ] ;
                       ui:child [
-                          rdf:type html:H3 ;
+                          rdf:type html:Div ;
+                          html:class "header-box"^^xsd:string ;
                           ui:child [
                               rdf:type lmdoc:ResourceDocAnchor ;
                               arg:node [
                                   sp:varName "instance"^^xsd:string ;
                                 ] ;
-                              arg:typeLabel "Instance: "^^xsd:string ;
+                              arg:typeLabel "Instance "^^xsd:string ;
                               ui:childIndex 0 ;
                             ] ;
-                          ui:childIndex 0 ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:P ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text [
+                                  rdf:type lmdoc:getDescription ;
+                                  arg:resource [
+                                      sp:varName "instance"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 2 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:ObjectsGroup ;
@@ -2005,7 +1846,7 @@ lmdoc:InstancesSection
                           arg:subject [
                               sp:varName "instance"^^xsd:string ;
                             ] ;
-                          ui:childIndex 1 ;
+                          ui:childIndex 3 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:ObjectsGroup ;
@@ -2020,24 +1861,29 @@ lmdoc:InstancesSection
                           arg:subject [
                               sp:varName "instance"^^xsd:string ;
                             ] ;
-                          ui:childIndex 3 ;
+                          ui:childIndex 5 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:ResourceFooter ;
                           arg:resource [
                               sp:varName "instance"^^xsd:string ;
                             ] ;
-                          ui:childIndex 5 ;
+                          ui:childIndex 7 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:VSpace ;
                           arg:margin "30px;"^^xsd:string ;
-                          ui:childIndex 2 ;
+                          ui:childIndex 4 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:VSpace ;
                           arg:margin "40px;"^^xsd:string ;
-                          ui:childIndex 4 ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:VSpace ;
+                          arg:margin "40px;"^^xsd:string ;
+                          ui:childIndex 6 ;
                         ] ;
                       ui:childIndex 0 ;
                       ui:template [
@@ -3437,6 +3283,7 @@ lmdoc:ObjectsGroup
                     ] ;
                   ui:child [
                       rdf:type html:Tbody ;
+                      html:class "lm-table-body"^^xsd:string ;
                       ui:child [
                           rdf:type ui:forEach ;
                           ui:child [
@@ -3462,12 +3309,13 @@ lmdoc:ObjectsGroup
                     ] ;
                   ui:child [
                       rdf:type html:Thead ;
+                      html:class "lm-table-header"^^xsd:string ;
                       ui:child [
                           rdf:type html:Th ;
                           ui:child [
                               rdf:type ui:TextNode ;
                               ui:childIndex 0 ;
-                              ui:text "Definition"^^xsd:string ;
+                              ui:text "Definitions"^^xsd:string ;
                             ] ;
                           ui:childIndex 1 ;
                         ] ;
@@ -4333,16 +4181,31 @@ lmdoc:PropertiesSection
                           sp:varName "property"^^xsd:string ;
                         ] ;
                       ui:child [
-                          rdf:type html:H3 ;
+                          rdf:type html:Div ;
+                          html:class "header-box"^^xsd:string ;
                           ui:child [
                               rdf:type lmdoc:ResourceDocAnchor ;
                               arg:node [
                                   sp:varName "property"^^xsd:string ;
                                 ] ;
-                              arg:typeLabel "Property: "^^xsd:string ;
+                              arg:typeLabel "Property "^^xsd:string ;
                               ui:childIndex 0 ;
                             ] ;
-                          ui:childIndex 0 ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:P ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text [
+                                  rdf:type lmdoc:getDescription ;
+                                  arg:resource [
+                                      sp:varName "property"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 2 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:ObjectsGroup ;
@@ -4357,7 +4220,7 @@ lmdoc:PropertiesSection
                           arg:subject [
                               sp:varName "property"^^xsd:string ;
                             ] ;
-                          ui:childIndex 1 ;
+                          ui:childIndex 3 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:ObjectsGroup ;
@@ -4372,24 +4235,29 @@ lmdoc:PropertiesSection
                           arg:subject [
                               sp:varName "property"^^xsd:string ;
                             ] ;
-                          ui:childIndex 3 ;
+                          ui:childIndex 5 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:ResourceFooter ;
                           arg:resource [
                               sp:varName "property"^^xsd:string ;
                             ] ;
-                          ui:childIndex 5 ;
+                          ui:childIndex 7 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:VSpace ;
                           arg:margin "30px;"^^xsd:string ;
-                          ui:childIndex 2 ;
+                          ui:childIndex 4 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:VSpace ;
                           arg:margin "40px;"^^xsd:string ;
-                          ui:childIndex 4 ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:VSpace ;
+                          arg:margin "40px;"^^xsd:string ;
+                          ui:childIndex 6 ;
                         ] ;
                       ui:childIndex 0 ;
                       ui:template [
@@ -4447,11 +4315,15 @@ lmdoc:ResourceDocAnchor
                 ] ;
             ] ;
           ui:child [
-              rdf:type ui:TextNode ;
-              ui:childIndex 0 ;
-              ui:text [
-                  sp:varName "typeLabel"^^xsd:string ;
+              rdf:type html:Strong ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text [
+                      sp:varName "typeLabel"^^xsd:string ;
+                    ] ;
                 ] ;
+              ui:childIndex 0 ;
             ] ;
           ui:child [
               rdf:type ui:TextNode ;

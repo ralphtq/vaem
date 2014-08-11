@@ -81,11 +81,11 @@ dct:title
 .
 vaem:Aspect
   rdf:type owl:Class ;
-  dct:description "Aspect is used to distinguish among sets of features of a domain or subject area. The term is borrowed from \"aspect-oriented\" programming, where it is used to separate concerns. An ontology may be characterized by this dimension so as to parition features that are orthogonal. For example,  in a systems ontology we can distinguish aspects for \"structure\", \"function\", \"behavior\" and \"interface\""^^xsd:string ;
+  dct:description "Aspect is used to distinguish among sets of features of a domain or subject area. The term is borrowed from \"aspect-oriented\" programming, where it is used to separate concerns. An ontology may be characterized by this dimension so as to parition features that are orthogonal. For example,  in a systems ontology there may be aspects for \"structure\", \"function\", \"behavior\" and \"interface\" or \"interoperability\". A viewpoint can be distinguished by \"aspects\". For example the \"information viewpoint\" of an application can be partitioned into separate graphs for the \"security\", \"operational\" and\"data retention\" aspects."^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "Aspect"^^xsd:string ;
-  rdfs:subClassOf owl:Thing ;
+  rdfs:label "Aspect Dimension"^^xsd:string ;
+  rdfs:subClassOf vaem:Dimension ;
 .
 vaem:CatalogEntry
   dct:description "VAEM Governed Object class is a placeholder for concepts that are fully defined by the voag:GovernedObject concept hierarchy for building a catalog of ontologies and graphs"^^xsd:string ;
@@ -105,13 +105,6 @@ vaem:ConstraintsGraph
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Constraints graph"^^xsd:string ;
-.
-vaem:Context
-  rdf:type owl:Class ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "Context"^^xsd:string ;
-  rdfs:subClassOf owl:Thing ;
 .
 vaem:ControllersGraph
   rdf:type vaem:GraphRole ;
@@ -135,13 +128,21 @@ vaem:DataGraph
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Data graph"^^xsd:string ;
 .
-vaem:Discipline
+vaem:Dimension
   rdf:type owl:Class ;
-  dct:description "A Discipline is a specific area of work or study. Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.  In VAEM, \"Discipline\" is used as a dimension for characterizing an ontology graph"^^xsd:string ;
+  dct:description "A dimension identifies a separation of concens that serves as a way to categorize an ontology graph. In VAEM,  the notion of \"Dimension\" is partitioned into \"Aspect\", \"Discipline\", \"Domain\" and \"Viewpoint\". "^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "Discipline"^^xsd:string ;
+  rdfs:label "Domain"^^xsd:string ;
   rdfs:subClassOf owl:Thing ;
+.
+vaem:Discipline
+  rdf:type owl:Class ;
+  dct:description "A discipline is a specific area of work or study. Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.  In VAEM, discipline is used as a dimension for characterizing an ontology graph"^^xsd:string ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Discipline Dimension"^^xsd:string ;
+  rdfs:subClassOf vaem:Dimension ;
 .
 vaem:DocumentationGraph
   rdf:type vaem:GraphRole ;
@@ -155,8 +156,8 @@ vaem:Domain
   dct:description "A domain is a subject area of interest. Examples of domains are \"enterprise\", \"process\", \"organization\" and \"system\". In VAEM, \"Domain\" is used as a dimension for characterizing an ontology graph"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "Domain"^^xsd:string ;
-  rdfs:subClassOf owl:Thing ;
+  rdfs:label "Domain Dimension"^^xsd:string ;
+  rdfs:subClassOf vaem:Dimension ;
 .
 vaem:FunctionsGraph
   rdf:type vaem:GraphRole ;
@@ -209,27 +210,22 @@ vaem:GraphMetaData
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
       owl:allValuesFrom vaem:Aspect ;
-      owl:onProperty vaem:hasAspectScope ;
-    ] ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:allValuesFrom vaem:Context ;
-      owl:onProperty vaem:hasContext ;
+      owl:onProperty vaem:hasAspect ;
     ] ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
       owl:allValuesFrom vaem:Discipline ;
-      owl:onProperty vaem:hasDisciplineScope ;
+      owl:onProperty vaem:hasDiscipline ;
     ] ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
       owl:allValuesFrom vaem:Domain ;
-      owl:onProperty vaem:hasDomainScope ;
+      owl:onProperty vaem:hasDomain ;
     ] ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
       owl:allValuesFrom vaem:GraphMetaData ;
-      owl:onProperty vaem:hasRegistrationEntry ;
+      owl:onProperty vaem:hasMetadata ;
     ] ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
@@ -249,7 +245,7 @@ vaem:GraphMetaData
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
       owl:allValuesFrom vaem:Viewpoint ;
-      owl:onProperty vaem:hasViewpointScope ;
+      owl:onProperty vaem:hasViewpoint ;
     ] ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
@@ -274,7 +270,7 @@ vaem:GraphMetaData
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty vaem:hasRegistrationEntry ;
+      owl:onProperty vaem:hasMetadata ;
     ] ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
@@ -350,23 +346,6 @@ vaem:GraphRole
       owl:onProperty vaem:filePrefix ;
     ] ;
 .
-vaem:Identifier
-  rdf:type owl:Class ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "Identifier"^^xsd:string ;
-  rdfs:subClassOf owl:Thing ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:cardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty vaem:id ;
-    ] ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:cardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty vaem:name ;
-    ] ;
-.
 vaem:LinkSetGraph
   rdf:type vaem:GraphRole ;
   dct:description "A \"vaem:LinkSetGraph\" is a graph that holds statements that specify links between resources"^^xsd:string ;
@@ -385,6 +364,7 @@ vaem:MappingGraph
 .
 vaem:Party
   rdf:type owl:Class ;
+  dct:description "A \"Party\" is a generalization for an actor that may be realized as a person, organizaiton or named role."^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Party"^^xsd:string ;
@@ -411,32 +391,6 @@ vaem:ProxyGraph
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Proxy graph"^^xsd:string ;
-.
-vaem:RegistryEntry
-  rdf:type owl:Class ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "Registry Entry"^^xsd:string ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty vaem:description ;
-    ] ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty vaem:id ;
-    ] ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty vaem:name ;
-    ] ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty vaem:url ;
-    ] ;
 .
 vaem:RulesGraph
   rdf:type vaem:GraphRole ;
@@ -483,11 +437,11 @@ vaem:ViewGraph
 .
 vaem:Viewpoint
   rdf:type owl:Class ;
-  dct:description "Viewpoint is used to denote how a set of resources, or an individual resource, is relevant to a context of use. The term \"viewpoint\" is adopted from the ISO RM-ODP specifications and its more recent use in enterprise architecture descriptions.  In VAEM, \"Viewpoint\" is used as a dimension for characterizing an ontology graph"^^xsd:string ;
+  dct:description "Viewpoint is used to denote how a set of resources, or an individual resource, is relevant to a context of use. The term \"viewpoint\" is adopted from the ISO RM-ODP specifications and its more recent use in enterprise architecture descriptions. The RM-ODP introducesd the concept of viewpoint to describe a system from a particular set of concerns. RM-ODP defines five viewpoints. Together they provide a complete description of a system: enterprise viewpoint, information viewpoint, computational viewpoint, engineering viewpoint, and technology viewpoint.  In VAEM, \"Viewpoint\" is used as a dimension for characterizing an ontology graph.  The viewpoints of an ontology may not always correpsond directly to those of a system but the idea of describing a subject area of interest from distinct viewpoints is still relevant. A viewpoint can be further distinguished by \"aspects\". For example the \"information viewpoint\" of an application can be partitioned into separate graphs for the \"security\", \"operational\" and\"data retention\" aspects."^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "Viewpoint"^^xsd:string ;
-  rdfs:subClassOf owl:Thing ;
+  rdfs:label "ViewpointDimension"^^xsd:string ;
+  rdfs:subClassOf vaem:Dimension ;
 .
 vaem:VocabularyGraph
   rdf:type vaem:GraphRole ;
@@ -544,36 +498,36 @@ vaem:filePrefix
   rdfs:label "file prefix"^^xsd:string ;
   rdfs:range xsd:string ;
 .
-vaem:hasAspectScope
+vaem:hasAspect
   rdf:type owl:ObjectProperty ;
-  dct:description "The property \"vaem:hasAspectScope\" is used to distinguish among sets of features of a domain or subject area. The term is borrowed from \"aspect-oriented\" programming, where it is used to separate concerns. An ontology may be characterized by this dimension so as to parition features that are orthogonal. For example,  in a systems ontology we can distinguish aspects for \"structure\", \"function\", \"behavior\" and \"interface\".  The property is an \"rdf:Property\" to allow both scalar and object values"^^xsd:string ;
+  dct:description "The property \"vaem:hasAspect\" is used to distinguish among sets of features of a domain or subject area. The term is borrowed from \"aspect-oriented\" programming, where it is used to separate concerns. An ontology may be characterized by this dimension so as to parition features that are orthogonal. For example,  in a systems ontology we can distinguish aspects for \"structure\", \"function\", \"behavior\" and \"interface\".  The property is an \"rdf:Property\" to allow both scalar and object values"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "has aspect scope"^^xsd:string ;
-  rdfs:subPropertyOf vaem:hasScope ;
+  rdfs:label "has aspect "^^xsd:string ;
+  rdfs:subPropertyOf vaem:hasDimension ;
 .
-vaem:hasContext
+vaem:hasDimension
   rdf:type owl:ObjectProperty ;
-  dct:description "The property \"vaem:hasContext\" is used indicate a \"situation\" in which an ontology has relevance.  InVAEM, the property can used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^xsd:string ;
+  dct:description "The property \"vaem:hasDimension\" is used categorize an ontology.  In VAEM, the property is used to characterize an ontology graph."^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "has context"^^xsd:string ;
+  rdfs:label "has dimension"^^xsd:string ;
 .
-vaem:hasDisciplineScope
+vaem:hasDiscipline
   rdf:type owl:ObjectProperty ;
-  dct:description "The property \"vaem:hasDisciplineScope\" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study. Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^xsd:string ;
+  dct:description "The property \"vaem:hasDiscipline\" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study. Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "has discipline scope"^^xsd:string ;
-  rdfs:subPropertyOf vaem:hasScope ;
+  rdfs:label "has discipline"^^xsd:string ;
+  rdfs:subPropertyOf vaem:hasDimension ;
 .
-vaem:hasDomainScope
+vaem:hasDomain
   rdf:type owl:ObjectProperty ;
-  dct:description "The property \"vaem:hasDomainScope\" is used to specify how  a set of resources, or an individual resource is grounded in a domain, that is, a subject area of interest. Examples of domains are \"enterprise\", \"process\", \"organization\" and \"system\". In VAEM, the property is used as a dimension for characterizing an ontology graph. The property is an \"rdf:Property\" to allow both scalar and object values"^^xsd:string ;
+  dct:description "The property \"vaem:hasDomain\" is used to specify how  a set of resources, or an individual resource is grounded in a domain, that is, a subject area of interest. Examples of domains are \"enterprise\", \"process\", \"organization\" and \"system\". In VAEM, the property is used as a dimension for characterizing an ontology graph. The property is an \"rdf:Property\" to allow both scalar and object values"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "has domain scope"^^xsd:string ;
-  rdfs:subPropertyOf vaem:hasScope ;
+  rdfs:label "has domain"^^xsd:string ;
+  rdfs:subPropertyOf vaem:hasDimension ;
 .
 vaem:hasGraphMetadata
   rdf:type owl:AnnotationProperty ;
@@ -603,39 +557,33 @@ vaem:hasLicenseType
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "has license type"@en-US ;
 .
+vaem:hasMetadata
+  rdf:type owl:ObjectProperty ;
+  dct:description "The property \"hasMetadata\" is used to reference a metadata information structure."^^xsd:string ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "has metadata"^^xsd:string ;
+.
 vaem:hasOwner
   rdf:type owl:ObjectProperty ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "has owner"^^xsd:string ;
 .
-vaem:hasRegistrationEntry
-  rdf:type owl:ObjectProperty ;
-  dct:description "The property \"hasRegistrationEntry\" is used to refer to a resource or a location on the web that is the authorative source for holding metadata on the registration of an ontology"^^xsd:string ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "has registration entry"^^xsd:string ;
-.
-vaem:hasScope
-  rdf:type owl:ObjectProperty ;
-  dct:description "The property \"vaem:hasScope\" is used indicate a scope of relevance of an ontology.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^xsd:string ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "has scope"^^xsd:string ;
-.
 vaem:hasSteward
   rdf:type owl:ObjectProperty ;
+  dct:description "A property that is used to refer to a \"Steward\", that is, the party or role that is responsible for maintaining an asset, in the case of VAEM, an ontology graph."^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "has steward"^^xsd:string ;
 .
-vaem:hasViewpointScope
+vaem:hasViewpoint
   rdf:type owl:ObjectProperty ;
-  dct:description "The property \"vaem:hasVewpointScope\" is used to denote how a set of resources, or an individual resource, is relevant to a context of use. The term \"viewpoint\" is adopted from the ISO RM-ODP specifications and its more recent use in enterprise architecture descriptions.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^xsd:string ;
+  dct:description "The property \"vaem:hasViewpoint\" is used to denote how a set of resources, or an individual resource, is relevant to a context of use. The term \"viewpoint\" is adopted from the ISO RM-ODP specifications and its more recent use in enterprise architecture descriptions.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "has viewpoint scope"^^xsd:string ;
-  rdfs:subPropertyOf vaem:hasScope ;
+  rdfs:label "has viewpoint"^^xsd:string ;
+  rdfs:subPropertyOf vaem:hasDimension ;
 .
 vaem:id
   rdf:type owl:DatatypeProperty ;
