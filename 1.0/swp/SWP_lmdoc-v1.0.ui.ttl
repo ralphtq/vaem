@@ -1679,17 +1679,7 @@ http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadataView&resource=http%3
 .
 lmdoc:ImageResourceViewer
   rdf:type swa:ObjectViewerClass ;
-  swa:objectWidgetWeight [
-      rdf:type swa:WeightedExpression ;
-      swa:expression [
-          rdf:type sp:eq ;
-          sp:arg1 [
-              sp:varName "kind"^^xsd:string ;
-            ] ;
-          sp:arg2 "image" ;
-        ] ;
-      swa:weight 3 ;
-    ] ;
+  ui:overrides swa:ImageResourceViewer ;
   ui:private "true"^^xsd:boolean ;
   ui:prototype [
       rdf:type ui:group ;
@@ -3148,7 +3138,7 @@ lmdoc:ObjectViewer
       spl:predicate arg:graph ;
       spl:valueType rdfs:Resource ;
     ] ;
-  ui:private "true"^^xsd:boolean ;
+  ui:private "false"^^xsd:boolean ;
   ui:prototype [
       rdf:type html:Div ;
       html:class "swa-object-widget"^^xsd:string ;
