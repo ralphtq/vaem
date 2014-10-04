@@ -3,8 +3,7 @@
 # imports: http://topbraid.org/swa
 # imports: http://uispin.org/ui
 # imports: http://uispin.org/ui.ui
-# imports: http://vaem.linkedmodel.org/1.0/spin/lib
-# imports: http://www.linkedmodel.org/2.0/schema/vaem
+# imports: http://www.linkedmodel.org/schema/vaem
 # imports: http://www.w3.org/2004/02/skos/core
 
 @prefix afn: <http://jena.hpl.hp.com/ARQ/function#> .
@@ -14,6 +13,7 @@
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix fn: <http://www.w3.org/2005/xpath-functions#> .
 @prefix html: <http://uispin.org/html#> .
+@prefix iess: <http://ies.topbraidlive.org/schema/ies#> .
 @prefix let: <http://uispin.org/let#> .
 @prefix letrs: <http://uispin.org/letrs#> .
 @prefix lmdoc: <http://www.linkedmodel.org/oui/lmdoc#> .
@@ -65,6 +65,16 @@ arg:sectionHeading
   rdf:type rdf:Property ;
   rdfs:subPropertyOf sp:arg ;
 .
+<http://topbraid.org/email#TestAddress>
+  rdf:type owl:Class ;
+  rdfs:label "Test address"^^xsd:string ;
+  rdfs:subClassOf <http://topbraid.org/email#Address> ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty vaem:id ;
+    ] ;
+.
 <http://topbraid.org/xhtml#Area>
   rdf:type rdfs:Resource ;
 .
@@ -115,8 +125,7 @@ voag:Logo
   owl:imports <http://topbraid.org/swa> ;
   owl:imports <http://uispin.org/ui> ;
   owl:imports <http://uispin.org/ui.ui> ;
-  owl:imports <http://vaem.linkedmodel.org/1.0/spin/lib> ;
-  owl:imports <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  owl:imports <http://www.linkedmodel.org/schema/vaem> ;
   owl:imports <http://www.w3.org/2004/02/skos/core> ;
   owl:versionInfo "Created with TopBraid Composer"^^xsd:string ;
 .
@@ -320,14 +329,14 @@ lmdoc:AllOwners
               ] ;
             sp:predicate vaem:owner ;
             sp:subject [
-                sp:varName "graph"^^xsd:string ;
+                sp:varName "resource"^^xsd:string ;
               ] ;
           ]
         ) ;
     ] ;
   spin:constraint [
       rdf:type spl:Argument ;
-      spl:predicate arg:graph ;
+      spl:predicate arg:resource ;
       spl:valueType rdfs:Resource ;
       rdfs:comment "The class that the instances must have."^^xsd:string ;
     ] ;
@@ -732,6 +741,9 @@ lmdoc:CopyrightSection
       rdf:type ui:group ;
       ui:child [
           rdf:type ui:call ;
+          arg:resource [
+              sp:varName "resource"^^xsd:string ;
+            ] ;
           ui:child [
               rdf:type ui:if ;
               ui:child [
@@ -809,7 +821,7 @@ lmdoc:DetailedClassView
       rdf:type ui:setContext ;
       ui:child [
           rdf:type html:Div ;
-          html:class "tuiView"^^xsd:string ;
+          html:class "lm-resources-box"^^xsd:string ;
           ui:child [
               rdf:type html:Div ;
               html:class "ies_resource_summary"^^xsd:string ;
@@ -839,8 +851,8 @@ lmdoc:DetailedClassView
                       rdf:type ui:TextNode ;
                       ui:childIndex 0 ;
                       ui:text [
-                          rdf:type lmlib:maybeDescription ;
-                          sp:arg1 [
+                          rdf:type lmdoc:getDescription ;
+                          arg:resource [
                               sp:varName "class"^^xsd:string ;
                             ] ;
                         ] ;
@@ -915,7 +927,7 @@ lmdoc:DetailedClassView
                         sp:object [
                             sp:varName "?0"^^xsd:string ;
                           ] ;
-                        sp:predicate lmlib:relevantPropertiesAtClassWithParent ;
+                        sp:predicate lmdoc:relevantPropertiesAtClassWithParent ;
                         sp:subject [
                             sp:varName "property"^^xsd:string ;
                           ] ;
@@ -960,7 +972,6 @@ lmdoc:DetailedClassView
                   rdf:type ui:if ;
                   ui:child [
                       rdf:type html:Div ;
-                      html:class "ies-subtitle"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -1031,7 +1042,7 @@ lmdoc:DetailedClassView
                         sp:object [
                             sp:varName "super"^^xsd:string ;
                           ] ;
-                        sp:predicate lmlib:mySuperClass ;
+                        sp:predicate lmdoc:mySuperClass ;
                         sp:subject [
                             sp:varName "class"^^xsd:string ;
                           ] ;
@@ -1074,7 +1085,7 @@ lmdoc:DetailedClassView
                         sp:object [
                             sp:varName "depth"^^xsd:string ;
                           ] ;
-                        sp:predicate lmlib:inheritanceDepth ;
+                        sp:predicate lmdoc:inheritanceDepth ;
                         sp:subject [
                             sp:varName "?0"^^xsd:string ;
                           ] ;
@@ -1122,15 +1133,6 @@ lmdoc:DetailedClassView
               ui:childIndex 5 ;
             ] ;
           ui:childIndex 0 ;
-        ] ;
-      ui:queryGraph [
-          rdf:type ui:graphWithImports ;
-          sp:arg1 [
-              rdf:type lmlib:maybeConvertToURI ;
-              sp:arg1 [
-                  sp:varName "context"^^xsd:string ;
-                ] ;
-            ] ;
         ] ;
       ui:varName "createLinkFunction"^^xsd:string ;
       ui:varValue lmdoc:createLinkForMainForm ;
@@ -1180,11 +1182,7 @@ lmdoc:GraphHeader
   ui:prototype [
       rdf:type ui:group ;
       let:myGraphMetadata [
-          rdf:type spl:object ;
-          sp:arg1 [
-              sp:varName "resource"^^xsd:string ;
-            ] ;
-          sp:arg2 vaem:hasGraphMetadata ;
+          sp:varName "resource"^^xsd:string ;
         ] ;
       ui:child [
           rdf:type ui:group ;
@@ -1428,6 +1426,9 @@ lmdoc:GraphHeader
                         ] ;
                       ui:child [
                           rdf:type lmdoc:CopyrightSection ;
+                          arg:resource [
+                              sp:varName "myGraphMetadata"^^xsd:string ;
+                            ] ;
                           ui:childIndex 2 ;
                         ] ;
                       ui:childIndex 1 ;
@@ -1474,206 +1475,234 @@ lmdoc:GraphMetadataView
     ] ;
   ui:prototype [
       rdf:type ui:group ;
-      let:myGraphMetadata [
-          rdf:type spl:object ;
+      let:myGraph [
+          rdf:type sp:iri ;
           sp:arg1 [
               sp:varName "resource"^^xsd:string ;
             ] ;
-          sp:arg2 vaem:hasGraphMetadata ;
         ] ;
       ui:child [
-          rdf:type html:Hr ;
-          ui:childIndex 1 ;
-        ] ;
-      ui:child [
-          rdf:type html:Hr ;
-          ui:childIndex 7 ;
-        ] ;
-      ui:child [
-          rdf:type html:Section ;
-          html:class "details"^^xsd:string ;
-          html:id "details"^^xsd:string ;
-          html:property "dct:abstract"^^xsd:string ;
-          html:rel "bibo:Chapter"^^xsd:string ;
-          html:resource "#ref"^^xsd:string ;
-          html:typeof "bibo:Chapter"^^xsd:string ;
+          rdf:type ui:setContext ;
           ui:child [
-              rdf:type html:Div ;
-              html:style "font-size:small;"^^xsd:string ;
+              rdf:type ui:group ;
+              let:myGraphMetadata [
+                  rdf:type spl:object ;
+                  sp:arg1 [
+                      sp:varName "myGraph"^^xsd:string ;
+                    ] ;
+                  sp:arg2 vaem:hasMetadata ;
+                ] ;
               ui:child [
-                  rdf:type html:A ;
-                  html:href "http://www.topquadrant.com/technology/sparql-web-pages-swp/"^^xsd:string ;
+                  rdf:type html:Div ;
                   ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text "TopBraid SPARQL Web Pages (SWP)"^^xsd:string ;
+                      rdf:type html:Hr ;
+                      ui:childIndex 5 ;
                     ] ;
-                  ui:childIndex 3 ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text "Generated "^^xsd:string ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 1 ;
-                  ui:text [
-                      rdf:type xsd:date ;
-                      sp:arg1 [
-                          rdf:type afn:now ;
+                  ui:child [
+                      rdf:type html:Section ;
+                      html:class "details"^^xsd:string ;
+                      html:id "details"^^xsd:string ;
+                      html:property "dct:abstract"^^xsd:string ;
+                      html:rel "bibo:Chapter"^^xsd:string ;
+                      html:resource "#ref"^^xsd:string ;
+                      html:typeof "bibo:Chapter"^^xsd:string ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:style "font-size:small;"^^xsd:string ;
+                          ui:child [
+                              rdf:type html:A ;
+                              html:href "http://www.topquadrant.com/technology/sparql-web-pages-swp/"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "TopBraid SPARQL Web Pages (SWP)"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 3 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Generated "^^xsd:string ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 1 ;
+                              ui:text [
+                                  rdf:type xsd:date ;
+                                  sp:arg1 [
+                                      rdf:type afn:now ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 2 ;
+                              ui:text " using"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 6 ;
                         ] ;
+                      ui:child [
+                          rdf:type html:Hr ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Hr ;
+                          ui:childIndex 3 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Hr ;
+                          ui:childIndex 5 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Section ;
+                          html:class "informative"^^xsd:string ;
+                          html:id "classes"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:ClassesSection ;
+                              arg:resource [
+                                  sp:varName "myGraph"^^xsd:string ;
+                                ] ;
+                              arg:sectionHeading "Classes"^^xsd:string ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Section ;
+                          html:class "informative"^^xsd:string ;
+                          html:id "instances"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:InstancesSection ;
+                              arg:resource [
+                                  sp:varName "myGraph"^^xsd:string ;
+                                ] ;
+                              arg:sectionHeading "Instances"^^xsd:string ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 4 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Section ;
+                          html:class "informative"^^xsd:string ;
+                          html:id "properties"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:PropertiesSection ;
+                              arg:resource [
+                                  sp:varName "myGraph"^^xsd:string ;
+                                ] ;
+                              arg:sectionHeading "Properties"^^xsd:string ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:childIndex 6 ;
                     ] ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
+                  ui:child [
+                      rdf:type html:Section ;
+                      html:class "informative"^^xsd:string ;
+                      html:id "overview-of-ontology"^^xsd:string ;
+                      ui:child [
+                          rdf:type lmdoc:IndexSection ;
+                          arg:resource [
+                              sp:varName "resource"^^xsd:string ;
+                            ] ;
+                          arg:sectionHeading "Resources Index"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 2 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Section ;
+                      html:class "introductory"^^xsd:string ;
+                      html:id "abstract"^^xsd:string ;
+                      html:property "dct:abstract"^^xsd:string ;
+                      html:rel "bibo:Chapter"^^xsd:string ;
+                      html:resource "#ref"^^xsd:string ;
+                      html:typeof "bibo:Chapter"^^xsd:string ;
+                      ui:child [
+                          rdf:type lmdoc:IntroductionSection ;
+                          arg:resource [
+                              sp:varName "myGraphMetadata"^^xsd:string ;
+                            ] ;
+                          arg:sectionHeading "Abstract"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Section ;
+                      html:id "namespaces-1"^^xsd:string ;
+                      html:rel "bibo:Chapter"^^xsd:string ;
+                      html:resource "#ref"^^xsd:string ;
+                      html:typeof "bibo:Chapter"^^xsd:string ;
+                      ui:child [
+                          rdf:type lmdoc:ImportedNamespaces ;
+                          arg:resource [
+                              sp:varName "resource"^^xsd:string ;
+                            ] ;
+                          arg:sectionHeading "Imported Graphs"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 3 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Section ;
+                      html:id "non-imported-myGraphMetadatas"^^xsd:string ;
+                      html:rel "bibo:Chapter"^^xsd:string ;
+                      html:resource "#ref"^^xsd:string ;
+                      html:typeof "bibo:Chapter"^^xsd:string ;
+                      ui:child [
+                          rdf:type lmdoc:NonImportedResources ;
+                          arg:resource [
+                              sp:varName "myGraphMetadata"^^xsd:string ;
+                            ] ;
+                          arg:sectionHeading "Non-imported Resources"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 4 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Section ;
+                      html:id "toc"^^xsd:string ;
+                      ui:child [
+                          rdf:type lmdoc:TableOfContents ;
+                          arg:sectionHeading "Table of Contents"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
                   ui:childIndex 2 ;
-                  ui:text " using"^^xsd:string ;
                 ] ;
-              ui:childIndex 6 ;
-            ] ;
-          ui:child [
-              rdf:type html:Hr ;
-              ui:childIndex 1 ;
-            ] ;
-          ui:child [
-              rdf:type html:Hr ;
-              ui:childIndex 3 ;
-            ] ;
-          ui:child [
-              rdf:type html:Hr ;
-              ui:childIndex 5 ;
-            ] ;
-          ui:child [
-              rdf:type html:Section ;
-              html:class "informative"^^xsd:string ;
-              html:id "classes"^^xsd:string ;
               ui:child [
-                  rdf:type lmdoc:ClassesSection ;
+                  rdf:type html:Hr ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type lmdoc:GraphHeader ;
                   arg:resource [
-                      sp:varName "resource"^^xsd:string ;
+                      sp:varName "myGraphMetadata"^^xsd:string ;
                     ] ;
-                  arg:sectionHeading "Classes"^^xsd:string ;
                   ui:childIndex 0 ;
                 ] ;
               ui:childIndex 0 ;
-            ] ;
-          ui:child [
-              rdf:type html:Section ;
-              html:class "informative"^^xsd:string ;
-              html:id "instances"^^xsd:string ;
-              ui:child [
-                  rdf:type lmdoc:InstancesSection ;
-                  arg:resource [
-                      sp:varName "resource"^^xsd:string ;
-                    ] ;
-                  arg:sectionHeading "Instances"^^xsd:string ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 4 ;
-            ] ;
-          ui:child [
-              rdf:type html:Section ;
-              html:class "informative"^^xsd:string ;
-              html:id "properties"^^xsd:string ;
-              ui:child [
-                  rdf:type lmdoc:PropertiesSection ;
-                  arg:resource [
-                      sp:varName "resource"^^xsd:string ;
-                    ] ;
-                  arg:sectionHeading "Properties"^^xsd:string ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 2 ;
-            ] ;
-          ui:childIndex 8 ;
-        ] ;
-      ui:child [
-          rdf:type html:Section ;
-          html:class "informative"^^xsd:string ;
-          html:id "overview-of-ontology"^^xsd:string ;
-          ui:child [
-              rdf:type lmdoc:IndexSection ;
-              arg:resource [
-                  sp:varName "resource"^^xsd:string ;
-                ] ;
-              arg:sectionHeading "Resources Index"^^xsd:string ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:childIndex 4 ;
-        ] ;
-      ui:child [
-          rdf:type html:Section ;
-          html:class "introductory"^^xsd:string ;
-          html:id "abstract"^^xsd:string ;
-          html:property "dct:abstract"^^xsd:string ;
-          html:rel "bibo:Chapter"^^xsd:string ;
-          html:resource "#ref"^^xsd:string ;
-          html:typeof "bibo:Chapter"^^xsd:string ;
-          ui:child [
-              rdf:type lmdoc:IntroductionSection ;
-              arg:resource [
-                  sp:varName "myGraphMetadata"^^xsd:string ;
-                ] ;
-              arg:sectionHeading "Abstract"^^xsd:string ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:childIndex 2 ;
-        ] ;
-      ui:child [
-          rdf:type html:Section ;
-          html:id "namespaces-1"^^xsd:string ;
-          html:rel "bibo:Chapter"^^xsd:string ;
-          html:resource "#ref"^^xsd:string ;
-          html:typeof "bibo:Chapter"^^xsd:string ;
-          ui:child [
-              rdf:type lmdoc:ImportedNamespaces ;
-              arg:resource [
-                  sp:varName "resource"^^xsd:string ;
-                ] ;
-              arg:sectionHeading "Imported Graphs"^^xsd:string ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:childIndex 5 ;
-        ] ;
-      ui:child [
-          rdf:type html:Section ;
-          html:id "non-imported-myGraphMetadatas"^^xsd:string ;
-          html:rel "bibo:Chapter"^^xsd:string ;
-          html:resource "#ref"^^xsd:string ;
-          html:typeof "bibo:Chapter"^^xsd:string ;
-          ui:child [
-              rdf:type lmdoc:NonImportedResources ;
-              arg:resource [
-                  sp:varName "myGraphMetadata"^^xsd:string ;
-                ] ;
-              arg:sectionHeading "Non-imported Resources"^^xsd:string ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:childIndex 6 ;
-        ] ;
-      ui:child [
-          rdf:type html:Section ;
-          html:id "toc"^^xsd:string ;
-          ui:child [
-              rdf:type lmdoc:TableOfContents ;
-              arg:sectionHeading "Table of Contents"^^xsd:string ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:childIndex 3 ;
-        ] ;
-      ui:child [
-          rdf:type lmdoc:GraphHeader ;
-          arg:resource [
-              sp:varName "resource"^^xsd:string ;
             ] ;
           ui:childIndex 0 ;
+          ui:queryGraph [
+              rdf:type ui:unionOfGraphs ;
+              sp:arg1 [
+                  sp:varName "myGraph"^^xsd:string ;
+                ] ;
+              sp:arg2 [
+                  rdf:type ui:graphWithImports ;
+                  sp:arg1 <http://qudt.org/swa/doc> ;
+                ] ;
+            ] ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadataView&resource=http%3A%2F%2Fqudt.org%2F2.0%2Fschema%2Fqudt&_base=http://qudt.org/swa/doc&_withImports=true"""^^xsd:string ;
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadataView&resource=http%3A%2F%2Fqudt.org%2F2.0%2Fschema%2Fqudt"""^^xsd:string ;
   rdfs:label "Graph metadata view"^^xsd:string ;
   rdfs:subClassOf lmdoc:Pages ;
 .
@@ -2561,7 +2590,7 @@ lmdoc:IntroductionSection
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 2 ;
-              ui:text "\" is also available in formats: "^^xsd:string ;
+              ui:text "\" is also available as  "^^xsd:string ;
             ] ;
           ui:child [
               rdf:type ui:TextNode ;
@@ -2604,11 +2633,10 @@ lmdoc:IntroductionSection
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
               ui:text [
-                  rdf:type spl:object ;
-                  sp:arg1 [
+                  rdf:type lmdoc:getDescription ;
+                  arg:resource [
                       sp:varName "resource"^^xsd:string ;
                     ] ;
-                  sp:arg2 vaem:description ;
                 ] ;
             ] ;
           ui:childIndex 1 ;
@@ -2668,7 +2696,7 @@ lmdoc:Label
   rdf:type ui:NodeClass ;
   spin:constraint [
       rdf:type spl:Argument ;
-      spl:predicate tui:node ;
+      spl:predicate arg:node ;
       rdfs:comment "The RDF node to display."^^xsd:string ;
     ] ;
   ui:prototype [
@@ -2683,7 +2711,7 @@ lmdoc:Label
                   html:class "lm_hidden_resource_content"^^xsd:string ;
                   ui:child [
                       rdf:type lmdoc:PopUpResourceView ;
-                      tui:resource [
+                      arg:resource [
                           sp:varName "node"^^xsd:string ;
                         ] ;
                       ui:childIndex 0 ;
@@ -2706,16 +2734,6 @@ lmdoc:Label
                             ] ;
                         ] ;
                       ui:childIndex 0 ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 1 ;
-                      ui:text [
-                          rdf:type lmdoc:labelText ;
-                          tui:resource [
-                              sp:varName "node"^^xsd:string ;
-                            ] ;
-                        ] ;
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
@@ -2814,40 +2832,26 @@ lmdoc:LabelList
   rdf:type ui:NodeClass ;
   spin:constraint [
       rdf:type spl:Argument ;
-      spl:predicate ui:resultSet ;
+      spl:predicate arg:resultSet ;
       spl:valueType sp:Select ;
       rdfs:comment "The SELECT query delivering the nodes to display in its first column."^^xsd:string ;
     ] ;
   ui:prototype [
       rdf:type ui:forEach ;
       ui:child [
-          rdf:type ui:if ;
-          ui:child [
-              rdf:type ui:TextNode ;
-              ui:childIndex 0 ;
-              ui:text ", "^^xsd:string ;
-            ] ;
-          ui:childIndex 0 ;
-          ui:condition [
-              rdf:type sp:gt ;
-              sp:arg1 [
-                  sp:varName "index"^^xsd:string ;
-                ] ;
-              sp:arg2 0 ;
-            ] ;
-        ] ;
-      ui:child [
           rdf:type lmdoc:Label ;
-          tui:node [
+          arg:node [
               sp:varName "node"^^xsd:string ;
             ] ;
-          ui:childIndex 1 ;
+          ui:childIndex 0 ;
         ] ;
       ui:indexVar "index"^^xsd:string ;
       ui:resultSet [
           rdf:type sp:Select ;
           sp:resultVariables (
-              _:b40132
+              [
+                sp:varName "node"^^xsd:string ;
+              ]
             ) ;
           sp:where (
               [
@@ -2855,33 +2859,48 @@ lmdoc:LabelList
                     sp:varName "resultSet"^^xsd:string ;
                   ] ;
                 sp:predicate rdf:first ;
-                sp:subject _:b33596 ;
+                sp:subject [
+                    sp:varName "?0"^^xsd:string ;
+                  ] ;
               ]
               [
-                sp:object _:b49932 ;
+                sp:object [
+                    sp:varName "?1"^^xsd:string ;
+                  ] ;
                 sp:predicate rdf:rest ;
-                sp:subject _:b33596 ;
+                sp:subject [
+                    sp:varName "?0"^^xsd:string ;
+                  ] ;
               ]
               [
                 sp:object 0 ;
                 sp:predicate rdf:first ;
-                sp:subject _:b49932 ;
+                sp:subject [
+                    sp:varName "?1"^^xsd:string ;
+                  ] ;
               ]
               [
                 sp:object () ;
                 sp:predicate rdf:rest ;
-                sp:subject _:b49932 ;
+                sp:subject [
+                    sp:varName "?1"^^xsd:string ;
+                  ] ;
               ]
               [
-                sp:object _:b40132 ;
+                sp:object [
+                    sp:varName "node"^^xsd:string ;
+                  ] ;
                 sp:predicate spr:colCells ;
-                sp:subject _:b33596 ;
+                sp:subject [
+                    sp:varName "?0"^^xsd:string ;
+                  ] ;
               ]
             ) ;
         ] ;
+      ui:separator ", "^^xsd:string ;
     ] ;
   ui:responseType ui:HTML ;
-  rdfs:comment "A comma-separated list of values from a given result set. The individual values will be rendered into tui:Labels."^^xsd:string ;
+  rdfs:comment "A comma-separated list of values from a given result set. The individual values will be rendered into lmdoc:Labels."^^xsd:string ;
   rdfs:label "Label list"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
 .
@@ -3020,6 +3039,11 @@ lmdoc:Link
   rdfs:comment "A hyperlink to a resource, using the display label of the resource as text. Additional arguments may be passed in 'lmdoc:optionalArgs' for the rest call."^^xsd:string ;
   rdfs:label "Link"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
+.
+lmdoc:MagicProperties
+  rdf:type spin:MagicProperty ;
+  rdfs:label "Magic properties"^^xsd:string ;
+  rdfs:subClassOf spin:MagicProperties ;
 .
 lmdoc:NonImportedResources
   rdf:type ui:NodeClass ;
@@ -3940,7 +3964,7 @@ lmdoc:PopUpResourceView
   rdf:type ui:NodeClass ;
   spin:constraint [
       rdf:type spl:Argument ;
-      spl:predicate tui:resource ;
+      spl:predicate arg:resource ;
       spl:valueType rdfs:Resource ;
       rdfs:comment "curation graph"^^xsd:string ;
     ] ;
@@ -4123,6 +4147,285 @@ lmdoc:PropertiesSection
 .
 lmdoc:PropertiesTable
   rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:class ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:propertySet ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type html:Table ;
+          html:class "docPropertiesTable"^^xsd:string ;
+          ui:child [
+              rdf:type html:Tr ;
+              ui:child [
+                  rdf:type html:Th ;
+                  html:class "docPropertiesTH"^^xsd:string ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "#"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 2 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Th ;
+                  html:class "docPropertiesTH"^^xsd:string ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "Permissible Values (inherited from Parent Class)"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 3 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Th ;
+                  html:class "docPropertiesTH"^^xsd:string ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "Property"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Th ;
+                  html:class "docPropertuesTH"^^xsd:string ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "Type"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:forEach ;
+                  ui:child [
+                      rdf:type html:Tr ;
+                      ui:child [
+                          rdf:type html:Td ;
+                          html:class "docPropertiesTD"^^xsd:string ;
+                          ui:child [
+                              rdf:type html:B ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      rdf:type ui:label ;
+                                      sp:arg1 [
+                                          sp:varName "property"^^xsd:string ;
+                                        ] ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 1 ;
+                              ui:text " ["^^xsd:string ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 2 ;
+                              ui:text [
+                                  rdf:type ui:encodeNode ;
+                                  sp:arg1 [
+                                      sp:varName "property"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 3 ;
+                              ui:text "]"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Td ;
+                          html:class "docPropertiesTD"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:forEach ;
+                              ui:child [
+                                  rdf:type lmdoc:Label ;
+                                  arg:node [
+                                      sp:varName "type"^^xsd:string ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 0 ;
+                              ui:resultSet [
+                                  rdf:type sp:Select ;
+                                  sp:orderBy (
+                                      [
+                                        rdf:type ui:label ;
+                                        sp:arg1 [
+                                            sp:varName "type"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                    ) ;
+                                  sp:resultVariables (
+                                      [
+                                        sp:varName "type"^^xsd:string ;
+                                      ]
+                                    ) ;
+                                  sp:where (
+                                      [
+                                        sp:object [
+                                            sp:varName "type"^^xsd:string ;
+                                          ] ;
+                                        sp:predicate rdf:type ;
+                                        sp:subject [
+                                            sp:varName "property"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                    ) ;
+                                ] ;
+                              ui:separator ", "^^xsd:string ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Td ;
+                          html:class "docPropertiesTD"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:group ;
+                              letrs:myCardinalities [
+                                  rdf:type sp:Select ;
+                                  sp:resultVariables (
+                                      [
+                                        sp:varName "min"^^xsd:string ;
+                                      ]
+                                      [
+                                        sp:varName "max"^^xsd:string ;
+                                      ]
+                                    ) ;
+                                  sp:where (
+                                      [
+                                        rdf:type sp:Bind ;
+                                        sp:expression [
+                                            rdf:type smf:minCardinality ;
+                                            sp:arg1 [
+                                                sp:varName "class"^^xsd:string ;
+                                              ] ;
+                                            sp:arg2 [
+                                                sp:varName "property"^^xsd:string ;
+                                              ] ;
+                                          ] ;
+                                        sp:variable [
+                                            sp:varName "min"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        rdf:type sp:Bind ;
+                                        sp:expression [
+                                            rdf:type smf:maxCardinality ;
+                                            sp:arg1 [
+                                                sp:varName "class"^^xsd:string ;
+                                              ] ;
+                                            sp:arg2 [
+                                                sp:varName "property"^^xsd:string ;
+                                              ] ;
+                                          ] ;
+                                        sp:variable [
+                                            sp:varName "max"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                    ) ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:forEach ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text "["^^xsd:string ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 1 ;
+                                      ui:text [
+                                          rdf:type sp:if ;
+                                          sp:arg1 [
+                                              rdf:type sp:bound ;
+                                              sp:arg1 [
+                                                  sp:varName "min"^^xsd:string ;
+                                                ] ;
+                                            ] ;
+                                          sp:arg2 [
+                                              sp:varName "min"^^xsd:string ;
+                                            ] ;
+                                          sp:arg3 0 ;
+                                        ] ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 2 ;
+                                      ui:text ".."^^xsd:string ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 3 ;
+                                      ui:text [
+                                          rdf:type sp:if ;
+                                          sp:arg1 [
+                                              rdf:type sp:ne ;
+                                              sp:arg1 [
+                                                  sp:varName "max"^^xsd:string ;
+                                                ] ;
+                                              sp:arg2 -1 ;
+                                            ] ;
+                                          sp:arg2 [
+                                              sp:varName "max"^^xsd:string ;
+                                            ] ;
+                                          sp:arg3 "*" ;
+                                        ] ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 4 ;
+                                      ui:text "]"^^xsd:string ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                  ui:resultSet [
+                                      sp:varName "myCardinalities"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:PropertyDetailsTable ;
+                          arg:class [
+                              sp:varName "class"^^xsd:string ;
+                            ] ;
+                          arg:parent [
+                              sp:varName "parent"^^xsd:string ;
+                            ] ;
+                          arg:property [
+                              sp:varName "property"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 3 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 4 ;
+                  ui:resultSet [
+                      sp:varName "propertySet"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  rdfs:label "Properties table"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
 .
 lmdoc:PropertyDetailsTable
@@ -4195,7 +4498,7 @@ lmdoc:PropertyDetailsTable
                         sp:object [
                             sp:varName "?2"^^xsd:string ;
                           ] ;
-                        sp:predicate lmlib:parentsOfPropertiesAtClass ;
+                        sp:predicate lmdoc:parentsOfPropertiesAtClass ;
                         sp:subject [
                             sp:varName "?0"^^xsd:string ;
                           ] ;
@@ -4339,7 +4642,7 @@ lmdoc:PropertyDetailsTable
                                             sp:object [
                                                 sp:varName "?2"^^xsd:string ;
                                               ] ;
-                                            sp:predicate lmlib:rangeOfPropertyAtClass ;
+                                            sp:predicate lmdoc:rangeOfPropertyAtClass ;
                                             sp:subject [
                                                 sp:varName "?0"^^xsd:string ;
                                               ] ;
@@ -4467,7 +4770,7 @@ lmdoc:PropertyDetailsTable
                                     sp:object [
                                         sp:varName "?2"^^xsd:string ;
                                       ] ;
-                                    sp:predicate lmlib:valueRestrictionsForPropertyAtClass ;
+                                    sp:predicate lmdoc:valueRestrictionsForPropertyAtClass ;
                                     sp:subject [
                                         sp:varName "?0"^^xsd:string ;
                                       ] ;
@@ -5570,6 +5873,11 @@ lmdoc:ViewAsXML
   rdfs:label "View as XML"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
 .
+lmdoc:Viewers
+  rdf:type ui:NodeClass ;
+  rdfs:label "Viewers"^^xsd:string ;
+  rdfs:subClassOf iess:Elements ;
+.
 lmdoc:createLinkForMainForm
   rdf:type ui:NodeClass ;
   rdfs:subClassOf lmdoc:CreateLinkFunctions ;
@@ -5612,17 +5920,23 @@ lmdoc:getDescription
       sp:where (
           [
             rdf:type sp:TriplePath ;
+            sp:object dct:description ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject [
+                sp:varName "descriptionProperty"^^xsd:string ;
+              ] ;
+          ]
+          [
             sp:object [
                 sp:varName "description"^^xsd:string ;
               ] ;
-            sp:path [
-                rdf:type sp:AltPath ;
-                sp:path1 [
-                    rdf:type sp:AltPath ;
-                    sp:path1 skos:definition ;
-                    sp:path2 dct:description ;
-                  ] ;
-                sp:path2 vaem:description ;
+            sp:predicate [
+                sp:varName "descriptionProperty"^^xsd:string ;
               ] ;
             sp:subject [
                 sp:varName "resource"^^xsd:string ;
@@ -5664,6 +5978,141 @@ lmdoc:getTitle
   spin:returnType xsd:string ;
   rdfs:label "get title"^^xsd:string ;
   rdfs:subClassOf lmdoc:Functions ;
+.
+lmdoc:inheritanceDepth
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "d"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object [
+                        sp:varName "x"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject spin:_arg1 ;
+                  ]
+                  [
+                    rdf:type sp:Filter ;
+                    sp:expression [
+                        rdf:type sp:ne ;
+                        sp:arg1 [
+                            sp:varName "x"^^xsd:string ;
+                          ] ;
+                        sp:arg2 spin:_arg2 ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "x"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdf:first ;
+                    sp:subject [
+                        sp:varName "?0"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "?1"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdf:rest ;
+                    sp:subject [
+                        sp:varName "?0"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object spin:_arg2 ;
+                    sp:predicate rdf:first ;
+                    sp:subject [
+                        sp:varName "?1"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object () ;
+                    sp:predicate rdf:rest ;
+                    sp:subject [
+                        sp:varName "?1"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "inc"^^xsd:string ;
+                      ] ;
+                    sp:predicate lmdoc:inheritanceDepth ;
+                    sp:subject [
+                        sp:varName "?0"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression [
+                        rdf:type sp:add ;
+                        sp:arg1 [
+                            sp:varName "inc"^^xsd:string ;
+                          ] ;
+                        sp:arg2 1 ;
+                      ] ;
+                    sp:variable [
+                        sp:varName "d"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object spin:_arg2 ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject spin:_arg1 ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression 1 ;
+                    sp:variable [
+                        sp:varName "d"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    rdf:type sp:Filter ;
+                    sp:expression [
+                        rdf:type sp:eq ;
+                        sp:arg1 spin:_arg1 ;
+                        sp:arg2 spin:_arg2 ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression 0 ;
+                    sp:variable [
+                        sp:varName "d"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "Current subclass"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "Current superclass"^^xsd:string ;
+    ] ;
+  rdfs:subClassOf lmdoc:MagicProperties ;
 .
 lmdoc:labelText
   rdf:type spin:Function ;
@@ -5794,19 +6243,970 @@ lmdoc:makeAnchorFromString
   rdfs:label "make anchor from string"^^xsd:string ;
   rdfs:subClassOf lmdoc:Functions ;
 .
+lmdoc:mySuperClass
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "super"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object owl:Class ;
+            sp:predicate rdf:type ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "super"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            sp:object [
+                sp:varName "superType"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:type ;
+            sp:subject [
+                sp:varName "super"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:ne ;
+                sp:arg1 [
+                    sp:varName "superType"^^xsd:string ;
+                  ] ;
+                sp:arg2 owl:Restriction ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:and ;
+                sp:arg1 [
+                    rdf:type sp:and ;
+                    sp:arg1 [
+                        rdf:type sp:ne ;
+                        sp:arg1 [
+                            sp:varName "super"^^xsd:string ;
+                          ] ;
+                        sp:arg2 rdfs:Resource ;
+                      ] ;
+                    sp:arg2 [
+                        rdf:type sp:ne ;
+                        sp:arg1 [
+                            sp:varName "super"^^xsd:string ;
+                          ] ;
+                        sp:arg2 owl:Thing ;
+                      ] ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "super"^^xsd:string ;
+                      ] ;
+                    sp:arg2 spin:_arg1 ;
+                  ] ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Class ;
+    ] ;
+  rdfs:label "my super class"^^xsd:string ;
+  rdfs:subClassOf lmdoc:MagicProperties ;
+.
 lmdoc:optionalLinkArgs
   rdf:type owl:DatatypeProperty ;
   rdfs:label "optional link args"^^xsd:string ;
   rdfs:range xsd:string ;
 .
+lmdoc:parentsOfPropertiesAtClass
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          [
+            sp:varName "parent"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject spin:_arg2 ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "superClass"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:and ;
+                sp:arg1 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 owl:Thing ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 rdfs:Resource ;
+                  ] ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:domain ;
+                    sp:subject [
+                        sp:varName "property"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:variable [
+                        sp:varName "parent"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "property"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:onProperty ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:NotExists ;
+                    sp:elements (
+                        [
+                          sp:object [
+                              sp:varName "value"^^xsd:string ;
+                            ] ;
+                          sp:predicate owl:hasValue ;
+                          sp:subject [
+                              sp:varName "superClass"^^xsd:string ;
+                            ] ;
+                        ]
+                      ) ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject [
+                        sp:varName "parent"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "property"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:onProperty ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "value"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:hasValue ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject [
+                        sp:varName "parent"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:isIRI ;
+                sp:arg1 [
+                    sp:varName "parent"^^xsd:string ;
+                  ] ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "a property on the left"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "property"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Relevant properties at {?class}"^^xsd:string ;
+  spin:returnType rdfs:Class ;
+  rdfs:label "parents of properties at class"^^xsd:string ;
+  rdfs:subClassOf lmdoc:MagicProperties ;
+.
+lmdoc:rangeOfPropertyAtClass
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          [
+            sp:varName "range"^^xsd:string ;
+          ]
+          [
+            sp:varName "valueRestriction"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "superClass"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:and ;
+                sp:arg1 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 owl:Thing ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 rdfs:Resource ;
+                  ] ;
+              ] ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "aProperty"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject spin:_arg2 ;
+          ]
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object [
+                        sp:varName "range"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:range ;
+                    sp:subject [
+                        sp:varName "aProperty"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression "false"^^xsd:boolean ;
+                    sp:variable [
+                        sp:varName "valueRestriction"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "aProperty"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:onProperty ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "range"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:allValuesFrom ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression "false"^^xsd:boolean ;
+                    sp:variable [
+                        sp:varName "valueRestriction"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "aProperty"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:onProperty ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "range"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:hasValue ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression "true"^^xsd:boolean ;
+                    sp:variable [
+                        sp:varName "valueRestriction"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "false"^^xsd:boolean ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "property"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Class ;
+      rdfs:comment "The class to get the properties of"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Range(s) for {?arg2} at class {?arg1}"^^xsd:string ;
+  rdfs:comment "Gets a list of ranges for a given class and property based on all superclasses."^^xsd:string ;
+  rdfs:label "Range of property at class"^^xsd:string ;
+  rdfs:subClassOf lmdoc:MagicProperties ;
+.
+lmdoc:relevantPropertiesAtClass
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          [
+            sp:varName "property"^^xsd:string ;
+          ]
+          [
+            sp:varName "parent"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate spl:relevantPropertyAtClass ;
+            sp:subject [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "superClass"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:and ;
+                sp:arg1 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 owl:Thing ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 rdfs:Resource ;
+                  ] ;
+              ] ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "aProperty"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:domain ;
+                    sp:subject [
+                        sp:varName "aProperty"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "aProperty"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:onProperty ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject [
+                        sp:varName "parent"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Class ;
+      rdfs:comment "The class to get the properties of"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Relevant properties at {?class}"^^xsd:string ;
+  rdfs:comment "Gets a list of relevant properties for a given class (arg:class), ordered by ui:labels."^^xsd:string ;
+  rdfs:label "Relevant properties at class"^^xsd:string ;
+  rdfs:subClassOf lmdoc:MagicProperties ;
+.
+lmdoc:relevantPropertiesAtClassWithParent
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          [
+            sp:varName "class"^^xsd:string ;
+          ]
+          [
+            sp:varName "parent"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "superClass"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:and ;
+                sp:arg1 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 owl:Thing ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 rdfs:Resource ;
+                  ] ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:domain ;
+                    sp:subject [
+                        sp:varName "property"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:variable [
+                        sp:varName "parent"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "property"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:onProperty ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:NotExists ;
+                    sp:elements (
+                        [
+                          sp:object [
+                              sp:varName "value"^^xsd:string ;
+                            ] ;
+                          sp:predicate owl:hasValue ;
+                          sp:subject [
+                              sp:varName "superClass"^^xsd:string ;
+                            ] ;
+                        ]
+                      ) ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject [
+                        sp:varName "parent"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:isIRI ;
+                sp:arg1 [
+                    sp:varName "class"^^xsd:string ;
+                  ] ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "a property on the left"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Relevant properties at {?class}"^^xsd:string ;
+  spin:returnType rdfs:Class ;
+  rdfs:comment """Gets a list of relevant properties for a given class (arg:class), ordered by ui:labels. 
+
+A magic property that establishes a relationship between properties (left) and classes (right) to determine which properties are \"relevant\" for the class. Relevant means that they have the class in their domain and/or restrictions, including superclasses and sub-properties.
+
+Note that the performance of the body of this magic property has been optimized for the case in which the class is given, so ideally use this for queries such as  ?property iess:relevantPropertyAtClass skos:Concept ."""^^xsd:string ;
+  rdfs:label "Relevant properties at class with parent"^^xsd:string ;
+  rdfs:subClassOf lmdoc:MagicProperties ;
+.
+lmdoc:relevantPropertyDetailsAtClass
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          [
+            sp:varName "property"^^xsd:string ;
+          ]
+          [
+            sp:varName "parent"^^xsd:string ;
+          ]
+          [
+            sp:varName "range"^^xsd:string ;
+          ]
+          [
+            sp:varName "valueRestriction"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+            sp:predicate lmdoc:relevantPropertiesAtClass ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "parent"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?3"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?3"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?3"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?4"^^xsd:string ;
+              ] ;
+            sp:predicate lmdoc:rangeOfPropertyAtClass ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "range"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?4"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?5"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?4"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "valueRestriction"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?5"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?5"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Class ;
+      rdfs:comment "The class to get the properties of"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Relevant properties at {?class}"^^xsd:string ;
+  rdfs:comment "Gets a list of relevant properties for a given class (arg:class), ordered by ui:labels."^^xsd:string ;
+  rdfs:label "Relevant property details at class"^^xsd:string ;
+  rdfs:subClassOf lmdoc:MagicProperties ;
+.
 lmdoc:ruleSet
   rdf:type owl:ObjectProperty ;
   rdfs:label "rule set"^^xsd:string ;
 .
+lmdoc:valueRestrictionsForPropertyAtClass
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          [
+            sp:varName "range"^^xsd:string ;
+          ]
+          [
+            sp:varName "superClass"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "superClass"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:NotExists ;
+            sp:elements (
+                [
+                  sp:object owl:Restriction ;
+                  sp:predicate rdf:type ;
+                  sp:subject [
+                      sp:varName "superClass"^^xsd:string ;
+                    ] ;
+                ]
+              ) ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:and ;
+                sp:arg1 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 owl:Thing ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 rdfs:Resource ;
+                  ] ;
+              ] ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "aProperty"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject spin:_arg2 ;
+          ]
+          [
+            sp:object [
+                sp:varName "res"^^xsd:string ;
+              ] ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject [
+                sp:varName "superClass"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "aProperty"^^xsd:string ;
+              ] ;
+            sp:predicate owl:onProperty ;
+            sp:subject [
+                sp:varName "res"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "range"^^xsd:string ;
+              ] ;
+            sp:predicate owl:hasValue ;
+            sp:subject [
+                sp:varName "res"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "false"^^xsd:boolean ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "property"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Class ;
+      rdfs:comment "The class to get the properties of"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Value restriction(s) for property {?arg2} at class {?arg1}"^^xsd:string ;
+  rdfs:comment "Gets restricted values for a given class and property based on all superclasses."^^xsd:string ;
+  rdfs:label "Value restrictions for property at class."^^xsd:string ;
+  rdfs:subClassOf lmdoc:MagicProperties ;
+.
 catalog:hasTypeLogo
   rdf:type owl:ObjectProperty ;
 .
-vaem:GraphMetadata
+vaem:GraphMetaData
   ui:instanceView [
       rdf:type ui:group ;
       ui:child [
@@ -5817,6 +7217,9 @@ vaem:GraphMetadata
       ui:id "wp"^^xsd:string ;
       ui:priority 2 ;
     ] ;
+.
+vaem:description
+  rdfs:subPropertyOf dct:description ;
 .
 vaem:exclude
   rdf:type owl:AnnotationProperty ;
@@ -5845,15 +7248,6 @@ owl:Ontology
 .
 _:b4674
   sp:varName "resource"^^xsd:string ;
-.
-_:b33596
-  sp:varName "?0"^^xsd:string ;
-.
-_:b40132
-  sp:varName "node"^^xsd:string ;
-.
-_:b49932
-  sp:varName "?1"^^xsd:string ;
 .
 _:b54653
   sp:varName "label"^^xsd:string ;
