@@ -388,6 +388,15 @@ table.lm-graph-metadata {
 	vertical-align: top;
 	background-color: #F5F6CE;
 	}
+
+table.lm-inner-table { 
+	border: 1px solid black; 
+	border-collapse: collapse; 
+	font-family: Tahoma; 
+	font-size: 10px; 
+	padding: 4px; 
+	vertical-align: top;
+	}
 	
 td.lm-table-row-label {
   border: 1px solid black; 
@@ -436,6 +445,34 @@ tr.lm-table-column-labels {
 	text-align:center;
 	vertical-align=middle ;
   }
+
+tr.lm-inner-row {
+	font-size: 10px;
+	text-align:center;
+	vertical-align=middle ;
+  }
+
+tr.lm-inner-column {
+	font-size: 10px;
+	text-align:center;
+	vertical-align=middle ;
+  }
+
+.twenty-five-percent {
+   width: 25% ;
+   }
+
+.fifty-percent {
+   width: 50% ;
+   }
+
+.seventy-five-percent {
+   width: 75% ;
+   }
+
+.one-hundred-percent {
+   width: 100% ;
+   }
 
 table.hidden-borders {
 	width: 100% ;
