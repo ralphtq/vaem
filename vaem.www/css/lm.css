@@ -1,7 +1,8 @@
 /*
  filename: lm.css
- Version: $id: $
- Last Modified: $lastModifiedDate: $
+ Version: 1.0
+ Last Modified: Dec 28, 2014
+ Author: Ralph Hodgson
  Derived from: http://www.w3.org/StyleSheets/TR/W3C-REC.css
                http://www.w3.org/TR/vocab-org/
 */
@@ -208,6 +209,31 @@ table.simple {
     margin-bottom:  0;
 }
 
+article {
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: justify;
+}
+
+article p {
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+.boxed {
+    display: inline;
+    border-style: solid;
+    border-width: 1px;
+    padding: 2px;
+}
+
+.inline {
+ display: inline;
+}
+
 div.resource-box {
     border: 2px solid #a1a1a1;
     padding: 10px 40px; 
@@ -257,7 +283,15 @@ div.lm-resources-index {
 	padding: 5px; 
 	border: dotted; 
 	background-color: #dddff0;
-  text-align:left;
+    text-align:left;
+  }
+
+div.lm-resources-list {
+	padding: 5px; 
+	border: dotted; 
+	background-color: #dddff0;
+    text-align:left;
+    line-height: 200%;
   }
 
 div.lm-resources-box {
@@ -363,7 +397,7 @@ div.innercenteringcontainer {
 	text-align: center;
 	vertical-align: center ;
 	margin-top: 1em;
-  margin-right: 1em;
+    margin-right: 1em;
 	margin-left: 1em;
 	margin-bottom: 1em;
 }
@@ -373,10 +407,6 @@ div.lm-title , h1.lm-title {
 	font-family: Arial;
 	font-size: 24.0pt;
 	text-align: center; 
- }
-
-h3 {
-	color: #0B0B3B;
  }
 
 table.lm-graph-metadata { 
@@ -491,6 +521,10 @@ tr,td.hidden-borders {
 	border-color: white;
 	vertical-align:bottom;
 }
+
+.center {
+    text-align: center ;
+    }
 
 #lm-container {
 	color: #515151;
