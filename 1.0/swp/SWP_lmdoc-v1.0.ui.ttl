@@ -1484,160 +1484,185 @@ lmdoc:GraphMetadataView
       ui:child [
           rdf:type ui:setContext ;
           ui:child [
-              rdf:type html:P ;
-              let:graph [
-                  rdf:type sp:iri ;
-                  sp:arg1 [
-                      rdf:type xsd:string ;
-                      sp:arg1 [
-                          rdf:type ui:currentQueryGraph ;
+              rdf:type html:Div ;
+              ui:child [
+                  rdf:type html:Hr ;
+                  ui:childIndex 5 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Section ;
+                  html:class "details"^^xsd:string ;
+                  html:id "details"^^xsd:string ;
+                  html:property "dct:abstract"^^xsd:string ;
+                  html:rel "bibo:Chapter"^^xsd:string ;
+                  html:resource "#ref"^^xsd:string ;
+                  html:typeof "bibo:Chapter"^^xsd:string ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:style "font-size:small;"^^xsd:string ;
+                      ui:child [
+                          rdf:type html:A ;
+                          html:href "http://www.topquadrant.com/technology/sparql-web-pages-swp/"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "TopBraid SPARQL Web Pages (SWP)"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 3 ;
                         ] ;
-                    ] ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text "Current Query Graph is "^^xsd:string ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 1 ;
-                  ui:text [
-                      sp:varName "graph"^^xsd:string ;
-                    ] ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:child [
-              rdf:type ui:group ;
-              let:myGraph [
-                  rdf:type sp:iri ;
-                  sp:arg1 [
-                      rdf:type spif:regex ;
-                      sp:arg1 [
-                          rdf:type xsd:string ;
-                          sp:arg1 [
-                              sp:varName "graph"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Generated "^^xsd:string ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 1 ;
+                          ui:text [
+                              rdf:type xsd:date ;
+                              sp:arg1 [
+                                  rdf:type afn:now ;
+                                ] ;
                             ] ;
                         ] ;
-                      sp:arg2 "^urn:x-union:(.*):.*$" ;
-                      sp:arg3 "$1" ;
-                    ] ;
-                ] ;
-              ui:child [
-                  rdf:type ui:group ;
-                  let:myGraphMetadata [
-                      rdf:type spl:object ;
-                      sp:arg1 [
-                          sp:varName "myGraph"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 2 ;
+                          ui:text " using"^^xsd:string ;
                         ] ;
-                      sp:arg2 vaem:hasMetadata ;
+                      ui:childIndex 6 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Hr ;
+                      ui:childIndex 1 ;
                     ] ;
                   ui:child [
                       rdf:type html:Hr ;
                       ui:childIndex 3 ;
                     ] ;
                   ui:child [
-                      rdf:type html:P ;
+                      rdf:type html:Hr ;
+                      ui:childIndex 5 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Section ;
+                      html:class "informative"^^xsd:string ;
+                      html:id "classes"^^xsd:string ;
                       ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text "My Graph is "^^xsd:string ;
-                        ] ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 1 ;
-                          ui:text [
+                          rdf:type lmdoc:ClassesSection ;
+                          arg:resource [
                               sp:varName "myGraph"^^xsd:string ;
                             ] ;
+                          arg:sectionHeading "Classes"^^xsd:string ;
+                          ui:childIndex 0 ;
                         ] ;
                       ui:childIndex 0 ;
                     ] ;
                   ui:child [
-                      rdf:type ui:group ;
-                      let:t [
-                          rdf:type sp:Select ;
-                          sp:resultVariables (
-                              [
-                                sp:varName "t"^^xsd:string ;
-                              ]
-                            ) ;
-                          sp:where (
-                              [
-                                rdf:type sp:NamedGraph ;
-                                sp:elements (
-                                    [
-                                      sp:object [
-                                          sp:varName "t"^^xsd:string ;
-                                        ] ;
-                                      sp:predicate rdf:type ;
-                                      sp:subject owl:Class ;
-                                    ]
-                                    [
-                                      sp:object [
-                                          sp:varName "t2"^^xsd:string ;
-                                        ] ;
-                                      sp:predicate rdfs:subClassOf ;
-                                      sp:subject <http://qudt.org/schema/qudt/QuantityKind> ;
-                                    ]
-                                  ) ;
-                                sp:graphNameNode [
-                                    sp:varName "myGraph"^^xsd:string ;
-                                  ] ;
-                              ]
-                            ) ;
-                        ] ;
+                      rdf:type html:Section ;
+                      html:class "informative"^^xsd:string ;
+                      html:id "instances"^^xsd:string ;
                       ui:child [
-                          rdf:type ui:else ;
-                          ui:child [
-                              rdf:type html:P ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Not bound"^^xsd:string ;
-                                ] ;
-                              ui:childIndex 0 ;
+                          rdf:type lmdoc:InstancesSection ;
+                          arg:resource [
+                              sp:varName "myGraph"^^xsd:string ;
                             ] ;
-                          ui:childIndex 1 ;
-                        ] ;
-                      ui:child [
-                          rdf:type ui:if ;
-                          ui:child [
-                              rdf:type html:P ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Type is "^^xsd:string ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 1 ;
-                                  ui:text [
-                                      sp:varName "t"^^xsd:string ;
-                                    ] ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
+                          arg:sectionHeading "Instances"^^xsd:string ;
                           ui:childIndex 0 ;
-                          ui:condition [
-                              rdf:type sp:bound ;
-                              sp:arg1 [
-                                  sp:varName "t"^^xsd:string ;
-                                ] ;
-                            ] ;
                         ] ;
-                      ui:childIndex 1 ;
+                      ui:childIndex 4 ;
                     ] ;
                   ui:child [
-                      rdf:type lmdoc:GraphHeader ;
-                      arg:resource [
-                          sp:varName "myGraphMetadata"^^xsd:string ;
+                      rdf:type html:Section ;
+                      html:class "informative"^^xsd:string ;
+                      html:id "properties"^^xsd:string ;
+                      ui:child [
+                          rdf:type lmdoc:PropertiesSection ;
+                          arg:resource [
+                              sp:varName "myGraph"^^xsd:string ;
+                            ] ;
+                          arg:sectionHeading "Properties"^^xsd:string ;
+                          ui:childIndex 0 ;
                         ] ;
                       ui:childIndex 2 ;
                     ] ;
+                  ui:childIndex 6 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Section ;
+                  html:class "informative"^^xsd:string ;
+                  html:id "overview-of-ontology"^^xsd:string ;
+                  ui:child [
+                      rdf:type lmdoc:IndexSection ;
+                      arg:resource [
+                          sp:varName "resource"^^xsd:string ;
+                        ] ;
+                      arg:sectionHeading "Resources Index"^^xsd:string ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 2 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Section ;
+                  html:class "introductory"^^xsd:string ;
+                  html:id "abstract"^^xsd:string ;
+                  html:property "dct:abstract"^^xsd:string ;
+                  html:rel "bibo:Chapter"^^xsd:string ;
+                  html:resource "#ref"^^xsd:string ;
+                  html:typeof "bibo:Chapter"^^xsd:string ;
+                  ui:child [
+                      rdf:type lmdoc:IntroductionSection ;
+                      arg:resource [
+                          sp:varName "myGraphMetadata"^^xsd:string ;
+                        ] ;
+                      arg:sectionHeading "Abstract"^^xsd:string ;
+                      ui:childIndex 0 ;
+                    ] ;
                   ui:childIndex 0 ;
                 ] ;
-              ui:childIndex 1 ;
+              ui:child [
+                  rdf:type html:Section ;
+                  html:id "namespaces-1"^^xsd:string ;
+                  html:rel "bibo:Chapter"^^xsd:string ;
+                  html:resource "#ref"^^xsd:string ;
+                  html:typeof "bibo:Chapter"^^xsd:string ;
+                  ui:child [
+                      rdf:type lmdoc:ImportedNamespaces ;
+                      arg:resource [
+                          sp:varName "resource"^^xsd:string ;
+                        ] ;
+                      arg:sectionHeading "Imported Graphs"^^xsd:string ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 3 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Section ;
+                  html:id "non-imported-myGraphMetadatas"^^xsd:string ;
+                  html:rel "bibo:Chapter"^^xsd:string ;
+                  html:resource "#ref"^^xsd:string ;
+                  html:typeof "bibo:Chapter"^^xsd:string ;
+                  ui:child [
+                      rdf:type lmdoc:NonImportedResources ;
+                      arg:resource [
+                          sp:varName "myGraphMetadata"^^xsd:string ;
+                        ] ;
+                      arg:sectionHeading "Non-imported Resources"^^xsd:string ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 4 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Section ;
+                  html:id "toc"^^xsd:string ;
+                  ui:child [
+                      rdf:type lmdoc:TableOfContents ;
+                      arg:sectionHeading "Table of Contents"^^xsd:string ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:childIndex 0 ;
             ] ;
           ui:childIndex 0 ;
           ui:queryGraph [
@@ -1653,40 +1678,44 @@ lmdoc:GraphMetadataView
         ] ;
     ] ;
   ui:responseType ui:HTML ;
-  rdfs:comment """<div>
-                <section class=\"introductory\" id=\"abstract\" property=\"dct:abstract\" rel=\"bibo:Chapter\" resource=\"#ref\" typeof=\"bibo:Chapter\">
-                    <lmdoc:IntroductionSection arg:resource=\"{= ?myGraphMetadata }\" arg:sectionHeading=\"Abstract\"/>
-                </section>
-                <section id=\"toc\">
-                    <lmdoc:TableOfContents arg:sectionHeading=\"Table of Contents\"/>
-                </section>
-                <section class=\"informative\" id=\"overview-of-ontology\">
-                    <lmdoc:IndexSection arg:resource=\"{= ?resource }\" arg:sectionHeading=\"Resources Index\"/>
-                </section>
-                <section id=\"namespaces-1\" rel=\"bibo:Chapter\" resource=\"#ref\" typeof=\"bibo:Chapter\">
-                    <lmdoc:ImportedNamespaces arg:resource=\"{= ?resource }\" arg:sectionHeading=\"Imported Graphs\"/>
-                </section>
-                <section id=\"non-imported-myGraphMetadatas\" rel=\"bibo:Chapter\" resource=\"#ref\" typeof=\"bibo:Chapter\">
-                    <lmdoc:NonImportedResources arg:resource=\"{= ?myGraphMetadata }\" arg:sectionHeading=\"Non-imported Resources\"/>
+  rdfs:comment """<ui:group let:myGraph=\"{= IRI(?resource) }\">
+    <ui:setContext ui:queryGraph=\"{= ui:unionOfGraphs(?myGraph, ui:graphWithImports(&lt;http://qudt.org/swa/doc&gt;)) }\">
+        <div>
+            <section class=\"introductory\" id=\"abstract\" property=\"dct:abstract\" rel=\"bibo:Chapter\" resource=\"#ref\" typeof=\"bibo:Chapter\">
+                <lmdoc:IntroductionSection arg:resource=\"{= ?myGraphMetadata }\" arg:sectionHeading=\"Abstract\"/>
+            </section>
+            <section id=\"toc\">
+                <lmdoc:TableOfContents arg:sectionHeading=\"Table of Contents\"/>
+            </section>
+            <section class=\"informative\" id=\"overview-of-ontology\">
+                <lmdoc:IndexSection arg:resource=\"{= ?resource }\" arg:sectionHeading=\"Resources Index\"/>
+            </section>
+            <section id=\"namespaces-1\" rel=\"bibo:Chapter\" resource=\"#ref\" typeof=\"bibo:Chapter\">
+                <lmdoc:ImportedNamespaces arg:resource=\"{= ?resource }\" arg:sectionHeading=\"Imported Graphs\"/>
+            </section>
+            <section id=\"non-imported-myGraphMetadatas\" rel=\"bibo:Chapter\" resource=\"#ref\" typeof=\"bibo:Chapter\">
+                <lmdoc:NonImportedResources arg:resource=\"{= ?myGraphMetadata }\" arg:sectionHeading=\"Non-imported Resources\"/>
+            </section>
+            <hr/>
+            <section class=\"details\" id=\"details\" property=\"dct:abstract\" rel=\"bibo:Chapter\" resource=\"#ref\" typeof=\"bibo:Chapter\">
+                <section class=\"informative\" id=\"classes\">
+                    <lmdoc:ClassesSection arg:resource=\"{= ?myGraph }\" arg:sectionHeading=\"Classes\"/>
                 </section>
                 <hr/>
-                <section class=\"details\" id=\"details\" property=\"dct:abstract\" rel=\"bibo:Chapter\" resource=\"#ref\" typeof=\"bibo:Chapter\">
-                    <section class=\"informative\" id=\"classes\">
-                        <lmdoc:ClassesSection arg:resource=\"{= ?myGraph }\" arg:sectionHeading=\"Classes\"/>
-                    </section>
-                    <hr/>
-                    <section class=\"informative\" id=\"properties\">
-                        <lmdoc:PropertiesSection arg:resource=\"{= ?myGraph }\" arg:sectionHeading=\"Properties\"/>
-                    </section>
-                    <hr/>
-                    <section class=\"informative\" id=\"instances\">
-                        <lmdoc:InstancesSection arg:resource=\"{= ?myGraph }\" arg:sectionHeading=\"Instances\"/>
-                    </section>
-                    <hr/>
-                    <div style=\"font-size:small;\">Generated {= xsd:date(afn:now()) } using<a href=\"http://www.topquadrant.com/technology/sparql-web-pages-swp/\">TopBraid SPARQL Web Pages (SWP)</a>
-                    </div>
+                <section class=\"informative\" id=\"properties\">
+                    <lmdoc:PropertiesSection arg:resource=\"{= ?myGraph }\" arg:sectionHeading=\"Properties\"/>
                 </section>
-            </div>"""^^xsd:string ;
+                <hr/>
+                <section class=\"informative\" id=\"instances\">
+                    <lmdoc:InstancesSection arg:resource=\"{= ?myGraph }\" arg:sectionHeading=\"Instances\"/>
+                </section>
+                <hr/>
+                <div style=\"font-size:small;\">Generated {= xsd:date(afn:now()) } using<a href=\"http://www.topquadrant.com/technology/sparql-web-pages-swp/\">TopBraid SPARQL Web Pages (SWP)</a>
+                </div>
+            </section>
+        </div>
+    </ui:setContext>
+</ui:group>"""^^xsd:string ;
   rdfs:comment """<ui:group let:myGraph=\"{= IRI(?resource) }\">
     <ui:setContext ui:queryGraph=\"{= ui:unionOfGraphs(?myGraph, ui:graphWithImports(&lt;http://qudt.org/swa/doc&gt;)) }\">
         <p let:graph=\"{= IRI(spif:regex(ui:currentQueryGraph(), &quot;^urn:x-union:(.*):.*$&quot;, &quot;$1&quot;)) }\">Current Query Graph is {= ?graph }</p>
@@ -1702,6 +1731,33 @@ lmdoc:GraphMetadataView
             </ui:group>
             <lmdoc:GraphHeader arg:resource=\"{= ?myGraphMetadata }\"/>
             <hr/>
+        </ui:group>
+    </ui:setContext>
+</ui:group>"""^^xsd:string ;
+  rdfs:comment """<ui:group let:myGraph=\"{= IRI(?resource) }\">
+    <ui:setContext ui:queryGraph=\"{= ui:unionOfGraphs(?myGraph, ui:graphWithImports(&lt;http://qudt.org/swa/doc&gt;)) }\">
+        <p let:graph=\"{= IRI(xsd:string(ui:currentQueryGraph())) }\">Current Query Graph is {= ?graph }</p>
+        <ui:group let:myGraph=\"{= IRI(spif:regex(xsd:string(?graph), &quot;^urn:x-union:(.*):.*$&quot;, &quot;$1&quot;)) }\">
+            <ui:group let:myGraphMetadata=\"{= spl:object(?myGraph, vaem:hasMetadata) }\">
+                <p>My Graph is {= ?myGraph }</p>
+                <ui:group let:t=\"{#
+                        SELECT ?t
+                        WHERE {
+                            GRAPH ?myGraph {
+                                owl:Class a ?t .
+                                &lt;http://qudt.org/schema/qudt/QuantityKind&gt; rdfs:subClassOf ?t2 .
+                            } .
+                        } }\">
+                    <ui:if ui:condition=\"{= bound(?t) }\">
+                        <p>Type is {= ?t }</p>
+                    </ui:if>
+                    <ui:else>
+                        <p>Not bound</p>
+                    </ui:else>
+                </ui:group>
+                <lmdoc:GraphHeader arg:resource=\"{= ?myGraphMetadata }\"/>
+                <hr/>
+            </ui:group>
         </ui:group>
     </ui:setContext>
 </ui:group>"""^^xsd:string ;
