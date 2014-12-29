@@ -244,6 +244,9 @@ article p {
     padding: 2px;
 }
 
+.smalltext {
+    font-size: 12px;
+}
 .inline {
  display: inline;
 }
