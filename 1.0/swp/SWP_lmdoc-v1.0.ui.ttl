@@ -1270,43 +1270,6 @@ lmdoc:GraphHeader
                           ui:child [
                               rdf:type html:Dd ;
                               ui:child [
-                                  rdf:type html:A ;
-                                  html:class "u-url"^^xsd:string ;
-                                  html:href [
-                                      sp:varName "thisVersion"^^xsd:string ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text [
-                                          sp:varName "thisVersion"^^xsd:string ;
-                                        ] ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:childIndex 1 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dd ;
-                              ui:child [
-                                  rdf:type html:A ;
-                                  html:href [
-                                      sp:varName "thisVersion"^^xsd:string ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text [
-                                          sp:varName "thisVersion"^^xsd:string ;
-                                        ] ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:childIndex 3 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dd ;
-                              ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
                                   ui:text [
@@ -1322,7 +1285,22 @@ lmdoc:GraphHeader
                           ui:child [
                               rdf:type html:Dd ;
                               ui:child [
-                                  rdf:type ui:else ;
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      rdf:type spl:object ;
+                                      sp:arg1 [
+                                          sp:varName "resource"^^xsd:string ;
+                                        ] ;
+                                      sp:arg2 vaem:revision ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Dd ;
+                              ui:child [
+                                  rdf:type ui:if ;
                                   ui:child [
                                       rdf:type html:A ;
                                       html:href [
@@ -1337,27 +1315,45 @@ lmdoc:GraphHeader
                                         ] ;
                                       ui:childIndex 0 ;
                                     ] ;
-                                  ui:childIndex 1 ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:if ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text [
-                                          sp:varName "replacesVersion"^^xsd:string ;
-                                        ] ;
-                                    ] ;
                                   ui:childIndex 0 ;
                                   ui:condition [
-                                      rdf:type sp:eq ;
+                                      rdf:type sp:ne ;
                                       sp:arg1 [
-                                          sp:varName "replacesVersion"^^xsd:string ;
+                                          sp:varName "previousVersion"^^xsd:string ;
                                         ] ;
                                       sp:arg2 "none" ;
                                     ] ;
                                 ] ;
                               ui:childIndex 5 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Dd ;
+                              ui:child [
+                                  rdf:type ui:if ;
+                                  ui:child [
+                                      rdf:type html:A ;
+                                      html:href [
+                                          sp:varName "thisVersion"^^xsd:string ;
+                                        ] ;
+                                      ui:child [
+                                          rdf:type ui:TextNode ;
+                                          ui:childIndex 0 ;
+                                          ui:text [
+                                              sp:varName "thisVersion"^^xsd:string ;
+                                            ] ;
+                                        ] ;
+                                      ui:childIndex 0 ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                  ui:condition [
+                                      rdf:type sp:ne ;
+                                      sp:arg1 [
+                                          sp:varName "thisVersion"^^xsd:string ;
+                                        ] ;
+                                      sp:arg2 "none" ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 3 ;
                             ] ;
                           ui:child [
                               rdf:type html:Dt ;
@@ -1444,7 +1440,7 @@ lmdoc:GraphHeader
                                 ] ;
                               sp:arg2 vaem:logo ;
                             ] ;
-                          sp:arg2 "http://linkedmodel.org/lib/lm/images/logos/TopBraid-RDM-Graph-Logo.png" ;
+                          sp:arg2 "http://www.topquadrant.com/wp-content/uploads/2013/09/topquadrant-logo1.png" ;
                         ] ;
                       ui:child [
                           rdf:type html:Img ;
