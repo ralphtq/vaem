@@ -230,6 +230,20 @@ article p {
     padding: 2px;
 }
 
+.dashedbox {
+    display: inline;
+    border-style: dashed;
+    border-width: 1px;
+    padding: 2px;
+}
+
+.dottedbox {
+    display: inline;
+    border-style: dotted;
+    border-width: 1px;
+    padding: 2px;
+}
+
 .inline {
  display: inline;
 }
