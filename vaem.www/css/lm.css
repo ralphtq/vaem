@@ -52,6 +52,11 @@ a[href]:hover { background: #ffa }
 }
 
 pre { margin-left: 2em }
+
+.spinrule {
+   padding: 2em;
+    width:100%;
+}
 /*
 p {
   margin-top: 0.6em;

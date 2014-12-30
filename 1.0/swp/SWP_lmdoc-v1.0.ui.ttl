@@ -1,5 +1,6 @@
 # baseURI: http://www.linkedmodel.org/1.1/swp/lmdoc
 # imports: http://spinrdf.org/spin.ui
+# imports: http://spinrdf.org/spinx
 # imports: http://topbraid.org/swa
 # imports: http://uispin.org/ui
 # imports: http://uispin.org/ui.ui
@@ -27,6 +28,7 @@
 @prefix spif: <http://spinrdf.org/spif#> .
 @prefix spin: <http://spinrdf.org/spin#> .
 @prefix spin.ui: <http://spinrdf.org/spin.ui#> .
+@prefix spinx: <http://spinrdf.org/spinx#> .
 @prefix spl: <http://spinrdf.org/spl#> .
 @prefix spr: <http://spinrdf.org/spr#> .
 @prefix swa: <http://topbraid.org/swa#> .
@@ -122,6 +124,7 @@ voag:Logo
   rdf:type owl:Ontology ;
   vaem:hasGraphRole vaem:ViewGraph ;
   owl:imports <http://spinrdf.org/spin.ui> ;
+  owl:imports <http://spinrdf.org/spinx> ;
   owl:imports <http://topbraid.org/swa> ;
   owl:imports <http://uispin.org/ui> ;
   owl:imports <http://uispin.org/ui.ui> ;
@@ -216,6 +219,75 @@ lmdoc:AllClasses
     ] ;
   rdfs:comment "Gets all classes defined in a given graph and orders them by label. Note this may (obviously) not scale if a class has too many instances."^^xsd:string ;
   rdfs:label "All classes"^^xsd:string ;
+  rdfs:subClassOf lmdoc:SelectTemplates ;
+.
+lmdoc:AllConstructore
+  rdf:type spin:SelectTemplate ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:orderBy (
+          [
+            sp:varName "property"^^xsd:string ;
+          ]
+        ) ;
+      sp:resultVariables (
+          [
+            sp:varName "property"^^xsd:string ;
+          ]
+          [
+            sp:varName "ruleBody"^^xsd:string ;
+          ]
+          [
+            sp:varName "ruleAsText"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object spin:constructor ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "ruleBody"^^xsd:string ;
+              ] ;
+            sp:predicate [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:subject [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:convertSPINRDFToString ;
+                sp:arg1 [
+                    sp:varName "ruleBody"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "ruleAsText"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:class ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The class that the instances must have."^^xsd:string ;
+    ] ;
+  rdfs:comment "Gets all constructors defined in a given graph and orders them by step."^^xsd:string ;
+  rdfs:label "All constructors"^^xsd:string ;
   rdfs:subClassOf lmdoc:SelectTemplates ;
 .
 lmdoc:AllInstances
@@ -433,6 +505,108 @@ lmdoc:AllProperties
   rdfs:label "All properties"^^xsd:string ;
   rdfs:subClassOf lmdoc:SelectTemplates ;
 .
+lmdoc:AllRules
+  rdf:type spin:SelectTemplate ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:orderBy (
+          [
+            sp:varName "ruleProperty"^^xsd:string ;
+          ]
+          [
+            sp:varName "stepText"^^xsd:string ;
+          ]
+        ) ;
+      sp:resultVariables (
+          [
+            sp:varName "ruleProperty"^^xsd:string ;
+          ]
+          [
+            sp:varName "ruleBody"^^xsd:string ;
+          ]
+          [
+            sp:varName "ruleAsText"^^xsd:string ;
+          ]
+          [
+            sp:varName "stepText"^^xsd:string ;
+          ]
+          [
+            sp:varName "ruleComment"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object spin:rule ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject [
+                sp:varName "ruleProperty"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "ruleBody"^^xsd:string ;
+              ] ;
+            sp:predicate [
+                sp:varName "ruleProperty"^^xsd:string ;
+              ] ;
+            sp:subject [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:convertSPINRDFToString ;
+                sp:arg1 [
+                    sp:varName "ruleBody"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "ruleAsText"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type lmdoc:ExtractStepTextFromRule ;
+                arg:rule [
+                    sp:varName "ruleBody"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "stepText"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type lmdoc:ExtractCommentTextFromRule ;
+                arg:rule [
+                    sp:varName "ruleBody"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "ruleComment"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:class ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The class that the instances must have."^^xsd:string ;
+    ] ;
+  rdfs:comment "Gets all rules defined in a given graph and orders them by step."^^xsd:string ;
+  rdfs:label "All rules"^^xsd:string ;
+  rdfs:subClassOf lmdoc:SelectTemplates ;
+.
 lmdoc:AnyURILiteralViewer
   rdf:type swa:ObjectViewerClass ;
   swa:objectWidgetWeight [
@@ -522,7 +696,7 @@ lmdoc:ClassInstances
               rdf:type ui:if ;
               ui:child [
                   rdf:type html:Div ;
-                  html:class "ies-subtitle"^^xsd:string ;
+                  html:class "swa-sub-title"^^xsd:string ;
                   ui:child [
                       rdf:type ui:TextNode ;
                       ui:childIndex 0 ;
@@ -536,7 +710,6 @@ lmdoc:ClassInstances
                       sp:varName "class"^^xsd:string ;
                     ] ;
                   arg:predicate rdf:type ;
-                  arg:tabular "true"^^xsd:string ;
                   ui:childIndex 1 ;
                 ] ;
               ui:childIndex 0 ;
@@ -824,27 +997,41 @@ lmdoc:DetailedClassView
           html:class "lm-resources-box"^^xsd:string ;
           ui:child [
               rdf:type html:Div ;
-              html:class "ies_resource_summary"^^xsd:string ;
+              html:class "swa-title"^^xsd:string ;
               ui:child [
-                  rdf:type html:P ;
-                  html:class "ies_qname"^^xsd:string ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text "QName = "^^xsd:string ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 1 ;
-                      ui:text [
-                          rdf:type ui:encodeNode ;
-                          sp:arg1 [
-                              sp:varName "class"^^xsd:string ;
-                            ] ;
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text [
+                      rdf:type ui:label ;
+                      sp:arg1 [
+                          sp:varName "class"^^xsd:string ;
                         ] ;
                     ] ;
-                  ui:childIndex 1 ;
                 ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 1 ;
+                  ui:text " ["^^xsd:string ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 2 ;
+                  ui:text [
+                      rdf:type ui:encodeNode ;
+                      sp:arg1 [
+                          sp:varName "class"^^xsd:string ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 3 ;
+                  ui:text "]"^^xsd:string ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:child [
+              rdf:type html:Div ;
               ui:child [
                   rdf:type html:P ;
                   ui:child [
@@ -862,18 +1049,190 @@ lmdoc:DetailedClassView
               ui:childIndex 1 ;
             ] ;
           ui:child [
-              rdf:type html:H2 ;
+              rdf:type ui:call ;
+              arg:class [
+                  sp:varName "class"^^xsd:string ;
+                ] ;
               ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text [
-                      rdf:type ui:label ;
-                      sp:arg1 [
-                          sp:varName "class"^^xsd:string ;
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa-sub-title"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Constructors"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:forEach ;
+                      ui:child [
+                          rdf:type html:P ;
+                          html:class "lm-para"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text [
+                                  sp:varName "commentText"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:P ;
+                          html:class "lm-para, dashedbox"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text [
+                                  rdf:type ui:encodeNode ;
+                                  sp:arg1 [
+                                      sp:varName "property"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Pre ;
+                          html:class "spinrule"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text [
+                                  rdf:type lmdoc:numberLines ;
+                                  sp:arg1 [
+                                      sp:varName "ruleAsText"^^xsd:string ;
+                                    ] ;
+                                  sp:arg2 0 ;
+                                  sp:arg3 999 ;
+                                  sp:arg4 0 ;
+                                  sp:arg5 80 ;
+                                  sp:arg6 "false"^^xsd:boolean ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:childIndex 1 ;
+                      ui:resultSet [
+                          sp:varName "constructors"^^xsd:string ;
                         ] ;
                     ] ;
+                  ui:childIndex 0 ;
+                  ui:condition [
+                      rdf:type sp:gt ;
+                      sp:arg1 [
+                          rdf:type spr:rowCount ;
+                          sp:arg1 [
+                              sp:varName "constructors"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      sp:arg2 0 ;
+                    ] ;
                 ] ;
-              ui:childIndex 0 ;
+              ui:childIndex 3 ;
+              ui:template lmdoc:AllConstructore ;
+              ui:varName "constructors"^^xsd:string ;
+            ] ;
+          ui:child [
+              rdf:type ui:call ;
+              arg:class [
+                  sp:varName "class"^^xsd:string ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa-sub-title"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Rules"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:forEach ;
+                      ui:child [
+                          rdf:type html:P ;
+                          html:class "lm-para"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text [
+                                  sp:varName "commentText"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:P ;
+                          html:class "lm-para, dashedbox"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text [
+                                  rdf:type ui:encodeNode ;
+                                  sp:arg1 [
+                                      sp:varName "ruleProperty"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 1 ;
+                              ui:text " - "^^xsd:string ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 2 ;
+                              ui:text [
+                                  sp:varName "stepText"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Pre ;
+                          html:class "spinrule"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text [
+                                  rdf:type lmdoc:numberLines ;
+                                  sp:arg1 [
+                                      sp:varName "ruleAsText"^^xsd:string ;
+                                    ] ;
+                                  sp:arg2 0 ;
+                                  sp:arg3 999 ;
+                                  sp:arg4 0 ;
+                                  sp:arg5 80 ;
+                                  sp:arg6 "false"^^xsd:boolean ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:childIndex 1 ;
+                      ui:resultSet [
+                          sp:varName "rules"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:condition [
+                      rdf:type sp:gt ;
+                      sp:arg1 [
+                          rdf:type spr:rowCount ;
+                          sp:arg1 [
+                              sp:varName "rules"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      sp:arg2 0 ;
+                    ] ;
+                ] ;
+              ui:childIndex 4 ;
+              ui:template lmdoc:AllRules ;
+              ui:varName "rules"^^xsd:string ;
             ] ;
           ui:child [
               rdf:type ui:call ;
@@ -895,7 +1254,7 @@ lmdoc:DetailedClassView
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
-              ui:childIndex 4 ;
+              ui:childIndex 6 ;
               ui:template [
                   rdf:type swa:modeProperty ;
                   arg:predicate swa:formObjectPredicateSelectionTemplate ;
@@ -972,6 +1331,7 @@ lmdoc:DetailedClassView
                   rdf:type ui:if ;
                   ui:child [
                       rdf:type html:Div ;
+                      html:class "swa-sub-title"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -1096,7 +1456,7 @@ lmdoc:DetailedClassView
                   rdf:type ui:if ;
                   ui:child [
                       rdf:type html:Div ;
-                      html:class "ies-subtitle"^^xsd:string ;
+                      html:class "swa-sub-title"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -1123,14 +1483,14 @@ lmdoc:DetailedClassView
                       sp:arg2 0 ;
                     ] ;
                 ] ;
-              ui:childIndex 3 ;
+              ui:childIndex 5 ;
             ] ;
           ui:child [
               rdf:type lmdoc:ClassInstances ;
               arg:class [
                   sp:varName "class"^^xsd:string ;
                 ] ;
-              ui:childIndex 5 ;
+              ui:childIndex 7 ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -1152,20 +1512,145 @@ lmdoc:Elements
       rdf:type ui:group ;
       ui:child [
           rdf:type html:Link ;
-          html:href "http://www.linkedmodel.org/css/lm.css"^^xsd:string ;
+          html:href [
+              rdf:type ui:concat ;
+              sp:arg1 [
+                  rdf:type ui:lib ;
+                ] ;
+              sp:arg2 "/spin/spin.css"^^xsd:string ;
+            ] ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
           ui:childIndex 0 ;
         ] ;
       ui:child [
-          rdf:type ui:CommentNode ;
+          rdf:type html:Link ;
+          html:href [
+              rdf:type ui:concat ;
+              sp:arg1 [
+                  rdf:type ui:lib ;
+                ] ;
+              sp:arg2 "/vaem/css/lm.css"^^xsd:string ;
+            ] ;
+          html:rel "stylesheet"^^xsd:string ;
+          html:type "text/css"^^xsd:string ;
           ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type ui:CommentNode ;
+          ui:childIndex 2 ;
           rdfs:comment "[if lt IE 9]><script src='https://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]"^^xsd:string ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
   rdfs:label "Elements"^^xsd:string ;
   rdfs:subClassOf ui:Element ;
+.
+lmdoc:ExtractCommentTextFromRule
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "commentText"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "comment"^^xsd:string ;
+              ] ;
+            sp:predicate rdfs:comment ;
+            sp:subject [
+                sp:varName "rule"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:regex ;
+                sp:arg1 [
+                    sp:varName "comment"^^xsd:string ;
+                  ] ;
+                sp:arg2 "^(STEP [A-Z]+-[A-Z]+-[0-9]+).*\\n(.*)" ;
+                sp:arg3 "$2" ;
+              ] ;
+            sp:variable [
+                sp:varName "commentText"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:not ;
+                sp:arg1 [
+                    rdf:type fn:starts-with ;
+                    sp:arg1 [
+                        sp:varName "commentText"^^xsd:string ;
+                      ] ;
+                    sp:arg2 "STEP" ;
+                  ] ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:rule ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:label "Extract comment text from rule"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Functions ;
+.
+lmdoc:ExtractStepTextFromRule
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "stepText"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "comment"^^xsd:string ;
+              ] ;
+            sp:predicate rdfs:comment ;
+            sp:subject [
+                sp:varName "rule"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:regex ;
+                sp:arg1 [
+                    rdf:type fn:substring ;
+                    sp:arg1 [
+                        sp:varName "comment"^^xsd:string ;
+                      ] ;
+                    sp:arg2 1 ;
+                    sp:arg3 16 ;
+                  ] ;
+                sp:arg2 "^(STEP [A-Z]+-[A-Z]+-[0-9]+).*$" ;
+                sp:arg3 "$1" ;
+              ] ;
+            sp:variable [
+                sp:varName "stepText"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:rule ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:label "Extract Step text from rule"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Functions ;
 .
 lmdoc:Functions
   rdf:type spin:Function ;
@@ -3105,6 +3590,47 @@ lmdoc:MagicProperties
   rdf:type spin:MagicProperty ;
   rdfs:label "Magic properties"^^xsd:string ;
   rdfs:subClassOf spin:MagicProperties ;
+.
+lmdoc:MyBNodeViewer
+  rdf:type swa:ObjectViewerClass ;
+  swa:objectWidgetWeight [
+      rdf:type swa:WeightedExpression ;
+      swa:expression [
+          rdf:type sp:eq ;
+          sp:arg1 [
+              sp:varName "kind"^^xsd:string ;
+            ] ;
+          sp:arg2 "blank" ;
+        ] ;
+    ] ;
+  ui:private "true"^^xsd:boolean ;
+  ui:prototype [
+      rdf:type html:Div ;
+      html:class "swa-shifted-label"^^xsd:string ;
+      ui:child [
+          rdf:type html:Pre ;
+          html:class "query"^^xsd:string ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text [
+                  rdf:type ui:label ;
+                  sp:arg1 [
+                      sp:varName "object"^^xsd:string ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:child [
+          rdf:type ui:CommentNode ;
+          ui:childIndex 1 ;
+          rdfs:comment "ui:resourceView ui:matchIds=\"showbnode\" ui:resource=\"{= ?object }\"/"^^xsd:string ;
+        ] ;
+    ] ;
+  rdfs:comment "My object viewer for blank nodes."^^xsd:string ;
+  rdfs:label "BNode viewer"^^xsd:string ;
+  rdfs:subClassOf swa:BNodeViewer ;
 .
 lmdoc:NonImportedResources
   rdf:type ui:NodeClass ;
@@ -6330,6 +6856,242 @@ lmdoc:mySuperClass
   rdfs:label "my super class"^^xsd:string ;
   rdfs:subClassOf lmdoc:MagicProperties ;
 .
+lmdoc:numberLines
+  rdf:type spin:Function ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue 60 ;
+      spl:predicate sp:arg5 ;
+      spl:valueType xsd:integer ;
+      rdfs:comment "width of code block"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue 999 ;
+      spl:predicate sp:arg3 ;
+      spl:valueType xsd:integer ;
+      rdfs:comment "number of lines to generate"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue "false"^^xsd:boolean ;
+      spl:predicate sp:arg4 ;
+      spl:valueType xsd:integer ;
+      rdfs:comment "indent"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:integer ;
+      rdfs:comment "first index"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg6 ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "debug"^^xsd:string ;
+    ] ;
+  spin:returnType xsd:string ;
+  spinx:javaScriptCode """// ----------
+// numberLines
+// ----------
+//
+// numberLines(text, firstLine, lineCount, depth, maxWidth, debug)
+//
+// @text:             what to number
+// @firstLine:      where to start in the array of split strings
+// @lineCount:    max number of lines to generate
+// @depth:         width of margin
+// @width:          width of code block
+// @debug:         trace rules in the output
+//
+
+
+var debug2 = false,
+     lineNo = 0 ,
+     offset= 0 ;
+
+function formatNumber(n) {
+   var str=n.toString() ;
+   if (n<10) str+= '  '
+   else  if (n<100) str += ' ';
+  return str + ' '
+  };
+
+
+function createShiftArr(step) {
+
+	var space = '     ';
+	
+	if ( isNaN(parseInt(step)) ) {  // argument is string
+		space = step;
+	} else { // argument is integer
+		switch(step) {
+			case 1: space = ' '; break;
+			case 2: space = '  '; break;
+			case 3: space = '   '; break;
+			case 4: space = '    '; break;
+			case 5: space = '     '; break;
+			case 6: space = '      '; break;
+			case 7: space = '       '; break;
+			case 8: space = '        '; break;
+			case 9: space = '         '; break;
+			case 10: space = '          '; break;
+			case 11: space = '           '; break;
+			case 12: space = '            '; break;
+		}
+	};
+
+	var shift = ['\\n!NN!']; // array of shifts
+	for(ix=0;ix<100;ix++){
+		shift.push(shift[ix]+space); 
+	}
+	return shift;
+   };
+
+function createSpacesArray() {
+	var ar = [''];
+	for(ix=0;ix<100;ix++){
+		ar.push(ar[ix] + ' '); 
+	}
+	return ar;
+};                                                                   
+
+function formatLine(str,width) {       
+  var ix,
+      adjWidth = width + 4,
+    
+    linesSplitOnComma = function (str, margin, width) {
+      if ( str.search(/, /) > -1)  {
+       var jx,
+           fla = str.replace(/, /,\",~==~  \" + margin)
+                  .split(\"~==~\") ,
+           splits = fla.length ,                         
+           fla2= [] ;
+      
+       for (jx=0; jx < splits ; jx++) {
+          var splitLine= fla[jx] ;     
+          if ((splitLine.length > adjWidth )  && ( splitLine.indexOf(\",\") > -1 )) {
+              fla2 = fla2.concat(linesSplitOnComma(splitLine, margin, adjWidth)) 
+            } else {
+            len = fla2.push(splitLine) 
+            }
+        } ;
+      return fla2
+      } else return [str]
+    } ;
+
+  function trySplitOnBracedExpression(width) {
+    var splitIndex = str.search(/{/) ,
+        safeIndex = (splitIndex > 3)? splitIndex - 3: 0 ;
+        margin = spacesArray[safeIndex] ,
+        newLine = \"\" ;
+    if ( str.search(/(\"{.*}\")/) > -1)  {
+      var fla = str.replace(/(\"{[=#]\\s[a-zA-Z0-9_&,;\\(\\)\\s':\\?]+}\")(&gt;|\\s)/g,\"~==~$1$2\") 
+                    .split(\"~==~\") ,
+          splits = fla.length ,
+          ar2 = [] ;
+      
+      newLine += fla[0] ;
+
+      for (ix=1; ix < splits ; ix++) {
+        var splitLine= margin + fla[ix] ;     
+        if (splitLine.length > adjWidth ) {
+              ar2 = ar2.concat(linesSplitOnComma(splitLine, margin, adjWidth)) 
+            } else {
+           len = ar2.push(splitLine) 
+          }
+        } 
+    } else {
+       var ar2 =  linesSplitOnComma(str, margin, adjWidth) ;
+       for(ix=0;ix < ar2.length; ix++) {
+          var splitLine= margin + ar2[ix] ;
+          newLine +=    splitLine ;
+         } 
+       } ; 
+     return newLine
+  } ;
+  
+  function trySplitOnIF(width) {
+    var splitIndex = str.search(/ \\(IF/) ,
+        safeIndex = (splitIndex > 2)? splitIndex - 2: 0 ;
+        margin = spacesArray[safeIndex] ,
+        newLine = \"\" ;
+    if ( str.search(/,\\sIF/) > -1)  {
+      var fla =str.replace(/,(\\sIF)/g,\",~==~$1\") 
+                    .split(\"~==~\") ,
+          splits = fla.length ,
+          ar2 = [] ;
+      
+      newLine += fla[0] ;
+
+      for (ix=1; ix < splits ; ix++) {
+        var splitLine= margin + fla[ix] ;     
+        if (splitLine.length > adjWidth ) {
+              ar2 = ar2.concat(linesSplitOnComma(splitLine, margin, adjWidth)) 
+            } else {
+           len = ar2.push(splitLine) 
+          }
+        } ;
+
+      for(ix=0;ix < ar2.length; ix++) {
+        var splitLine= margin + ar2[ix] ;
+        lineNo +=  1;
+        newLine += \"\\n\" + formatNumber(lineNo - offset) +  splitLine ;
+       } ; 
+     return newLine
+      } else { newLine = trySplitOnBracedExpression(width) } ;
+     return newLine   
+    } ;
+  
+  function makeSplits(width) {  
+    newLine = trySplitOnIF(width);
+    return newLine
+  }
+  
+   return makeSplits(width)
+} ;
+
+   function numberedTextLines(text, firstLine, lineCount, depth, maxWidth, debug) {
+
+       var ar = text.split('\\n'),
+             len =  ar.length ,
+             lastLine = (firstLine > 0)? lineCount + firstLine - 1 : lineCount ,
+             shift = step ? createShiftArr(step) : shift;
+        
+       function numberedIndentation(text) {
+            var offset = (firstLine > 0)? firstLine -1 : 0 ,
+                myStr = String(text).replace(\"!NN!\", formatNumber(lineNo - offset))  ;
+            return myStr
+            };
+
+        function numberText() {
+            var text = '';
+            for (i=firstLine;i< lastLine && i < len ; i++) {
+                var aLine = ar[i] + '' ;
+                lineNo++;
+                text += numberedIndentation(shift[1]) + formatLine(aLine,maxWidth) ;
+             } ;
+          return text
+         } ;
+
+         return numberText()
+
+    } ;
+
+   var step = 2 ,                          // 2 spaces
+      shift = createShiftArr(step),
+      spacesArray = createSpacesArray(),
+      result = numberedTextLines(arg1,arg2, arg3, arg4, arg5, arg6) ;
+      return result ;
+"""^^xsd:string ;
+  rdfs:subClassOf spin:Functions ;
+.
 lmdoc:optionalLinkArgs
   rdf:type owl:DatatypeProperty ;
   rdfs:label "optional link args"^^xsd:string ;
@@ -7228,10 +7990,14 @@ vaem:exclude
 .
 rdfs:Class
   ui:instanceView [
-      rdf:type lmdoc:DetailedClassView ;
-      arg:class spin:_this ;
-      ui:id "form"^^xsd:string ;
-      ui:priority 15 ;
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type lmdoc:DetailedClassView ;
+          arg:class spin:_this ;
+          ui:childIndex 0 ;
+          ui:id "form"^^xsd:string ;
+          ui:priority 15 ;
+        ] ;
     ] ;
 .
 owl:Ontology
