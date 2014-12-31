@@ -221,7 +221,7 @@ lmdoc:AllClasses
   rdfs:label "All classes"^^xsd:string ;
   rdfs:subClassOf lmdoc:SelectTemplates ;
 .
-lmdoc:AllConstructore
+lmdoc:AllConstructors
   rdf:type spin:SelectTemplate ;
   spin:body [
       rdf:type sp:Select ;
@@ -1031,24 +1031,6 @@ lmdoc:DetailedClassView
               ui:childIndex 0 ;
             ] ;
           ui:child [
-              rdf:type html:Div ;
-              ui:child [
-                  rdf:type html:P ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text [
-                          rdf:type lmdoc:getDescription ;
-                          arg:resource [
-                              sp:varName "class"^^xsd:string ;
-                            ] ;
-                        ] ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 1 ;
-            ] ;
-          ui:child [
               rdf:type ui:call ;
               arg:class [
                   sp:varName "class"^^xsd:string ;
@@ -1067,18 +1049,6 @@ lmdoc:DetailedClassView
                     ] ;
                   ui:child [
                       rdf:type ui:forEach ;
-                      ui:child [
-                          rdf:type html:P ;
-                          html:class "lm-para"^^xsd:string ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text [
-                                  sp:varName "commentText"^^xsd:string ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 1 ;
-                        ] ;
                       ui:child [
                           rdf:type html:P ;
                           html:class "lm-para, dashedbox"^^xsd:string ;
@@ -1112,7 +1082,7 @@ lmdoc:DetailedClassView
                                   sp:arg6 "false"^^xsd:boolean ;
                                 ] ;
                             ] ;
-                          ui:childIndex 2 ;
+                          ui:childIndex 1 ;
                         ] ;
                       ui:childIndex 1 ;
                       ui:resultSet [
@@ -1132,7 +1102,7 @@ lmdoc:DetailedClassView
                     ] ;
                 ] ;
               ui:childIndex 3 ;
-              ui:template lmdoc:AllConstructore ;
+              ui:template lmdoc:AllConstructors ;
               ui:varName "constructors"^^xsd:string ;
             ] ;
           ui:child [
@@ -1492,6 +1462,13 @@ lmdoc:DetailedClassView
                 ] ;
               ui:childIndex 7 ;
             ] ;
+          ui:child [
+              rdf:type lmdoc:MaybeDescription ;
+              arg:node [
+                  sp:varName "class"^^xsd:string ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
           ui:childIndex 0 ;
         ] ;
       ui:varName "createLinkFunction"^^xsd:string ;
@@ -1627,14 +1604,9 @@ lmdoc:ExtractStepTextFromRule
             sp:expression [
                 rdf:type spif:regex ;
                 sp:arg1 [
-                    rdf:type fn:substring ;
-                    sp:arg1 [
-                        sp:varName "comment"^^xsd:string ;
-                      ] ;
-                    sp:arg2 1 ;
-                    sp:arg3 16 ;
+                    sp:varName "comment"^^xsd:string ;
                   ] ;
-                sp:arg2 "^(STEP [A-Z]+-[A-Z]+-[0-9]+).*$" ;
+                sp:arg2 "^(.*)$" ;
                 sp:arg3 "$1" ;
               ] ;
             sp:variable [
@@ -2782,86 +2754,95 @@ lmdoc:InheritanceTable
           rdf:type html:Table ;
           html:class "docPropertiesTable"^^xsd:string ;
           ui:child [
-              rdf:type html:Tr ;
+              rdf:type html:Tbody ;
               ui:child [
-                  rdf:type html:Th ;
-                  html:class "docPropertiesTH"^^xsd:string ;
+                  rdf:type ui:forEach ;
                   ui:child [
-                      rdf:type ui:TextNode ;
+                      rdf:type html:Tr ;
+                      ui:child [
+                          rdf:type html:Td ;
+                          html:class "docPropertiesTD"^^xsd:string ;
+                          ui:child [
+                              rdf:type html:B ;
+                              ui:child [
+                                  rdf:type swa:Link ;
+                                  arg:resource [
+                                      sp:varName "super"^^xsd:string ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 1 ;
+                              ui:text "["^^xsd:string ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 2 ;
+                              ui:text [
+                                  rdf:type ui:encodeNode ;
+                                  sp:arg1 [
+                                      sp:varName "super"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 3 ;
+                              ui:text "]"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Td ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text [
+                                  sp:varName "depth"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
                       ui:childIndex 0 ;
-                      ui:text "Depth"^^xsd:string ;
                     ] ;
-                  ui:childIndex 1 ;
+                  ui:childIndex 0 ;
+                  ui:resultSet [
+                      sp:varName "resourceSet"^^xsd:string ;
+                    ] ;
                 ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type html:Thead ;
+              html:class "lm-table-header"^^xsd:string ;
               ui:child [
-                  rdf:type html:Th ;
-                  html:class "docPropertiesTH"^^xsd:string ;
+                  rdf:type html:Tr ;
                   ui:child [
-                      rdf:type ui:TextNode ;
+                      rdf:type html:Th ;
+                      html:class "docPropertiesTH"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Depth"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Th ;
+                      html:class "docPropertiesTH"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Superclass"^^xsd:string ;
+                        ] ;
                       ui:childIndex 0 ;
-                      ui:text "Superclass"^^xsd:string ;
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
               ui:childIndex 0 ;
-            ] ;
-          ui:child [
-              rdf:type ui:forEach ;
-              ui:child [
-                  rdf:type html:Tr ;
-                  ui:child [
-                      rdf:type html:Td ;
-                      html:class "docPropertiesTD"^^xsd:string ;
-                      ui:child [
-                          rdf:type html:B ;
-                          ui:child [
-                              rdf:type swa:Link ;
-                              arg:resource [
-                                  sp:varName "super"^^xsd:string ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 1 ;
-                          ui:text "["^^xsd:string ;
-                        ] ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 2 ;
-                          ui:text [
-                              rdf:type ui:encodeNode ;
-                              sp:arg1 [
-                                  sp:varName "super"^^xsd:string ;
-                                ] ;
-                            ] ;
-                        ] ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 3 ;
-                          ui:text "]"^^xsd:string ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:child [
-                      rdf:type html:Td ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text [
-                              sp:varName "depth"^^xsd:string ;
-                            ] ;
-                        ] ;
-                      ui:childIndex 1 ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 1 ;
-              ui:resultSet [
-                  sp:varName "resourceSet"^^xsd:string ;
-                ] ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -3590,6 +3571,132 @@ lmdoc:MagicProperties
   rdf:type spin:MagicProperty ;
   rdfs:label "Magic properties"^^xsd:string ;
   rdfs:subClassOf spin:MagicProperties ;
+.
+lmdoc:MaybeDescription
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:node ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The URI resource to display. Blank nodes or literals are not permitted. Use tui:Label to disambiguate."^^xsd:string ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:d1 [
+          rdf:type sp:coalesce ;
+          sp:arg1 [
+              rdf:type spl:object ;
+              sp:arg1 [
+                  sp:varName "node"^^xsd:string ;
+                ] ;
+              sp:arg2 vaem:description ;
+            ] ;
+          sp:arg2 "Nothing" ;
+        ] ;
+      ui:child [
+          rdf:type ui:group ;
+          let:d2 [
+              rdf:type sp:coalesce ;
+              sp:arg1 [
+                  rdf:type spl:object ;
+                  sp:arg1 [
+                      sp:varName "node"^^xsd:string ;
+                    ] ;
+                  sp:arg2 dct:description ;
+                ] ;
+              sp:arg2 "Nothing" ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type html:P ;
+                  html:class "lm-para"^^xsd:string ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text [
+                          sp:varName "d2"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:condition [
+                  rdf:type sp:ne ;
+                  sp:arg1 [
+                      sp:varName "d2"^^xsd:string ;
+                    ] ;
+                  sp:arg2 "Nothing" ;
+                ] ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type ui:group ;
+          let:d3 [
+              rdf:type sp:coalesce ;
+              sp:arg1 [
+                  rdf:type spl:object ;
+                  sp:arg1 [
+                      sp:varName "node"^^xsd:string ;
+                    ] ;
+                  sp:arg2 rdfs:comment ;
+                ] ;
+              sp:arg2 "Nothing" ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type html:P ;
+                  html:class "lm-para"^^xsd:string ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text [
+                          sp:varName "d3"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:condition [
+                  rdf:type sp:ne ;
+                  sp:arg1 [
+                      sp:varName "d3"^^xsd:string ;
+                    ] ;
+                  sp:arg2 "Nothing" ;
+                ] ;
+            ] ;
+          ui:childIndex 2 ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:P ;
+              html:class "lm-para"^^xsd:string ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text [
+                      sp:varName "d1"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              rdf:type sp:ne ;
+              sp:arg1 [
+                  sp:varName "d1"^^xsd:string ;
+                ] ;
+              sp:arg2 "Nothing" ;
+            ] ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:comment "Maybe Description"^^xsd:string ;
+  rdfs:label "Maybe Description"^^xsd:string ;
+  rdfs:subClassOf lmdoc:SubElements ;
 .
 lmdoc:MyBNodeViewer
   rdf:type swa:ObjectViewerClass ;
@@ -7995,9 +8102,9 @@ rdfs:Class
           rdf:type lmdoc:DetailedClassView ;
           arg:class spin:_this ;
           ui:childIndex 0 ;
-          ui:id "form"^^xsd:string ;
-          ui:priority 15 ;
         ] ;
+      ui:id "lmdoc"^^xsd:string ;
+      ui:priority -20 ;
     ] ;
 .
 owl:Ontology
