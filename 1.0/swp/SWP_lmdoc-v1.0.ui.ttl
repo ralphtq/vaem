@@ -67,6 +67,13 @@ arg:sectionHeading
   rdf:type rdf:Property ;
   rdfs:subPropertyOf sp:arg ;
 .
+spin:RuleProperty
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty lmdoc:htmlString ;
+    ] ;
+.
 <http://topbraid.org/email#TestAddress>
   rdf:type owl:Class ;
   rdfs:label "Test address"^^xsd:string ;
@@ -3582,92 +3589,63 @@ lmdoc:MaybeDescription
     ] ;
   ui:prototype [
       rdf:type ui:group ;
-      let:d1 [
+      ui:child [
+          rdf:type lmdoc:MaybeDescriptionUsingProperty ;
+          arg:node [
+              sp:varName "node"^^xsd:string ;
+            ] ;
+          arg:property dct:description ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type lmdoc:MaybeDescriptionUsingProperty ;
+          arg:node [
+              sp:varName "node"^^xsd:string ;
+            ] ;
+          arg:property vaem:description ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:child [
+          rdf:type lmdoc:MaybeDescriptionUsingProperty ;
+          arg:node [
+              sp:varName "node"^^xsd:string ;
+            ] ;
+          arg:property rdfs:comment ;
+          ui:childIndex 2 ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:comment "Maybe Description"^^xsd:string ;
+  rdfs:label "Maybe Description"^^xsd:string ;
+  rdfs:subClassOf lmdoc:SubElements ;
+.
+lmdoc:MaybeDescriptionUsingProperty
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:node ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The URI resource to display. Blank nodes or literals are not permitted. Use tui:Label to disambiguate."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:property ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:desc [
           rdf:type sp:coalesce ;
           sp:arg1 [
               rdf:type spl:object ;
               sp:arg1 [
                   sp:varName "node"^^xsd:string ;
                 ] ;
-              sp:arg2 vaem:description ;
+              sp:arg2 [
+                  sp:varName "property"^^xsd:string ;
+                ] ;
             ] ;
           sp:arg2 "Nothing" ;
-        ] ;
-      ui:child [
-          rdf:type ui:group ;
-          let:d2 [
-              rdf:type sp:coalesce ;
-              sp:arg1 [
-                  rdf:type spl:object ;
-                  sp:arg1 [
-                      sp:varName "node"^^xsd:string ;
-                    ] ;
-                  sp:arg2 dct:description ;
-                ] ;
-              sp:arg2 "Nothing" ;
-            ] ;
-          ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type html:P ;
-                  html:class "lm-para"^^xsd:string ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text [
-                          sp:varName "d2"^^xsd:string ;
-                        ] ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 0 ;
-              ui:condition [
-                  rdf:type sp:ne ;
-                  sp:arg1 [
-                      sp:varName "d2"^^xsd:string ;
-                    ] ;
-                  sp:arg2 "Nothing" ;
-                ] ;
-            ] ;
-          ui:childIndex 1 ;
-        ] ;
-      ui:child [
-          rdf:type ui:group ;
-          let:d3 [
-              rdf:type sp:coalesce ;
-              sp:arg1 [
-                  rdf:type spl:object ;
-                  sp:arg1 [
-                      sp:varName "node"^^xsd:string ;
-                    ] ;
-                  sp:arg2 rdfs:comment ;
-                ] ;
-              sp:arg2 "Nothing" ;
-            ] ;
-          ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type html:P ;
-                  html:class "lm-para"^^xsd:string ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text [
-                          sp:varName "d3"^^xsd:string ;
-                        ] ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 0 ;
-              ui:condition [
-                  rdf:type sp:ne ;
-                  sp:arg1 [
-                      sp:varName "d3"^^xsd:string ;
-                    ] ;
-                  sp:arg2 "Nothing" ;
-                ] ;
-            ] ;
-          ui:childIndex 2 ;
         ] ;
       ui:child [
           rdf:type ui:if ;
@@ -3678,7 +3656,7 @@ lmdoc:MaybeDescription
                   rdf:type ui:TextNode ;
                   ui:childIndex 0 ;
                   ui:text [
-                      sp:varName "d1"^^xsd:string ;
+                      sp:varName "desc"^^xsd:string ;
                     ] ;
                 ] ;
               ui:childIndex 0 ;
@@ -3687,15 +3665,63 @@ lmdoc:MaybeDescription
           ui:condition [
               rdf:type sp:ne ;
               sp:arg1 [
-                  sp:varName "d1"^^xsd:string ;
+                  sp:varName "desc"^^xsd:string ;
                 ] ;
               sp:arg2 "Nothing" ;
             ] ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
-  rdfs:comment "Maybe Description"^^xsd:string ;
-  rdfs:label "Maybe Description"^^xsd:string ;
+  rdfs:label "Maybe Description using property"^^xsd:string ;
+  rdfs:subClassOf lmdoc:SubElements ;
+.
+lmdoc:MaybeHTMLstring
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:node ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The URI resource to display. Blank nodes or literals are not permitted. Use tui:Label to disambiguate."^^xsd:string ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:desc [
+          rdf:type sp:coalesce ;
+          sp:arg1 [
+              rdf:type spl:object ;
+              sp:arg1 [
+                  sp:varName "node"^^xsd:string ;
+                ] ;
+              sp:arg2 lmdoc:htmlString ;
+            ] ;
+          sp:arg2 "Nothing" ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:P ;
+              html:class "lm-para"^^xsd:string ;
+              ui:child [
+                  rdf:type ui:parse ;
+                  ui:childIndex 0 ;
+                  ui:str [
+                      sp:varName "desc"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              rdf:type sp:ne ;
+              sp:arg1 [
+                  sp:varName "desc"^^xsd:string ;
+                ] ;
+              sp:arg2 "Nothing" ;
+            ] ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:label "Maybe an HTML string"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
 .
 lmdoc:MyBNodeViewer
@@ -6611,6 +6637,13 @@ lmdoc:getTitle
   spin:returnType xsd:string ;
   rdfs:label "get title"^^xsd:string ;
   rdfs:subClassOf lmdoc:Functions ;
+.
+lmdoc:htmlString
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "A string that can include html tags."^^xsd:string ;
+  rdfs:domain rdfs:Resource ;
+  rdfs:label "html string"^^xsd:string ;
+  rdfs:range xsd:string ;
 .
 lmdoc:inheritanceDepth
   rdf:type spin:MagicProperty ;
