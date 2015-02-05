@@ -297,6 +297,84 @@ lmdoc:AllConstructors
   rdfs:label "All constructors"^^xsd:string ;
   rdfs:subClassOf lmdoc:SelectTemplates ;
 .
+lmdoc:AllDocumentParts
+  rdf:type spin:MagicProperty ;
+  rdf:type spin:SelectTemplate ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:orderBy (
+          [
+            sp:varName "i"^^xsd:string ;
+          ]
+        ) ;
+      sp:resultVariables (
+          [
+            sp:varName "ct"^^xsd:string ;
+          ]
+          [
+            sp:varName "i"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "c"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:SeqPath ;
+                sp:path1 [
+                    rdf:type sp:SeqPath ;
+                    sp:path1 ui:prototype ;
+                    sp:path2 ui:child ;
+                  ] ;
+                sp:path2 ui:child ;
+              ] ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            sp:object [
+                sp:varName "i"^^xsd:string ;
+              ] ;
+            sp:predicate ui:childIndex ;
+            sp:subject [
+                sp:varName "c"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "ct"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:type ;
+            sp:subject [
+                sp:varName "c"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object spin:_arg1 ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject [
+                sp:varName "ct"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The class that the instances must have."^^xsd:string ;
+    ] ;
+  rdfs:comment "Gets all classes defined in a given graph and orders them by label. Note this may (obviously) not scale if a class has too many instances."^^xsd:string ;
+  rdfs:label "All document parts"^^xsd:string ;
+  rdfs:subClassOf lmdoc:SelectTemplates ;
+.
 lmdoc:AllInstances
   rdf:type spin:SelectTemplate ;
   spin:body [
@@ -932,7 +1010,7 @@ lmdoc:CopyrightSection
                   ui:child [
                       rdf:type ui:TextNode ;
                       ui:childIndex 0 ;
-                      ui:text """Copyright ©2011-2014 
+                      ui:text """Copyright ©2011-2015 
 """^^xsd:string ;
                     ] ;
                   ui:child [

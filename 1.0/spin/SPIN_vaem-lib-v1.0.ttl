@@ -1,8 +1,10 @@
 # baseURI: http://vaem.linkedmodel.org/1.0/spin/lib
 # imports: http://spinrdf.org/spin
+# imports: http://spinrdf.org/spinx
 # imports: http://www.linkedmodel.org/schema/vaem
 
 @prefix dct: <http://purl.org/dc/terms/> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
 @prefix lmlib: <http://vaem.linkedmodel.org/spin/lib/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -11,6 +13,7 @@
 @prefix sp: <http://spinrdf.org/sp#> .
 @prefix spif: <http://spinrdf.org/spif#> .
 @prefix spin: <http://spinrdf.org/spin#> .
+@prefix spinx: <http://spinrdf.org/spinx#> .
 @prefix spl: <http://spinrdf.org/spl#> .
 @prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -18,6 +21,7 @@
 <http://vaem.linkedmodel.org/1.0/spin/lib>
   rdf:type owl:Ontology ;
   owl:imports <http://spinrdf.org/spin> ;
+  owl:imports <http://spinrdf.org/spinx> ;
   owl:imports <http://www.linkedmodel.org/schema/vaem> ;
   owl:versionInfo "Created with TopBraid Composer"^^xsd:string ;
 .
@@ -28,6 +32,108 @@ lmlib:Functions
 lmlib:MagicProperties
   rdf:type spin:MagicProperty ;
   rdfs:subClassOf spin:MagicProperties ;
+.
+lmlib:indexOfListElement
+  rdf:type spin:Function ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue ","^^xsd:string ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate sp:arg3 ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "template as text representation of a SPARQL code block"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:query [
+      rdf:type sp:Select ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type lmlib:indexOfListElement ;
+                sp:arg1 "apple,pear,orange" ;
+                sp:arg2 "pear" ;
+              ] ;
+            sp:variable [
+                sp:varName "x1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type lmlib:indexOfListElement ;
+                sp:arg1 "apple,pear,orange" ;
+                sp:arg2 "orange" ;
+                sp:arg3 "," ;
+              ] ;
+            sp:variable [
+                sp:varName "x2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type lmlib:indexOfListElement ;
+                sp:arg1 "apple;pear;orange;melon" ;
+                sp:arg2 "melon" ;
+                sp:arg3 ";" ;
+              ] ;
+            sp:variable [
+                sp:varName "x3"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+      rdfs:comment "Test with the following query"^^xsd:string ;
+    ] ;
+  spin:returnType xsd:integer ;
+  spinx:javaScriptCode """// ----------------
+// indexOfListElement
+// ----------------
+//  gets the index of a list element from a separated list.
+//  counting from 1 and returning 0 if not found
+//
+// indexOfListElement(list,element, separator)
+//
+// @list {string} :           seperator-based list
+// @element(string):     element
+// @separator(string):   character(s) used to separate elements
+
+
+if (!String.prototype.trim) {
+  String.prototype.trim = function () {
+    return this.replace(/^\\s+|\\s+$/g, '');
+  };
+}
+
+ function indexOfListElement(list,element,separator) {
+  var  ar = list.split(separator) ,   // build an array of elements
+        len = ar.length ,
+        ix = 0 ,
+        pos = 0 ;
+
+      while ((pos == 0) && (ix < len)) {
+         if (ar[ix].trim() == element) { pos = ix +1 };
+         ix++
+       };
+
+     return pos
+    } ; 
+
+    var sep = typeof arg3 != \"undefined\" ? arg3 : ',';
+
+    return indexOfListElement(arg1,arg2,sep) 
+"""^^xsd:string ;
+  rdfs:label "get index of a list element"^^xsd:string ;
+  rdfs:subClassOf lmlib:Functions ;
 .
 lmlib:inheritanceDepth
   rdf:type spin:MagicProperty ;
@@ -164,6 +270,168 @@ lmlib:inheritanceDepth
     ] ;
   rdfs:subClassOf lmlib:MagicProperties ;
 .
+lmlib:mapFunctionWithOneArgumentOverList
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "result"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type xsd:string ;
+                sp:arg1 [
+                    rdf:type spif:regex ;
+                    sp:arg1 [
+                        sp:varName "aList"^^xsd:string ;
+                      ] ;
+                    sp:arg2 "([?\\w ]+)(,.*|$)" ;
+                    sp:arg3 "$1" ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "head"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type xsd:string ;
+                sp:arg1 [
+                    rdf:type spif:regex ;
+                    sp:arg1 [
+                        sp:varName "aList"^^xsd:string ;
+                      ] ;
+                    sp:arg2 "([?\\w ]+),(.*)$" ;
+                    sp:arg3 "$2" ;
+                    sp:arg4 "" ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "tailList"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:invoke ;
+                sp:arg1 [
+                    sp:varName "function"^^xsd:string ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type xsd:string ;
+                    sp:arg1 [
+                        sp:varName "head"^^xsd:string ;
+                      ] ;
+                  ] ;
+                sp:arg3 [
+                    sp:varName "invokeArg1"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "v"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:if ;
+                sp:arg1 [
+                    rdf:type sp:eq ;
+                    sp:arg1 [
+                        sp:varName "aListSoFar"^^xsd:string ;
+                      ] ;
+                    sp:arg2 "" ;
+                  ] ;
+                sp:arg2 [
+                    sp:varName "v"^^xsd:string ;
+                  ] ;
+                sp:arg3 [
+                    rdf:type fn:concat ;
+                    sp:arg1 [
+                        sp:varName "aListSoFar"^^xsd:string ;
+                      ] ;
+                    sp:arg2 "," ;
+                    sp:arg3 [
+                        sp:varName "v"^^xsd:string ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "newListSoFar"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:if ;
+                sp:arg1 [
+                    rdf:type sp:not ;
+                    sp:arg1 [
+                        rdf:type sp:bound ;
+                        sp:arg1 [
+                            sp:varName "tailList"^^xsd:string ;
+                          ] ;
+                      ] ;
+                  ] ;
+                sp:arg2 [
+                    sp:varName "newListSoFar"^^xsd:string ;
+                  ] ;
+                sp:arg3 [
+                    rdf:type lmlib:mapFunctionWithOneArgumentOverList ;
+                    <http://spinrdf.org/arg#aList> [
+                        sp:varName "tailList"^^xsd:string ;
+                      ] ;
+                    <http://spinrdf.org/arg#aListSoFar> [
+                        sp:varName "newListSoFar"^^xsd:string ;
+                      ] ;
+                    <http://spinrdf.org/arg#function> [
+                        sp:varName "function"^^xsd:string ;
+                      ] ;
+                    <http://spinrdf.org/arg#invokeArg1> [
+                        sp:varName "invokeArg1"^^xsd:string ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "result"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate <http://spinrdf.org/arg#aList> ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate <http://spinrdf.org/arg#aListSoFar> ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate <http://spinrdf.org/arg#function> ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate <http://spinrdf.org/arg#invokeArg1> ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:returnType rdfs:Resource ;
+  vaem:comment """Test 1:
+
+SELECT *
+WHERE {
+    BIND(lmlib:mapFunctionWithOneArgumentOverList( \"a,b,c,d\", \"\",fn:concat,\" test\") AS ?x)
+}"""^^xsd:string ;
+  rdfs:subClassOf lmlib:Functions ;
+.
 lmlib:maybeConvertToURI
   rdf:type spin:Function ;
   spin:body [
@@ -279,6 +547,54 @@ lmlib:maybeDescription
         ) ;
     ] ;
   rdfs:label "maybe description"^^xsd:string ;
+  rdfs:subClassOf lmlib:Functions ;
+.
+lmlib:mergeStringList
+  rdf:type spin:Function ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:returnType xsd:string ;
+  spinx:javaScriptCode """// --------------
+// mergeStringList
+// --------------
+//  constructs a comma-separated list by merging 2 lists
+//
+
+if (!String.prototype.trim) {
+  String.prototype.trim = function () {
+    return this.replace(/^\\s+|\\s+$/g, '');
+  };
+}
+
+// mergeStringList(list1, list2)
+//
+// @list1(String) :     comma-separated string of elements
+// @list2(String):      comma-separeted string of elements
+//
+
+function mergeStringList(list1, list2) {
+  var map = Array.prototype.map;
+
+  var  gList1 = map.call( list1.split(','), function(s){ return s.trim();}).join(','),
+         gList2 = map.call( list2.split(','), function(s){ return s.trim();}).join(','),
+         oList   = (gList1 != '') ? gList1.concat(',').concat(gList2) : gList2,
+         nList   = oList.split(',').filter(function(item,i,allItems){ return i==allItems.indexOf(item);}).join(',');
+
+     return nList
+
+    } ;
+
+ return mergeStringList(arg1, arg2) """^^xsd:string ;
+  rdfs:comment "adds elements to a list avoiding duplicates"^^xsd:string ;
+  rdfs:label "merge string list"^^xsd:string ;
   rdfs:subClassOf lmlib:Functions ;
 .
 lmlib:mySuperClass
@@ -816,6 +1132,47 @@ A magic property that establishes a relationship between properties (left) and c
 Note that the performance of the body of this magic property has been optimized for the case in which the class is given, so ideally use this for queries such as  ?property lmlib:relevantPropertyAtClass skos:Concept ."""^^xsd:string ;
   rdfs:label "Relevant properties at class with parent"^^xsd:string ;
   rdfs:subClassOf lmlib:MagicProperties ;
+.
+lmlib:sortStringList
+  rdf:type spin:Function ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:returnType xsd:string ;
+  spinx:javaScriptCode """// --------------
+// sortStringList
+// --------------
+//  sort a comma-separated list 
+//
+
+if (!String.prototype.trim) {
+  String.prototype.trim = function () {
+    return this.replace(/^\\s+|\\s+$/g, '');
+  };
+}
+
+// sortStringList(list)
+//
+// @list(String) :     comma-separated string of elements
+//
+
+function sortStringList(list) {
+
+  var  vList = list.split(',').sort().join(',') ;
+
+#   var  vList = list.split(',').sort().join(',').replace(\"NULL,\",\"\").replace(\"NULL\",\"\");
+
+
+     return vList
+
+    } ;
+
+ return sortStringList(arg1) """^^xsd:string ;
+  rdfs:comment "sorts elements of a comma-separated list of strings"^^xsd:string ;
+  rdfs:label "sort string list"^^xsd:string ;
+  rdfs:subClassOf lmlib:Functions ;
 .
 lmlib:valueRestrictionsForPropertyAtClass
   rdf:type spin:MagicProperty ;
