@@ -1574,29 +1574,15 @@ lmdoc:Elements
       rdf:type ui:group ;
       ui:child [
           rdf:type html:Link ;
-          html:href [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/spin/spin.css"^^xsd:string ;
-            ] ;
-          html:rel "stylesheet"^^xsd:string ;
-          html:type "text/css"^^xsd:string ;
-          ui:childIndex 0 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/vaem/css/lm.css"^^xsd:string ;
-            ] ;
+          html:href "http://linkedmodel.org/css/lm.css"^^xsd:string ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
           ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/css/spin/spin.css"^^xsd:string ;
+          ui:childIndex 0 ;
         ] ;
       ui:child [
           rdf:type ui:CommentNode ;
