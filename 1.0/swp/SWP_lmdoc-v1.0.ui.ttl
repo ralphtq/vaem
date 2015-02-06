@@ -67,6 +67,21 @@ arg:sectionHeading
   rdf:type rdf:Property ;
   rdfs:subPropertyOf sp:arg ;
 .
+arg:showConstructors
+  rdf:type rdf:Property ;
+  rdfs:range xsd:boolean ;
+  rdfs:subPropertyOf sp:arg ;
+.
+arg:showInstances
+  rdf:type rdf:Property ;
+  rdfs:range xsd:boolean ;
+  rdfs:subPropertyOf sp:arg ;
+.
+arg:showRules
+  rdf:type rdf:Property ;
+  rdfs:range xsd:boolean ;
+  rdfs:subPropertyOf sp:arg ;
+.
 spin:RuleProperty
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
@@ -1072,6 +1087,24 @@ lmdoc:DetailedClassView
   rdf:type ui:NodeClass ;
   spin:constraint [
       rdf:type spl:Argument ;
+      spl:defaultValue "false"^^xsd:boolean ;
+      spl:predicate arg:showConstructors ;
+      spl:valueType xsd:boolean ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue "false"^^xsd:boolean ;
+      spl:predicate arg:showInstances ;
+      spl:valueType xsd:boolean ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue "false"^^xsd:boolean ;
+      spl:predicate arg:showRules ;
+      spl:valueType xsd:boolean ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
       spl:predicate arg:class ;
       spl:valueType rdfs:Resource ;
     ] ;
@@ -1114,180 +1147,6 @@ lmdoc:DetailedClassView
                   ui:text "]"^^xsd:string ;
                 ] ;
               ui:childIndex 0 ;
-            ] ;
-          ui:child [
-              rdf:type ui:call ;
-              arg:class [
-                  sp:varName "class"^^xsd:string ;
-                ] ;
-              ui:child [
-                  rdf:type ui:if ;
-                  ui:child [
-                      rdf:type html:Div ;
-                      html:class "swa-sub-title"^^xsd:string ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text "Constructors"^^xsd:string ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:forEach ;
-                      ui:child [
-                          rdf:type html:P ;
-                          html:class "lm-para, dashedbox"^^xsd:string ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text [
-                                  rdf:type ui:encodeNode ;
-                                  sp:arg1 [
-                                      sp:varName "property"^^xsd:string ;
-                                    ] ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:Pre ;
-                          html:class "spinrule"^^xsd:string ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text [
-                                  rdf:type lmdoc:numberLines ;
-                                  sp:arg1 [
-                                      sp:varName "ruleAsText"^^xsd:string ;
-                                    ] ;
-                                  sp:arg2 0 ;
-                                  sp:arg3 999 ;
-                                  sp:arg4 0 ;
-                                  sp:arg5 80 ;
-                                  sp:arg6 "false"^^xsd:boolean ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 1 ;
-                        ] ;
-                      ui:childIndex 1 ;
-                      ui:resultSet [
-                          sp:varName "constructors"^^xsd:string ;
-                        ] ;
-                    ] ;
-                  ui:childIndex 0 ;
-                  ui:condition [
-                      rdf:type sp:gt ;
-                      sp:arg1 [
-                          rdf:type spr:rowCount ;
-                          sp:arg1 [
-                              sp:varName "constructors"^^xsd:string ;
-                            ] ;
-                        ] ;
-                      sp:arg2 0 ;
-                    ] ;
-                ] ;
-              ui:childIndex 3 ;
-              ui:template lmdoc:AllConstructors ;
-              ui:varName "constructors"^^xsd:string ;
-            ] ;
-          ui:child [
-              rdf:type ui:call ;
-              arg:class [
-                  sp:varName "class"^^xsd:string ;
-                ] ;
-              ui:child [
-                  rdf:type ui:if ;
-                  ui:child [
-                      rdf:type html:Div ;
-                      html:class "swa-sub-title"^^xsd:string ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text "Rules"^^xsd:string ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:forEach ;
-                      ui:child [
-                          rdf:type html:P ;
-                          html:class "lm-para"^^xsd:string ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text [
-                                  sp:varName "commentText"^^xsd:string ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 1 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:P ;
-                          html:class "lm-para, dashedbox"^^xsd:string ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text [
-                                  rdf:type ui:encodeNode ;
-                                  sp:arg1 [
-                                      sp:varName "ruleProperty"^^xsd:string ;
-                                    ] ;
-                                ] ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 1 ;
-                              ui:text " - "^^xsd:string ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 2 ;
-                              ui:text [
-                                  sp:varName "stepText"^^xsd:string ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:Pre ;
-                          html:class "spinrule"^^xsd:string ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text [
-                                  rdf:type lmdoc:numberLines ;
-                                  sp:arg1 [
-                                      sp:varName "ruleAsText"^^xsd:string ;
-                                    ] ;
-                                  sp:arg2 0 ;
-                                  sp:arg3 999 ;
-                                  sp:arg4 0 ;
-                                  sp:arg5 80 ;
-                                  sp:arg6 "false"^^xsd:boolean ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 2 ;
-                        ] ;
-                      ui:childIndex 1 ;
-                      ui:resultSet [
-                          sp:varName "rules"^^xsd:string ;
-                        ] ;
-                    ] ;
-                  ui:childIndex 0 ;
-                  ui:condition [
-                      rdf:type sp:gt ;
-                      sp:arg1 [
-                          rdf:type spr:rowCount ;
-                          sp:arg1 [
-                              sp:varName "rules"^^xsd:string ;
-                            ] ;
-                        ] ;
-                      sp:arg2 0 ;
-                    ] ;
-                ] ;
-              ui:childIndex 4 ;
-              ui:template lmdoc:AllRules ;
-              ui:varName "rules"^^xsd:string ;
             ] ;
           ui:child [
               rdf:type ui:call ;
@@ -1541,11 +1400,206 @@ lmdoc:DetailedClassView
               ui:childIndex 5 ;
             ] ;
           ui:child [
-              rdf:type lmdoc:ClassInstances ;
-              arg:class [
-                  sp:varName "class"^^xsd:string ;
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type ui:call ;
+                  arg:class [
+                      sp:varName "class"^^xsd:string ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:class "swa-sub-title"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Constructors"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:forEach ;
+                          ui:child [
+                              rdf:type html:P ;
+                              html:class "lm-para, dashedbox"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      rdf:type ui:encodeNode ;
+                                      sp:arg1 [
+                                          sp:varName "property"^^xsd:string ;
+                                        ] ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Pre ;
+                              html:class "spinrule"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      rdf:type lmdoc:numberLines ;
+                                      sp:arg1 [
+                                          sp:varName "ruleAsText"^^xsd:string ;
+                                        ] ;
+                                      sp:arg2 0 ;
+                                      sp:arg3 999 ;
+                                      sp:arg4 0 ;
+                                      sp:arg5 80 ;
+                                      sp:arg6 "false"^^xsd:boolean ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:childIndex 1 ;
+                          ui:resultSet [
+                              sp:varName "constructors"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:condition [
+                          rdf:type sp:gt ;
+                          sp:arg1 [
+                              rdf:type spr:rowCount ;
+                              sp:arg1 [
+                                  sp:varName "constructors"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          sp:arg2 0 ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:template lmdoc:AllConstructors ;
+                  ui:varName "constructors"^^xsd:string ;
+                ] ;
+              ui:childIndex 3 ;
+              ui:condition [
+                  sp:varName "showConstructors"^^xsd:string ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type ui:call ;
+                  arg:class [
+                      sp:varName "class"^^xsd:string ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:class "swa-sub-title"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Rules"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:forEach ;
+                          ui:child [
+                              rdf:type html:P ;
+                              html:class "lm-para"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      sp:varName "commentText"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:P ;
+                              html:class "lm-para, dashedbox"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      rdf:type ui:encodeNode ;
+                                      sp:arg1 [
+                                          sp:varName "ruleProperty"^^xsd:string ;
+                                        ] ;
+                                    ] ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text " - "^^xsd:string ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 2 ;
+                                  ui:text [
+                                      sp:varName "stepText"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Pre ;
+                              html:class "spinrule"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      rdf:type lmdoc:numberLines ;
+                                      sp:arg1 [
+                                          sp:varName "ruleAsText"^^xsd:string ;
+                                        ] ;
+                                      sp:arg2 0 ;
+                                      sp:arg3 999 ;
+                                      sp:arg4 0 ;
+                                      sp:arg5 80 ;
+                                      sp:arg6 "false"^^xsd:boolean ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 2 ;
+                            ] ;
+                          ui:childIndex 1 ;
+                          ui:resultSet [
+                              sp:varName "rules"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:condition [
+                          rdf:type sp:gt ;
+                          sp:arg1 [
+                              rdf:type spr:rowCount ;
+                              sp:arg1 [
+                                  sp:varName "rules"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          sp:arg2 0 ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:template lmdoc:AllRules ;
+                  ui:varName "rules"^^xsd:string ;
+                ] ;
+              ui:childIndex 4 ;
+              ui:condition [
+                  sp:varName "showRules"^^xsd:string ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type lmdoc:ClassInstances ;
+                  arg:class [
+                      sp:varName "class"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 0 ;
                 ] ;
               ui:childIndex 7 ;
+              ui:condition [
+                  sp:varName "showInstances"^^xsd:string ;
+                ] ;
             ] ;
           ui:child [
               rdf:type lmdoc:MaybeDescription ;
@@ -8198,6 +8252,9 @@ rdfs:Class
       ui:child [
           rdf:type lmdoc:DetailedClassView ;
           arg:class spin:_this ;
+          arg:showConstructors "false"^^xsd:boolean ;
+          arg:showInstances "false"^^xsd:boolean ;
+          arg:showRules "false"^^xsd:boolean ;
           ui:childIndex 0 ;
         ] ;
       ui:id "lmdoc"^^xsd:string ;
