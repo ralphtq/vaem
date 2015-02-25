@@ -1771,11 +1771,14 @@ lmdoc:GraphHeader
           let:thisVersion [
               rdf:type sp:coalesce ;
               sp:arg1 [
-                  rdf:type spl:object ;
+                  rdf:type xsd:string ;
                   sp:arg1 [
-                      sp:varName "myGraphMetadata"^^xsd:string ;
+                      rdf:type spl:object ;
+                      sp:arg1 [
+                          sp:varName "myGraphMetadata"^^xsd:string ;
+                        ] ;
+                      sp:arg2 vaem:latestPublishedVersion ;
                     ] ;
-                  sp:arg2 vaem:latestPublishedVersion ;
                 ] ;
               sp:arg2 "none" ;
             ] ;
