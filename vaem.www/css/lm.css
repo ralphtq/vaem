@@ -104,10 +104,13 @@ table {
 	  }
 
 td, th {
-	    border:1px solid black;
 	    padding:1em;
 	    font-family: sans-serif;
 	  }  
+
+.black-border {
+	    border:1px solid black;
+	   }
 
 table#namespaces td {
 	    font-family: monospace;
@@ -354,14 +357,14 @@ div.lm-resource-header {
 div.lm-resource-name {
  font-size: 18px;
  font-weight:bold ;
- vertical-align=middle ;
  background-color: #d8d8d8;
  position: relative;
  }
 
 div.lm-resource-collab-links {
 	text-align:right;
-	vertical-align=top ;
+	vertical-align: 
+	top ;
   position: right;
  }
 
@@ -516,19 +519,19 @@ tbody.lm-table-body {
 tr.lm-table-column-labels {
 	font-size: 12px;
 	text-align:center;
-	vertical-align=middle ;
+	vertical-align: middle ;
   }
 
 tr.lm-inner-row {
 	font-size: 10px;
 	text-align:center;
-	vertical-align=middle ;
+	vertical-align:middle ;
   }
 
 tr.lm-inner-column {
 	font-size: 10px;
 	text-align:center;
-	vertical-align=middle ;
+	vertical-align:middle ;
   }
 
 .twenty-five-percent {
@@ -550,7 +553,7 @@ tr.lm-inner-column {
 table.hidden-borders {
 	width: 100% ;
 	border-width: 1px;
-	border-spacing: ;
+	border-spacing: 1px;
 	border-style: hidden;
 	border-color: white;
 	border-collapse: collapse;
@@ -664,7 +667,7 @@ tr,td.hidden-borders {
 p.lm-resource-description {
 	font-size: 12px;
 	text-align:left;
-	vertical-align=top ;
+	vertical-align:top ;
   }
 
 .middle {
@@ -794,10 +797,10 @@ p.tablenote {
 table.lm-graph-summary {
 	width: 100% ;
 	border-width: 1px;
-	border-spacing: ;
+	border-spacing: 1px;
 	border-style: solid;
 	font-family: Arial;
-  font-size: 12px;
+    font-size: 12px;
 	}
 
 #lm-footer {

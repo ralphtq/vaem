@@ -224,11 +224,6 @@ vaem:GraphMetaData
     ] ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
-      owl:allValuesFrom vaem:GraphMetaData ;
-      owl:onProperty vaem:hasMetadata ;
-    ] ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
       owl:allValuesFrom vaem:GraphRole ;
       owl:onProperty vaem:hasGraphRole ;
     ] ;
@@ -266,11 +261,6 @@ vaem:GraphMetaData
       rdf:type owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:hasLicenseType ;
-    ] ;
-  rdfs:subClassOf [
-      rdf:type owl:Restriction ;
-      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty vaem:hasMetadata ;
     ] ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
@@ -556,13 +546,6 @@ vaem:hasLicenseType
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "has license type"@en-US ;
-.
-vaem:hasMetadata
-  rdf:type owl:ObjectProperty ;
-  dct:description "The property \"hasMetadata\" is used to reference a metadata information structure."^^xsd:string ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "has metadata"^^xsd:string ;
 .
 vaem:hasOwner
   rdf:type owl:ObjectProperty ;

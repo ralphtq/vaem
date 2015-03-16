@@ -34,6 +34,7 @@
 @prefix swa: <http://topbraid.org/swa#> .
 @prefix tui: <http://uispin.org/tui#> .
 @prefix ui: <http://uispin.org/ui#> .
+@prefix uix: <http://topbraidlive.org/uix#> .
 @prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
 @prefix voag: <http://voag.linkedmodel.org/schema/voag#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -144,6 +145,7 @@ voag:Logo
 .
 <http://www.linkedmodel.org/1.1/swp/lmdoc>
   rdf:type owl:Ontology ;
+  vaem:hasGraphMetadata <http://www.linkedmodel.org/1.1/swp/lmdoc/GMD_LMDOC> ;
   vaem:hasGraphRole vaem:ViewGraph ;
   owl:imports <http://spinrdf.org/spin.ui> ;
   owl:imports <http://spinrdf.org/spinx> ;
@@ -153,6 +155,17 @@ voag:Logo
   owl:imports <http://www.linkedmodel.org/schema/vaem> ;
   owl:imports <http://www.w3.org/2004/02/skos/core> ;
   owl:versionInfo "Created with TopBraid Composer"^^xsd:string ;
+.
+<http://www.linkedmodel.org/1.1/swp/lmdoc/GMD_LMDOC>
+  rdf:type <vaem:DocumentationGraph> ;
+  dct:created "2014-08-06"^^xsd:date ;
+  vaem:hasOwner vaem:TopQuadrant ;
+  vaem:hasSteward vaem:TopQuadrant ;
+  vaem:name "lmdoc"^^xsd:string ;
+  vaem:namespace "http://www.linkedmodel.org/oui/lmdoc#"^^xsd:anyURI ;
+  vaem:namespacePrefix "lmdoc"^^xsd:string ;
+  vaem:owner "TopQuadrant"^^xsd:string ;
+  vaem:revision "1.1"^^xsd:string ;
 .
 lmdoc:AllClasses
   rdf:type spin:SelectTemplate ;
@@ -755,6 +768,184 @@ lmdoc:AskTemplates
   rdf:type spin:AskTemplate ;
   rdfs:label "Ask templates"^^xsd:string ;
   rdfs:subClassOf spin:AskTemplates ;
+.
+lmdoc:BuildMetadataRecord
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:graphName [
+          rdf:type spif:regex ;
+          sp:arg1 [
+              rdf:type xsd:string ;
+              sp:arg1 [
+                  sp:varName "graph"^^xsd:string ;
+                ] ;
+            ] ;
+          sp:arg2 ".*/([A-Za-z0-9-]+)$" ;
+          sp:arg3 "$1" ;
+        ] ;
+      ui:child [
+          rdf:type ui:group ;
+          let:metadataName [
+              rdf:type fn:concat ;
+              sp:arg1 "GMD_" ;
+              sp:arg2 [
+                  rdf:type fn:upper-case ;
+                  sp:arg1 [
+                      sp:varName "graphName"^^xsd:string ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type html:P ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "Make graph metadata "^^xsd:string ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 1 ;
+                  ui:text [
+                      sp:varName "metadataName"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:child [
+              rdf:type ui:transaction ;
+              ui:child [
+                  rdf:type ui:update ;
+                  ui:childIndex 0 ;
+                  ui:updateQuery [
+                      rdf:type sp:Modify ;
+                      sp:insertPattern (
+                          [
+                            rdf:type sp:NamedGraph ;
+                            sp:elements (
+                                [
+                                  sp:object vaem:GraphMetaData ;
+                                  sp:predicate rdf:type ;
+                                  sp:subject [
+                                      sp:varName "gmdU"^^xsd:string ;
+                                    ] ;
+                                ]
+                                [
+                                  sp:object [
+                                      sp:varName "graphName"^^xsd:string ;
+                                    ] ;
+                                  sp:predicate vaem:name ;
+                                  sp:subject [
+                                      sp:varName "gmdU"^^xsd:string ;
+                                    ] ;
+                                ]
+                                [
+                                  sp:object [
+                                      sp:varName "date"^^xsd:string ;
+                                    ] ;
+                                  sp:predicate dct:created ;
+                                  sp:subject [
+                                      sp:varName "gmdU"^^xsd:string ;
+                                    ] ;
+                                ]
+                                [
+                                  sp:object [
+                                      sp:varName "date"^^xsd:string ;
+                                    ] ;
+                                  sp:predicate dct:modified ;
+                                  sp:subject [
+                                      sp:varName "gmdU"^^xsd:string ;
+                                    ] ;
+                                ]
+                                [
+                                  sp:object ""^^xsd:string ;
+                                  sp:predicate dct:description ;
+                                  sp:subject [
+                                      sp:varName "gmdU"^^xsd:string ;
+                                    ] ;
+                                ]
+                                [
+                                  sp:object ""^^xsd:string ;
+                                  sp:predicate dct:title ;
+                                  sp:subject [
+                                      sp:varName "gmdU"^^xsd:string ;
+                                    ] ;
+                                ]
+                                [
+                                  sp:object ""^^xsd:string ;
+                                  sp:predicate dct:subject ;
+                                  sp:subject [
+                                      sp:varName "gmdU"^^xsd:string ;
+                                    ] ;
+                                ]
+                                [
+                                  sp:object ""^^xsd:string ;
+                                  sp:predicate vaem:intent ;
+                                  sp:subject [
+                                      sp:varName "gmdU"^^xsd:string ;
+                                    ] ;
+                                ]
+                                [
+                                  sp:object [
+                                      sp:varName "gmdU"^^xsd:string ;
+                                    ] ;
+                                  sp:predicate vaem:hasGraphMetadata ;
+                                  sp:subject [
+                                      sp:varName "graph"^^xsd:string ;
+                                    ] ;
+                                ]
+                              ) ;
+                            sp:graphNameNode [
+                                sp:varName "graph"^^xsd:string ;
+                              ] ;
+                          ]
+                        ) ;
+                      sp:where (
+                          [
+                            rdf:type sp:Bind ;
+                            sp:expression [
+                                rdf:type sp:iri ;
+                                sp:arg1 [
+                                    rdf:type fn:concat ;
+                                    sp:arg1 [
+                                        rdf:type xsd:string ;
+                                        sp:arg1 [
+                                            sp:varName "graph"^^xsd:string ;
+                                          ] ;
+                                      ] ;
+                                    sp:arg2 "/" ;
+                                    sp:arg3 [
+                                        sp:varName "metadataName"^^xsd:string ;
+                                      ] ;
+                                  ] ;
+                              ] ;
+                            sp:variable [
+                                sp:varName "gmdU"^^xsd:string ;
+                              ] ;
+                          ]
+                          [
+                            rdf:type sp:Bind ;
+                            sp:expression [
+                                rdf:type afn:now ;
+                              ] ;
+                            sp:variable [
+                                sp:varName "date"^^xsd:string ;
+                              ] ;
+                          ]
+                        ) ;
+                    ] ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  rdfs:subClassOf lmdoc:Factories ;
 .
 lmdoc:ClassInstances
   rdf:type ui:NodeClass ;
@@ -1628,15 +1819,21 @@ lmdoc:Elements
       rdf:type ui:group ;
       ui:child [
           rdf:type html:Link ;
-          html:href "http://linkedmodel.org/css/lm.css"^^xsd:string ;
-          html:rel "stylesheet"^^xsd:string ;
-          html:type "text/css"^^xsd:string ;
-          ui:childIndex 1 ;
+          html:href "http://linkedmodel.org/css/spin/spin.css"^^xsd:string ;
+          ui:childIndex 0 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
-          html:href "http://linkedmodel.org/css/spin/spin.css"^^xsd:string ;
-          ui:childIndex 0 ;
+          html:href [
+              rdf:type ui:concat ;
+              sp:arg1 [
+                  rdf:type ui:lib ;
+                ] ;
+              sp:arg2 "/vaem/css/lm.css"^^xsd:string ;
+            ] ;
+          html:rel "stylesheet"^^xsd:string ;
+          html:type "text/css"^^xsd:string ;
+          ui:childIndex 1 ;
         ] ;
       ui:child [
           rdf:type ui:CommentNode ;
@@ -1748,6 +1945,10 @@ lmdoc:ExtractStepTextFromRule
   spin:returnType xsd:string ;
   rdfs:label "Extract Step text from rule"^^xsd:string ;
   rdfs:subClassOf lmdoc:Functions ;
+.
+lmdoc:Factories
+  rdf:type ui:NodeClass ;
+  rdfs:subClassOf lmdoc:Elements ;
 .
 lmdoc:Functions
   rdf:type spin:Function ;
@@ -2278,6 +2479,226 @@ lmdoc:GraphHeader
   rdfs:label "Graph Header"^^xsd:string ;
   rdfs:subClassOf lmdoc:Sections ;
 .
+lmdoc:GraphMetadata
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:headIncludes [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href [
+              rdf:type ui:concat ;
+              sp:arg1 [
+                  rdf:type ui:lib ;
+                ] ;
+              sp:arg2 "/swa/css/swa.css"^^xsd:string ;
+            ] ;
+          html:rel "stylesheet"^^xsd:string ;
+          html:type "text/css"^^xsd:string ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href [
+              rdf:type ui:concat ;
+              sp:arg1 [
+                  rdf:type ui:lib ;
+                ] ;
+              sp:arg2 "/swa/css/swaspin.css"^^xsd:string ;
+            ] ;
+          html:rel "stylesheet"^^xsd:string ;
+          html:type "text/css"^^xsd:string ;
+          ui:childIndex 2 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href [
+              rdf:type ui:concat ;
+              sp:arg1 [
+                  rdf:type ui:lib ;
+                ] ;
+              sp:arg2 "/tbladmin/css/tbladmin.css"^^xsd:string ;
+            ] ;
+          html:rel "stylesheet"^^xsd:string ;
+          html:type "text/css"^^xsd:string ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:myGraph [
+          rdf:type sp:iri ;
+          sp:arg1 [
+              sp:varName "graph"^^xsd:string ;
+            ] ;
+        ] ;
+      ui:child [
+          rdf:type lmdoc:GraphMetadataContainer ;
+          arg:title "Graph Metadata Maintainer"^^xsd:string ;
+          ui:child [
+              rdf:type ui:setContext ;
+              ui:child [
+                  rdf:type ui:group ;
+                  let:maybeGraphMetadata [
+                      rdf:type spl:objectInGraph ;
+                      sp:arg1 [
+                          sp:varName "myGraph"^^xsd:string ;
+                        ] ;
+                      sp:arg2 vaem:hasGraphMetadata ;
+                      sp:arg3 [
+                          sp:varName "myGraph"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type lmdoc:BuildMetadataRecord ;
+                          arg:graph [
+                              sp:varName "myGraph"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:condition [
+                          rdf:type sp:not ;
+                          sp:arg1 [
+                              rdf:type sp:bound ;
+                              sp:arg1 [
+                                  sp:varName "maybeGraphMetadata"^^xsd:string ;
+                                ] ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:group ;
+                  let:myGraphMetadata [
+                      rdf:type spl:objectInGraph ;
+                      sp:arg1 [
+                          sp:varName "myGraph"^^xsd:string ;
+                        ] ;
+                      sp:arg2 vaem:hasGraphMetadata ;
+                      sp:arg3 [
+                          sp:varName "myGraph"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type swa:Header ;
+                      arg:label [
+                          rdf:type ui:concat ;
+                          sp:arg1 "Metadata for Graph "^^xsd:string ;
+                          sp:arg2 [
+                              sp:varName "myGraph"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type swa:SwitchableForm ;
+                      arg:editable "true"^^xsd:boolean ;
+                      arg:resource [
+                          sp:varName "myGraphMetadata"^^xsd:string ;
+                        ] ;
+                      arg:showURI "false"^^xsd:boolean ;
+                      arg:suppressHeader "true"^^xsd:boolean ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:queryGraph [
+                  rdf:type ui:unionOfGraphs ;
+                  sp:arg1 [
+                      rdf:type ui:graphWithImports ;
+                      sp:arg1 [
+                          sp:varName "myGraph"^^xsd:string ;
+                        ] ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:comment """Test with:
+
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://www.linkedmodel.org/2.0/schema/vaem"""^^xsd:string ;
+  rdfs:label "Graph Documentation"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Pages ;
+.
+lmdoc:GraphMetadataContainer
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:title ;
+      spl:valueType xsd:string ;
+    ] ;
+  ui:prototype [
+      rdf:type html:Div ;
+      ui:child [
+          rdf:type html:Div ;
+          html:class "tbladmin-page-body"^^xsd:string ;
+          ui:child [
+              rdf:type ui:insertionPoint ;
+              ui:childIndex 0 ;
+              ui:pointId "body"^^xsd:string ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type html:Table ;
+          ui:child [
+              rdf:type html:Tr ;
+              ui:child [
+                  rdf:type html:Td ;
+                  html:class "tbladmin-title-td"^^xsd:string ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "title"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Td ;
+                  ui:child [
+                      rdf:type html:A ;
+                      html:href "admin"^^xsd:string ;
+                      ui:child [
+                          rdf:type html:Img ;
+                          html:alt "TopBraid"^^xsd:string ;
+                          html:height "50"^^xsd:string ;
+                          html:src [
+                              rdf:type ui:concat ;
+                              sp:arg1 [
+                                  rdf:type ui:lib ;
+                                ] ;
+                              sp:arg2 "/vaem/images/topbraid-live-logo.png"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  rdfs:subClassOf lmdoc:Elements ;
+.
 lmdoc:GraphMetadataView
   rdf:type ui:NodeClass ;
   spin:constraint [
@@ -2501,96 +2922,6 @@ lmdoc:GraphMetadataView
         ] ;
     ] ;
   ui:responseType ui:HTML ;
-  rdfs:comment """<ui:group let:myGraph=\"{= IRI(?resource) }\">
-    <ui:setContext ui:queryGraph=\"{= ui:unionOfGraphs(?myGraph, ui:graphWithImports(&lt;http://qudt.org/swa/doc&gt;)) }\">
-        <div>
-            <section class=\"introductory\" id=\"abstract\" property=\"dct:abstract\" rel=\"bibo:Chapter\" resource=\"#ref\" typeof=\"bibo:Chapter\">
-                <lmdoc:IntroductionSection arg:resource=\"{= ?myGraphMetadata }\" arg:sectionHeading=\"Abstract\"/>
-            </section>
-            <section id=\"toc\">
-                <lmdoc:TableOfContents arg:sectionHeading=\"Table of Contents\"/>
-            </section>
-            <section class=\"informative\" id=\"overview-of-ontology\">
-                <lmdoc:IndexSection arg:resource=\"{= ?resource }\" arg:sectionHeading=\"Resources Index\"/>
-            </section>
-            <section id=\"namespaces-1\" rel=\"bibo:Chapter\" resource=\"#ref\" typeof=\"bibo:Chapter\">
-                <lmdoc:ImportedNamespaces arg:resource=\"{= ?resource }\" arg:sectionHeading=\"Imported Graphs\"/>
-            </section>
-            <section id=\"non-imported-myGraphMetadatas\" rel=\"bibo:Chapter\" resource=\"#ref\" typeof=\"bibo:Chapter\">
-                <lmdoc:NonImportedResources arg:resource=\"{= ?myGraphMetadata }\" arg:sectionHeading=\"Non-imported Resources\"/>
-            </section>
-            <hr/>
-            <section class=\"details\" id=\"details\" property=\"dct:abstract\" rel=\"bibo:Chapter\" resource=\"#ref\" typeof=\"bibo:Chapter\">
-                <section class=\"informative\" id=\"classes\">
-                    <lmdoc:ClassesSection arg:resource=\"{= ?myGraph }\" arg:sectionHeading=\"Classes\"/>
-                </section>
-                <hr/>
-                <section class=\"informative\" id=\"properties\">
-                    <lmdoc:PropertiesSection arg:resource=\"{= ?myGraph }\" arg:sectionHeading=\"Properties\"/>
-                </section>
-                <hr/>
-                <section class=\"informative\" id=\"instances\">
-                    <lmdoc:InstancesSection arg:resource=\"{= ?myGraph }\" arg:sectionHeading=\"Instances\"/>
-                </section>
-                <hr/>
-                <div style=\"font-size:small;\">Generated {= xsd:date(afn:now()) } using<a href=\"http://www.topquadrant.com/technology/sparql-web-pages-swp/\">TopBraid SPARQL Web Pages (SWP)</a>
-                </div>
-            </section>
-        </div>
-    </ui:setContext>
-</ui:group>"""^^xsd:string ;
-  rdfs:comment """<ui:group let:myGraph=\"{= IRI(?resource) }\">
-    <ui:setContext ui:queryGraph=\"{= ui:unionOfGraphs(?myGraph, ui:graphWithImports(&lt;http://qudt.org/swa/doc&gt;)) }\">
-        <p let:graph=\"{= IRI(spif:regex(ui:currentQueryGraph(), &quot;^urn:x-union:(.*):.*$&quot;, &quot;$1&quot;)) }\">Current Query Graph is {= ?graph }</p>
-        <ui:group let:myGraphMetadata=\"{= spl:object(?myGraph, vaem:hasMetadata) }\">
-            <ui:group let:t=\"{#
-                    SELECT ?t
-                    WHERE {
-                        GRAPH &lt;urn:x-union:http%3A%2F%2Fqudt.org%2F2.0%2Fschema%2Fqudt:http%3A%2F%2Frdfex.org%2FwithImports%3Furi%3Dhttp%3A%2F%2Fqudt.org%2Fswa%2Fdoc&gt; {
-                            owl:Class a ?t .
-                        } .
-                    } }\">
-                <p>Type is {= ?t }</p>
-            </ui:group>
-            <lmdoc:GraphHeader arg:resource=\"{= ?myGraphMetadata }\"/>
-            <hr/>
-        </ui:group>
-    </ui:setContext>
-</ui:group>"""^^xsd:string ;
-  rdfs:comment """<ui:group let:myGraph=\"{= IRI(?resource) }\">
-    <ui:setContext ui:queryGraph=\"{= ui:unionOfGraphs(?myGraph, ui:graphWithImports(&lt;http://qudt.org/swa/doc&gt;)) }\">
-        <p let:graph=\"{= IRI(xsd:string(ui:currentQueryGraph())) }\">Current Query Graph is {= ?graph }</p>
-        <ui:group let:myGraph=\"{= IRI(spif:regex(xsd:string(?graph), &quot;^urn:x-union:(.*):.*$&quot;, &quot;$1&quot;)) }\">
-            <ui:group let:myGraphMetadata=\"{= spl:object(?myGraph, vaem:hasMetadata) }\">
-                <p>My Graph is {= ?myGraph }</p>
-                <ui:group let:t=\"{#
-                        SELECT ?t
-                        WHERE {
-                            GRAPH ?myGraph {
-                                owl:Class a ?t .
-                                &lt;http://qudt.org/schema/qudt/QuantityKind&gt; rdfs:subClassOf ?t2 .
-                            } .
-                        } }\">
-                    <ui:if ui:condition=\"{= bound(?t) }\">
-                        <p>Type is {= ?t }</p>
-                    </ui:if>
-                    <ui:else>
-                        <p>Not bound</p>
-                    </ui:else>
-                </ui:group>
-                <lmdoc:GraphHeader arg:resource=\"{= ?myGraphMetadata }\"/>
-                <hr/>
-            </ui:group>
-        </ui:group>
-    </ui:setContext>
-</ui:group>"""^^xsd:string ;
-  rdfs:comment """Test with:
-
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadataView&resource=http%3A%2F%2Fqudt.org%2F2.0%2Fschema%2Fqudt
-
-IRI(spif:regex(xsd:string(ui:currentQueryGraph()), &quot;^urn:x-union:(.*):.*$&quot;, &quot;$1&quot;))
-
-BIND (smf:definedIn(&lt;http://qudt.org/schema/qudt/QuantityKind&gt;) AS ?t) ."""^^xsd:string ;
   rdfs:label "Graph metadata view"^^xsd:string ;
   rdfs:subClassOf lmdoc:Pages ;
 .
