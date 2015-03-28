@@ -92,15 +92,31 @@ vaem:CatalogEntry
 .
 vaem:CollectionGraph
   rdf:type vaem:GraphRole ;
-  dct:description "A \"vaem:CollectionGraph\" is a graph that aggregates other graphs using \"owl:imports\" statements"^^xsd:string ;
+  vaem:description "A \"vaem:CollectionGraph\" is a graph that aggregates other graphs using \"owl:imports\" statements."^^xsd:string ;
   vaem:filePrefix "COLLECTION"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Collection graph"^^xsd:string ;
 .
+vaem:ConfigurationGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph that serves as a registy or provides other parameter settings."^^xsd:string ;
+  vaem:filePrefix "CONFIG"^^xsd:string ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Collection graph"^^xsd:string ;
+.
+vaem:ConnectSetGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph that specifies mapings between external data sources and a neutral model."^^xsd:string ;
+  vaem:filePrefix "CONNECTSET"^^xsd:string ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Connect set graph"^^xsd:string ;
+.
 vaem:ConstraintsGraph
   rdf:type vaem:GraphRole ;
-  dct:description "A \"vaem:ConstraintsGraph\" is a graph that holds SPIN constraints"^^xsd:string ;
+  vaem:description "A graph that is for defining constraints using SPIN."^^xsd:string ;
   vaem:filePrefix "CONSTRAINTS"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -108,14 +124,15 @@ vaem:ConstraintsGraph
 .
 vaem:ControllersGraph
   rdf:type vaem:GraphRole ;
-  vaem:filePrefix "CONTROLLERS"^^xsd:string ;
+  vaem:description "A graph that acts as a controller in an MVC-like framework."^^xsd:string ;
+  vaem:filePrefix "CONTROLLER"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Controllers graph"^^xsd:string ;
 .
 vaem:CurationGraph
   rdf:type vaem:GraphRole ;
-  dct:description "A \"vaem:CurationGraph\" is a graph to hold metadata that is needed to describe, govern and provision another graph. A curation graph will likely use VOAG and VAEM for this purpose. The property \"vaem:curationGraph\" is used to link to the graph (or graphs) being curated"^^xsd:string ;
+  vaem:description "A graph to hold metadata that is needed to describe, govern and provision another graph. A curation graph will likely use VOAG and VAEM for this purpose. The property \"vaem:curationGraph\" is used to link to the graph (or graphs) being curated"^^xsd:string ;
   vaem:filePrefix "CURATION"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -123,6 +140,7 @@ vaem:CurationGraph
 .
 vaem:DataGraph
   rdf:type vaem:GraphRole ;
+  vaem:description "A graph that holds data instances."^^xsd:string ;
   vaem:filePrefix "DATA"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -146,6 +164,7 @@ vaem:Discipline
 .
 vaem:DocumentationGraph
   rdf:type vaem:GraphRole ;
+  vaem:description "A graph that is soley for the purpose of generating documentation."^^xsd:string ;
   vaem:filePrefix "DOC"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -161,6 +180,7 @@ vaem:Domain
 .
 vaem:FunctionsGraph
   rdf:type vaem:GraphRole ;
+  vaem:description "A graph that defines SPIN functions."^^xsd:string ;
   vaem:filePrefix "FUNCTIONS"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -170,15 +190,15 @@ vaem:GMD_VAEM
   rdf:type vaem:GraphMetaData ;
   dct:abstract "VAEM stands for \"Vocabulary for Attaching Essential Metadata\". What VAEM regards as essential metadata is data about dates and times, confidentiality, and other characterisitic qualifiers of the ontology, but also references to where a ontology is documented and where to find ontology registration for governance, attribution and provenance. VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix \"dct\". VAEM is OWL-DL compliant."^^xsd:string ;
   dct:created "2011-04-20"^^xsd:date ;
-  dct:modified "2014-07-26"^^xsd:date ;
+  dct:modified "2015-03-28"^^xsd:date ;
   dct:title "VAEM Version 2.0 Metadata"^^xsd:string ;
-  vaem:description "VAEM stands for \"Vocabulary for Attaching Essential Metadata\". What VAEM regards as essential metadata is data about dates and times, confidentiality, and other characterisitic qualifiers of the ontology, but also references to where a ontology is documented and where to find ontology registration for governance, attribution and provenance. VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix \"dct\". VAEM is OWL-DL compliant."^^xsd:string ;
+  vaem:description "VAEM stands for \"Vocabulary for Attaching Essential Metadata\". What VAEM regards as essential metadata is data about dates and times, confidentiality, and other characterisitic qualifiers of the ontology, but also references to where a ontology is documented and where to find ontology registration for governance, attribution and provenance. VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix \"dct\"."^^xsd:string ;
   vaem:hasGraphRole vaem:SchemaGraph ;
   vaem:hasOwner vaem:TopQuadrant ;
   vaem:hasSteward vaem:TopQuadrant ;
   vaem:intent "The purpose of VAEM is to provide, by import, a foundation for commonly needed resources for metadata on an ontology."^^xsd:string ;
   vaem:latestPublishedVersion "http://www.linkedmodel.org/doc/2014/SCHEMA_vaem-v2.0"^^xsd:anyURI ;
-  vaem:logo "http://www.topquadrant.com/resources/logos/topbraid-live-logo.png"^^xsd:anyURI ;
+  vaem:logo "http://www.linkedmodel.org/lib/lm/images/logos/vaem_logo_300x110.png"^^xsd:anyURI ;
   vaem:name "VAEM"^^xsd:string ;
   vaem:namespace "http://www.linkedmodel.org/schema/vaem#"^^xsd:anyURI ;
   vaem:namespacePrefix "vaem"^^xsd:string ;
@@ -338,7 +358,7 @@ vaem:GraphRole
 .
 vaem:LinkSetGraph
   rdf:type vaem:GraphRole ;
-  dct:description "A \"vaem:LinkSetGraph\" is a graph that holds statements that specify links between resources"^^xsd:string ;
+  vaem:description "A graph that holds statements that specify links between resources."^^xsd:string ;
   vaem:filePrefix "LINKSET"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -346,7 +366,7 @@ vaem:LinkSetGraph
 .
 vaem:MappingGraph
   rdf:type vaem:GraphRole ;
-  dct:description "A graph that specifies a transformation of a graph into another graph or graphs. Invariably this is a SPINMap graph using SPARQL Rules (SPIN) to express the transforms."^^xsd:string ;
+  vaem:description "A graph that specifies a transformation of a graph into another graph or graphs. Invariably this is a SPINMap graph using SPARQL Rules (SPIN) to express the transforms."^^xsd:string ;
   vaem:filePrefix "MAPPINGS"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -377,13 +397,23 @@ vaem:Party
 .
 vaem:ProxyGraph
   rdf:type vaem:GraphRole ;
+  vaem:description "A graph that represents an external data source, or schema, as an ontology model."^^xsd:string ;
   vaem:filePrefix "PROXY"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Proxy graph"^^xsd:string ;
 .
+vaem:ReferenceDataGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph that holds reference data."^^xsd:string ;
+  vaem:filePrefix "REFDATA"^^xsd:string ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Reference data graph"^^xsd:string ;
+.
 vaem:RulesGraph
   rdf:type vaem:GraphRole ;
+  vaem:description "A graph that holds SPIN rules."^^xsd:string ;
   vaem:filePrefix "RULES"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -391,6 +421,7 @@ vaem:RulesGraph
 .
 vaem:SchemaGraph
   rdf:type vaem:GraphRole ;
+  vaem:description "A graph that defines classes and properties for one or more namespaces."^^xsd:string ;
   vaem:filePrefix "SCHEMA"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -398,10 +429,19 @@ vaem:SchemaGraph
 .
 vaem:ScriptGraph
   rdf:type vaem:GraphRole ;
+  vaem:description "A graph that defines SWP templates that are of a general scripting nature."^^xsd:string ;
   vaem:filePrefix "SCRIPT"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Script graph"^^xsd:string ;
+.
+vaem:ServicesGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph that implements SWP services."^^xsd:string ;
+  vaem:filePrefix "SERVICES"^^xsd:string ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Services Graph"^^xsd:string ;
 .
 vaem:TopQuadrant
   rdf:type vaem:Party ;
@@ -413,6 +453,7 @@ vaem:TopQuadrant
 .
 vaem:TransformsGraph
   rdf:type vaem:GraphRole ;
+  vaem:description "A graph that uses SPIN to define transforms."^^xsd:string ;
   vaem:filePrefix "TRANSFORMS"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -420,6 +461,7 @@ vaem:TransformsGraph
 .
 vaem:ViewGraph
   rdf:type vaem:GraphRole ;
+  vaem:description "A graph that provides the access to services in an MVC-like framework."^^xsd:string ;
   vaem:filePrefix "VIEWS"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -435,7 +477,7 @@ vaem:Viewpoint
 .
 vaem:VocabularyGraph
   rdf:type vaem:GraphRole ;
-  dct:description "An RDF/OWL Graph that is a controlled set of instances."^^xsd:string ;
+  vaem:description "A graph that is a controlled set of instances that define a terminology. Typically this is based on SKOS."^^xsd:string ;
   vaem:filePrefix "VOCAB"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
