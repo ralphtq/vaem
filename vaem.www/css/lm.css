@@ -1,7 +1,7 @@
 /*
  filename: lm.css
  Version: 1.0
- Last Modified: Dec 28, 2014
+ Last Modified: Mar 29, 2015
  Author: Ralph Hodgson
  Derived from: http://www.w3.org/StyleSheets/TR/W3C-REC.css
                http://www.w3.org/TR/vocab-org/
@@ -276,9 +276,17 @@ article p {
 .smalltext {
     font-size: 12px;
 }
+
 .inline {
  display: inline;
 }
+
+.lm-title {
+	position: relative ;
+	font-family: Arial;
+	font-size: 24.0pt;
+	text-align: center; 
+ }
 
 div.lm-abstract {
     border: 2px solid #a1a1a1;
@@ -287,18 +295,22 @@ div.lm-abstract {
     border-radius: 15px;
 }
 
-div.resource-box {
-    border: 2px solid #a1a1a1;
-    padding: 10px 40px; 
-    background: #ffffff;
-    border-radius: 15px;
-}
+div.lm-resource-box {
+ font-size: 12px;
+ width: 90%;
+ text-align:left;
+ border: 1px solid gray;
+ padding: 10px 40px; 
+ background-color: #f9f9f9;
+ }
+ 
 
-div.header-box {
+div.lm-header-box {
     width: 320px;
     padding: 10px;
-    border: 3px solid gray;
+    border: 1px solid gray;
     margin: 0px;
+    font-size: 14px;
 }
 
 div.lm-contents-navigation {
@@ -316,14 +328,11 @@ div.lm-summary {
 	position: relative ;
  }
 
-div.lm-class-details-box {
- }
-
 div.lm-resources-container {
     color: #515151;
 	margin: 0 auto;
 	padding: 0 20px 0 20px;
-	width: 700px;
+	width: 100%;
 	background-color: #0B3B0B;
  }
 
@@ -346,12 +355,6 @@ div.lm-resources-list {
     text-align:left;
     line-height: 200%;
   }
-
-div.lm-resources-box {
- font-size: 12px;
- width: 700px;
- text-align:left;
- }
 
 div.lm-class-header {
 	 font-size: 18px;
@@ -385,19 +388,19 @@ div.lm-resource-details-box {
  }
 
 div.lm-resource-summary {
- font-size: 12px;
- background-color: #ffffda;
- padding: 6px 12px 6px 12px;
- margin: 12px 12px 12px 12px;
- border: #c0c0c0 solid 1px;
+   font-size: 12px;
+   background-color: #ffffda;
+   padding: 6px 12px 6px 12px;
+   margin: 12px 12px 12px 12px;
+   border: #c0c0c0 solid 1px;
  }
 
 div.lm-resource-table-box {
- font-size: 12px;
- background-color: #ffffda;
- padding: 6px 12px 6px 12px;
- margin: 12px 12px 12px 12px;
- border: #c0c0c0 solid 1px;
+   font-size: 12px;
+   background-color: #ffffda;
+   padding: 6px 12px 6px 12px;
+   margin: 12px 12px 12px 12px;
+   border: #c0c0c0 solid 1px;
  }
 
 div#lm-tabs-container {
@@ -455,24 +458,22 @@ div.innercenteringcontainer {
 	margin-bottom: 1em;
 }
 
-div.lm-title , h1.lm-title {
-	position: relative ;
-	font-family: Arial;
-	font-size: 24.0pt;
-	text-align: center; 
- }
+div.lm-buttons-dock {
+  margin:10px; 4px; 1px; 4px; 
+  background-color: #F0FFFF;
+  border-radius: 15px;
+  }
 
-table.lm-graph-metadata { 
+table.lm-table { 
 	border: 1px solid black; 
 	border-collapse: collapse; 
 	font-family: Tahoma; 
-	font-size: 8pt; 
 	padding: 10px; 
 	vertical-align: top;
-	background-color: #F5F6CE;
+	background-color: white
 	}
 
-table.lm-inner-table { 
+table.lm-table2 { 
 	border: 1px solid black; 
 	border-collapse: collapse; 
 	font-family: Tahoma; 
@@ -480,9 +481,27 @@ table.lm-inner-table {
 	padding: 4px; 
 	vertical-align: top;
 	}
+
+table.lm-table3 {
+	width: 100% ;
+	border-width: 1px;
+	border-spacing: 1px;
+	border: 1px solid black; 
+	border-color: black;
+	border-collapse: collapse;
+	background-color: #ffffff;
+}
+
+tr,td.lm-borders {
+	border-width: 1px;
+	padding: 1px;
+	border: 1px solid black; 
+	border-color: black;
+	vertical-align:middle;
+}
 	
 td.lm-table-row-label {
-  border: 1px solid black; 
+    border: 1px solid black; 
 	border-collapse: collapse; 
 	font-family: Tahoma; 
 	font-size: 9pt; 
@@ -492,8 +511,7 @@ td.lm-table-row-label {
 	color: #0B0B3B;
 }
 
-
-th.resource-details-header {
+th.lm-big-header {
   font-size: 14px;
   text-align:center;
   }
@@ -523,10 +541,11 @@ tbody.lm-table-body {
 	vertical-align: top;
 }
 
-tr.lm-table-column-labels {
+th.lm-column-labels {
 	font-size: 12px;
 	text-align:center;
 	vertical-align: middle ;
+    border: 1px dotted black; 
   }
 
 tr.lm-inner-row {
@@ -535,10 +554,19 @@ tr.lm-inner-row {
 	vertical-align:middle ;
   }
 
-tr.lm-inner-column {
+tr.lm-row {
+	font-size: 10px;
+	text-align:left;
+	vertical-align:middle ;
+	border: 1px solid black; 
+  }
+
+td.lm-column {
 	font-size: 10px;
 	text-align:center;
 	vertical-align:middle ;
+	border: 1px dotted black; 
+	text-align:left;
   }
 
 .twenty-five-percent {
@@ -556,24 +584,6 @@ tr.lm-inner-column {
 .one-hundred-percent {
    width: 100% ;
    }
-
-table.hidden-borders {
-	width: 100% ;
-	border-width: 1px;
-	border-spacing: 1px;
-	border-style: hidden;
-	border-color: white;
-	border-collapse: collapse;
-	background-color: #ffffff;
-}
-
-tr,td.hidden-borders {
-	border-width: 1px;
-	padding: 1px;
-	border-style: inset;
-	border-color: white;
-	vertical-align:bottom;
-}
 
 .center {
     text-align: center ;
