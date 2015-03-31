@@ -2032,7 +2032,7 @@ lmdoc:Elements
                 ] ;
               sp:arg2 "/css/spin/spin.css"^^xsd:string ;
             ] ;
-          ui:childIndex 0 ;
+          ui:childIndex 3 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
@@ -2045,11 +2045,35 @@ lmdoc:Elements
             ] ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
+          ui:childIndex 4 ;
+        ] ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content "TopBraid,RDF,OWL,SPARQL,SPIN,SWP,SPARQLMotion,LinkedData"^^xsd:string ;
+          html:name "keywords"^^xsd:string ;
           ui:childIndex 1 ;
         ] ;
       ui:child [
-          rdf:type ui:CommentNode ;
+          rdf:type html:Meta ;
+          html:content "TopQuadrant"^^xsd:string ;
+          html:name "author"^^xsd:string ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content [
+              rdf:type ui:concat ;
+              sp:arg1 "Generated from RDF/OWL by TopBraid SWP on "^^xsd:string ;
+              sp:arg2 [
+                  rdf:type afn:now ;
+                ] ;
+            ] ;
+          html:name "description"^^xsd:string ;
           ui:childIndex 2 ;
+        ] ;
+      ui:child [
+          rdf:type ui:CommentNode ;
+          ui:childIndex 5 ;
           rdfs:comment "[if lt IE 9]><script src='https://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]"^^xsd:string ;
         ] ;
     ] ;
@@ -2430,12 +2454,6 @@ lmdoc:Graph
         ] ;
     ] ;
   ui:responseType ui:HTML ;
-  vaem:todo """Add metadata llke:
-
-        <meta content=\"TopQuadrant\" name=\"author\">
-        <meta content=\"TopBraid,RDF,OWL,SPARQL,SPIN,SPARQLMotion,DTYPE, LinkedData\" name=\"keywords\">
-        <meta content=\"Generated from RDF/OWL by TopBraid Suite on 2015-03-29T12:28:58.836-07:00\" name=\"description\">"""^^xsd:string ;
-  vaem:todo "remove dependency on swa.css"^^xsd:string ;
   rdfs:comment """Test with:
 
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:Graph&graph=http://www.linkedmodel.org/2.0/schema/vaem"""^^xsd:string ;
@@ -3604,6 +3622,7 @@ A full set of alphabetically ordered imported graphs is shown in the table below
                           rdf:type ui:forEach ;
                           ui:child [
                               rdf:type html:Tr ;
+                              html:class "lm-row"^^xsd:string ;
                               ui:child [
                                   rdf:type html:Td ;
                                   html:class "lm-column"^^xsd:string ;
@@ -4092,6 +4111,30 @@ lmdoc:InstancesSection
                           rdf:type html:Div ;
                           html:class "lm-resource-box"^^xsd:string ;
                           ui:child [
+                              rdf:type html:Dd ;
+                              html:class "size-14"^^xsd:string ;
+                              ui:child [
+                                  rdf:type lmdoc:ObjectsBody ;
+                                  arg:predicate rdf:type ;
+                                  arg:subject [
+                                      sp:varName "instance"^^xsd:string ;
+                                    ] ;
+                                  ui:args "*"^^xsd:string ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 2 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Div ;
+                              html:class "swa-sub-title"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Type"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:child [
                               rdf:type lmdoc:MaybeDescription ;
                               arg:node [
                                   sp:varName "instance"^^xsd:string ;
@@ -4101,9 +4144,6 @@ lmdoc:InstancesSection
                           ui:child [
                               rdf:type lmdoc:ObjectsGroup ;
                               arg:filterFunction swa:isAnnotationProperty ;
-                              arg:graph [
-                                  sp:varName "graph"^^xsd:string ;
-                                ] ;
                               arg:label "Annotations"^^xsd:string ;
                               arg:predicates [
                                   sp:varName "rs"^^xsd:string ;
@@ -4111,14 +4151,11 @@ lmdoc:InstancesSection
                               arg:subject [
                                   sp:varName "instance"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 1 ;
+                              ui:childIndex 6 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ObjectsGroup ;
                               arg:filterFunction swa:isNonAnnotationProperty ;
-                              arg:graph [
-                                  sp:varName "graph"^^xsd:string ;
-                                ] ;
                               arg:label "Properties"^^xsd:string ;
                               arg:predicates [
                                   sp:varName "rs"^^xsd:string ;
@@ -4126,7 +4163,7 @@ lmdoc:InstancesSection
                               arg:subject [
                                   sp:varName "instance"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 3 ;
+                              ui:childIndex 4 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ResourceFooter ;
@@ -4134,17 +4171,22 @@ lmdoc:InstancesSection
                               arg:resource [
                                   sp:varName "instance"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 5 ;
+                              ui:childIndex 8 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:VSpace ;
                               arg:margin "30px;"^^xsd:string ;
-                              ui:childIndex 2 ;
+                              ui:childIndex 3 ;
+                            ] ;
+                          ui:child [
+                              rdf:type lmdoc:VSpace ;
+                              arg:margin "30px;"^^xsd:string ;
+                              ui:childIndex 5 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:VSpace ;
                               arg:margin "40px;"^^xsd:string ;
-                              ui:childIndex 4 ;
+                              ui:childIndex 7 ;
                             ] ;
                           ui:childIndex 2 ;
                         ] ;
@@ -4450,11 +4492,6 @@ lmdoc:LabelList
 .
 lmdoc:LabeledObjects
   rdf:type ui:NodeClass ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:predicate arg:graph ;
-      spl:valueType rdfs:Resource ;
-    ] ;
   ui:private "false"^^xsd:boolean ;
   ui:prototype [
       rdf:type ui:group ;
@@ -4475,9 +4512,6 @@ lmdoc:LabeledObjects
                   rdf:type ui:setContext ;
                   ui:child [
                       rdf:type lmdoc:ObjectsBody ;
-                      arg:graph [
-                          sp:varName "graph"^^xsd:string ;
-                        ] ;
                       ui:args "*"^^xsd:string ;
                       ui:childIndex 0 ;
                     ] ;
@@ -4922,11 +4956,6 @@ lmdoc:ObjectElements
 .
 lmdoc:ObjectViewer
   rdf:type swa:ObjectViewerClass ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:predicate arg:graph ;
-      spl:valueType rdfs:Resource ;
-    ] ;
   ui:private "false"^^xsd:boolean ;
   ui:prototype [
       rdf:type html:Div ;
@@ -5057,18 +5086,10 @@ lmdoc:ObjectWidgetRow
       spl:predicate arg:object ;
       rdfs:comment "The object node."^^xsd:string ;
     ] ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:predicate arg:graph ;
-      spl:valueType rdfs:Resource ;
-    ] ;
   ui:prototype [
       rdf:type ui:group ;
       ui:child [
           rdf:type ui:dynamicView ;
-          arg:graph [
-              sp:varName "graph"^^xsd:string ;
-            ] ;
           arg:object [
               sp:varName "object"^^xsd:string ;
             ] ;
@@ -5090,11 +5111,6 @@ lmdoc:Objects
   rdf:type ui:NodeClass ;
   spin:constraint [
       rdf:type spl:Argument ;
-      spl:predicate arg:graph ;
-      spl:valueType rdfs:Resource ;
-    ] ;
-  spin:constraint [
-      rdf:type spl:Argument ;
       spl:predicate arg:label ;
       spl:valueType xsd:string ;
     ] ;
@@ -5111,9 +5127,6 @@ lmdoc:Objects
         ] ;
       ui:child [
           rdf:type lmdoc:LabeledObjects ;
-          arg:graph [
-              sp:varName "graph"^^xsd:string ;
-            ] ;
           arg:single [
               rdf:type sp:if ;
               sp:arg1 [
@@ -5162,11 +5175,6 @@ lmdoc:ObjectsBody
       spl:predicate arg:single ;
       spl:valueType xsd:boolean ;
       rdfs:comment "True to allow at most one value."^^xsd:string ;
-    ] ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:predicate arg:graph ;
-      spl:valueType rdfs:Resource ;
     ] ;
   ui:private "true"^^xsd:boolean ;
   ui:prototype [
@@ -5225,9 +5233,6 @@ lmdoc:ObjectsBody
                               html:class "swa-object-row"^^xsd:string ;
                               ui:child [
                                   rdf:type lmdoc:ObjectWidgetRow ;
-                                  arg:graph [
-                                      sp:varName "graph"^^xsd:string ;
-                                    ] ;
                                   arg:object [
                                       sp:varName "object"^^xsd:string ;
                                     ] ;
@@ -5367,9 +5372,6 @@ lmdoc:ObjectsBody
                                       rdf:type ui:if ;
                                       ui:child [
                                           rdf:type lmdoc:ObjectsBody ;
-                                          arg:graph [
-                                              sp:varName "graph"^^xsd:string ;
-                                            ] ;
                                           arg:offset [
                                               sp:varName "newOffset"^^xsd:string ;
                                             ] ;
@@ -5419,9 +5421,6 @@ lmdoc:ObjectsBody
                       html:class "swa-object-row"^^xsd:string ;
                       ui:child [
                           rdf:type lmdoc:ObjectWidgetRow ;
-                          arg:graph [
-                              sp:varName "graph"^^xsd:string ;
-                            ] ;
                           arg:predicate [
                               sp:varName "predicate"^^xsd:string ;
                             ] ;
@@ -5497,11 +5496,6 @@ lmdoc:ObjectsGroup
       spl:predicate arg:filterFunction ;
       spl:valueType spin:Function ;
       rdfs:comment "An optional filter function that takes a predicate and a subject as arguments and returns true for all predicates that should be displayed."^^xsd:string ;
-    ] ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:predicate arg:graph ;
-      spl:valueType rdfs:Resource ;
     ] ;
   spin:constraint [
       rdf:type spl:Argument ;
@@ -5632,9 +5626,6 @@ lmdoc:ObjectsGroup
                           rdf:type ui:forEach ;
                           ui:child [
                               rdf:type lmdoc:Objects ;
-                              arg:graph [
-                                  sp:varName "graph"^^xsd:string ;
-                                ] ;
                               arg:predicate [
                                   sp:varName "predicate"^^xsd:string ;
                                 ] ;
@@ -5660,9 +5651,9 @@ lmdoc:ObjectsGroup
                           ui:child [
                               rdf:type ui:TextNode ;
                               ui:childIndex 0 ;
-                              ui:text "Definitions"^^xsd:string ;
+                              ui:text "QName"^^xsd:string ;
                             ] ;
-                          ui:childIndex 2 ;
+                          ui:childIndex 1 ;
                         ] ;
                       ui:child [
                           rdf:type html:Th ;
@@ -5670,9 +5661,9 @@ lmdoc:ObjectsGroup
                           ui:child [
                               rdf:type ui:TextNode ;
                               ui:childIndex 0 ;
-                              ui:text "QName"^^xsd:string ;
+                              ui:text "Values"^^xsd:string ;
                             ] ;
-                          ui:childIndex 1 ;
+                          ui:childIndex 2 ;
                         ] ;
                       ui:child [
                           rdf:type html:Th ;
@@ -5829,9 +5820,6 @@ lmdoc:PropertiesSection
                           ui:child [
                               rdf:type lmdoc:ObjectsGroup ;
                               arg:filterFunction swa:isAnnotationProperty ;
-                              arg:graph [
-                                  sp:varName "graph"^^xsd:string ;
-                                ] ;
                               arg:label "Annotations"^^xsd:string ;
                               arg:predicates [
                                   sp:varName "rs"^^xsd:string ;
@@ -5839,14 +5827,11 @@ lmdoc:PropertiesSection
                               arg:subject [
                                   sp:varName "property"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 1 ;
+                              ui:childIndex 3 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ObjectsGroup ;
                               arg:filterFunction swa:isNonAnnotationProperty ;
-                              arg:graph [
-                                  sp:varName "graph"^^xsd:string ;
-                                ] ;
                               arg:label "Properties"^^xsd:string ;
                               arg:predicates [
                                   sp:varName "rs"^^xsd:string ;
@@ -5854,7 +5839,7 @@ lmdoc:PropertiesSection
                               arg:subject [
                                   sp:varName "property"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 3 ;
+                              ui:childIndex 1 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ResourceFooter ;
@@ -7403,7 +7388,7 @@ lmdoc:URIResourceViewer
             ] ;
           sp:arg2 "uri" ;
         ] ;
-      swa:weight 3 ;
+      swa:weight 50 ;
     ] ;
   ui:overrides swa:URIResourceViewer ;
   ui:private "false"^^xsd:boolean ;

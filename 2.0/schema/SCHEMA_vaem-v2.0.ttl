@@ -74,6 +74,10 @@ dct:title
   rdfs:label "title"^^xsd:string ;
   rdfs:range xsd:string ;
 .
+voag:GMD_VOAG
+  vaem:isMetadataFor <http://voag.linkedmodel.org/2.0/schema/voag> ;
+  vaem:isMetadataFor <http://voag.linkedmodel.org/schema/voag> ;
+.
 <http://www.linkedmodel.org/2.0/schema/vaem>
   rdf:type owl:Ontology ;
   vaem:hasGraphMetadata vaem:GMD_VAEM ;
@@ -502,7 +506,7 @@ vaem:comment
   dct:description "An annotation property that can be freely used on any kind of resource. The range of the property is \"xsd:string\""^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "definition"^^xsd:string ;
+  rdfs:label "comment"^^xsd:string ;
   rdfs:range xsd:string ;
 .
 vaem:date
@@ -565,6 +569,7 @@ vaem:hasGraphMetadata
   rdf:type owl:AnnotationProperty ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "has graph metadata"^^xsd:string ;
   rdfs:range vaem:GraphMetaData ;
 .
 vaem:hasGraphRole
@@ -633,9 +638,16 @@ vaem:isElaboratedIn
   dct:description "An annotation used to reference a graph that elaborates (adds properties and axioms to) a resource"^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "isDefinedBy" ;
+  rdfs:label "is elaborated in"^^xsd:string ;
   rdfs:range xsd:anyURI ;
   rdfs:subPropertyOf rdfs:isDefinedBy ;
+.
+vaem:isMetadataFor
+  rdf:type owl:AnnotationProperty ;
+  dct:description "An annotation used to reference the graph that is being described with metadata."^^xsd:string ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "is metadata for"^^xsd:string ;
 .
 vaem:lastUpdated
   dct:description "The property \"vaem:lastUpdated\" is intended for general use as the name implies.  The range of the property is set as \"vaem:dateUnion\" so as to allow a value to have a number of forms from a  year only to a full timestamp"^^xsd:string ;
@@ -653,6 +665,7 @@ vaem:logo
   dct:description "The property \"vaem:logo\" is a reference to an image that is used for publishing the ontology\""^^xsd:string ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "logo"^^xsd:string ;
   rdfs:range xsd:anyURI ;
 .
 vaem:name
