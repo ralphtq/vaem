@@ -1,9 +1,8 @@
 # baseURI: http://lib.topquadrant.com/owl/1.0.0/srg/o2o
 # imports: http://spinrdf.org/spin
 # imports: http://topbraid.org/sparqlmotionfunctions
-# imports: http://www.linkedmodel.org/1.0/schema/dtype
+# imports: http://www.linkedmodel.org/schema/dtype
 
-# c14n-version: 3
 @prefix afn: <http://jena.hpl.hp.com/ARQ/function#> .
 @prefix arg: <http://spinrdf.org/arg#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
@@ -24,11 +23,12 @@
 @prefix tui: <http://uispin.org/tui#> .
 @prefix ui: <http://uispin.org/ui#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
 <http://lib.topquadrant.com/owl/1.0.0/srg/o2o>
   rdf:type owl:Ontology ;
   owl:imports <http://spinrdf.org/spin> ;
   owl:imports <http://topbraid.org/sparqlmotionfunctions> ;
-  owl:imports <http://www.linkedmodel.org/1.0/schema/dtype> ;
+  owl:imports <http://www.linkedmodel.org/schema/dtype> ;
   owl:versionInfo "http://lib.topquadrant.com/owl/1.0.0/srg/o2o#"^^xsd:string ;
 .
 o2o:ClassMagicProperties
@@ -849,15 +849,15 @@ o2o:canBecomeURI
                         sp:arg1 [
                             rdf:type fn:starts-with ;
                             sp:arg1 [
-  sp:varName "literal"^^xsd:string ;
-] ;
+                                sp:varName "literal"^^xsd:string ;
+                              ] ;
                             sp:arg2 "http" ;
                           ] ;
                         sp:arg2 [
                             rdf:type fn:starts-with ;
                             sp:arg1 [
-  sp:varName "literal"^^xsd:string ;
-] ;
+                                sp:varName "literal"^^xsd:string ;
+                              ] ;
                             sp:arg2 "urn" ;
                           ] ;
                       ] ;
@@ -1020,30 +1020,38 @@ o2o:constructIncrementallyPairedList
   spin:body [
       rdf:type sp:Select ;
       sp:resultVariables (
-          _:b18580
+          [
+            sp:varName "pairedList"^^xsd:string ;
+          ]
         ) ;
       sp:where (
           [
-            rdf:type sp:Let ;
+            rdf:type sp:Bind ;
             sp:expression [
                 rdf:type smf:indexOf ;
                 sp:arg1 spin:_arg2 ;
                 sp:arg2 spin:_arg3 ;
               ] ;
-            sp:variable _:b221624 ;
+            sp:variable [
+                sp:varName "i1"^^xsd:string ;
+              ] ;
           ]
           [
-            rdf:type sp:Let ;
+            rdf:type sp:Bind ;
             sp:expression [
                 rdf:type fn:substring ;
                 sp:arg1 spin:_arg2 ;
                 sp:arg2 0 ;
-                sp:arg3 _:b221624 ;
+                sp:arg3 [
+                    sp:varName "i1"^^xsd:string ;
+                  ] ;
               ] ;
-            sp:variable _:b93709 ;
+            sp:variable [
+                sp:varName "p1_1"^^xsd:string ;
+              ] ;
           ]
           [
-            rdf:type sp:Let ;
+            rdf:type sp:Bind ;
             sp:expression [
                 rdf:type smf:if ;
                 sp:arg1 [
@@ -1051,66 +1059,94 @@ o2o:constructIncrementallyPairedList
                     sp:arg1 spin:_arg1 ;
                     sp:arg2 "" ;
                   ] ;
-                sp:arg2 _:b93709 ;
+                sp:arg2 [
+                    sp:varName "p1_1"^^xsd:string ;
+                  ] ;
                 sp:arg3 [
                     rdf:type fn:concat ;
                     sp:arg1 spin:_arg1 ;
                     sp:arg2 spin:_arg3 ;
-                    sp:arg3 _:b93709 ;
+                    sp:arg3 [
+                        sp:varName "p1_1"^^xsd:string ;
+                      ] ;
                   ] ;
               ] ;
-            sp:variable _:b720613 ;
+            sp:variable [
+                sp:varName "p1"^^xsd:string ;
+              ] ;
           ]
           [
-            rdf:type sp:Let ;
+            rdf:type sp:Bind ;
             sp:expression [
                 rdf:type fn:substring ;
                 sp:arg1 spin:_arg2 ;
                 sp:arg2 [
                     rdf:type sp:add ;
-                    sp:arg1 _:b221624 ;
+                    sp:arg1 [
+                        sp:varName "i1"^^xsd:string ;
+                      ] ;
                     sp:arg2 2 ;
                   ] ;
               ] ;
-            sp:variable _:b817016 ;
+            sp:variable [
+                sp:varName "rest"^^xsd:string ;
+              ] ;
           ]
           [
-            rdf:type sp:Let ;
+            rdf:type sp:Bind ;
             sp:expression [
                 rdf:type smf:indexOf ;
-                sp:arg1 _:b817016 ;
+                sp:arg1 [
+                    sp:varName "rest"^^xsd:string ;
+                  ] ;
                 sp:arg2 spin:_arg3 ;
               ] ;
-            sp:variable _:b149178 ;
+            sp:variable [
+                sp:varName "restFirstSplitIndex"^^xsd:string ;
+              ] ;
           ]
           [
-            rdf:type sp:Let ;
+            rdf:type sp:Bind ;
             sp:expression [
                 rdf:type fn:string-length ;
-                sp:arg1 _:b817016 ;
+                sp:arg1 [
+                    sp:varName "rest"^^xsd:string ;
+                  ] ;
               ] ;
-            sp:variable _:b890994 ;
+            sp:variable [
+                sp:varName "restLength"^^xsd:string ;
+              ] ;
           ]
           [
-            rdf:type sp:Let ;
+            rdf:type sp:Bind ;
             sp:expression [
                 rdf:type smf:indexOf ;
-                sp:arg1 _:b817016 ;
+                sp:arg1 [
+                    sp:varName "rest"^^xsd:string ;
+                  ] ;
                 sp:arg2 spin:_arg2 ;
               ] ;
-            sp:variable _:b149178 ;
+            sp:variable [
+                sp:varName "restFirstSplitIndex2"^^xsd:string ;
+              ] ;
           ]
           [
-            rdf:type sp:Let ;
+            rdf:type sp:Bind ;
             sp:expression [
                 rdf:type sp:coalesce ;
-                sp:arg1 _:b149178 ;
-                sp:arg2 _:b890994 ;
+                sp:arg1 [
+                    sp:varName "restFirstSplitIndex2"^^xsd:string ;
+                  ] ;
+                sp:arg2 [
+                    sp:varName "restLength"^^xsd:string ;
+                  ] ;
               ] ;
-            sp:variable _:b436235 ;
+            sp:variable [
+                sp:varName "i2"^^xsd:string ;
+              ] ;
           ]
           [
-            rdf:type sp:Let ;
+            rdf:type sp:Bind ;
             sp:expression [
                 rdf:type fn:substring ;
                 sp:arg1 spin:_arg2 ;
@@ -1119,16 +1155,22 @@ o2o:constructIncrementallyPairedList
                     rdf:type sp:add ;
                     sp:arg1 [
                         rdf:type sp:add ;
-                        sp:arg1 _:b221624 ;
-                        sp:arg2 _:b436235 ;
+                        sp:arg1 [
+                            sp:varName "i1"^^xsd:string ;
+                          ] ;
+                        sp:arg2 [
+                            sp:varName "i2"^^xsd:string ;
+                          ] ;
                       ] ;
                     sp:arg2 1 ;
                   ] ;
               ] ;
-            sp:variable _:b628957 ;
+            sp:variable [
+                sp:varName "p2_1"^^xsd:string ;
+              ] ;
           ]
           [
-            rdf:type sp:Let ;
+            rdf:type sp:Bind ;
             sp:expression [
                 rdf:type smf:if ;
                 sp:arg1 [
@@ -1136,51 +1178,75 @@ o2o:constructIncrementallyPairedList
                     sp:arg1 spin:_arg1 ;
                     sp:arg2 "" ;
                   ] ;
-                sp:arg2 _:b628957 ;
+                sp:arg2 [
+                    sp:varName "p2_1"^^xsd:string ;
+                  ] ;
                 sp:arg3 [
                     rdf:type fn:concat ;
                     sp:arg1 spin:_arg1 ;
                     sp:arg2 spin:_arg3 ;
-                    sp:arg3 _:b628957 ;
+                    sp:arg3 [
+                        sp:varName "p2_1"^^xsd:string ;
+                      ] ;
                   ] ;
               ] ;
-            sp:variable _:b750119 ;
+            sp:variable [
+                sp:varName "p2"^^xsd:string ;
+              ] ;
           ]
           [
-            rdf:type sp:Let ;
+            rdf:type sp:Bind ;
             sp:expression [
                 rdf:type fn:concat ;
-                sp:arg1 _:b720613 ;
+                sp:arg1 [
+                    sp:varName "p1"^^xsd:string ;
+                  ] ;
                 sp:arg2 spin:_arg4 ;
-                sp:arg3 _:b750119 ;
+                sp:arg3 [
+                    sp:varName "p2"^^xsd:string ;
+                  ] ;
               ] ;
-            sp:variable _:b738025 ;
+            sp:variable [
+                sp:varName "pair"^^xsd:string ;
+              ] ;
           ]
           [
-            rdf:type sp:Let ;
+            rdf:type sp:Bind ;
             sp:expression [
                 rdf:type smf:if ;
                 sp:arg1 [
                     rdf:type fn:contains ;
-                    sp:arg1 _:b817016 ;
+                    sp:arg1 [
+                        sp:varName "rest"^^xsd:string ;
+                      ] ;
                     sp:arg2 spin:_arg3 ;
                   ] ;
                 sp:arg2 [
                     rdf:type fn:concat ;
-                    sp:arg1 _:b738025 ;
+                    sp:arg1 [
+                        sp:varName "pair"^^xsd:string ;
+                      ] ;
                     sp:arg2 spin:_arg5 ;
                     sp:arg3 [
                         rdf:type o2o:constructIncrementallyPairedList ;
-                        sp:arg1 _:b720613 ;
-                        sp:arg2 _:b817016 ;
+                        sp:arg1 [
+                            sp:varName "p1"^^xsd:string ;
+                          ] ;
+                        sp:arg2 [
+                            sp:varName "rest"^^xsd:string ;
+                          ] ;
                         sp:arg3 spin:_arg3 ;
                         sp:arg4 spin:_arg4 ;
                         sp:arg5 spin:_arg5 ;
                       ] ;
                   ] ;
-                sp:arg3 _:b738025 ;
+                sp:arg3 [
+                    sp:varName "pair"^^xsd:string ;
+                  ] ;
               ] ;
-            sp:variable _:b18580 ;
+            sp:variable [
+                sp:varName "pairedList"^^xsd:string ;
+              ] ;
           ]
         ) ;
     ] ;
@@ -1228,24 +1294,24 @@ o2o:constructPairedList
           [
             rdf:type sp:Bind ;
             sp:expression spin:_arg1 ;
-            sp:variable _:b61884 ;
+            sp:variable _:b221594 ;
           ]
           [
             rdf:type sp:Bind ;
             sp:expression [
                 rdf:type smf:indexOf ;
-                sp:arg1 _:b61884 ;
+                sp:arg1 _:b221594 ;
                 sp:arg2 spin:_arg2 ;
               ] ;
-            sp:variable _:b565334 ;
+            sp:variable _:b194711 ;
           ]
           [
             rdf:type sp:Bind ;
             sp:expression [
                 rdf:type fn:substring ;
-                sp:arg1 _:b61884 ;
+                sp:arg1 _:b221594 ;
                 sp:arg2 0 ;
-                sp:arg3 _:b565334 ;
+                sp:arg3 _:b194711 ;
               ] ;
             sp:variable [
                 sp:varName "p1"^^xsd:string ;
@@ -1255,10 +1321,10 @@ o2o:constructPairedList
             rdf:type sp:Bind ;
             sp:expression [
                 rdf:type fn:substring ;
-                sp:arg1 _:b61884 ;
+                sp:arg1 _:b221594 ;
                 sp:arg2 [
                     rdf:type sp:add ;
-                    sp:arg1 _:b565334 ;
+                    sp:arg1 _:b194711 ;
                     sp:arg2 2 ;
                   ] ;
               ] ;
@@ -1270,7 +1336,7 @@ o2o:constructPairedList
                 rdf:type fn:string-length ;
                 sp:arg1 _:b432848 ;
               ] ;
-            sp:variable _:b140239 ;
+            sp:variable _:b626792 ;
           ]
           [
             rdf:type sp:Bind ;
@@ -1279,16 +1345,16 @@ o2o:constructPairedList
                 sp:arg1 _:b432848 ;
                 sp:arg2 spin:_arg2 ;
               ] ;
-            sp:variable _:b882055 ;
+            sp:variable _:b607741 ;
           ]
           [
             rdf:type sp:Bind ;
             sp:expression [
                 rdf:type sp:coalesce ;
-                sp:arg1 _:b882055 ;
-                sp:arg2 _:b140239 ;
+                sp:arg1 _:b607741 ;
+                sp:arg2 _:b626792 ;
               ] ;
-            sp:variable _:b220327 ;
+            sp:variable _:b678336 ;
           ]
           [
             rdf:type sp:Bind ;
@@ -1296,7 +1362,7 @@ o2o:constructPairedList
                 rdf:type fn:substring ;
                 sp:arg1 _:b432848 ;
                 sp:arg2 0 ;
-                sp:arg3 _:b220327 ;
+                sp:arg3 _:b678336 ;
               ] ;
             sp:variable [
                 sp:varName "p2"^^xsd:string ;
@@ -1448,21 +1514,21 @@ o2o:copyNode
                         sp:arg1 [
                             rdf:type sp:eq ;
                             sp:arg1 [
-  rdf:type afn:namespace ;
-  sp:arg1 spin:_arg1 ;
-] ;
+                                rdf:type afn:namespace ;
+                                sp:arg1 spin:_arg1 ;
+                              ] ;
                             sp:arg2 spin:_arg2 ;
                           ] ;
                         sp:arg2 [
                             rdf:type smf:resource ;
                             sp:arg1 [
-  rdf:type fn:concat ;
-  sp:arg1 spin:_arg3 ;
-  sp:arg2 [
-      rdf:type afn:localname ;
-      sp:arg1 spin:_arg1 ;
-    ] ;
-] ;
+                                rdf:type fn:concat ;
+                                sp:arg1 spin:_arg3 ;
+                                sp:arg2 [
+                                    rdf:type afn:localname ;
+                                    sp:arg1 spin:_arg1 ;
+                                  ] ;
+                              ] ;
                           ] ;
                         sp:arg3 spin:_arg1 ;
                       ] ;
@@ -1760,7 +1826,7 @@ o2o:formatHTMLreferenceForResource
                     sp:arg1 spin:_arg1 ;
                   ] ;
               ] ;
-            sp:variable _:b564691 ;
+            sp:variable _:b496003 ;
           ]
           [
             rdf:type sp:Let ;
@@ -1772,7 +1838,7 @@ o2o:formatHTMLreferenceForResource
             sp:expression [
                 rdf:type fn:concat ;
                 sp:arg1 "<a href=\"" ;
-                sp:arg2 _:b564691 ;
+                sp:arg2 _:b496003 ;
                 sp:arg3 "\" target=\"" ;
                 sp:arg4 spin:_arg3 ;
                 sp:arg5 "\">" ;
@@ -1789,7 +1855,7 @@ o2o:formatHTMLreferenceForResource
             sp:expression [
                 rdf:type fn:concat ;
                 sp:arg1 "<a href=\"" ;
-                sp:arg2 _:b564691 ;
+                sp:arg2 _:b496003 ;
                 sp:arg3 "\" target=\"" ;
                 sp:arg4 spin:_arg3 ;
                 sp:arg5 "\">" ;
@@ -1824,7 +1890,7 @@ o2o:formatHTMLreferenceForResource
                 rdf:type smf:if ;
                 sp:arg1 [
                     rdf:type sp:eq ;
-                    sp:arg1 _:b564691 ;
+                    sp:arg1 _:b496003 ;
                     sp:arg2 "no" ;
                   ] ;
                 sp:arg2 _:b812966 ;
@@ -3344,15 +3410,15 @@ o2o:isSystemResource
                         sp:arg1 [
                             rdf:type sp:eq ;
                             sp:arg1 [
-  sp:varName "ns"^^xsd:string ;
-] ;
+                                sp:varName "ns"^^xsd:string ;
+                              ] ;
                             sp:arg2 "http://www.w3.org/2002/07/owl#" ;
                           ] ;
                         sp:arg2 [
                             rdf:type sp:eq ;
                             sp:arg1 [
-  sp:varName "ns"^^xsd:string ;
-] ;
+                                sp:varName "ns"^^xsd:string ;
+                              ] ;
                             sp:arg2 "http://www.w3.org/2000/01/rdf-schema#" ;
                           ] ;
                       ] ;
@@ -3859,7 +3925,7 @@ o2o:namePart
                 sp:arg2 _:b620327 ;
                 sp:arg3 "$2" ;
               ] ;
-            sp:variable _:b847525 ;
+            sp:variable _:b524871 ;
           ]
           [
             rdf:type sp:Let ;
@@ -3867,13 +3933,13 @@ o2o:namePart
                 rdf:type smf:if ;
                 sp:arg1 [
                     rdf:type sp:eq ;
-                    sp:arg1 _:b847525 ;
+                    sp:arg1 _:b524871 ;
                     sp:arg2 "" ;
                   ] ;
                 sp:arg2 _:b104027 ;
                 sp:arg3 [
                     rdf:type o2o:tailPart ;
-                    sp:arg1 _:b847525 ;
+                    sp:arg1 _:b524871 ;
                     sp:arg2 spin:_arg2 ;
                   ] ;
               ] ;
@@ -4860,11 +4926,11 @@ o2o:parentsOfPropertiesAtClass
                     sp:elements (
                         [
                           sp:object [
-sp:varName "value"^^xsd:string ;
+                              sp:varName "value"^^xsd:string ;
                             ] ;
                           sp:predicate owl:hasValue ;
                           sp:subject [
-sp:varName "superClass"^^xsd:string ;
+                              sp:varName "superClass"^^xsd:string ;
                             ] ;
                         ]
                       ) ;
@@ -5259,11 +5325,11 @@ o2o:relevantPropertiesAtClass
                     sp:elements (
                         [
                           sp:object [
-sp:varName "value"^^xsd:string ;
+                              sp:varName "value"^^xsd:string ;
                             ] ;
                           sp:predicate owl:hasValue ;
                           sp:subject [
-sp:varName "superClass"^^xsd:string ;
+                              sp:varName "superClass"^^xsd:string ;
                             ] ;
                         ]
                       ) ;
@@ -5398,11 +5464,11 @@ o2o:relevantPropertiesAtClassWithParent
                     sp:elements (
                         [
                           sp:object [
-sp:varName "value"^^xsd:string ;
+                              sp:varName "value"^^xsd:string ;
                             ] ;
                           sp:predicate owl:hasValue ;
                           sp:subject [
-sp:varName "superClass"^^xsd:string ;
+                              sp:varName "superClass"^^xsd:string ;
                             ] ;
                         ]
                       ) ;
@@ -5833,7 +5899,7 @@ o2o:tailPart
                 sp:arg2 _:b86265 ;
                 sp:arg3 "$2" ;
               ] ;
-            sp:variable _:b220008 ;
+            sp:variable _:b194862 ;
           ]
           [
             rdf:type sp:Let ;
@@ -5841,15 +5907,15 @@ o2o:tailPart
                 rdf:type smf:if ;
                 sp:arg1 [
                     rdf:type fn:contains ;
-                    sp:arg1 _:b220008 ;
+                    sp:arg1 _:b194862 ;
                     sp:arg2 spin:_arg2 ;
                   ] ;
                 sp:arg2 [
                     rdf:type o2o:tailPart ;
-                    sp:arg1 _:b220008 ;
+                    sp:arg1 _:b194862 ;
                     sp:arg2 spin:_arg2 ;
                   ] ;
-                sp:arg3 _:b220008 ;
+                sp:arg3 _:b194862 ;
               ] ;
             sp:variable _:b311742 ;
           ]
@@ -6155,9 +6221,6 @@ _:b8318
 _:b15925
   sp:varName "?3"^^xsd:string ;
 .
-_:b18580
-  sp:varName "pairedList"^^xsd:string ;
-.
 _:b19689
   sp:varName "propname"^^xsd:string ;
 .
@@ -6179,9 +6242,6 @@ _:b48426
 _:b57636
   sp:varName "indexOfRandomInstance"^^xsd:string ;
 .
-_:b61884
-  sp:varName "str"^^xsd:string ;
-.
 _:b62967
   sp:varName "r"^^xsd:string ;
 .
@@ -6202,9 +6262,6 @@ _:b92503
 .
 _:b93091
   sp:varName "url"^^xsd:string ;
-.
-_:b93709
-  sp:varName "p1_1"^^xsd:string ;
 .
 _:b95771
   sp:varName "x"^^xsd:string ;
@@ -6233,14 +6290,8 @@ _:b120164
 _:b135411
   sp:varName "indexOfRandomInstance1"^^xsd:string ;
 .
-_:b140239
-  sp:varName "restLength"^^xsd:string ;
-.
 _:b146661
   sp:varName "propname"^^xsd:string ;
-.
-_:b149178
-  sp:varName "restFirstSplitIndex"^^xsd:string ;
 .
 _:b149870
   sp:varName "?5"^^xsd:string ;
@@ -6287,6 +6338,12 @@ _:b190922
 _:b191193
   sp:varName "pairMatch"^^xsd:string ;
 .
+_:b194711
+  sp:varName "i1"^^xsd:string ;
+.
+_:b194862
+  sp:varName "rest"^^xsd:string ;
+.
 _:b196853
   sp:varName "r"^^xsd:string ;
 .
@@ -6296,14 +6353,8 @@ _:b197519
 _:b206706
   sp:varName "inputAsString"^^xsd:string ;
 .
-_:b220008
-  sp:varName "rest"^^xsd:string ;
-.
-_:b220327
-  sp:varName "i2"^^xsd:string ;
-.
-_:b221624
-  sp:varName "i1"^^xsd:string ;
+_:b221594
+  sp:varName "str"^^xsd:string ;
 .
 _:b223607
   sp:varName "pairedList2"^^xsd:string ;
@@ -6404,14 +6455,14 @@ _:b435793
 _:b435991
   sp:varName "nextProperty"^^xsd:string ;
 .
-_:b436235
-  sp:varName "i2"^^xsd:string ;
-.
 _:b463042
   sp:varName "randomEnumValue"^^xsd:string ;
 .
 _:b490475
   sp:varName "ref2"^^xsd:string ;
+.
+_:b496003
+  sp:varName "hrefValue"^^xsd:string ;
 .
 _:b499526
   sp:varName "?4"^^xsd:string ;
@@ -6431,6 +6482,9 @@ _:b517979
 _:b522613
   sp:varName "ontClass"^^xsd:string ;
 .
+_:b524871
+  sp:varName "rest"^^xsd:string ;
+.
 _:b530587
   sp:varName "o"^^xsd:string ;
 .
@@ -6445,12 +6499,6 @@ _:b558358
 .
 _:b562475
   sp:varName "res"^^xsd:string ;
-.
-_:b564691
-  sp:varName "hrefValue"^^xsd:string ;
-.
-_:b565334
-  sp:varName "i1"^^xsd:string ;
 .
 _:b574195
   sp:varName "p1"^^xsd:string ;
@@ -6470,6 +6518,9 @@ _:b603277
 _:b603372
   sp:varName "p2"^^xsd:string ;
 .
+_:b607741
+  sp:varName "restFirstSplitIndex"^^xsd:string ;
+.
 _:b609425
   sp:varName "uri"^^xsd:string ;
 .
@@ -6479,8 +6530,8 @@ _:b609929
 _:b620327
   sp:varName "regex"^^xsd:string ;
 .
-_:b628957
-  sp:varName "p2_1"^^xsd:string ;
+_:b626792
+  sp:varName "restLength"^^xsd:string ;
 .
 _:b630195
   sp:varName "pair"^^xsd:string ;
@@ -6530,6 +6581,9 @@ _:b675477
 _:b676997
   sp:varName "o2"^^xsd:string ;
 .
+_:b678336
+  sp:varName "i2"^^xsd:string ;
+.
 _:b679670
   sp:varName "index1"^^xsd:string ;
 .
@@ -6542,23 +6596,14 @@ _:b693630
 _:b707256
   sp:varName "p1"^^xsd:string ;
 .
-_:b720613
-  sp:varName "p1"^^xsd:string ;
-.
 _:b722008
   sp:varName "htmlString"^^xsd:string ;
 .
 _:b722009
   sp:varName "titlecase"^^xsd:string ;
 .
-_:b738025
-  sp:varName "pair"^^xsd:string ;
-.
 _:b743452
   sp:varName "propname"^^xsd:string ;
-.
-_:b750119
-  sp:varName "p2"^^xsd:string ;
 .
 _:b754254
   sp:varName "?1"^^xsd:string ;
@@ -6596,9 +6641,6 @@ _:b804273
 _:b812966
   sp:varName "isLiteral"^^xsd:string ;
 .
-_:b817016
-  sp:varName "rest"^^xsd:string ;
-.
 _:b821157
   sp:varName "rest"^^xsd:string ;
 .
@@ -6620,14 +6662,8 @@ _:b841569
 _:b842355
   sp:varName "prefix"^^xsd:string ;
 .
-_:b847525
-  sp:varName "rest"^^xsd:string ;
-.
 _:b881296
   sp:varName "cls"^^xsd:string ;
-.
-_:b882055
-  sp:varName "restFirstSplitIndex"^^xsd:string ;
 .
 _:b886453
   sp:varName "pairedList"^^xsd:string ;
@@ -6640,9 +6676,6 @@ _:b888482
 .
 _:b890702
   sp:varName "literalLength"^^xsd:string ;
-.
-_:b890994
-  sp:varName "restLength"^^xsd:string ;
 .
 _:b893330
   sp:varName "rand"^^xsd:string ;

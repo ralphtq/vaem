@@ -968,31 +968,63 @@ lmdoc:AnyURILiteralViewer
       swa:weight 2 ;
     ] ;
   ui:overrides swa:AnyURILiteralViewer ;
-  ui:private "true"^^xsd:boolean ;
+  ui:private "false"^^xsd:boolean ;
   ui:prototype [
       rdf:type html:Div ;
       ui:child [
-          rdf:type html:A ;
-          html:href [
-              rdf:type xsd:string ;
-              sp:arg1 [
-                  sp:varName "object"^^xsd:string ;
-                ] ;
-            ] ;
-          html:title [
-              sp:varName "title"^^xsd:string ;
-            ] ;
+          rdf:type ui:else ;
           ui:child [
-              rdf:type ui:TextNode ;
-              ui:childIndex 0 ;
-              ui:text [
+              rdf:type html:A ;
+              html:href [
                   rdf:type xsd:string ;
                   sp:arg1 [
                       sp:varName "object"^^xsd:string ;
                     ] ;
                 ] ;
+              html:title [
+                  sp:varName "title"^^xsd:string ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text [
+                      rdf:type xsd:string ;
+                      sp:arg1 [
+                          sp:varName "object"^^xsd:string ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:A ;
+              html:href [
+                  rdf:type xsd:string ;
+                  sp:arg1 [
+                      sp:varName "object"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text [
+                      sp:varName "object"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
             ] ;
           ui:childIndex 0 ;
+          ui:condition [
+              rdf:type fn:starts-with ;
+              sp:arg1 [
+                  sp:varName "object"^^xsd:string ;
+                ] ;
+              sp:arg2 "http" ;
+            ] ;
         ] ;
     ] ;
   rdfs:comment "The LM Doc viewer for xsd:anyURI values: shows a hyperlink to the URI."^^xsd:string ;
@@ -1193,17 +1225,19 @@ lmdoc:ClassInstances
       rdf:type ui:setContext ;
       ui:child [
           rdf:type ui:group ;
-          let:count [
+          letrs:instances [
               rdf:type sp:Select ;
+              sp:orderBy (
+                  [
+                    rdf:type ui:label ;
+                    sp:arg1 [
+                        sp:varName "instance"^^xsd:string ;
+                      ] ;
+                  ]
+                ) ;
               sp:resultVariables (
                   [
-                    sp:expression [
-                        rdf:type sp:Count ;
-                        sp:expression [
-                            sp:varName "instance"^^xsd:string ;
-                          ] ;
-                      ] ;
-                    sp:varName "instanceCount"^^xsd:string ;
+                    sp:varName "instance"^^xsd:string ;
                   ]
                 ) ;
               sp:where (
@@ -1221,6 +1255,31 @@ lmdoc:ClassInstances
           ui:child [
               rdf:type ui:if ;
               ui:child [
+                  rdf:type html:Dd ;
+                  ui:child [
+                      rdf:type ui:forEach ;
+                      ui:child [
+                          rdf:type lmdoc:ResourceDocLink ;
+                          arg:resource [
+                              sp:varName "instance"^^xsd:string ;
+                            ] ;
+                          arg:title [
+                              rdf:type xsd:string ;
+                              sp:arg1 [
+                                  sp:varName "instance"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:resultSet [
+                          sp:varName "instances"^^xsd:string ;
+                        ] ;
+                      ui:separator " | "^^xsd:string ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
                   rdf:type html:Div ;
                   html:class "swa-sub-title"^^xsd:string ;
                   ui:child [
@@ -1230,19 +1289,14 @@ lmdoc:ClassInstances
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
-              ui:child [
-                  rdf:type lmdoc:SubjectsBody ;
-                  arg:object [
-                      sp:varName "class"^^xsd:string ;
-                    ] ;
-                  arg:predicate rdf:type ;
-                  ui:childIndex 1 ;
-                ] ;
               ui:childIndex 0 ;
               ui:condition [
                   rdf:type sp:gt ;
                   sp:arg1 [
-                      sp:varName "count"^^xsd:string ;
+                      rdf:type spr:rowCount ;
+                      sp:arg1 [
+                          sp:varName "instances"^^xsd:string ;
+                        ] ;
                     ] ;
                   sp:arg2 0 ;
                 ] ;
@@ -1493,6 +1547,16 @@ lmdoc:DetailedClassView
           rdf:type html:Div ;
           html:class "lm-resource-box"^^xsd:string ;
           ui:child [
+              rdf:type html:Div ;
+              html:class "swa-sub-title"^^xsd:string ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "Description"^^xsd:string ;
+                ] ;
+              ui:childIndex 2 ;
+            ] ;
+          ui:child [
               rdf:type ui:call ;
               arg:resource [
                   sp:varName "class"^^xsd:string ;
@@ -1512,7 +1576,7 @@ lmdoc:DetailedClassView
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
-              ui:childIndex 6 ;
+              ui:childIndex 9 ;
               ui:template [
                   rdf:type swa:modeProperty ;
                   arg:predicate swa:formObjectPredicateSelectionTemplate ;
@@ -1634,7 +1698,7 @@ lmdoc:DetailedClassView
                       sp:arg2 0 ;
                     ] ;
                 ] ;
-              ui:childIndex 2 ;
+              ui:childIndex 5 ;
             ] ;
           ui:child [
               rdf:type ui:group ;
@@ -1751,7 +1815,7 @@ lmdoc:DetailedClassView
                       sp:arg2 0 ;
                     ] ;
                 ] ;
-              ui:childIndex 5 ;
+              ui:childIndex 8 ;
             ] ;
           ui:child [
               rdf:type ui:if ;
@@ -1855,7 +1919,7 @@ lmdoc:DetailedClassView
                   ui:template lmdoc:AllConstructors ;
                   ui:varName "constructors"^^xsd:string ;
                 ] ;
-              ui:childIndex 3 ;
+              ui:childIndex 6 ;
               ui:condition [
                   sp:varName "showConstructors"^^xsd:string ;
                 ] ;
@@ -1966,7 +2030,7 @@ lmdoc:DetailedClassView
                   ui:template lmdoc:AllRules ;
                   ui:varName "rules"^^xsd:string ;
                 ] ;
-              ui:childIndex 4 ;
+              ui:childIndex 7 ;
               ui:condition [
                   sp:varName "showRules"^^xsd:string ;
                 ] ;
@@ -1978,9 +2042,14 @@ lmdoc:DetailedClassView
                   arg:class [
                       sp:varName "class"^^xsd:string ;
                     ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type lmdoc:VSpace ;
+                  arg:margin "40px;"^^xsd:string ;
                   ui:childIndex 0 ;
                 ] ;
-              ui:childIndex 7 ;
+              ui:childIndex 10 ;
               ui:condition [
                   sp:varName "showInstances"^^xsd:string ;
                 ] ;
@@ -1990,7 +2059,7 @@ lmdoc:DetailedClassView
               arg:node [
                   sp:varName "class"^^xsd:string ;
                 ] ;
-              ui:childIndex 1 ;
+              ui:childIndex 3 ;
             ] ;
           ui:child [
               rdf:type lmdoc:ResourceFooter ;
@@ -1998,12 +2067,22 @@ lmdoc:DetailedClassView
               arg:resource [
                   sp:varName "class"^^xsd:string ;
                 ] ;
-              ui:childIndex 9 ;
+              ui:childIndex 12 ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:VSpace ;
+              arg:margin "30px;"^^xsd:string ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:VSpace ;
+              arg:margin "30px;"^^xsd:string ;
+              ui:childIndex 4 ;
             ] ;
           ui:child [
               rdf:type lmdoc:VSpace ;
               arg:margin "40px;"^^xsd:string ;
-              ui:childIndex 8 ;
+              ui:childIndex 11 ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -4122,7 +4201,17 @@ lmdoc:InstancesSection
                                   ui:args "*"^^xsd:string ;
                                   ui:childIndex 0 ;
                                 ] ;
-                              ui:childIndex 2 ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Div ;
+                              html:class "swa-sub-title"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Description"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 3 ;
                             ] ;
                           ui:child [
                               rdf:type html:Div ;
@@ -4132,14 +4221,14 @@ lmdoc:InstancesSection
                                   ui:childIndex 0 ;
                                   ui:text "Type"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 1 ;
+                              ui:childIndex 0 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:MaybeDescription ;
                               arg:node [
                                   sp:varName "instance"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 0 ;
+                              ui:childIndex 4 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ObjectsGroup ;
@@ -4151,7 +4240,7 @@ lmdoc:InstancesSection
                               arg:subject [
                                   sp:varName "instance"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 6 ;
+                              ui:childIndex 8 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ObjectsGroup ;
@@ -4163,7 +4252,7 @@ lmdoc:InstancesSection
                               arg:subject [
                                   sp:varName "instance"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 4 ;
+                              ui:childIndex 6 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ResourceFooter ;
@@ -4171,12 +4260,12 @@ lmdoc:InstancesSection
                               arg:resource [
                                   sp:varName "instance"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 8 ;
+                              ui:childIndex 10 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:VSpace ;
                               arg:margin "30px;"^^xsd:string ;
-                              ui:childIndex 3 ;
+                              ui:childIndex 2 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:VSpace ;
@@ -4185,8 +4274,13 @@ lmdoc:InstancesSection
                             ] ;
                           ui:child [
                               rdf:type lmdoc:VSpace ;
-                              arg:margin "40px;"^^xsd:string ;
+                              arg:margin "30px;"^^xsd:string ;
                               ui:childIndex 7 ;
+                            ] ;
+                          ui:child [
+                              rdf:type lmdoc:VSpace ;
+                              arg:margin "40px;"^^xsd:string ;
+                              ui:childIndex 9 ;
                             ] ;
                           ui:childIndex 2 ;
                         ] ;
@@ -4632,6 +4726,92 @@ lmdoc:Link
   rdfs:label "Link"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
 .
+lmdoc:LiteralViewer
+  rdf:type swa:ObjectViewerClass ;
+  swa:objectWidgetWeight [
+      rdf:type swa:WeightedExpression ;
+      swa:expression [
+          rdf:type sp:eq ;
+          sp:arg1 [
+              sp:varName "kind"^^xsd:string ;
+            ] ;
+          sp:arg2 "literal" ;
+        ] ;
+      swa:weight 50 ;
+    ] ;
+  ui:overrides swa:LiteralViewer ;
+  ui:private "true"^^xsd:boolean ;
+  ui:prototype [
+      rdf:type html:Div ;
+      html:class "swa-shifted-label"^^xsd:string ;
+      ui:child [
+          rdf:type ui:else ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text [
+                  sp:varName "object"^^xsd:string ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type swa:LangDisplay ;
+                  arg:lang [
+                      rdf:type sp:lang ;
+                      sp:arg1 [
+                          sp:varName "object"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 1 ;
+              ui:condition [
+                  rdf:type sp:ne ;
+                  sp:arg1 [
+                      rdf:type sp:lang ;
+                      sp:arg1 [
+                          sp:varName "object"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  sp:arg2 "" ;
+                ] ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:A ;
+              html:href [
+                  rdf:type xsd:string ;
+                  sp:arg1 [
+                      sp:varName "object"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text [
+                      sp:varName "object"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              rdf:type fn:starts-with ;
+              sp:arg1 [
+                  sp:varName "object"^^xsd:string ;
+                ] ;
+              sp:arg2 "http" ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:comment "A node viewer for literal values, displaying the literal's text. If a language tag is present, then this will be displayed behind the text."^^xsd:string ;
+  rdfs:label "Literal viewer"^^xsd:string ;
+  rdfs:subClassOf swa:LiteralViewer ;
+.
 lmdoc:MagicProperties
   rdf:type spin:MagicProperty ;
   rdfs:label "Magic properties"^^xsd:string ;
@@ -4660,16 +4840,15 @@ lmdoc:MaybeDescription
           arg:node [
               sp:varName "node"^^xsd:string ;
             ] ;
-          arg:property vaem:description ;
-          ui:childIndex 0 ;
+          arg:property rdfs:comment ;
+          ui:childIndex 2 ;
         ] ;
       ui:child [
-          rdf:type lmdoc:MaybeDescriptionUsingProperty ;
+          rdf:type lmdoc:MaybeHTMLstring ;
           arg:node [
               sp:varName "node"^^xsd:string ;
             ] ;
-          arg:property rdfs:comment ;
-          ui:childIndex 2 ;
+          ui:childIndex 0 ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
@@ -4752,7 +4931,21 @@ lmdoc:MaybeHTMLstring
                 ] ;
               sp:arg2 lmdoc:htmlString ;
             ] ;
-          sp:arg2 "Nothing" ;
+          sp:arg2 [
+              rdf:type spl:object ;
+              sp:arg1 [
+                  sp:varName "node"^^xsd:string ;
+                ] ;
+              sp:arg2 vaem:description ;
+            ] ;
+          sp:arg3 [
+              rdf:type spl:object ;
+              sp:arg1 [
+                  sp:varName "node"^^xsd:string ;
+                ] ;
+              sp:arg2 lmdoc:htmlString ;
+            ] ;
+          sp:arg4 "Nothing" ;
         ] ;
       ui:child [
           rdf:type ui:if ;
@@ -4956,6 +5149,7 @@ lmdoc:ObjectElements
 .
 lmdoc:ObjectViewer
   rdf:type swa:ObjectViewerClass ;
+  ui:overrides swa:ObjectViewer ;
   ui:private "false"^^xsd:boolean ;
   ui:prototype [
       rdf:type html:Div ;
@@ -5046,6 +5240,11 @@ lmdoc:ObjectViewer
       ui:child [
           rdf:type ui:if ;
           ui:child [
+              rdf:type ui:CommentNode ;
+              ui:childIndex 0 ;
+              rdfs:comment "p>In lmdoc:ObjectViewer with class {= ?class }</p"^^xsd:string ;
+            ] ;
+          ui:child [
               rdf:type ui:dynamicView ;
               arg:object [
                   sp:varName "object"^^xsd:string ;
@@ -5056,7 +5255,7 @@ lmdoc:ObjectViewer
               arg:subject [
                   sp:varName "subject"^^xsd:string ;
                 ] ;
-              ui:childIndex 0 ;
+              ui:childIndex 1 ;
               ui:class [
                   sp:varName "class"^^xsd:string ;
                 ] ;
@@ -5075,6 +5274,7 @@ lmdoc:ObjectViewer
 - ?kind: \"literal\", \"blank\", \"uri\" or \"image\"
 - ?predicate: the property being displayed"""^^xsd:string ;
   rdfs:label "Object viewer"^^xsd:string ;
+  rdfs:subClassOf swa:ObjectViewer ;
   rdfs:subClassOf lmdoc:ObjectElements ;
 .
 lmdoc:ObjectWidgetRow
@@ -5805,17 +6005,27 @@ lmdoc:PropertiesSection
                               arg:typeLabel "Property "^^xsd:string ;
                               ui:childIndex 0 ;
                             ] ;
-                          ui:childIndex 1 ;
+                          ui:childIndex 0 ;
                         ] ;
                       ui:child [
                           rdf:type html:Div ;
                           html:class "lm-resource-box"^^xsd:string ;
                           ui:child [
+                              rdf:type html:Div ;
+                              html:class "swa-sub-title"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Description"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
                               rdf:type lmdoc:MaybeDescription ;
                               arg:node [
                                   sp:varName "property"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 0 ;
+                              ui:childIndex 1 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ObjectsGroup ;
@@ -5827,7 +6037,7 @@ lmdoc:PropertiesSection
                               arg:subject [
                                   sp:varName "property"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 3 ;
+                              ui:childIndex 5 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ObjectsGroup ;
@@ -5839,7 +6049,7 @@ lmdoc:PropertiesSection
                               arg:subject [
                                   sp:varName "property"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 1 ;
+                              ui:childIndex 3 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ResourceFooter ;
@@ -5847,7 +6057,7 @@ lmdoc:PropertiesSection
                               arg:resource [
                                   sp:varName "property"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 5 ;
+                              ui:childIndex 7 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:VSpace ;
@@ -5856,15 +6066,15 @@ lmdoc:PropertiesSection
                             ] ;
                           ui:child [
                               rdf:type lmdoc:VSpace ;
-                              arg:margin "40px;"^^xsd:string ;
+                              arg:margin "30px;"^^xsd:string ;
                               ui:childIndex 4 ;
                             ] ;
-                          ui:childIndex 2 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:VSpace ;
-                          arg:margin "20px;"^^xsd:string ;
-                          ui:childIndex 0 ;
+                          ui:child [
+                              rdf:type lmdoc:VSpace ;
+                              arg:margin "40px;"^^xsd:string ;
+                              ui:childIndex 6 ;
+                            ] ;
+                          ui:childIndex 1 ;
                         ] ;
                       ui:childIndex 0 ;
                       ui:template [

@@ -1,580 +1,729 @@
-# Saved by TopBraid on Fri Sep 16 19:48:09 PDT 2011
 # baseURI: http://www.linkedmodel.org/1.2/scripts/ontologygenerator
 # imports: http://topbraid.org/sparqlmotionfunctions
-# imports: http://www.linkedmodel.org/1.2/catalog/lm
 # imports: http://topbraid.org/sparqlmotionlib-tbc
 
-@prefix fn:      <http://www.w3.org/2005/xpath-functions#> .
-@prefix ontologygenerator:  <http://www.linkedmodel.org/1.2/scripts/ontologygenerator#> .
-@prefix owl:     <http://www.w3.org/2002/07/owl#> .
-@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix sm:      <http://topbraid.org/sparqlmotion#> .
-@prefix smf:     <http://topbraid.org/sparqlmotionfunctions#> .
-@prefix sml:     <http://topbraid.org/sparqlmotionlib#> .
-@prefix sp:      <http://spinrdf.org/sp#> .
-@prefix spif:    <http://spinrdf.org/spif#> .
-@prefix spin:    <http://spinrdf.org/spin#> .
-@prefix spl:     <http://spinrdf.org/spl#> .
-@prefix vaem:    <http://www.linkedmodel.org/schema/vaem#> .
-@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
+@prefix ontologygenerator: <http://www.linkedmodel.org/1.2/scripts/ontologygenerator#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sm: <http://topbraid.org/sparqlmotion#> .
+@prefix smf: <http://topbraid.org/sparqlmotionfunctions#> .
+@prefix sml: <http://topbraid.org/sparqlmotionlib#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 sml:ExportToExternalRDFFile
-      rdf:type sm:Module ;
-      rdfs:label "Export to external RDF file"^^xsd:string ;
-      rdfs:subClassOf sml:ExportToLocalModules ;
-      spin:constraint
-              [ rdf:type spl:Argument ;
-                rdfs:comment "The path of the file to create. The path can be relative to the current script's folder (e.g., myFolder/test.rdf) or absolute to the workspace root /myProject/myFolder/test.rdf. Can be left blank if the base URI already has a representation in the workspace. In that case, the primary file in the workspace will be overwritten."^^xsd:string ;
-                spl:optional "true"^^xsd:boolean ;
-                spl:predicate sml:targetFilePath
-              ] ;
-      spin:constraint
-              [ rdf:type spl:Argument ;
-                rdfs:comment "The base URI under which the resulting file will be registered in the workspace."^^xsd:string ;
-                spl:predicate sml:baseURI
-              ] .
-
+  rdf:type sm:Module ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate sml:targetFilePath ;
+      rdfs:comment "The path of the file to create. The path can be relative to the current script's folder (e.g., myFolder/test.rdf) or absolute to the workspace root /myProject/myFolder/test.rdf. Can be left blank if the base URI already has a representation in the workspace. In that case, the primary file in the workspace will be overwritten."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sml:baseURI ;
+      rdfs:comment "The base URI under which the resulting file will be registered in the workspace."^^xsd:string ;
+    ] ;
+  rdfs:label "Export to external RDF file"^^xsd:string ;
+  rdfs:subClassOf sml:ExportToLocalModules ;
+.
 <http://www.linkedmodel.org/1.2/scripts/ontologygenerator>
-      rdf:type owl:Ontology ;
-      vaem:description "http://localhost:8083/tbl/actions?action=sparqlmotion&id=ontologygenerator:generateOntologiesCatalog"^^xsd:string ;
-      owl:imports <http://topbraid.org/sparqlmotionfunctions> , <http://topbraid.org/sparqlmotionlib-tbc> , <http://www.linkedmodel.org/1.2/catalog/lm> ;
-      owl:versionInfo "Created with TopBraid Composer"^^xsd:string .
-
+  rdf:type owl:Ontology ;
+  vaem:description "http://localhost:8083/tbl/actions?action=sparqlmotion&id=ontologygenerator:generateOntologiesCatalog"^^xsd:string ;
+  owl:imports <http://topbraid.org/sparqlmotionfunctions> ;
+  owl:imports <http://topbraid.org/sparqlmotionlib-tbc> ;
+  owl:versionInfo "Created with TopBraid Composer"^^xsd:string ;
+.
 ontologygenerator:BindOnePrefix
-      rdf:type sml:BindBySelect ;
-      rdfs:label "Bind one prefix"^^xsd:string ;
-      sm:next ontologygenerator:DeleteCatalogPrefixes ;
-      sml:selectQuery
-              [ rdf:type sp:Select ;
-                sp:resultVariables (_:b1) ;
-                sp:where ([ sp:object owl:Ontology ;
-                            sp:predicate rdf:type ;
-                            sp:subject _:b2
-                          ] [ sp:object _:b1 ;
-                            sp:predicate rdf:value ;
-                            sp:subject _:b2
-                          ])
-              ] .
-
+  rdf:type sml:BindBySelect ;
+  sm:next ontologygenerator:DeleteCatalogPrefixes ;
+  sml:selectQuery [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b20543
+        ) ;
+      sp:where (
+          [
+            sp:object owl:Ontology ;
+            sp:predicate rdf:type ;
+            sp:subject _:b68997 ;
+          ]
+          [
+            sp:object _:b20543 ;
+            sp:predicate rdf:value ;
+            sp:subject _:b68997 ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "Bind one prefix"^^xsd:string ;
+.
 ontologygenerator:ConstructCatalogTriples
-      rdf:type sml:ApplyConstruct ;
-      rdfs:label "Construct catalog triples"^^xsd:string ;
-      sm:next ontologygenerator:ConstructNonVersionedImports , ontologygenerator:FilterOutVersionedImports ;
-      sml:constructQuery
-              [ rdf:type sp:Construct ;
-                sp:templates ([ sp:object _:b3 ;
-                            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
-                            sp:subject _:b4
-                          ] [ sp:object _:b5 ;
-                            sp:predicate vaem:namespace ;
-                            sp:subject _:b4
-                          ]) ;
-                sp:where ([ sp:object _:b3 ;
-                            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
-                            sp:subject _:b4
-                          ] [ sp:object _:b5 ;
-                            sp:predicate vaem:namespace ;
-                            sp:subject _:b4
-                          ])
-              ] ;
-      sml:replace "true"^^xsd:boolean .
-
+  rdf:type sml:ApplyConstruct ;
+  sm:next ontologygenerator:ConstructNonVersionedImports ;
+  sm:next ontologygenerator:FilterOutVersionedImports ;
+  sml:constructQuery [
+      rdf:type sp:Construct ;
+      sp:templates (
+          [
+            sp:object _:b35744 ;
+            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
+            sp:subject _:b98440 ;
+          ]
+          [
+            sp:object _:b69337 ;
+            sp:predicate vaem:namespace ;
+            sp:subject _:b98440 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object _:b35744 ;
+            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
+            sp:subject _:b98440 ;
+          ]
+          [
+            sp:object _:b69337 ;
+            sp:predicate vaem:namespace ;
+            sp:subject _:b98440 ;
+          ]
+        ) ;
+    ] ;
+  sml:replace "true"^^xsd:boolean ;
+  rdfs:label "Construct catalog triples"^^xsd:string ;
+.
 ontologygenerator:ConstructNonVersionedImports
-      rdf:type sml:ApplyConstruct ;
-      rdfs:label "Construct non versioned imports"^^xsd:string ;
-      sm:next ontologygenerator:ConstructTempPrefixModel ;
-      sml:constructQuery
-              [ rdf:type sp:Construct ;
-                sp:templates ([ sp:object _:b6 ;
-                            sp:predicate owl:imports ;
-                            sp:subject _:b7
-                          ]) ;
-                sp:where ([ rdf:type sp:Bind ;
-                            sp:expression
-                                    [ rdf:type smf:resource ;
-                                      sp:arg1 [ sp:varName "nonVersionedBaseURI"^^xsd:string
-                                              ]
-                                    ] ;
-                            sp:variable _:b7
-                          ] [ sp:object _:b8 ;
-                            sp:predicate owl:imports ;
-                            sp:subject _:b7
-                          ] [ rdf:type sp:Bind ;
-                            sp:expression
-                                    [ rdf:type xsd:string ;
-                                      sp:arg1 _:b8
-                                    ] ;
-                            sp:variable _:b9
-                          ] [ sp:object _:b9 ;
-                            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
-                            sp:subject _:b10
-                          ] [ sp:object _:b11 ;
-                            sp:predicate vaem:namespace ;
-                            sp:subject _:b10
-                          ] [ rdf:type sp:Bind ;
-                            sp:expression
-                                    [ rdf:type smf:resource ;
-                                      sp:arg1 _:b11
-                                    ] ;
-                            sp:variable _:b6
-                          ])
+  rdf:type sml:ApplyConstruct ;
+  sm:next ontologygenerator:ConstructTempPrefixModel ;
+  sml:constructQuery [
+      rdf:type sp:Construct ;
+      sp:templates (
+          [
+            sp:object _:b80065 ;
+            sp:predicate owl:imports ;
+            sp:subject _:b52430 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:resource ;
+                sp:arg1 [
+                    sp:varName "nonVersionedBaseURI"^^xsd:string ;
+                  ] ;
               ] ;
-      sml:replace "true"^^xsd:boolean .
-
+            sp:variable _:b52430 ;
+          ]
+          [
+            sp:object _:b94246 ;
+            sp:predicate owl:imports ;
+            sp:subject _:b52430 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type xsd:string ;
+                sp:arg1 _:b94246 ;
+              ] ;
+            sp:variable _:b68894 ;
+          ]
+          [
+            sp:object _:b68894 ;
+            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
+            sp:subject _:b10710 ;
+          ]
+          [
+            sp:object _:b89924 ;
+            sp:predicate vaem:namespace ;
+            sp:subject _:b10710 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:resource ;
+                sp:arg1 _:b89924 ;
+              ] ;
+            sp:variable _:b80065 ;
+          ]
+        ) ;
+    ] ;
+  sml:replace "true"^^xsd:boolean ;
+  rdfs:label "Construct non versioned imports"^^xsd:string ;
+.
 ontologygenerator:ConstructNonVersionedOntologyResource
-      rdf:type sml:ApplyConstruct ;
-      rdfs:label "Construct non versioned ontology resource"^^xsd:string ;
-      sm:next ontologygenerator:MergeForOntologyResource ;
-      sml:constructQuery
-              [ rdf:type sp:Construct ;
-                sp:templates ([ sp:object _:b12 ;
-                            sp:predicate _:b13 ;
-                            sp:subject _:b14
-                          ]) ;
-                sp:where ([ rdf:type sp:Bind ;
-                            sp:expression
-                                    [ rdf:type smf:resource ;
-                                      sp:arg1 [ sp:varName "versionedBaseURI"^^xsd:string
-                                              ]
-                                    ] ;
-                            sp:variable _:b15
-                          ] [ rdf:type sp:Bind ;
-                            sp:expression
-                                    [ rdf:type smf:resource ;
-                                      sp:arg1 [ sp:varName "nonVersionedBaseURI"^^xsd:string
-                                              ]
-                                    ] ;
-                            sp:variable _:b14
-                          ] [ sp:object _:b12 ;
-                            sp:predicate _:b13 ;
-                            sp:subject _:b15
-                          ])
+  rdf:type sml:ApplyConstruct ;
+  sm:next ontologygenerator:MergeForOntologyResource ;
+  sml:constructQuery [
+      rdf:type sp:Construct ;
+      sp:templates (
+          [
+            sp:object _:b51968 ;
+            sp:predicate _:b39384 ;
+            sp:subject _:b87096 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:resource ;
+                sp:arg1 [
+                    sp:varName "versionedBaseURI"^^xsd:string ;
+                  ] ;
               ] ;
-      sml:replace "true"^^xsd:boolean .
-
+            sp:variable _:b84557 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:resource ;
+                sp:arg1 [
+                    sp:varName "nonVersionedBaseURI"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable _:b87096 ;
+          ]
+          [
+            sp:object _:b51968 ;
+            sp:predicate _:b39384 ;
+            sp:subject _:b84557 ;
+          ]
+        ) ;
+    ] ;
+  sml:replace "true"^^xsd:boolean ;
+  rdfs:label "Construct non versioned ontology resource"^^xsd:string ;
+.
 ontologygenerator:ConstructTempPrefixModel
-      rdf:type sml:ApplyConstruct ;
-      rdfs:label "Construct temp prefix model"^^xsd:string ;
-      sm:next ontologygenerator:IterateWhile_1 ;
-      sml:constructQuery
-              [ rdf:type sp:Construct ;
-                sp:templates ([ sp:object _:b16 ;
-                            sp:predicate rdf:value ;
-                            sp:subject _:b17
-                          ]) ;
-                sp:where ([ sp:object _:b16 ;
-                            sp:predicate spif:prefix ;
-                            sp:subject
-                                    [ sp:varName "nse"^^xsd:string
-                                    ]
-                          ] [ sp:object owl:Ontology ;
-                            sp:predicate rdf:type ;
-                            sp:subject _:b17
-                          ])
-              ] .
-
+  rdf:type sml:ApplyConstruct ;
+  sm:next ontologygenerator:IterateWhile_1 ;
+  sml:constructQuery [
+      rdf:type sp:Construct ;
+      sp:templates (
+          [
+            sp:object _:b90852 ;
+            sp:predicate rdf:value ;
+            sp:subject _:b22159 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object _:b90852 ;
+            sp:predicate spif:prefix ;
+            sp:subject [
+                sp:varName "nse"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object owl:Ontology ;
+            sp:predicate rdf:type ;
+            sp:subject _:b22159 ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "Construct temp prefix model"^^xsd:string ;
+.
 ontologygenerator:DeleteCatalogPrefixes
-      rdf:type sml:ModifyPrefixes ;
-      rdfs:label "Delete catalog prefixes"^^xsd:string ;
-      sm:next ontologygenerator:RemovePrefixFromTempModel ;
-      sml:deletedPrefix "{?prefixToDelete}"^^xsd:string .
-
+  rdf:type sml:ModifyPrefixes ;
+  sm:next ontologygenerator:RemovePrefixFromTempModel ;
+  sml:deletedPrefix "{?prefixToDelete}"^^xsd:string ;
+  rdfs:label "Delete catalog prefixes"^^xsd:string ;
+.
 ontologygenerator:ExportNonVersionedOntology
-      rdf:type sml:ExportToExternalRDFFile ;
-      rdfs:label "Export non versioned ontology"^^xsd:string ;
-      sm:next ontologygenerator:Merge ;
-      sml:baseURI
-              [ sp:varName "nonVersionedBaseURI"^^xsd:string
-              ] ;
-      sml:targetFilePath
-              [ rdf:type fn:concat ;
-                sp:arg1 [ sp:varName "targetBasePath"^^xsd:string
-                        ] ;
-                sp:arg2 "/" ;
-                sp:arg3 [ rdf:type smf:regex ;
-                          sp:arg1 [ sp:varName "nonVersionedBaseURI"^^xsd:string
-                                  ] ;
-                          sp:arg2 "http://" ;
-                          sp:arg3 ""
-                        ] ;
-                sp:arg4 ".ttl"
-              ] .
-
+  rdf:type sml:ExportToExternalRDFFile ;
+  sm:next ontologygenerator:Merge ;
+  sml:baseURI [
+      sp:varName "nonVersionedBaseURI"^^xsd:string ;
+    ] ;
+  sml:targetFilePath [
+      rdf:type fn:concat ;
+      sp:arg1 [
+          sp:varName "targetBasePath"^^xsd:string ;
+        ] ;
+      sp:arg2 "/" ;
+      sp:arg3 [
+          rdf:type smf:regex ;
+          sp:arg1 [
+              sp:varName "nonVersionedBaseURI"^^xsd:string ;
+            ] ;
+          sp:arg2 "http://" ;
+          sp:arg3 "" ;
+        ] ;
+      sp:arg4 ".ttl" ;
+    ] ;
+  rdfs:label "Export non versioned ontology"^^xsd:string ;
+.
 ontologygenerator:ExportVersionedOntology
-      rdf:type sml:ExportToExternalRDFFile ;
-      rdfs:label "Export versioned ontology"^^xsd:string ;
-      sm:next ontologygenerator:Merge ;
-      sml:baseURI
-              [ sp:varName "versionedBaseURI"^^xsd:string
-              ] ;
-      sml:targetFilePath
-              [ rdf:type fn:concat ;
-                sp:arg1 [ sp:varName "targetBasePath"^^xsd:string
-                        ] ;
-                sp:arg2 "/" ;
-                sp:arg3 [ rdf:type smf:regex ;
-                          sp:arg1 [ sp:varName "versionedBaseURI"^^xsd:string
-                                  ] ;
-                          sp:arg2 "http://" ;
-                          sp:arg3 ""
-                        ] ;
-                sp:arg4 ".ttl"
-              ] .
-
+  rdf:type sml:ExportToExternalRDFFile ;
+  sm:next ontologygenerator:Merge ;
+  sml:baseURI [
+      sp:varName "versionedBaseURI"^^xsd:string ;
+    ] ;
+  sml:targetFilePath [
+      rdf:type fn:concat ;
+      sp:arg1 [
+          sp:varName "targetBasePath"^^xsd:string ;
+        ] ;
+      sp:arg2 "/" ;
+      sp:arg3 [
+          rdf:type smf:regex ;
+          sp:arg1 [
+              sp:varName "versionedBaseURI"^^xsd:string ;
+            ] ;
+          sp:arg2 "http://" ;
+          sp:arg3 "" ;
+        ] ;
+      sp:arg4 ".ttl" ;
+    ] ;
+  rdfs:label "Export versioned ontology"^^xsd:string ;
+.
 ontologygenerator:FilterOutCatalogTriples
-      rdf:type sml:FilterByConstruct ;
-      rdfs:label "Filter out catalog triples"^^xsd:string ;
-      sm:next ontologygenerator:ConstructTempPrefixModel ;
-      sml:constructQuery
-              [ rdf:type sp:Construct ;
-                sp:templates ([ sp:object _:b18 ;
-                            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
-                            sp:subject _:b19
-                          ] [ sp:object _:b20 ;
-                            sp:predicate vaem:namespace ;
-                            sp:subject _:b19
-                          ]) ;
-                sp:where ([ sp:object _:b18 ;
-                            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
-                            sp:subject _:b19
-                          ] [ sp:object _:b20 ;
-                            sp:predicate vaem:namespace ;
-                            sp:subject _:b19
-                          ])
-              ] .
-
+  rdf:type sml:FilterByConstruct ;
+  sm:next ontologygenerator:ConstructTempPrefixModel ;
+  sml:constructQuery [
+      rdf:type sp:Construct ;
+      sp:templates (
+          [
+            sp:object _:b66870 ;
+            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
+            sp:subject _:b17364 ;
+          ]
+          [
+            sp:object _:b34918 ;
+            sp:predicate vaem:namespace ;
+            sp:subject _:b17364 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object _:b66870 ;
+            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
+            sp:subject _:b17364 ;
+          ]
+          [
+            sp:object _:b34918 ;
+            sp:predicate vaem:namespace ;
+            sp:subject _:b17364 ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "Filter out catalog triples"^^xsd:string ;
+.
 ontologygenerator:FilterOutVersionedImports
-      rdf:type sml:FilterByConstruct ;
-      rdfs:label "Filter out versioned imports"^^xsd:string ;
-      sm:next ontologygenerator:FilterOutCatalogTriples ;
-      sml:constructQuery
-              [ rdf:type sp:Construct ;
-                sp:templates ([ sp:object _:b21 ;
-                            sp:predicate owl:imports ;
-                            sp:subject _:b22
-                          ]) ;
-                sp:where ([ rdf:type sp:Bind ;
-                            sp:expression
-                                    [ rdf:type smf:resource ;
-                                      sp:arg1 [ sp:varName "nonVersionedBaseURI"^^xsd:string
-                                              ]
-                                    ] ;
-                            sp:variable _:b22
-                          ] [ sp:object _:b21 ;
-                            sp:predicate owl:imports ;
-                            sp:subject _:b22
-                          ] [ rdf:type sp:Bind ;
-                            sp:expression
-                                    [ rdf:type xsd:string ;
-                                      sp:arg1 _:b21
-                                    ] ;
-                            sp:variable _:b23
-                          ] [ sp:object _:b23 ;
-                            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
-                            sp:subject _:b24
-                          ] [ sp:object
-                                    [ sp:varName "nonVersionedImportStr"^^xsd:string
-                                    ] ;
-                            sp:predicate vaem:namespace ;
-                            sp:subject _:b24
-                          ])
-              ] .
-
+  rdf:type sml:FilterByConstruct ;
+  sm:next ontologygenerator:FilterOutCatalogTriples ;
+  sml:constructQuery [
+      rdf:type sp:Construct ;
+      sp:templates (
+          [
+            sp:object _:b6416 ;
+            sp:predicate owl:imports ;
+            sp:subject _:b5665 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:resource ;
+                sp:arg1 [
+                    sp:varName "nonVersionedBaseURI"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable _:b5665 ;
+          ]
+          [
+            sp:object _:b6416 ;
+            sp:predicate owl:imports ;
+            sp:subject _:b5665 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type xsd:string ;
+                sp:arg1 _:b6416 ;
+              ] ;
+            sp:variable _:b78604 ;
+          ]
+          [
+            sp:object _:b78604 ;
+            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
+            sp:subject _:b20420 ;
+          ]
+          [
+            sp:object [
+                sp:varName "nonVersionedImportStr"^^xsd:string ;
+              ] ;
+            sp:predicate vaem:namespace ;
+            sp:subject _:b20420 ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "Filter out versioned imports"^^xsd:string ;
+.
 ontologygenerator:Get_Catalog
-      rdf:type sml:BindBySelect ;
-      rdfs:label "Get Catalog"^^xsd:string ;
-      sm:next ontologygenerator:Iterate_Over_Catalog_Entries ;
-      sml:selectQuery
-              [ rdf:type sp:Select ;
-                sp:resultVariables (_:b25) ;
-                sp:where ([ sp:object <http://www.linkedmodel.org/schema/catalog#LinkedModelCatalog> ;
-                            sp:predicate rdf:type ;
-                            sp:subject _:b25
-                          ])
-              ] .
-
+  rdf:type sml:BindBySelect ;
+  sm:next ontologygenerator:Iterate_Over_Catalog_Entries ;
+  sml:selectQuery [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b30520
+        ) ;
+      sp:where (
+          [
+            sp:object <http://www.linkedmodel.org/schema/catalog#LinkedModelCatalog> ;
+            sp:predicate rdf:type ;
+            sp:subject _:b30520 ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "Get Catalog"^^xsd:string ;
+.
 ontologygenerator:ImportCatalogLocal
-      rdf:type sml:ImportRDFFromWorkspace ;
-      rdfs:label "Import catalog local"^^xsd:string ;
-      sm:next ontologygenerator:Get_Catalog ;
-      sml:ignoreImports "true"^^xsd:boolean .
-
+  rdf:type sml:ImportRDFFromWorkspace ;
+  sm:next ontologygenerator:Get_Catalog ;
+  sml:ignoreImports "true"^^xsd:boolean ;
+  rdfs:label "Import catalog local"^^xsd:string ;
+.
 ontologygenerator:ImportGraph
-      rdf:type sml:ImportRDFFromWorkspace ;
-      sm:next ontologygenerator:RemoveVersionedOntologyResource , ontologygenerator:ConstructNonVersionedOntologyResource , ontologygenerator:ExportVersionedOntology , ontologygenerator:PassThroughPrefixes ;
-      sml:baseURI
-              [ sp:varName "versionedBaseURI"^^xsd:string
-              ] ;
-      sml:ignoreImports "true"^^xsd:boolean .
-
+  rdf:type sml:ImportRDFFromWorkspace ;
+  sm:next ontologygenerator:ConstructNonVersionedOntologyResource ;
+  sm:next ontologygenerator:ExportVersionedOntology ;
+  sm:next ontologygenerator:PassThroughPrefixes ;
+  sm:next ontologygenerator:RemoveVersionedOntologyResource ;
+  sml:baseURI [
+      sp:varName "versionedBaseURI"^^xsd:string ;
+    ] ;
+  sml:ignoreImports "true"^^xsd:boolean ;
+.
 ontologygenerator:Import_Catalog
-      rdf:type sml:ImportRDFFromWorkspace ;
-      rdfs:label "Import Catalog"^^xsd:string ;
-      sm:next ontologygenerator:Iterate_Over_Catalog_Entries ;
-      sml:ignoreImports "false"^^xsd:boolean .
-
+  rdf:type sml:ImportRDFFromWorkspace ;
+  sm:next ontologygenerator:Iterate_Over_Catalog_Entries ;
+  sml:ignoreImports "false"^^xsd:boolean ;
+  rdfs:label "Import Catalog"^^xsd:string ;
+.
 ontologygenerator:IterateWhile_1
-      rdf:type sml:IterateWhile ;
-      rdfs:label "Iterate while 1"^^xsd:string ;
-      sm:body ontologygenerator:BindOnePrefix ;
-      sm:next ontologygenerator:ExportNonVersionedOntology ;
-      sml:askQuery
-              [ rdf:type sp:Ask ;
-                sp:where ([ sp:object owl:Ontology ;
-                            sp:predicate rdf:type ;
-                            sp:subject _:b26
-                          ] [ sp:object
-                                    [ sp:varName "pr"^^xsd:string
-                                    ] ;
-                            sp:predicate rdf:value ;
-                            sp:subject _:b26
-                          ])
-              ] .
-
+  rdf:type sml:IterateWhile ;
+  sm:body ontologygenerator:BindOnePrefix ;
+  sm:next ontologygenerator:ExportNonVersionedOntology ;
+  sml:askQuery [
+      rdf:type sp:Ask ;
+      sp:where (
+          [
+            sp:object owl:Ontology ;
+            sp:predicate rdf:type ;
+            sp:subject _:b13004 ;
+          ]
+          [
+            sp:object [
+                sp:varName "pr"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:value ;
+            sp:subject _:b13004 ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "Iterate while 1"^^xsd:string ;
+.
 ontologygenerator:Iterate_Over_Catalog_Entries
-      rdf:type sml:IterateOverSelect ;
-      rdfs:label "Iterate Over Catalog Entries"^^xsd:string ;
-      sm:body ontologygenerator:Trace_Processing ;
-      sm:next ontologygenerator:ReturnFromGeneratedCatalog ;
-      sml:selectQuery
-              [ rdf:type sp:Select ;
-                sp:resultVariables (_:b27 _:b28 _:b29 _:b30) ;
-                sp:where ([ sp:object _:b31 ;
-                            sp:predicate vaem:hasCatalogEntry ;
-                            sp:subject
-                                    [ sp:varName "catalog"^^xsd:string
-                                    ]
-                          ] [ sp:object _:b29 ;
-                            sp:predicate vaem:namespacePrefix ;
-                            sp:subject _:b31
-                          ] [ sp:object _:b28 ;
-                            sp:predicate vaem:namespace ;
-                            sp:subject _:b31
-                          ] [ sp:object _:b27 ;
-                            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
-                            sp:subject _:b31
-                          ] [ sp:object _:b32 ;
-                            sp:predicate <http://voag.linkedmodel.org/schema/voag#hasProvenance> ;
-                            sp:subject _:b31
-                          ] [ sp:object _:b30 ;
-                            sp:predicate vaem:revision ;
-                            sp:subject _:b32
-                          ])
-              ] .
-
+  rdf:type sml:IterateOverSelect ;
+  sm:body ontologygenerator:Trace_Processing ;
+  sm:next ontologygenerator:ReturnFromGeneratedCatalog ;
+  sml:selectQuery [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b50741
+          _:b23484
+          _:b22060
+          _:b97519
+        ) ;
+      sp:where (
+          [
+            sp:object _:b24801 ;
+            sp:predicate vaem:hasCatalogEntry ;
+            sp:subject [
+                sp:varName "catalog"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object _:b22060 ;
+            sp:predicate vaem:namespacePrefix ;
+            sp:subject _:b24801 ;
+          ]
+          [
+            sp:object _:b23484 ;
+            sp:predicate vaem:namespace ;
+            sp:subject _:b24801 ;
+          ]
+          [
+            sp:object _:b50741 ;
+            sp:predicate <http://voag.linkedmodel.org/schema/voag#curatedGraphURI> ;
+            sp:subject _:b24801 ;
+          ]
+          [
+            sp:object _:b88484 ;
+            sp:predicate <http://voag.linkedmodel.org/schema/voag#hasProvenance> ;
+            sp:subject _:b24801 ;
+          ]
+          [
+            sp:object _:b97519 ;
+            sp:predicate vaem:revision ;
+            sp:subject _:b88484 ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "Iterate Over Catalog Entries"^^xsd:string ;
+.
 ontologygenerator:Merge
-      rdf:type sml:Merge ;
-      rdfs:label "Merge"^^xsd:string .
-
+  rdf:type sml:Merge ;
+  rdfs:label "Merge"^^xsd:string ;
+.
 ontologygenerator:MergeForOntologyResource
-      rdf:type sml:Merge ;
-      rdfs:label "Merge for ontology resource"^^xsd:string ;
-      sm:next ontologygenerator:ConstructNonVersionedImports , ontologygenerator:FilterOutVersionedImports .
-
+  rdf:type sml:Merge ;
+  sm:next ontologygenerator:ConstructNonVersionedImports ;
+  sm:next ontologygenerator:FilterOutVersionedImports ;
+  rdfs:label "Merge for ontology resource"^^xsd:string ;
+.
 ontologygenerator:PassThroughPrefixes
-      rdf:type sml:ApplyConstruct ;
-      rdfs:label "Pass through prefixes"^^xsd:string ;
-      sm:next ontologygenerator:ExportNonVersionedOntology ;
-      sml:constructQuery
-              [ rdf:type sp:Construct ;
-                sp:templates () ;
-                sp:where ()
-              ] ;
-      sml:replace "true"^^xsd:boolean .
-
+  rdf:type sml:ApplyConstruct ;
+  sm:next ontologygenerator:ExportNonVersionedOntology ;
+  sml:constructQuery [
+      rdf:type sp:Construct ;
+      sp:templates () ;
+      sp:where () ;
+    ] ;
+  sml:replace "true"^^xsd:boolean ;
+  rdfs:label "Pass through prefixes"^^xsd:string ;
+.
 ontologygenerator:RemovePrefixFromTempModel
-      rdf:type sml:FilterByConstruct ;
-      rdfs:label "Remove prefix from temp model"^^xsd:string ;
-      sml:constructQuery
-              [ rdf:type sp:Construct ;
-                sp:templates ([ sp:object _:b33 ;
-                            sp:predicate rdf:value ;
-                            sp:subject _:b34
-                          ]) ;
-                sp:where ([ sp:object owl:Ontology ;
-                            sp:predicate rdf:type ;
-                            sp:subject _:b34
-                          ] [ sp:object _:b33 ;
-                            sp:predicate rdf:value ;
-                            sp:subject _:b34
-                          ])
-              ] .
-
+  rdf:type sml:FilterByConstruct ;
+  sml:constructQuery [
+      rdf:type sp:Construct ;
+      sp:templates (
+          [
+            sp:object _:b84327 ;
+            sp:predicate rdf:value ;
+            sp:subject _:b80768 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object owl:Ontology ;
+            sp:predicate rdf:type ;
+            sp:subject _:b80768 ;
+          ]
+          [
+            sp:object _:b84327 ;
+            sp:predicate rdf:value ;
+            sp:subject _:b80768 ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "Remove prefix from temp model"^^xsd:string ;
+.
 ontologygenerator:RemoveVersionedOntologyResource
-      rdf:type sml:FilterByConstruct ;
-      rdfs:label "Remove versioned ontology resource"^^xsd:string ;
-      sm:next ontologygenerator:MergeForOntologyResource ;
-      sml:constructQuery
-              [ rdf:type sp:Construct ;
-                sp:templates ([ sp:object _:b35 ;
-                            sp:predicate _:b36 ;
-                            sp:subject _:b37
-                          ]) ;
-                sp:where ([ rdf:type sp:Bind ;
-                            sp:expression
-                                    [ rdf:type smf:resource ;
-                                      sp:arg1 [ sp:varName "versionedBaseURI"^^xsd:string
-                                              ]
-                                    ] ;
-                            sp:variable _:b37
-                          ] [ sp:object _:b35 ;
-                            sp:predicate _:b36 ;
-                            sp:subject _:b37
-                          ])
-              ] .
-
+  rdf:type sml:FilterByConstruct ;
+  sm:next ontologygenerator:MergeForOntologyResource ;
+  sml:constructQuery [
+      rdf:type sp:Construct ;
+      sp:templates (
+          [
+            sp:object _:b155 ;
+            sp:predicate _:b32387 ;
+            sp:subject _:b22170 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:resource ;
+                sp:arg1 [
+                    sp:varName "versionedBaseURI"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable _:b22170 ;
+          ]
+          [
+            sp:object _:b155 ;
+            sp:predicate _:b32387 ;
+            sp:subject _:b22170 ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "Remove versioned ontology resource"^^xsd:string ;
+.
 ontologygenerator:ReturnFromGeneratedCatalog
-      rdf:type sml:ReturnText ;
-      rdfs:label "Return from generated catalog"^^xsd:string ;
-      sml:mimeType "text"^^xsd:string ;
-      sml:text "Finished"^^xsd:string .
-
+  rdf:type sml:ReturnText ;
+  sml:mimeType "text"^^xsd:string ;
+  sml:text "Finished"^^xsd:string ;
+  rdfs:label "Return from generated catalog"^^xsd:string ;
+.
 ontologygenerator:Trace_Processing
-      rdf:type sml:BindBySelect ;
-      rdfs:label "Trace Processing"^^xsd:string ;
-      sm:next ontologygenerator:ConstructCatalogTriples , ontologygenerator:ImportGraph ;
-      sml:selectQuery
-              [ rdf:type sp:Select ;
-                sp:where ([ rdf:type sp:Bind ;
-                            sp:expression
-                                    [ rdf:type smf:trace ;
-                                      sp:arg1 "Generating HTML from Graph with Prefix {?prefix}"
-                                    ] ;
-                            sp:variable
-                                    [ sp:varName "trace"^^xsd:string
-                                    ]
-                          ])
-              ] .
-
+  rdf:type sml:BindBySelect ;
+  sm:next ontologygenerator:ConstructCatalogTriples ;
+  sm:next ontologygenerator:ImportGraph ;
+  sml:selectQuery [
+      rdf:type sp:Select ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:trace ;
+                sp:arg1 "Generating HTML from Graph with Prefix {?prefix}" ;
+              ] ;
+            sp:variable [
+                sp:varName "trace"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "Trace Processing"^^xsd:string ;
+.
 ontologygenerator:baseURI
-      rdf:type owl:DatatypeProperty ;
-      rdfs:label "base URI"^^xsd:string ;
-      rdfs:range xsd:string .
-
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "base URI"^^xsd:string ;
+  rdfs:range xsd:string ;
+.
 ontologygenerator:generateOntologyFiles
-      rdf:type sm:Function ;
-      rdfs:subClassOf sm:Functions ;
-      spin:constraint
-              [ rdf:type spl:Argument ;
-                spl:defaultValue "http://www.linkedmodel.org/1.2/catalog/lm"^^xsd:string ;
-                spl:predicate ontologygenerator:baseURI ;
-                spl:valueType xsd:string ;
-                sm:next ontologygenerator:Import_Catalog , ontologygenerator:ImportCatalogLocal
-              ] ;
-      spin:constraint
-              [ rdf:type spl:Argument ;
-                spl:defaultValue "C:\\GraphExports"^^xsd:string ;
-                spl:predicate ontologygenerator:targetBasePath ;
-                spl:valueType xsd:string ;
-                sm:next ontologygenerator:Iterate_Over_Catalog_Entries
-              ] ;
-      spin:returnType xsd:string ;
-      sm:returnModule ontologygenerator:ReturnFromGeneratedCatalog .
-
+  rdf:type sm:Function ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue "C:\\GraphExports"^^xsd:string ;
+      spl:predicate ontologygenerator:targetBasePath ;
+      spl:valueType xsd:string ;
+      sm:next ontologygenerator:Iterate_Over_Catalog_Entries ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue "http://www.linkedmodel.org/1.2/catalog/lm"^^xsd:string ;
+      spl:predicate ontologygenerator:baseURI ;
+      spl:valueType xsd:string ;
+      sm:next ontologygenerator:ImportCatalogLocal ;
+      sm:next ontologygenerator:Import_Catalog ;
+    ] ;
+  spin:returnType xsd:string ;
+  sm:returnModule ontologygenerator:ReturnFromGeneratedCatalog ;
+  rdfs:subClassOf sm:Functions ;
+.
 ontologygenerator:targetBasePath
-      rdf:type owl:DatatypeProperty ;
-      rdfs:label "target base path"^^xsd:string ;
-      rdfs:range xsd:string .
-
-_:b37
-      sp:varName "versionedOntology"^^xsd:string .
-
-_:b36
-      sp:varName "p"^^xsd:string .
-
-_:b35
-      sp:varName "o"^^xsd:string .
-
-_:b34
-      sp:varName "ont"^^xsd:string .
-
-_:b33
-      sp:varName "prefixToDelete"^^xsd:string .
-
-_:b32
-      sp:varName "provenance"^^xsd:string .
-
-_:b31
-      sp:varName "entry"^^xsd:string .
-
-_:b30
-      sp:varName "version"^^xsd:string .
-
-_:b29
-      sp:varName "prefix"^^xsd:string .
-
-_:b28
-      sp:varName "nonVersionedBaseURI"^^xsd:string .
-
-_:b27
-      sp:varName "versionedBaseURI"^^xsd:string .
-
-_:b26
-      sp:varName "ont"^^xsd:string .
-
-_:b25
-      sp:varName "catalog"^^xsd:string .
-
-_:b24
-      sp:varName "entry"^^xsd:string .
-
-_:b23
-      sp:varName "versionedImportStr"^^xsd:string .
-
-_:b22
-      sp:varName "ontology"^^xsd:string .
-
-_:b21
-      sp:varName "versionedImport"^^xsd:string .
-
-_:b20
-      sp:varName "nonVersionedImport"^^xsd:string .
-
-_:b19
-      sp:varName "entry"^^xsd:string .
-
-_:b18
-      sp:varName "versionedImport"^^xsd:string .
-
-_:b17
-      sp:varName "ont"^^xsd:string .
-
-_:b16
-      sp:varName "pr"^^xsd:string .
-
-_:b15
-      sp:varName "versionedOntology"^^xsd:string .
-
-_:b14
-      sp:varName "nonVersionedOntology"^^xsd:string .
-
-_:b13
-      sp:varName "p"^^xsd:string .
-
-_:b12
-      sp:varName "o"^^xsd:string .
-
-_:b11
-      sp:varName "nonVersionedImportStr"^^xsd:string .
-
-_:b10
-      sp:varName "entry"^^xsd:string .
-
-_:b9  sp:varName "versionedImportStr"^^xsd:string .
-
-_:b8  sp:varName "versionedImport"^^xsd:string .
-
-_:b7  sp:varName "ontology"^^xsd:string .
-
-_:b6  sp:varName "nonVersionedImport"^^xsd:string .
-
-_:b5  sp:varName "nonVersionedImport"^^xsd:string .
-
-_:b4  sp:varName "entry"^^xsd:string .
-
-_:b3  sp:varName "versionedImport"^^xsd:string .
-
-_:b2  sp:varName "ont"^^xsd:string .
-
-_:b1  sp:varName "prefixToDelete"^^xsd:string .
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "target base path"^^xsd:string ;
+  rdfs:range xsd:string ;
+.
+_:b155
+  sp:varName "o"^^xsd:string ;
+.
+_:b5665
+  sp:varName "ontology"^^xsd:string ;
+.
+_:b6416
+  sp:varName "versionedImport"^^xsd:string ;
+.
+_:b10710
+  sp:varName "entry"^^xsd:string ;
+.
+_:b13004
+  sp:varName "ont"^^xsd:string ;
+.
+_:b17364
+  sp:varName "entry"^^xsd:string ;
+.
+_:b20420
+  sp:varName "entry"^^xsd:string ;
+.
+_:b20543
+  sp:varName "prefixToDelete"^^xsd:string ;
+.
+_:b22060
+  sp:varName "prefix"^^xsd:string ;
+.
+_:b22159
+  sp:varName "ont"^^xsd:string ;
+.
+_:b22170
+  sp:varName "versionedOntology"^^xsd:string ;
+.
+_:b23484
+  sp:varName "nonVersionedBaseURI"^^xsd:string ;
+.
+_:b24801
+  sp:varName "entry"^^xsd:string ;
+.
+_:b30520
+  sp:varName "catalog"^^xsd:string ;
+.
+_:b32387
+  sp:varName "p"^^xsd:string ;
+.
+_:b34918
+  sp:varName "nonVersionedImport"^^xsd:string ;
+.
+_:b35744
+  sp:varName "versionedImport"^^xsd:string ;
+.
+_:b39384
+  sp:varName "p"^^xsd:string ;
+.
+_:b50741
+  sp:varName "versionedBaseURI"^^xsd:string ;
+.
+_:b51968
+  sp:varName "o"^^xsd:string ;
+.
+_:b52430
+  sp:varName "ontology"^^xsd:string ;
+.
+_:b66870
+  sp:varName "versionedImport"^^xsd:string ;
+.
+_:b68894
+  sp:varName "versionedImportStr"^^xsd:string ;
+.
+_:b68997
+  sp:varName "ont"^^xsd:string ;
+.
+_:b69337
+  sp:varName "nonVersionedImport"^^xsd:string ;
+.
+_:b78604
+  sp:varName "versionedImportStr"^^xsd:string ;
+.
+_:b80065
+  sp:varName "nonVersionedImport"^^xsd:string ;
+.
+_:b80768
+  sp:varName "ont"^^xsd:string ;
+.
+_:b84327
+  sp:varName "prefixToDelete"^^xsd:string ;
+.
+_:b84557
+  sp:varName "versionedOntology"^^xsd:string ;
+.
+_:b87096
+  sp:varName "nonVersionedOntology"^^xsd:string ;
+.
+_:b88484
+  sp:varName "provenance"^^xsd:string ;
+.
+_:b89924
+  sp:varName "nonVersionedImportStr"^^xsd:string ;
+.
+_:b90852
+  sp:varName "pr"^^xsd:string ;
+.
+_:b94246
+  sp:varName "versionedImport"^^xsd:string ;
+.
+_:b97519
+  sp:varName "version"^^xsd:string ;
+.
+_:b98440
+  sp:varName "entry"^^xsd:string ;
+.
