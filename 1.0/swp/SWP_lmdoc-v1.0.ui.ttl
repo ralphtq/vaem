@@ -7634,20 +7634,63 @@ lmdoc:URIResourceViewer
           ui:child [
               rdf:type ui:if ;
               ui:child [
-                  rdf:type lmdoc:ResourceDocLink ;
-                  arg:resource [
-                      sp:varName "object"^^xsd:string ;
+                  rdf:type ui:else ;
+                  ui:child [
+                      rdf:type lmdoc:ResourceLink ;
+                      arg:resource [
+                          sp:varName "object"^^xsd:string ;
+                        ] ;
+                      arg:title [
+                          rdf:type xsd:string ;
+                          sp:arg1 [
+                              sp:varName "object"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:Dd ;
+                      html:class "size-10"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              rdf:type spl:object ;
+                              sp:arg1 [
+                                  sp:varName "object"^^xsd:string ;
+                                ] ;
+                              sp:arg2 vaem:description ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:ResourceDocLink ;
+                      arg:resource [
+                          sp:varName "object"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
                     ] ;
                   ui:childIndex 0 ;
+                  ui:condition [
+                      rdf:type lmdoc:IsDefinedInGraph ;
+                      arg:graph [
+                          sp:varName "myGraph"^^xsd:string ;
+                        ] ;
+                      arg:resource [
+                          sp:varName "object"^^xsd:string ;
+                        ] ;
+                    ] ;
                 ] ;
               ui:childIndex 0 ;
               ui:condition [
-                  rdf:type lmdoc:IsDefinedInGraph ;
-                  arg:graph [
+                  rdf:type sp:bound ;
+                  sp:arg1 [
                       sp:varName "myGraph"^^xsd:string ;
-                    ] ;
-                  arg:resource [
-                      sp:varName "object"^^xsd:string ;
                     ] ;
                 ] ;
             ] ;
