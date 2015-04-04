@@ -4,6 +4,7 @@
 # imports: http://topbraid.org/swa
 # imports: http://uispin.org/ui
 # imports: http://uispin.org/ui.ui
+# imports: http://voag.linkedmodel.org/2.0/schema/voag
 # imports: http://www.linkedmodel.org/schema/vaem
 # imports: http://www.w3.org/2004/02/skos/core
 
@@ -36,7 +37,7 @@
 @prefix ui: <http://uispin.org/ui#> .
 @prefix uix: <http://topbraidlive.org/uix#> .
 @prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
-@prefix voag: <http://voag.linkedmodel.org/schema/voag#> .
+@prefix voag: <http://voag.linkedmodel.org/voag/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 dct:description
@@ -60,6 +61,11 @@ arg:margin
 .
 arg:options
   rdf:type rdf:Property ;
+  rdfs:range xsd:string ;
+.
+arg:parentLevel
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "parent level"^^xsd:string ;
   rdfs:range xsd:string ;
 .
 arg:propertySet
@@ -112,20 +118,17 @@ spin:RuleProperty
 <http://topbraid.org/xhtml#Area>
   rdf:type rdfs:Resource ;
 .
-voag:Figure
-  rdf:type owl:Class ;
-.
-voag:Figure_1
+<http://voag.linkedmodel.org/schema/voag#Figure_1>
   rdf:type owl:Class ;
   rdfs:subClassOf voag:Figure ;
 .
-voag:Figure_2
+<http://voag.linkedmodel.org/schema/voag#Figure_2>
   rdf:type owl:Class ;
-  rdfs:subClassOf voag:Figure_1 ;
+  rdfs:subClassOf <http://voag.linkedmodel.org/schema/voag#Figure_1> ;
 .
-voag:Figure_3
+<http://voag.linkedmodel.org/schema/voag#Figure_3>
   rdf:type owl:Class ;
-  rdfs:subClassOf voag:Figure_2 ;
+  rdfs:subClassOf <http://voag.linkedmodel.org/schema/voag#Figure_2> ;
 .
 voag:Graph
   rdf:type owl:Class ;
@@ -149,9 +152,6 @@ voag:Graph
       ui:priority 2 ;
     ] ;
 .
-voag:Logo
-  rdf:type owl:Class ;
-.
 <http://www.linkedmodel.org/1.1/swp/lmdoc>
   rdf:type owl:Ontology ;
   vaem:hasGraphMetadata <http://www.linkedmodel.org/1.1/swp/lmdoc/GMD_LMDOC> ;
@@ -161,6 +161,7 @@ voag:Logo
   owl:imports <http://topbraid.org/swa> ;
   owl:imports <http://uispin.org/ui> ;
   owl:imports <http://uispin.org/ui.ui> ;
+  owl:imports <http://voag.linkedmodel.org/2.0/schema/voag> ;
   owl:imports <http://www.linkedmodel.org/schema/vaem> ;
   owl:imports <http://www.w3.org/2004/02/skos/core> ;
   owl:versionInfo "Created with TopBraid Composer"^^xsd:string ;
@@ -7467,32 +7468,27 @@ lmdoc:TOCEntry
   ui:prototype [
       rdf:type ui:group ;
       ui:child [
-          rdf:type html:Li ;
-          html:class "tocline"^^xsd:string ;
-          ui:child [
-              rdf:type html:A ;
-              html:class "tocxref"^^xsd:string ;
-              html:href [
-                  rdf:type fn:concat ;
-                  sp:arg1 "#" ;
-                  sp:arg2 [
-                      rdf:type lmdoc:makeAnchorFromString ;
-                      arg:label [
-                          sp:varName "heading"^^xsd:string ;
-                        ] ;
+          rdf:type html:A ;
+          html:class "tocxref"^^xsd:string ;
+          html:href [
+              rdf:type fn:concat ;
+              sp:arg1 "#" ;
+              sp:arg2 [
+                  rdf:type lmdoc:makeAnchorFromString ;
+                  arg:label [
+                      sp:varName "heading"^^xsd:string ;
                     ] ;
                 ] ;
+            ] ;
+          ui:child [
+              rdf:type html:Span ;
+              html:class "secno"^^xsd:string ;
               ui:child [
-                  rdf:type html:Span ;
-                  html:class "secno"^^xsd:string ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text [
-                          sp:varName "heading"^^xsd:string ;
-                        ] ;
-                    ] ;
+                  rdf:type ui:TextNode ;
                   ui:childIndex 0 ;
+                  ui:text [
+                      sp:varName "heading"^^xsd:string ;
+                    ] ;
                 ] ;
               ui:childIndex 0 ;
             ] ;
@@ -7537,47 +7533,78 @@ lmdoc:TableOfContents
         ] ;
       ui:child [
           rdf:type html:Ol ;
+          html:class "lm-toc-numeric"^^xsd:string ;
           ui:child [
-              rdf:type html:Ol ;
+              rdf:type html:Li ;
               ui:child [
-                  rdf:type lmdoc:TOCEntry ;
-                  arg:heading "Classes"^^xsd:string ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:child [
-                  rdf:type lmdoc:TOCEntry ;
-                  arg:heading "Instances"^^xsd:string ;
-                  ui:childIndex 2 ;
-                ] ;
-              ui:child [
-                  rdf:type lmdoc:TOCEntry ;
-                  arg:heading "Properties"^^xsd:string ;
+                  rdf:type html:Ol ;
+                  html:class "lm-toc"^^xsd:string ;
+                  ui:child [
+                      rdf:type html:Li ;
+                      ui:child [
+                          rdf:type lmdoc:TOCEntry ;
+                          arg:heading "Classes"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Li ;
+                      ui:child [
+                          rdf:type lmdoc:TOCEntry ;
+                          arg:heading "Instances"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 2 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Li ;
+                      ui:child [
+                          rdf:type lmdoc:TOCEntry ;
+                          arg:heading "Properties"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
                   ui:childIndex 1 ;
                 ] ;
-              ui:childIndex 3 ;
-            ] ;
-          ui:child [
-              rdf:type html:Ol ;
               ui:child [
                   rdf:type lmdoc:TOCEntry ;
-                  arg:heading "Imported Graphs"^^xsd:string ;
+                  arg:heading "Resource Details"^^xsd:string ;
                   ui:childIndex 0 ;
-                ] ;
-              ui:child [
-                  rdf:type lmdoc:TOCEntry ;
-                  arg:heading "Non-imported Resources"^^xsd:string ;
-                  ui:childIndex 1 ;
                 ] ;
               ui:childIndex 1 ;
             ] ;
           ui:child [
-              rdf:type lmdoc:TOCEntry ;
-              arg:heading "Resource Details"^^xsd:string ;
-              ui:childIndex 2 ;
-            ] ;
-          ui:child [
-              rdf:type lmdoc:TOCEntry ;
-              arg:heading "Resource Index"^^xsd:string ;
+              rdf:type html:Li ;
+              ui:child [
+                  rdf:type html:Ol ;
+                  html:class "lm-toc"^^xsd:string ;
+                  ui:child [
+                      rdf:type html:Li ;
+                      ui:child [
+                          rdf:type lmdoc:TOCEntry ;
+                          arg:heading "Imported Graphs"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Li ;
+                      ui:child [
+                          rdf:type lmdoc:TOCEntry ;
+                          arg:heading "Non-imported Resources"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type lmdoc:TOCEntry ;
+                  arg:heading "Resource Index"^^xsd:string ;
+                  ui:childIndex 0 ;
+                ] ;
               ui:childIndex 0 ;
             ] ;
           ui:childIndex 1 ;
@@ -7653,20 +7680,12 @@ lmdoc:URIResourceViewer
               ui:child [
                   rdf:type ui:if ;
                   ui:child [
-                      rdf:type html:Dd ;
-                      html:class "size-10"^^xsd:string ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text [
-                              rdf:type spl:object ;
-                              sp:arg1 [
-                                  sp:varName "object"^^xsd:string ;
-                                ] ;
-                              sp:arg2 vaem:description ;
-                            ] ;
-                        ] ;
+                      rdf:type ui:resourceView ;
                       ui:childIndex 1 ;
+                      ui:matchIds "lmdoc-summary"^^xsd:string ;
+                      ui:resource [
+                          sp:varName "object"^^xsd:string ;
+                        ] ;
                     ] ;
                   ui:child [
                       rdf:type lmdoc:ResourceDocLink ;
@@ -9532,6 +9551,63 @@ rdfs:Class
         ] ;
       ui:id "lmdoc"^^xsd:string ;
       ui:priority -20 ;
+    ] ;
+.
+rdfs:Resource
+  ui:instanceView [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type ui:group ;
+          let:title [
+              rdf:type sp:coalesce ;
+              sp:arg1 [
+                  rdf:type spl:object ;
+                  sp:arg1 spin:_this ;
+                  sp:arg2 voag:title ;
+                ] ;
+              sp:arg2 [
+                  rdf:type spl:object ;
+                  sp:arg1 spin:_this ;
+                  sp:arg2 dct:title ;
+                ] ;
+              sp:arg3 "" ;
+            ] ;
+          ui:child [
+              rdf:type ui:group ;
+              let:summary [
+                  rdf:type spl:object ;
+                  sp:arg1 spin:_this ;
+                  sp:arg2 vaem:description ;
+                ] ;
+              ui:child [
+                  rdf:type html:Dt ;
+                  ui:child [
+                      rdf:type html:Dd ;
+                      html:class "size-10"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:parse ;
+                          ui:childIndex 0 ;
+                          ui:str [
+                              sp:varName "summary"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text [
+                          sp:varName "title"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:id "lmdoc-summary"^^xsd:string ;
+      ui:priority -1 ;
     ] ;
 .
 owl:Ontology

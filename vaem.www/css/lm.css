@@ -170,12 +170,54 @@ code {
 }
 
 /* --- TOC --- */
+
 .toc a, .tof a {
     text-decoration:    none;
 }
 
 a .secno, a .figno {
     color:  #000;
+}
+
+ol{
+    list-style: none;
+}
+
+ol.lm-toc{
+    list-style: none;
+}
+
+ol.lm-toc-numeric{
+    counter-reset: numeric;
+}
+ol.lm-toc-numeric > li:before{
+    counter-increment: numeric;
+    content: counter(numeric)".";
+    padding-right:5px;
+}
+ol.lm-toc-numeric li ol.lm-toc{
+    counter-reset: inner;
+}
+ol.lm-toc-numeric ol.lm-toc li:before{
+    counter-increment: inner;
+    content: counter(numeric)"."counters(inner,'.');
+    padding-right:5px;
+}
+
+ul.circle {
+    list-style-type: circle;
+}
+
+ul.square {
+    list-style-type: square;
+}
+
+ol.upper-roman {
+    list-style-type: upper-roman;
+}
+
+ol.lower-alpha {
+    list-style-type: lower-alpha;
 }
 
 ul.tof, ol.tof {
