@@ -71,7 +71,9 @@ pre { margin-left: 2em }
 .size-48 { font-size: 48px; }
 .size-60 { font-size: 60px; }
 .size-72 { font-size: 72px; }
-      
+     
+.align-top {vertical-align: top} 
+.align-middle {vertical-align: middle} 
 /*
 p {
   margin-top: 0.6em;
@@ -187,9 +189,18 @@ ol.lm-toc{
     list-style: none;
 }
 
+ol.lm-lower-roman {
+	list-style-type: lower-roman;
+}
+
 ol.lm-toc-numeric{
     counter-reset: numeric;
 }
+
+ol.lm-lower-roman {
+	list-style-type: lower-roman;
+}
+
 ol.lm-toc-numeric > li:before{
     counter-increment: numeric;
     content: counter(numeric)".";

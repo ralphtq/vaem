@@ -402,6 +402,42 @@ lmdoc:AbstractSection
   rdfs:label "Abstract section"^^xsd:string ;
   rdfs:subClassOf lmdoc:Sections ;
 .
+lmdoc:AbstractSubject
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue "160px"^^xsd:string ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:labelWidth ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The label width, defaults to 160px. Set to \"inline\" to have the preferred width, i.e. it will occupy exactly the needed space."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:hideIfEmpty ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to suppress this if the given subject has no value for the given predicate. Has no effect if we are not in view mode."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:label ;
+      spl:valueType xsd:string ;
+      rdfs:comment "A label, overriding the default label."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:linear ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "By default (false), the label and the widget will be laid out in a tabular style, with all widgets nicely aligned underneath one another. If set to true, then no such alignment will happen. (In previous versions of SWA this was represented using arg:tabular)."^^xsd:string ;
+    ] ;
+  ui:abstract "true"^^xsd:boolean ;
+  rdfs:comment "Similar to swa:AbstractObject but for the other direction."^^xsd:string ;
+  rdfs:label "Abstract subject"^^xsd:string ;
+  rdfs:subClassOf lmdoc:SubjectElements ;
+.
 lmdoc:AllClasses
   rdf:type spin:SelectTemplate ;
   spin:body [
@@ -4711,6 +4747,36 @@ lmdoc:LabeledObjects
           html:class "lm-row"^^xsd:string ;
           ui:child [
               rdf:type html:Td ;
+              html:class "lm-column align-top"^^xsd:string ;
+              ui:child [
+                  rdf:type lmdoc:URIResourceViewer ;
+                  arg:label [
+                      rdf:type sp:if ;
+                      sp:arg1 [
+                          rdf:type sp:bound ;
+                          sp:arg1 [
+                              sp:varName "label"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      sp:arg2 [
+                          sp:varName "label"^^xsd:string ;
+                        ] ;
+                      sp:arg3 [
+                          rdf:type ui:label ;
+                          sp:arg1 [
+                              sp:varName "predicate"^^xsd:string ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  arg:object [
+                      sp:varName "predicate"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:child [
+              rdf:type html:Td ;
               html:class "lm-column"^^xsd:string ;
               html:id [
                   rdf:type ui:concat ;
@@ -4731,55 +4797,6 @@ lmdoc:LabeledObjects
                   ui:varValue [
                       sp:varName "viewWidget"^^xsd:string ;
                     ] ;
-                ] ;
-              ui:childIndex 2 ;
-            ] ;
-          ui:child [
-              rdf:type html:Td ;
-              html:class "lm-column"^^xsd:string ;
-              ui:child [
-                  rdf:type swa:PropertyLabel ;
-                  arg:id [
-                      rdf:type ui:concat ;
-                      sp:arg1 "property-label-"^^xsd:string ;
-                      sp:arg2 [
-                          sp:varName "predicate"^^xsd:string ;
-                        ] ;
-                    ] ;
-                  arg:label [
-                      rdf:type sp:if ;
-                      sp:arg1 [
-                          rdf:type sp:bound ;
-                          sp:arg1 [
-                              sp:varName "label"^^xsd:string ;
-                            ] ;
-                        ] ;
-                      sp:arg2 [
-                          sp:varName "label"^^xsd:string ;
-                        ] ;
-                      sp:arg3 [
-                          rdf:type ui:label ;
-                          sp:arg1 [
-                              sp:varName "predicate"^^xsd:string ;
-                            ] ;
-                        ] ;
-                    ] ;
-                  arg:property [
-                      sp:varName "predicate"^^xsd:string ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:child [
-              rdf:type html:Td ;
-              html:class "lm-column"^^xsd:string ;
-              ui:child [
-                  rdf:type lmdoc:URIResourceViewer ;
-                  arg:object [
-                      sp:varName "predicate"^^xsd:string ;
-                    ] ;
-                  ui:childIndex 0 ;
                 ] ;
               ui:childIndex 1 ;
             ] ;
@@ -5989,19 +6006,9 @@ lmdoc:ObjectsGroup
                           ui:child [
                               rdf:type ui:TextNode ;
                               ui:childIndex 0 ;
-                              ui:text "QName"^^xsd:string ;
-                            ] ;
-                          ui:childIndex 1 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:Th ;
-                          html:class "lm-column-labels"^^xsd:string ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
                               ui:text "Values"^^xsd:string ;
                             ] ;
-                          ui:childIndex 2 ;
+                          ui:childIndex 1 ;
                         ] ;
                       ui:child [
                           rdf:type html:Th ;
@@ -6270,6 +6277,7 @@ lmdoc:PropertiesTable
           html:class "lm-table"^^xsd:string ;
           ui:child [
               rdf:type html:Tbody ;
+              html:class "lm-table-body"^^xsd:string ;
               ui:child [
                   rdf:type ui:forEach ;
                   ui:child [
@@ -6277,7 +6285,7 @@ lmdoc:PropertiesTable
                       html:class "lm-row"^^xsd:string ;
                       ui:child [
                           rdf:type html:Td ;
-                          html:class "lm-column"^^xsd:string ;
+                          html:class "lm-column align-top"^^xsd:string ;
                           ui:child [
                               rdf:type html:B ;
                               ui:child [
@@ -6293,6 +6301,18 @@ lmdoc:PropertiesTable
                               ui:childIndex 0 ;
                             ] ;
                           ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Td ;
+                          html:class "lm-column align-top"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:URIResourceViewer ;
+                              arg:object [
+                                  sp:varName "property"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 1 ;
                         ] ;
                       ui:child [
                           rdf:type html:Td ;
@@ -6446,18 +6466,6 @@ lmdoc:PropertiesTable
                               ui:childIndex 0 ;
                             ] ;
                           ui:childIndex 3 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:Td ;
-                          html:class "lm-column"^^xsd:string ;
-                          ui:child [
-                              rdf:type lmdoc:URIResourceViewer ;
-                              arg:object [
-                                  sp:varName "property"^^xsd:string ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 1 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:PropertyDetailsTable ;
@@ -7046,6 +7054,72 @@ lmdoc:PropertyDetailsTable
   rdfs:label "Property details table"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
 .
+lmdoc:ReferencesToResourceInGivenGraph
+  rdf:type spin:SelectTemplate ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:orderBy (
+          [
+            rdf:type ui:label ;
+            sp:arg1 [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+      sp:resultVariables (
+          [
+            sp:varName "property"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "graph"^^xsd:string ;
+              ] ;
+            sp:predicate rdfs:isDefinedBy ;
+            sp:subject [
+                sp:varName "resource"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "resource"^^xsd:string ;
+              ] ;
+            sp:predicate [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:subject [
+                sp:varName "subject"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:ne ;
+                sp:arg1 [
+                    sp:varName "property"^^xsd:string ;
+                  ] ;
+                sp:arg2 rdfs:isDefinedBy ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The class that the instances must have."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:resource ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  rdfs:comment "Gets all properties for subjects that reference a resource as object in given class."^^xsd:string ;
+  rdfs:label "All instances"^^xsd:string ;
+  rdfs:subClassOf lmdoc:SelectTemplates ;
+.
 lmdoc:ResourceDocAnchor
   rdf:type ui:NodeClass ;
   spin:constraint [
@@ -7408,6 +7482,8 @@ lmdoc:SubjectElements
       spl:valueType rdf:Property ;
       rdfs:comment "The predicate."^^xsd:string ;
     ] ;
+  ui:abstract "true"^^xsd:boolean ;
+  ui:private "true"^^xsd:boolean ;
   rdfs:subClassOf lmdoc:ViewElements ;
 .
 lmdoc:SubjectWidgetRow
@@ -7435,191 +7511,11 @@ lmdoc:SubjectWidgetRow
     ] ;
   rdfs:comment "A row of a SubjectWidget."^^xsd:string ;
   rdfs:label "Subject widget row"^^xsd:string ;
-  rdfs:subClassOf lmdoc:SubjectElements ;
+  rdfs:subClassOf lmdoc:ViewElements ;
 .
-lmdoc:SubjectsBody
+lmdoc:Subjects
   rdf:type ui:NodeClass ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:optional "true"^^xsd:boolean ;
-      spl:predicate arg:single ;
-      spl:valueType xsd:boolean ;
-      rdfs:comment "True to allow at most one value."^^xsd:string ;
-    ] ;
-  ui:private "true"^^xsd:boolean ;
-  ui:prototype [
-      rdf:type ui:group ;
-      ui:child [
-          rdf:type ui:else ;
-          ui:child [
-              rdf:type html:Div ;
-              html:class "ies-object-row"^^xsd:string ;
-              ui:child [
-                  rdf:type lmdoc:SubjectWidgetRow ;
-                  arg:predicate [
-                      sp:varName "predicate"^^xsd:string ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:childIndex 1 ;
-        ] ;
-      ui:child [
-          rdf:type ui:if ;
-          ui:child [
-              rdf:type html:Div ;
-              html:class "swa-add-button-div"^^xsd:string ;
-              html:style [
-                  rdf:type sp:if ;
-                  sp:arg1 [
-                      sp:varName "single"^^xsd:string ;
-                    ] ;
-                  sp:arg2 "display: none" ;
-                  sp:arg3 [
-                      sp:varName "none"^^xsd:string ;
-                    ] ;
-                ] ;
-              let:pid [
-                  rdf:type ui:uniqueId ;
-                ] ;
-              ui:child [
-                  rdf:type html:A ;
-                  html:class "ies-add-row-button"^^xsd:string ;
-                  html:href "javascript:void(0)"^^xsd:string ;
-                  html:onclick [
-                      rdf:type fn:concat ;
-                      sp:arg1 "swa.addRow('"^^xsd:string ;
-                      sp:arg2 [
-                          sp:varName "pid"^^xsd:string ;
-                        ] ;
-                      sp:arg3 "', "^^xsd:string ;
-                      sp:arg4 [
-                          rdf:type sp:coalesce ;
-                          sp:arg1 [
-                              sp:varName "single"^^xsd:string ;
-                            ] ;
-                          sp:arg2 "false"^^xsd:boolean ;
-                        ] ;
-                      sp:arg5 ")"^^xsd:string ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:child [
-                  rdf:type html:Div ;
-                  html:id [
-                      sp:varName "pid"^^xsd:string ;
-                    ] ;
-                  html:style "display: none"^^xsd:string ;
-                  ui:child [
-                      rdf:type html:Div ;
-                      html:class "ies-object-row"^^xsd:string ;
-                      ui:child [
-                          rdf:type ui:setContext ;
-                          ui:child [
-                              rdf:type lmdoc:SubjectWidgetRow ;
-                              arg:object [
-                                  sp:varName "object"^^xsd:string ;
-                                ] ;
-                              arg:predicate [
-                                  sp:varName "predicate"^^xsd:string ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 0 ;
-                          ui:varName "createLinkFunction"^^xsd:string ;
-                          ui:varValue lmdoc:createLinkForMainForm ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 1 ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:childIndex 2 ;
-          ui:condition [
-              rdf:type swa:isEditMode ;
-            ] ;
-        ] ;
-      ui:child [
-          rdf:type ui:if ;
-          ui:child [
-              rdf:type ui:call ;
-              arg:object [
-                  sp:varName "object"^^xsd:string ;
-                ] ;
-              arg:predicate [
-                  sp:varName "predicate"^^xsd:string ;
-                ] ;
-              ui:child [
-                  rdf:type ui:forEach ;
-                  ui:child [
-                      rdf:type html:Div ;
-                      html:class "ies_widget_value_slot"^^xsd:string ;
-                      ui:child [
-                          rdf:type lmdoc:SubjectWidgetRow ;
-                          arg:object [
-                              sp:varName "object"^^xsd:string ;
-                            ] ;
-                          arg:predicate [
-                              sp:varName "predicate"^^xsd:string ;
-                            ] ;
-                          arg:subject [
-                              sp:varName "subject"^^xsd:string ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 1 ;
-                  ui:resultSet [
-                      sp:varName "rs"^^xsd:string ;
-                    ] ;
-                ] ;
-              ui:child [
-                  rdf:type ui:if ;
-                  ui:child [
-                      rdf:type html:Div ;
-                      html:class "ies-object-row"^^xsd:string ;
-                      ui:child [
-                          rdf:type lmdoc:SubjectWidgetRow ;
-                          arg:object [
-                              sp:varName "object"^^xsd:string ;
-                            ] ;
-                          arg:predicate [
-                              sp:varName "predicate"^^xsd:string ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 0 ;
-                  ui:condition [
-                      rdf:type sp:eq ;
-                      sp:arg1 [
-                          rdf:type spr:rowCount ;
-                          sp:arg1 [
-                              sp:varName "rs"^^xsd:string ;
-                            ] ;
-                        ] ;
-                      sp:arg2 0 ;
-                    ] ;
-                ] ;
-              ui:childIndex 0 ;
-              ui:template swa:SortedSubjects ;
-            ] ;
-          ui:childIndex 0 ;
-          ui:condition [
-              rdf:type sp:bound ;
-              sp:arg1 [
-                  sp:varName "object"^^xsd:string ;
-                ] ;
-            ] ;
-        ] ;
-    ] ;
-  rdfs:comment "The body of a subjects widget."^^xsd:string ;
-  rdfs:label "Subjects body"^^xsd:string ;
-  rdfs:subClassOf lmdoc:SubjectElements ;
+  rdfs:subClassOf lmdoc:AbstractSubject ;
 .
 lmdoc:TOCEntry
   rdf:type ui:NodeClass ;
@@ -7806,6 +7702,113 @@ lmdoc:TableOfContents
   ui:responseType ui:HTML ;
   rdfs:label "Table of contents"^^xsd:string ;
   rdfs:subClassOf lmdoc:Sections ;
+.
+lmdoc:URIResourceSubjectViewer
+  rdf:type swa:SubjectViewerClass ;
+  swa:subjectWidgetWeight [
+      rdf:type swa:WeightedExpression ;
+      swa:expression [
+          rdf:type sp:isIRI ;
+          sp:arg1 [
+              sp:varName "subject"^^xsd:string ;
+            ] ;
+        ] ;
+    ] ;
+  ui:overrides swa:URIResourceSubjectViewer ;
+  ui:private "false"^^xsd:boolean ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:myGraph [
+          rdf:type ui:contextValue ;
+          sp:arg1 "graph" ;
+        ] ;
+      ui:child [
+          rdf:type html:Div ;
+          html:class "swa-shifted-label"^^xsd:string ;
+          html:title [
+              sp:varName "subject"^^xsd:string ;
+            ] ;
+          ui:child [
+              rdf:type ui:else ;
+              ui:child [
+                  rdf:type lmdoc:ResourceLink ;
+                  arg:resource [
+                      sp:varName "subject"^^xsd:string ;
+                    ] ;
+                  arg:title [
+                      rdf:type xsd:string ;
+                      sp:arg1 [
+                          sp:varName "subject"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type ui:else ;
+                  ui:child [
+                      rdf:type lmdoc:ResourceLink ;
+                      arg:resource [
+                          sp:varName "subject"^^xsd:string ;
+                        ] ;
+                      arg:title [
+                          rdf:type xsd:string ;
+                          sp:arg1 [
+                              sp:varName "subject"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type ui:resourceView ;
+                      ui:childIndex 1 ;
+                      ui:matchIds "lmdoc-summary"^^xsd:string ;
+                      ui:resource [
+                          sp:varName "subject"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:ResourceDocLink ;
+                      arg:label [
+                          sp:varName "myLabel"^^xsd:string ;
+                        ] ;
+                      arg:resource [
+                          sp:varName "subject"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:condition [
+                      rdf:type lmdoc:IsDefinedInGraph ;
+                      arg:graph [
+                          sp:varName "myGraph"^^xsd:string ;
+                        ] ;
+                      arg:resource [
+                          sp:varName "subject"^^xsd:string ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:condition [
+                  rdf:type sp:bound ;
+                  sp:arg1 [
+                      sp:varName "myGraph"^^xsd:string ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  rdfs:comment "A viewer for URI resources, displaying a hyperlink to that resource."^^xsd:string ;
+  rdfs:label "URI resource subject viewer"^^xsd:string ;
+  rdfs:subClassOf swa:URIResourceSubjectViewer ;
 .
 lmdoc:URIResourceViewer
   rdf:type swa:ObjectViewerClass ;
@@ -8186,6 +8189,561 @@ lmdoc:Viewers
   rdf:type ui:NodeClass ;
   rdfs:label "Viewers"^^xsd:string ;
   rdfs:subClassOf iess:Elements ;
+.
+lmdoc:WhereUsedLabeledSubjects
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:single ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to only allow at most one subject for this component."^^xsd:string ;
+    ] ;
+  ui:private "true"^^xsd:boolean ;
+  ui:prototype [
+      rdf:type ui:if ;
+      ui:child [
+          rdf:type html:Tr ;
+          html:class "lm-row"^^xsd:string ;
+          ui:child [
+              rdf:type html:Td ;
+              html:class "lm-table-column align-top"^^xsd:string ;
+              ui:child [
+                  rdf:type lmdoc:URIResourceViewer ;
+                  arg:object [
+                      sp:varName "predicate"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type html:Td ;
+              html:class "lm-table-column"^^xsd:string ;
+              html:id [
+                  rdf:type ui:concat ;
+                  sp:arg1 [
+                      sp:varName "pid"^^xsd:string ;
+                    ] ;
+                  sp:arg2 "-body"^^xsd:string ;
+                ] ;
+              ui:child [
+                  rdf:type lmdoc:WhereUsedSubjectsBody ;
+                  ui:args "*"^^xsd:string ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:condition [
+          rdf:type sp:or ;
+          sp:arg1 [
+              rdf:type sp:or ;
+              sp:arg1 [
+                  rdf:type sp:or ;
+                  sp:arg1 [
+                      rdf:type sp:not ;
+                      sp:arg1 [
+                          rdf:type sp:bound ;
+                          sp:arg1 [
+                              sp:varName "hideIfEmpty"^^xsd:string ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  sp:arg2 [
+                      rdf:type sp:ne ;
+                      sp:arg1 [
+                          sp:varName "hideIfEmpty"^^xsd:string ;
+                        ] ;
+                      sp:arg2 "true"^^xsd:boolean ;
+                    ] ;
+                ] ;
+              sp:arg2 [
+                  rdf:type sp:ne ;
+                  sp:arg1 [
+                      rdf:type swa:mode ;
+                    ] ;
+                  sp:arg2 swa:ViewMode ;
+                ] ;
+            ] ;
+          sp:arg2 [
+              rdf:type sp:and ;
+              sp:arg1 [
+                  rdf:type sp:bound ;
+                  sp:arg1 [
+                      sp:varName "object"^^xsd:string ;
+                    ] ;
+                ] ;
+              sp:arg2 [
+                  rdf:type sp:exists ;
+                  sp:elements (
+                      [
+                        sp:object [
+                            sp:varName "object"^^xsd:string ;
+                          ] ;
+                        sp:predicate [
+                            sp:varName "predicate"^^xsd:string ;
+                          ] ;
+                        sp:subject [
+                            sp:varName "anySubject"^^xsd:string ;
+                          ] ;
+                      ]
+                    ) ;
+                ] ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:comment "Where used labelled subjects"^^xsd:string ;
+  rdfs:label "Labeled subjects"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Subjects ;
+.
+lmdoc:WhereUsedSubjects
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:object ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:predicates ;
+      spl:valueType sp:Select ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      letrs:rs [
+          rdf:type sp:Select ;
+          sp:resultVariables (
+              [
+                sp:varName "predicate"^^xsd:string ;
+              ]
+            ) ;
+          sp:where (
+              [
+                sp:object [
+                    sp:varName "predicates"^^xsd:string ;
+                  ] ;
+                sp:predicate rdf:first ;
+                sp:subject [
+                    sp:varName "?0"^^xsd:string ;
+                  ] ;
+              ]
+              [
+                sp:object [
+                    sp:varName "?1"^^xsd:string ;
+                  ] ;
+                sp:predicate rdf:rest ;
+                sp:subject [
+                    sp:varName "?0"^^xsd:string ;
+                  ] ;
+              ]
+              [
+                sp:object 0 ;
+                sp:predicate rdf:first ;
+                sp:subject [
+                    sp:varName "?1"^^xsd:string ;
+                  ] ;
+              ]
+              [
+                sp:object () ;
+                sp:predicate rdf:rest ;
+                sp:subject [
+                    sp:varName "?1"^^xsd:string ;
+                  ] ;
+              ]
+              [
+                sp:object [
+                    sp:varName "predicate"^^xsd:string ;
+                  ] ;
+                sp:predicate spr:colCells ;
+                sp:subject [
+                    sp:varName "?0"^^xsd:string ;
+                  ] ;
+              ]
+              [
+                rdf:type sp:Filter ;
+                sp:expression [
+                    rdf:type sp:or ;
+                    sp:arg1 [
+                        rdf:type sp:not ;
+                        sp:arg1 [
+                            rdf:type sp:bound ;
+                            sp:arg1 [
+                                sp:varName "filterFunction"^^xsd:string ;
+                              ] ;
+                          ] ;
+                      ] ;
+                    sp:arg2 [
+                        rdf:type spif:invoke ;
+                        sp:arg1 [
+                            sp:varName "filterFunction"^^xsd:string ;
+                          ] ;
+                        sp:arg2 [
+                            sp:varName "predicate"^^xsd:string ;
+                          ] ;
+                        sp:arg3 [
+                            sp:varName "subject"^^xsd:string ;
+                          ] ;
+                      ] ;
+                  ] ;
+              ]
+              [
+                rdf:type sp:Filter ;
+                sp:expression [
+                    rdf:type sp:not ;
+                    sp:arg1 [
+                        rdf:type swa:isHiddenProperty ;
+                        arg:property [
+                            sp:varName "predicate"^^xsd:string ;
+                          ] ;
+                      ] ;
+                  ] ;
+              ]
+            ) ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:Table ;
+              html:class "lm-table"^^xsd:string ;
+              let:pid [
+                  rdf:type ui:uniqueId ;
+                ] ;
+              ui:child [
+                  rdf:type html:Tbody ;
+                  html:class "lm-table-body"^^xsd:string ;
+                  ui:child [
+                      rdf:type ui:forEach ;
+                      ui:child [
+                          rdf:type lmdoc:WhereUsedLabeledSubjects ;
+                          arg:property [
+                              sp:varName "predicate"^^xsd:string ;
+                            ] ;
+                          arg:single "false"^^xsd:boolean ;
+                          ui:args "*"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:resultSet [
+                          sp:varName "rs"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Thead ;
+                  html:class "lm-table-header"^^xsd:string ;
+                  ui:child [
+                      rdf:type html:Th ;
+                      html:class "lm-column-labels"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Referencing Property"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Th ;
+                      html:class "lm-column-labels"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Subject"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              rdf:type sp:gt ;
+              sp:arg1 [
+                  rdf:type spr:rowCount ;
+                  sp:arg1 [
+                      sp:varName "rs"^^xsd:string ;
+                    ] ;
+                ] ;
+              sp:arg2 0 ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:comment "Inserts a widget for a given predicate/object combination, showing the subjects as values. This is typically known as \"Incoming References\"."^^xsd:string ;
+  rdfs:label "Subjects"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Subjects ;
+.
+lmdoc:WhereUsedSubjectsBody
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:single ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to allow at most one value."^^xsd:string ;
+    ] ;
+  ui:private "true"^^xsd:boolean ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type ui:else ;
+          ui:child [
+              rdf:type html:Div ;
+              html:class "swa-object-row"^^xsd:string ;
+              ui:child [
+                  rdf:type swa:SubjectWidgetRow ;
+                  arg:predicate [
+                      sp:varName "predicate"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:Div ;
+              html:class "swa-add-button-div"^^xsd:string ;
+              html:style [
+                  rdf:type sp:if ;
+                  sp:arg1 [
+                      sp:varName "single"^^xsd:string ;
+                    ] ;
+                  sp:arg2 "display: none" ;
+                  sp:arg3 [
+                      sp:varName "none"^^xsd:string ;
+                    ] ;
+                ] ;
+              let:pid [
+                  rdf:type ui:uniqueId ;
+                ] ;
+              ui:child [
+                  rdf:type html:A ;
+                  html:class "swa-add-row-button"^^xsd:string ;
+                  html:href "javascript:void(0)"^^xsd:string ;
+                  html:onclick [
+                      rdf:type fn:concat ;
+                      sp:arg1 "swa.addRow('"^^xsd:string ;
+                      sp:arg2 [
+                          sp:varName "pid"^^xsd:string ;
+                        ] ;
+                      sp:arg3 "', "^^xsd:string ;
+                      sp:arg4 [
+                          rdf:type sp:coalesce ;
+                          sp:arg1 [
+                              sp:varName "single"^^xsd:string ;
+                            ] ;
+                          sp:arg2 "false"^^xsd:boolean ;
+                        ] ;
+                      sp:arg5 ")"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Div ;
+                  html:id [
+                      sp:varName "pid"^^xsd:string ;
+                    ] ;
+                  html:style "display: none"^^xsd:string ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "ies-object-row"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:setContext ;
+                          ui:child [
+                              rdf:type swa:SubjectWidgetRow ;
+                              arg:object [
+                                  sp:varName "object"^^xsd:string ;
+                                ] ;
+                              arg:predicate [
+                                  sp:varName "predicate"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                          ui:varName "createLinkFunction"^^xsd:string ;
+                          ui:varValue lmdoc:createLinkForMainForm ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 2 ;
+          ui:condition [
+              rdf:type swa:isEditMode ;
+            ] ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type ui:call ;
+              arg:object [
+                  sp:varName "object"^^xsd:string ;
+                ] ;
+              arg:predicate [
+                  sp:varName "predicate"^^xsd:string ;
+                ] ;
+              ui:child [
+                  rdf:type ui:forEach ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa_widget_value_slot"^^xsd:string ;
+                      ui:child [
+                          rdf:type swa:SubjectWidgetRow ;
+                          arg:object [
+                              sp:varName "object"^^xsd:string ;
+                            ] ;
+                          arg:predicate [
+                              sp:varName "predicate"^^xsd:string ;
+                            ] ;
+                          arg:subject [
+                              sp:varName "subject"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                  ui:resultSet [
+                      sp:varName "rs"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa-object-row"^^xsd:string ;
+                      ui:child [
+                          rdf:type swa:SubjectWidgetRow ;
+                          arg:object [
+                              sp:varName "object"^^xsd:string ;
+                            ] ;
+                          arg:predicate [
+                              sp:varName "predicate"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:condition [
+                      rdf:type sp:eq ;
+                      sp:arg1 [
+                          rdf:type spr:rowCount ;
+                          sp:arg1 [
+                              sp:varName "rs"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      sp:arg2 0 ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:template swa:SortedSubjects ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              rdf:type sp:bound ;
+              sp:arg1 [
+                  sp:varName "object"^^xsd:string ;
+                ] ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:comment "Where used subjects body"^^xsd:string ;
+  rdfs:label "Subjects body"^^xsd:string ;
+  rdfs:subClassOf lmdoc:SubjectElements ;
+.
+lmdoc:WhereUsedSubjectsGroup
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:filterFunction ;
+      spl:valueType spin:Function ;
+      rdfs:comment "An optional filter function that takes a predicate, subject and subjectType as arguments and returns true for all predicates that should be displayed."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:label ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The title label."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:object ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The resource to display."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:predicates ;
+      spl:valueType sp:Select ;
+      rdfs:comment "A result set (e.g., SPARQL SELECT query) that delivers the predicates in this group."^^xsd:string ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:Div ;
+              html:class "swa-objects-group"^^xsd:string ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa-sub-title"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "label"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:condition [
+                      rdf:type sp:bound ;
+                      sp:arg1 [
+                          sp:varName "label"^^xsd:string ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type lmdoc:WhereUsedSubjects ;
+                  arg:object [
+                      sp:varName "object"^^xsd:string ;
+                    ] ;
+                  arg:predicates [
+                      sp:varName "predicates"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              rdf:type sp:gt ;
+              sp:arg1 [
+                  rdf:type spr:rowCount ;
+                  sp:arg1 [
+                      sp:varName "predicates"^^xsd:string ;
+                    ] ;
+                ] ;
+              sp:arg2 0 ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:comment "A group of subject widgets."^^xsd:string ;
+  rdfs:label "Where used subjects group"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Subjects ;
 .
 lmdoc:countOfInstanceOfType
   rdf:type spin:Function ;
