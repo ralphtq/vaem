@@ -1,7 +1,7 @@
 /*
  filename: lm.css
  Version: 1.0
- Last Modified: Mar 29, 2015
+ Last Modified: Apr 6, 2015
  Author: Ralph Hodgson
  Derived from: http://www.w3.org/StyleSheets/TR/W3C-REC.css
                http://www.w3.org/TR/vocab-org/
@@ -17,19 +17,35 @@ body {
   background-attachment: fixed;
   background-repeat: no-repeat;
 }
-:link { color: #00C; background: transparent }
-:visited { color: #609; background: transparent }
-a:active { color: #C00; background: transparent }
+
+a:link { 
+	text-decoration: none;
+	color: #00C; 
+	background: transparent 
+}
+
+a:visited { 
+	color: #609; 
+	background: transparent
+}
+
+a:active { 
+	color: #C00; 
+	background: transparent 
+	}
 
 a:link img, a:visited img { border-style: none } /* no border on img links */
 
 a img { color: white; }        /* trick to hide the border in Netscape 4 */
+
 @media all {                   /* hide the next rule from Netscape 4 */
   a img { color: inherit; }    /* undo the color change above */
 }
 
 h1, h2, h3, h4, h5, h6 { text-align: left }
+
 /* background should be transparent, but WebTV has a bug */
+
 h1, h2, h3 { color: #005A9C; background: white }
 h1 { font: 170% sans-serif }
 h2 { font: 140% sans-serif }
@@ -55,7 +71,7 @@ pre { margin-left: 2em }
 
 .spinrule {
    padding: 2em;
-    width:100%;
+   width:100%;
 }
 
 .size-8 { font-size: 8px; }
@@ -74,18 +90,18 @@ pre { margin-left: 2em }
      
 .align-top {vertical-align: top} 
 .align-middle {vertical-align: middle} 
-/*
-p {
-  margin-top: 0.6em;
-  margin-bottom: 0.6em;
-}
-*/
+
+
 dt, dd { margin-top: 0; margin-bottom: 0 } /* opera 3.50 */
 dt { font-weight: bold }
 
 ul.toc, ol.toc {
   list-style: disc;		/* Mac NS has problem with 'none' */
   list-style: none;
+}
+
+li.lm-toce {
+	padding: 5px;
 }
 
 @media speech {
@@ -191,6 +207,10 @@ ol.lm-toc{
 
 ol.lm-lower-roman {
 	list-style-type: lower-roman;
+}
+
+ol.lm-decimal {
+	list-style-type: decimal;
 }
 
 ol.lm-toc-numeric{
@@ -350,7 +370,6 @@ div.lm-resource-box {
  padding: 10px 40px; 
  background-color: #f9f9f9;
  }
- 
 
 div.lm-header-box {
     width: 320px;
@@ -636,28 +655,33 @@ td.lm-column {
     text-align: center ;
     }
 
-#lm-container {
+.lm-container {
 	color: #515151;
 	margin: 0 auto;
-	padding: 0 10px 0 10px;
-	width: 800px;
-	background-color: #f2ffff;
+	padding: 10px;
+	background-color: #ffffff;
 }
-#lm-header {
+
+.lm-header {
 	text-align: left;
-	padding: 0 10px 0 10px;
+	padding: 10px;
 	margin: 0 auto;
-	width: 800px;
+	width: 100% ;
 	background-color: #f2ffff;
   }
-  
+ 
+ .lm-header-mast {
+	text-align: left;
+	background-color: #f2ffff;
+  }
+ 
 #lm-body {
     clear: both;
     padding-top: 6px;
     position: relative;
   }
   
-#lm-footer {
+.lm-footer {
     font-size: 11px;
     height: 55px;
     padding: 6px 0 3px 0;

@@ -7551,7 +7551,6 @@ lmdoc:TOCEntry
         ] ;
       ui:child [
           rdf:type html:A ;
-          html:class "tocxref"^^xsd:string ;
           html:href [
               rdf:type fn:concat ;
               sp:arg1 "#" ;
@@ -7563,16 +7562,11 @@ lmdoc:TOCEntry
                 ] ;
             ] ;
           ui:child [
-              rdf:type html:Span ;
-              html:class "secno"^^xsd:string ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text [
-                      sp:varName "heading"^^xsd:string ;
-                    ] ;
-                ] ;
+              rdf:type ui:TextNode ;
               ui:childIndex 0 ;
+              ui:text [
+                  sp:varName "heading"^^xsd:string ;
+                ] ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -7625,11 +7619,13 @@ lmdoc:TableOfContents
           html:class "lm-toc-numeric"^^xsd:string ;
           ui:child [
               rdf:type html:Li ;
+              html:class "lm-toce"^^xsd:string ;
               ui:child [
                   rdf:type html:Ol ;
                   html:class "lm-toc"^^xsd:string ;
                   ui:child [
                       rdf:type html:Li ;
+                      html:class "lm-toce"^^xsd:string ;
                       ui:child [
                           rdf:type lmdoc:TOCEntry ;
                           arg:heading "Classes"^^xsd:string ;
@@ -7639,6 +7635,7 @@ lmdoc:TableOfContents
                     ] ;
                   ui:child [
                       rdf:type html:Li ;
+                      html:class "lm-toce"^^xsd:string ;
                       ui:child [
                           rdf:type lmdoc:TOCEntry ;
                           arg:heading "Instances"^^xsd:string ;
@@ -7648,6 +7645,7 @@ lmdoc:TableOfContents
                     ] ;
                   ui:child [
                       rdf:type html:Li ;
+                      html:class "lm-toce"^^xsd:string ;
                       ui:child [
                           rdf:type lmdoc:TOCEntry ;
                           arg:heading "Properties"^^xsd:string ;
@@ -7666,11 +7664,13 @@ lmdoc:TableOfContents
             ] ;
           ui:child [
               rdf:type html:Li ;
+              html:class "lm-toce"^^xsd:string ;
               ui:child [
                   rdf:type html:Ol ;
                   html:class "lm-toc"^^xsd:string ;
                   ui:child [
                       rdf:type html:Li ;
+                      html:class "lm-toce"^^xsd:string ;
                       ui:child [
                           rdf:type lmdoc:TOCEntry ;
                           arg:heading "Imported Graphs"^^xsd:string ;
@@ -7680,6 +7680,7 @@ lmdoc:TableOfContents
                     ] ;
                   ui:child [
                       rdf:type html:Li ;
+                      html:class "lm-toce"^^xsd:string ;
                       ui:child [
                           rdf:type lmdoc:TOCEntry ;
                           arg:heading "Non-imported Resources"^^xsd:string ;
