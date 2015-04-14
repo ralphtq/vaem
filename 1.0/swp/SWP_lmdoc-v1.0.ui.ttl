@@ -1644,7 +1644,7 @@ lmdoc:Class
   rdfs:comment """Test with:
 
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:Class&graph=http://www.linkedmodel.org/2.0/schema/vaem&class=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23GraphRole"""^^xsd:string ;
-  rdfs:label "Graph Documentation"^^xsd:string ;
+  rdfs:label "Class Documentation"^^xsd:string ;
   rdfs:subClassOf lmdoc:Pages ;
 .
 lmdoc:ClassInstances
@@ -4753,6 +4753,310 @@ lmdoc:InheritanceTable
   ui:responseType ui:HTML ;
   rdfs:label "Inheritance table"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
+.
+lmdoc:Instance
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:overlay ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:flags ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:instance ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:errorPrototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type ui:else ;
+          ui:child [
+              rdf:type ui:group ;
+              let:myGraphMetadata [
+                  rdf:type spl:object ;
+                  sp:arg1 [
+                      sp:varName "myGraph"^^xsd:string ;
+                    ] ;
+                  sp:arg2 vaem:hasGraphMetadata ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:P ;
+                      html:class "lm-para"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "No metadata for graph "^^xsd:string ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 1 ;
+                          ui:text [
+                              sp:varName "graph"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:condition "(!bound(?graph))"^^xsd:string ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:P ;
+              html:class "lm-para"^^xsd:string ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "Missiing graph value"^^xsd:string ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition "(!bound(?graph))"^^xsd:string ;
+        ] ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:myGraph [
+          rdf:type sp:iri ;
+          sp:arg1 [
+              sp:varName "graph"^^xsd:string ;
+            ] ;
+        ] ;
+      ui:child [
+          rdf:type ui:group ;
+          let:myOverlay [
+              rdf:type sp:iri ;
+              sp:arg1 [
+                  rdf:type sp:coalesce ;
+                  sp:arg1 [
+                      sp:varName "overlay"^^xsd:string ;
+                    ] ;
+                  sp:arg2 ui:tempGraph ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:setContext ;
+              ui:child [
+                  rdf:type ui:setContext ;
+                  ui:child [
+                      rdf:type ui:setContext ;
+                      ui:child [
+                          rdf:type ui:group ;
+                          let:myGraphMetadata [
+                              rdf:type spl:object ;
+                              sp:arg1 [
+                                  sp:varName "myGraph"^^xsd:string ;
+                                ] ;
+                              sp:arg2 vaem:hasGraphMetadata ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Div ;
+                              let:myLogo [
+                                  rdf:type sp:coalesce ;
+                                  sp:arg1 [
+                                      rdf:type spl:object ;
+                                      sp:arg1 [
+                                          sp:varName "myGraphMetadata"^^xsd:string ;
+                                        ] ;
+                                      sp:arg2 vaem:logo ;
+                                    ] ;
+                                  sp:arg2 "http://www.topquadrant.com/wp-content/uploads/2013/09/topquadrant-logo1.png" ;
+                                ] ;
+                              ui:child [
+                                  rdf:type html:Img ;
+                                  html:height "60px"^^xsd:string ;
+                                  html:src [
+                                      sp:varName "myLogo"^^xsd:string ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:call ;
+                              arg:subject [
+                                  sp:varName "instance"^^xsd:string ;
+                                ] ;
+                              ui:child [
+                                  rdf:type html:Dd ;
+                                  html:class "size-14"^^xsd:string ;
+                                  ui:child [
+                                      rdf:type lmdoc:ObjectsBody ;
+                                      arg:predicate rdf:type ;
+                                      arg:subject [
+                                          sp:varName "instance"^^xsd:string ;
+                                        ] ;
+                                      ui:args "*"^^xsd:string ;
+                                      ui:childIndex 0 ;
+                                    ] ;
+                                  ui:childIndex 3 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type html:Div ;
+                                  html:class "lm-header-box"^^xsd:string ;
+                                  ui:child [
+                                      rdf:type lmdoc:ResourceDocAnchor ;
+                                      arg:node [
+                                          sp:varName "instance"^^xsd:string ;
+                                        ] ;
+                                      arg:typeLabel "Instance "^^xsd:string ;
+                                      ui:childIndex 0 ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type html:Div ;
+                                  html:class "swa-sub-title"^^xsd:string ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text "Description"^^xsd:string ;
+                                    ] ;
+                                  ui:childIndex 5 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type html:Div ;
+                                  html:class "swa-sub-title"^^xsd:string ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text "Type"^^xsd:string ;
+                                    ] ;
+                                  ui:childIndex 2 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type lmdoc:MaybeDescription ;
+                                  arg:node [
+                                      sp:varName "instance"^^xsd:string ;
+                                    ] ;
+                                  ui:childIndex 6 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type lmdoc:ObjectsGroup ;
+                                  arg:filterFunction swa:isAnnotationProperty ;
+                                  arg:label "Annotations"^^xsd:string ;
+                                  arg:predicates [
+                                      sp:varName "rs"^^xsd:string ;
+                                    ] ;
+                                  arg:subject [
+                                      sp:varName "instance"^^xsd:string ;
+                                    ] ;
+                                  ui:childIndex 10 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type lmdoc:ObjectsGroup ;
+                                  arg:filterFunction swa:isNonAnnotationProperty ;
+                                  arg:label "Properties"^^xsd:string ;
+                                  arg:predicates [
+                                      sp:varName "rs"^^xsd:string ;
+                                    ] ;
+                                  arg:subject [
+                                      sp:varName "instance"^^xsd:string ;
+                                    ] ;
+                                  ui:childIndex 8 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type lmdoc:ResourceFooter ;
+                                  arg:options "CSV,JSONLD,RDF,TURTLE"^^xsd:string ;
+                                  arg:resource [
+                                      sp:varName "instance"^^xsd:string ;
+                                    ] ;
+                                  ui:childIndex 12 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type lmdoc:VSpace ;
+                                  arg:margin "20px;"^^xsd:string ;
+                                  ui:childIndex 1 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type lmdoc:VSpace ;
+                                  arg:margin "30px;"^^xsd:string ;
+                                  ui:childIndex 4 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type lmdoc:VSpace ;
+                                  arg:margin "30px;"^^xsd:string ;
+                                  ui:childIndex 7 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type lmdoc:VSpace ;
+                                  arg:margin "30px;"^^xsd:string ;
+                                  ui:childIndex 9 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type lmdoc:VSpace ;
+                                  arg:margin "40px;"^^xsd:string ;
+                                  ui:childIndex 11 ;
+                                ] ;
+                              ui:childIndex 1 ;
+                              ui:template [
+                                  rdf:type swa:modeProperty ;
+                                  arg:predicate swa:formObjectPredicateSelectionTemplate ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:queryGraph [
+                          rdf:type ui:unionOfGraphs ;
+                          sp:arg1 [
+                              rdf:type ui:graphWithImports ;
+                              sp:arg1 [
+                                  sp:varName "myGraph"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          sp:arg2 [
+                              rdf:type ui:graphWithImports ;
+                              sp:arg1 [
+                                  sp:varName "myOverlay"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          sp:arg3 [
+                              rdf:type ui:graphWithImports ;
+                              sp:arg1 <http://www.linkedmodel.org/1.1/swp/lmdoc> ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:varName "graph"^^xsd:string ;
+                  ui:varValue [
+                      sp:varName "myGraph"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:varName "flags"^^xsd:string ;
+              ui:varValue [
+                  sp:varName "flags"^^xsd:string ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  vaem:todo "remove dependency on swa.css"^^xsd:string ;
+  rdfs:comment """Test with:
+
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&instance=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23ScriptGraph"""^^xsd:string ;
+  rdfs:label "Instance Documentation"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Pages ;
 .
 lmdoc:InstancesSection
   rdf:type ui:NodeClass ;
