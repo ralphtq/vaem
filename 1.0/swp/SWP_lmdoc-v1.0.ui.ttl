@@ -2010,119 +2010,161 @@ lmdoc:DetailedClassView
             ] ;
           ui:child [
               rdf:type ui:group ;
-              letrs:myPropertySet [
-                  rdf:type sp:Select ;
-                  sp:distinct "true"^^xsd:boolean ;
-                  sp:orderBy (
-                      [
-                        rdf:type ui:label ;
-                        sp:arg1 [
-                            sp:varName "property"^^xsd:string ;
-                          ] ;
-                      ]
-                    ) ;
-                  sp:resultVariables (
-                      [
-                        sp:varName "property"^^xsd:string ;
-                      ]
-                      [
-                        sp:varName "parent"^^xsd:string ;
-                      ]
-                    ) ;
-                  sp:where (
-                      [
-                        sp:object [
-                            sp:varName "?0"^^xsd:string ;
-                          ] ;
-                        sp:predicate lmdoc:relevantPropertiesAtClassWithParent ;
-                        sp:subject [
-                            sp:varName "property"^^xsd:string ;
-                          ] ;
-                      ]
-                      [
-                        sp:object [
-                            sp:varName "class"^^xsd:string ;
-                          ] ;
-                        sp:predicate rdf:first ;
-                        sp:subject [
-                            sp:varName "?0"^^xsd:string ;
-                          ] ;
-                      ]
-                      [
-                        sp:object [
-                            sp:varName "?1"^^xsd:string ;
-                          ] ;
-                        sp:predicate rdf:rest ;
-                        sp:subject [
-                            sp:varName "?0"^^xsd:string ;
-                          ] ;
-                      ]
-                      [
-                        sp:object [
-                            sp:varName "parent"^^xsd:string ;
-                          ] ;
-                        sp:predicate rdf:first ;
-                        sp:subject [
-                            sp:varName "?1"^^xsd:string ;
-                          ] ;
-                      ]
-                      [
-                        sp:object () ;
-                        sp:predicate rdf:rest ;
-                        sp:subject [
-                            sp:varName "?1"^^xsd:string ;
-                          ] ;
-                      ]
-                    ) ;
+              let:t1 [
+                  rdf:type spif:currentTimeMillis ;
                 ] ;
               ui:child [
-                  rdf:type ui:if ;
+                  rdf:type ui:group ;
+                  let:t2 [
+                      rdf:type spif:currentTimeMillis ;
+                    ] ;
                   ui:child [
-                      rdf:type html:Div ;
-                      html:class "swa-sub-title"^^xsd:string ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text "Relevant Properties for "^^xsd:string ;
-                        ] ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 1 ;
-                          ui:text [
-                              rdf:type ui:label ;
+                      rdf:type ui:group ;
+                      let:d1 [
+                          rdf:type smf:trace ;
+                          sp:arg1 "Time taken to show class properties for {?2} was {?1} millisecs" ;
+                          sp:arg2 [
+                              rdf:type sp:sub ;
+                              sp:arg1 [
+                                  sp:varName "t2"^^xsd:string ;
+                                ] ;
+                              sp:arg2 [
+                                  sp:varName "t1"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          sp:arg3 [
+                              rdf:type ui:encodeNode ;
                               sp:arg1 [
                                   sp:varName "class"^^xsd:string ;
                                 ] ;
                             ] ;
                         ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "dfdf"^^xsd:string ;
+                        ] ;
                       ui:childIndex 0 ;
                     ] ;
-                  ui:child [
-                      rdf:type lmdoc:PropertiesTable ;
-                      arg:class [
-                          sp:varName "class"^^xsd:string ;
-                        ] ;
-                      arg:propertySet [
-                          sp:varName "myPropertySet"^^xsd:string ;
-                        ] ;
-                      ui:childIndex 1 ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:group ;
+                  letrs:myPropertySet [
+                      rdf:type sp:Select ;
+                      sp:distinct "true"^^xsd:boolean ;
+                      sp:orderBy (
+                          [
+                            rdf:type ui:label ;
+                            sp:arg1 [
+                                sp:varName "property"^^xsd:string ;
+                              ] ;
+                          ]
+                        ) ;
+                      sp:resultVariables (
+                          [
+                            sp:varName "property"^^xsd:string ;
+                          ]
+                          [
+                            sp:varName "parent"^^xsd:string ;
+                          ]
+                        ) ;
+                      sp:where (
+                          [
+                            sp:object [
+                                sp:varName "?0"^^xsd:string ;
+                              ] ;
+                            sp:predicate lmdoc:relevantPropertiesAtClassWithParent ;
+                            sp:subject [
+                                sp:varName "property"^^xsd:string ;
+                              ] ;
+                          ]
+                          [
+                            sp:object [
+                                sp:varName "class"^^xsd:string ;
+                              ] ;
+                            sp:predicate rdf:first ;
+                            sp:subject [
+                                sp:varName "?0"^^xsd:string ;
+                              ] ;
+                          ]
+                          [
+                            sp:object [
+                                sp:varName "?1"^^xsd:string ;
+                              ] ;
+                            sp:predicate rdf:rest ;
+                            sp:subject [
+                                sp:varName "?0"^^xsd:string ;
+                              ] ;
+                          ]
+                          [
+                            sp:object [
+                                sp:varName "parent"^^xsd:string ;
+                              ] ;
+                            sp:predicate rdf:first ;
+                            sp:subject [
+                                sp:varName "?1"^^xsd:string ;
+                              ] ;
+                          ]
+                          [
+                            sp:object () ;
+                            sp:predicate rdf:rest ;
+                            sp:subject [
+                                sp:varName "?1"^^xsd:string ;
+                              ] ;
+                          ]
+                        ) ;
                     ] ;
                   ui:child [
-                      rdf:type lmdoc:VSpace ;
-                      arg:margin "20px;"^^xsd:string ;
-                      ui:childIndex 2 ;
-                    ] ;
-                  ui:childIndex 0 ;
-                  ui:condition [
-                      rdf:type sp:gt ;
-                      sp:arg1 [
-                          rdf:type spr:rowCount ;
-                          sp:arg1 [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:class "swa-sub-title"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Relevant Properties for "^^xsd:string ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 1 ;
+                              ui:text [
+                                  rdf:type ui:label ;
+                                  sp:arg1 [
+                                      sp:varName "class"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:PropertiesTable ;
+                          arg:class [
+                              sp:varName "class"^^xsd:string ;
+                            ] ;
+                          arg:propertySet [
                               sp:varName "myPropertySet"^^xsd:string ;
                             ] ;
+                          ui:childIndex 1 ;
                         ] ;
-                      sp:arg2 0 ;
+                      ui:child [
+                          rdf:type lmdoc:VSpace ;
+                          arg:margin "20px;"^^xsd:string ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:condition [
+                          rdf:type sp:gt ;
+                          sp:arg1 [
+                              rdf:type spr:rowCount ;
+                              sp:arg1 [
+                                  sp:varName "myPropertySet"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          sp:arg2 0 ;
+                        ] ;
                     ] ;
+                  ui:childIndex 0 ;
                 ] ;
               ui:childIndex 5 ;
             ] ;
