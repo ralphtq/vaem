@@ -1488,61 +1488,8 @@ lmdoc:Class
                               sp:arg2 vaem:hasGraphMetadata ;
                             ] ;
                           ui:child [
-                              rdf:type html:Div ;
-                              html:class "size-10"^^xsd:string ;
-                              ui:child [
-                                  rdf:type html:A ;
-                                  html:href "http://www.topquadrant.com/technology/sparql-web-pages-swp/"^^xsd:string ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text "TopBraid SPARQL Web Pages (SWP)"^^xsd:string ;
-                                    ] ;
-                                  ui:childIndex 5 ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Generated "^^xsd:string ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 1 ;
-                                  ui:text [
-                                      rdf:type xsd:date ;
-                                      sp:arg1 [
-                                          rdf:type afn:now ;
-                                        ] ;
-                                    ] ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 2 ;
-                                  ui:text " by lmdoc version "^^xsd:string ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 3 ;
-                                  ui:text [
-                                      rdf:type spl:object ;
-                                      sp:arg1 lmdoc:GMD_LMDOC ;
-                                      sp:arg2 vaem:revision ;
-                                    ] ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 4 ;
-                                  ui:text " using "^^xsd:string ;
-                                ] ;
-                              ui:childIndex 5 ;
-                            ] ;
-                          ui:child [
                               rdf:type html:Hr ;
                               ui:childIndex 2 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Hr ;
-                              ui:childIndex 4 ;
                             ] ;
                           ui:child [
                               rdf:type html:Section ;
@@ -1595,8 +1542,12 @@ lmdoc:Class
                               ui:childIndex 1 ;
                             ] ;
                           ui:child [
-                              rdf:type lmdoc:GraphHeader ;
-                              arg:resource [
+                              rdf:type lmdoc:Footer ;
+                              ui:childIndex 4 ;
+                            ] ;
+                          ui:child [
+                              rdf:type lmdoc:PartHeader ;
+                              arg:metadata [
                                   sp:varName "myGraphMetadata"^^xsd:string ;
                                 ] ;
                               ui:childIndex 0 ;
@@ -2572,24 +2523,54 @@ lmdoc:Elements
       rdf:type ui:group ;
       ui:child [
           rdf:type html:Link ;
-          html:href [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/css/spin/spin.css"^^xsd:string ;
-            ] ;
+          html:href "http://linkedmodel.org/css/spin/spin.css"^^xsd:string ;
           ui:childIndex 3 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
-          html:href [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/vaem/css/lm.css"^^xsd:string ;
-            ] ;
+          html:href "http://linkedmodel.org/jquery/css/jquery.contextmenu.css"^^xsd:string ;
+          html:rel "stylesheet"^^xsd:string ;
+          html:type "text/css"^^xsd:string ;
+          ui:childIndex 10 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/jquery/css/jquery.jqplot.min.css"^^xsd:string ;
+          html:rel "stylesheet"^^xsd:string ;
+          html:type "text/css"^^xsd:string ;
+          ui:childIndex 12 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/jquery/css/smoothness/jquery-ui.css"^^xsd:string ;
+          html:rel "stylesheet"^^xsd:string ;
+          html:type "text/css"^^xsd:string ;
+          ui:childIndex 9 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/jquery/css/ui.jqgrid.css"^^xsd:string ;
+          html:rel "stylesheet"^^xsd:string ;
+          html:type "text/css"^^xsd:string ;
+          ui:childIndex 11 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/swa/css/swa.css"^^xsd:string ;
+          html:rel "stylesheet"^^xsd:string ;
+          html:type "text/css"^^xsd:string ;
+          ui:childIndex 8 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/swa/css/swaspin.css"^^xsd:string ;
+          html:rel "stylesheet"^^xsd:string ;
+          html:type "text/css"^^xsd:string ;
+          ui:childIndex 6 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/vaem/css/lm.css"^^xsd:string ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
           ui:childIndex 4 ;
@@ -2619,14 +2600,103 @@ lmdoc:Elements
           ui:childIndex 2 ;
         ] ;
       ui:child [
+          rdf:type html:Script ;
+          html:language "javascript"^^xsd:string ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.jqplot.min.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 22 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/i18n/grid.locale-en.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 15 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery-ui.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 14 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.contextmenu.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 17 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.cookie.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 18 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.hotkeys.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 19 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.jqGrid.min.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 16 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 13 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.jstree.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 21 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.layout.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 20 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/openajax/js/OpenAjax.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 24 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/swa/js/swa.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 25 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/swa/js/swaspin.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 7 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text "$.jqplot.config.enablePlugins = true;"^^xsd:string ;
+            ] ;
+          ui:childIndex 23 ;
+        ] ;
+      ui:child [
           rdf:type ui:CommentNode ;
           ui:childIndex 5 ;
           rdfs:comment "[if lt IE 9]><script src='https://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]"^^xsd:string ;
         ] ;
     ] ;
+  ui:overrides swa:Elements ;
   ui:responseType ui:HTML ;
   rdfs:label "Elements"^^xsd:string ;
-  rdfs:subClassOf ui:Element ;
+  rdfs:subClassOf swa:Elements ;
 .
 lmdoc:ExtractCommentTextFromRule
   rdf:type spin:Function ;
@@ -2733,6 +2803,67 @@ lmdoc:Factories
   rdf:type ui:NodeClass ;
   rdfs:subClassOf lmdoc:Elements ;
 .
+lmdoc:Footer
+  rdf:type ui:NodeClass ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type html:Div ;
+          html:class "size-10"^^xsd:string ;
+          ui:child [
+              rdf:type html:A ;
+              html:href "http://www.topquadrant.com/technology/sparql-web-pages-swp/"^^xsd:string ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "TopBraid SPARQL Web Pages (SWP)"^^xsd:string ;
+                ] ;
+              ui:childIndex 5 ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text "Generated "^^xsd:string ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 1 ;
+              ui:text [
+                  rdf:type xsd:date ;
+                  sp:arg1 [
+                      rdf:type afn:now ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 2 ;
+              ui:text " by lmdoc version "^^xsd:string ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 3 ;
+              ui:text [
+                  rdf:type spl:object ;
+                  sp:arg1 lmdoc:GMD_LMDOC ;
+                  sp:arg2 vaem:revision ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 4 ;
+              ui:text " using "^^xsd:string ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type html:Hr ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  rdfs:label "Footer"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Sections ;
+.
 lmdoc:Functions
   rdf:type spin:Function ;
   rdfs:label "Functions"^^xsd:string ;
@@ -2791,65 +2922,12 @@ lmdoc:Graph
                       html:resource "#ref"^^xsd:string ;
                       html:typeof "bibo:Chapter"^^xsd:string ;
                       ui:child [
-                          rdf:type html:Div ;
-                          html:class "size-10"^^xsd:string ;
-                          ui:child [
-                              rdf:type html:A ;
-                              html:href "http://www.topquadrant.com/technology/sparql-web-pages-swp/"^^xsd:string ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "TopBraid SPARQL Web Pages (SWP)"^^xsd:string ;
-                                ] ;
-                              ui:childIndex 5 ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text "Generated "^^xsd:string ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 1 ;
-                              ui:text [
-                                  rdf:type xsd:date ;
-                                  sp:arg1 [
-                                      rdf:type afn:now ;
-                                    ] ;
-                                ] ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 2 ;
-                              ui:text " by lmdoc version "^^xsd:string ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 3 ;
-                              ui:text [
-                                  rdf:type spl:object ;
-                                  sp:arg1 lmdoc:GMD_LMDOC ;
-                                  sp:arg2 vaem:revision ;
-                                ] ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 4 ;
-                              ui:text " using "^^xsd:string ;
-                            ] ;
-                          ui:childIndex 6 ;
-                        ] ;
-                      ui:child [
                           rdf:type html:Hr ;
                           ui:childIndex 1 ;
                         ] ;
                       ui:child [
                           rdf:type html:Hr ;
                           ui:childIndex 3 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:Hr ;
-                          ui:childIndex 5 ;
                         ] ;
                       ui:child [
                           rdf:type html:Section ;
@@ -2892,6 +2970,10 @@ lmdoc:Graph
                               ui:childIndex 0 ;
                             ] ;
                           ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:Footer ;
+                          ui:childIndex 5 ;
                         ] ;
                       ui:childIndex 8 ;
                     ] ;
@@ -2971,7 +3053,7 @@ lmdoc:Graph
                     ] ;
                   ui:child [
                       rdf:type lmdoc:GraphHeader ;
-                      arg:resource [
+                      arg:metadata [
                           sp:varName "myGraphMetadata"^^xsd:string ;
                         ] ;
                       ui:childIndex 0 ;
@@ -3011,13 +3093,13 @@ lmdoc:GraphHeader
   rdf:type ui:NodeClass ;
   spin:constraint [
       rdf:type spl:Argument ;
-      spl:predicate arg:resource ;
+      spl:predicate arg:metadata ;
       spl:valueType rdfs:Resource ;
     ] ;
   ui:prototype [
       rdf:type ui:group ;
       let:myGraphMetadata [
-          sp:varName "resource"^^xsd:string ;
+          sp:varName "metadata"^^xsd:string ;
         ] ;
       ui:child [
           rdf:type ui:group ;
@@ -3336,26 +3418,12 @@ lmdoc:GraphMetadata
       rdf:type ui:group ;
       ui:child [
           rdf:type html:Link ;
-          html:href [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/swa/css/swa.css"^^xsd:string ;
-            ] ;
-          html:rel "stylesheet"^^xsd:string ;
-          html:type "text/css"^^xsd:string ;
+          html:href "http://linkedmodel.org/css/spin/spin.css"^^xsd:string ;
           ui:childIndex 1 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
-          html:href [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/swa/css/swaspin.css"^^xsd:string ;
-            ] ;
+          html:href "http://linkedmodel.org/vaem/css/lm.css"^^xsd:string ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
           ui:childIndex 2 ;
@@ -4139,7 +4207,7 @@ lmdoc:GraphTest
                         ] ;
                       ui:child [
                           rdf:type lmdoc:GraphHeader ;
-                          arg:resource [
+                          arg:metadata [
                               sp:varName "myGraphMetadata"^^xsd:string ;
                             ] ;
                           ui:childIndex 0 ;
@@ -4868,29 +4936,6 @@ lmdoc:Instance
                               sp:arg2 vaem:hasGraphMetadata ;
                             ] ;
                           ui:child [
-                              rdf:type html:Div ;
-                              let:myLogo [
-                                  rdf:type sp:coalesce ;
-                                  sp:arg1 [
-                                      rdf:type spl:object ;
-                                      sp:arg1 [
-                                          sp:varName "myGraphMetadata"^^xsd:string ;
-                                        ] ;
-                                      sp:arg2 vaem:logo ;
-                                    ] ;
-                                  sp:arg2 "http://www.topquadrant.com/wp-content/uploads/2013/09/topquadrant-logo1.png" ;
-                                ] ;
-                              ui:child [
-                                  rdf:type html:Img ;
-                                  html:height "60px"^^xsd:string ;
-                                  html:src [
-                                      sp:varName "myLogo"^^xsd:string ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:child [
                               rdf:type ui:call ;
                               arg:subject [
                                   sp:varName "instance"^^xsd:string ;
@@ -5011,6 +5056,17 @@ lmdoc:Instance
                                   rdf:type swa:modeProperty ;
                                   arg:predicate swa:formObjectPredicateSelectionTemplate ;
                                 ] ;
+                            ] ;
+                          ui:child [
+                              rdf:type lmdoc:Footer ;
+                              ui:childIndex 2 ;
+                            ] ;
+                          ui:child [
+                              rdf:type lmdoc:PartHeader ;
+                              arg:metadata [
+                                  sp:varName "myGraphMetadata"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 0 ;
                             ] ;
                           ui:childIndex 0 ;
                         ] ;
@@ -6826,6 +6882,45 @@ lmdoc:Pages
 lmdoc:Panes
   rdf:type ui:NodeClass ;
   rdfs:subClassOf lmdoc:Elements ;
+.
+lmdoc:PartHeader
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:metadata ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:myGraphMetadata [
+          sp:varName "metadata"^^xsd:string ;
+        ] ;
+      ui:child [
+          rdf:type html:Div ;
+          let:myLogo [
+              rdf:type sp:coalesce ;
+              sp:arg1 [
+                  rdf:type spl:object ;
+                  sp:arg1 [
+                      sp:varName "myGraphMetadata"^^xsd:string ;
+                    ] ;
+                  sp:arg2 vaem:logo ;
+                ] ;
+              sp:arg2 "http://www.topquadrant.com/wp-content/uploads/2013/09/topquadrant-logo1.png" ;
+            ] ;
+          ui:child [
+              rdf:type html:Img ;
+              html:height "60px"^^xsd:string ;
+              html:src [
+                  sp:varName "myLogo"^^xsd:string ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  rdfs:label "Part header"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Sections ;
 .
 lmdoc:PopUpResourceView
   rdf:type ui:NodeClass ;
