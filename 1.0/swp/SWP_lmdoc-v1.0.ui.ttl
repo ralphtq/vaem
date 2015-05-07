@@ -1990,11 +1990,6 @@ lmdoc:DetailedClassView
                                 ] ;
                             ] ;
                         ] ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text "dfdf"^^xsd:string ;
-                        ] ;
                       ui:childIndex 0 ;
                     ] ;
                   ui:childIndex 1 ;
@@ -3551,7 +3546,9 @@ lmdoc:GraphMetadata
 
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://www.linkedmodel.org/2.0/schema/vaem
 
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://www.linkedmodel.org/1.2/schema/dtype"""^^xsd:string ;
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://www.linkedmodel.org/1.2/schema/dtype
+
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://qudt.org/2.0/schema/qudt"""^^xsd:string ;
   rdfs:label "Graph Documentation"^^xsd:string ;
   rdfs:subClassOf lmdoc:Pages ;
 .
