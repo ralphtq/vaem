@@ -3206,7 +3206,7 @@ lmdoc:GraphHeader
                                   ui:text [
                                       rdf:type spl:object ;
                                       sp:arg1 [
-                                          sp:varName "resource"^^xsd:string ;
+                                          sp:varName "myGraphMetadata"^^xsd:string ;
                                         ] ;
                                       sp:arg2 vaem:revision ;
                                     ] ;
@@ -3363,7 +3363,7 @@ lmdoc:GraphHeader
                       ui:child [
                           rdf:type lmdoc:CopyrightSection ;
                           arg:resource [
-                              sp:varName "resource"^^xsd:string ;
+                              sp:varName "myGraphMetadata"^^xsd:string ;
                             ] ;
                           ui:childIndex 2 ;
                         ] ;
