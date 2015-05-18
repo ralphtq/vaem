@@ -19,6 +19,7 @@
 @prefix letrs: <http://uispin.org/letrs#> .
 @prefix lmdoc: <http://www.linkedmodel.org/oui/lmdoc#> .
 @prefix lmlib: <http://vaem.linkedmodel.org/spin/lib/> .
+@prefix o2o: <http://lib.topquadrant.com/owl/srg/o2o#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -1966,18 +1967,18 @@ lmdoc:DetailedClassView
                 ] ;
               ui:child [
                   rdf:type ui:group ;
-                  let:t2 [
+                  let:t3 [
                       rdf:type spif:currentTimeMillis ;
                     ] ;
                   ui:child [
                       rdf:type ui:group ;
-                      let:d1 [
+                      let:d2 [
                           rdf:type smf:trace ;
-                          sp:arg1 "Time taken to show class properties for {?2} was {?1} millisecs" ;
+                          sp:arg1 "Show class properties for {?2} took {?1} millisecs" ;
                           sp:arg2 [
                               rdf:type sp:sub ;
                               sp:arg1 [
-                                  sp:varName "t2"^^xsd:string ;
+                                  sp:varName "t3"^^xsd:string ;
                                 ] ;
                               sp:arg2 [
                                   sp:varName "t1"^^xsd:string ;
@@ -3545,10 +3546,9 @@ lmdoc:GraphMetadata
   rdfs:comment """Test with:
 
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://www.linkedmodel.org/2.0/schema/vaem
-
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://www.linkedmodel.org/1.2/schema/dtype
-
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://qudt.org/2.0/schema/qudt"""^^xsd:string ;
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://qudt.org/2.0/schema/qudt
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://qudt.org/2.0/schema/qudt/science"""^^xsd:string ;
   rdfs:label "Graph Documentation"^^xsd:string ;
   rdfs:subClassOf lmdoc:Pages ;
 .
@@ -7214,105 +7214,170 @@ lmdoc:PropertiesTable
                           html:class "lm-column"^^xsd:string ;
                           ui:child [
                               rdf:type ui:group ;
-                              letrs:myCardinalities [
+                              let:max [
                                   rdf:type sp:Select ;
                                   sp:resultVariables (
                                       [
-                                        sp:varName "min"^^xsd:string ;
-                                      ]
-                                      [
-                                        sp:varName "max"^^xsd:string ;
+                                        sp:varName "c"^^xsd:string ;
                                       ]
                                     ) ;
                                   sp:where (
                                       [
-                                        rdf:type sp:Bind ;
-                                        sp:expression [
-                                            rdf:type smf:minCardinality ;
-                                            sp:arg1 [
-                                                sp:varName "class"^^xsd:string ;
-                                              ] ;
-                                            sp:arg2 [
-                                                sp:varName "property"^^xsd:string ;
-                                              ] ;
+                                        rdf:type sp:TriplePath ;
+                                        sp:object [
+                                            sp:varName "parent"^^xsd:string ;
                                           ] ;
-                                        sp:variable [
-                                            sp:varName "min"^^xsd:string ;
+                                        sp:path [
+                                            rdf:type sp:ModPath ;
+                                            sp:modMax -2 ;
+                                            sp:modMin 0 ;
+                                            sp:subPath rdfs:subClassOf ;
+                                          ] ;
+                                        sp:subject [
+                                            sp:varName "class"^^xsd:string ;
                                           ] ;
                                       ]
                                       [
-                                        rdf:type sp:Bind ;
-                                        sp:expression [
-                                            rdf:type smf:maxCardinality ;
-                                            sp:arg1 [
-                                                sp:varName "class"^^xsd:string ;
-                                              ] ;
-                                            sp:arg2 [
-                                                sp:varName "property"^^xsd:string ;
-                                              ] ;
+                                        sp:object [
+                                            sp:varName "res"^^xsd:string ;
                                           ] ;
-                                        sp:variable [
-                                            sp:varName "max"^^xsd:string ;
+                                        sp:predicate rdfs:subClassOf ;
+                                        sp:subject [
+                                            sp:varName "parent"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        sp:object owl:Restriction ;
+                                        sp:predicate rdf:type ;
+                                        sp:subject [
+                                            sp:varName "res"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        sp:object [
+                                            sp:varName "property"^^xsd:string ;
+                                          ] ;
+                                        sp:predicate owl:onProperty ;
+                                        sp:subject [
+                                            sp:varName "res"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        rdf:type sp:TriplePath ;
+                                        sp:object [
+                                            sp:varName "c"^^xsd:string ;
+                                          ] ;
+                                        sp:path [
+                                            rdf:type sp:AltPath ;
+                                            sp:path1 owl:cardinality ;
+                                            sp:path2 owl:maxCardinality ;
+                                          ] ;
+                                        sp:subject [
+                                            sp:varName "res"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                    ) ;
+                                ] ;
+                              let:min [
+                                  rdf:type sp:Select ;
+                                  sp:resultVariables (
+                                      [
+                                        sp:varName "c"^^xsd:string ;
+                                      ]
+                                    ) ;
+                                  sp:where (
+                                      [
+                                        rdf:type sp:TriplePath ;
+                                        sp:object [
+                                            sp:varName "parent"^^xsd:string ;
+                                          ] ;
+                                        sp:path [
+                                            rdf:type sp:ModPath ;
+                                            sp:modMax -2 ;
+                                            sp:modMin 0 ;
+                                            sp:subPath rdfs:subClassOf ;
+                                          ] ;
+                                        sp:subject [
+                                            sp:varName "class"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        sp:object [
+                                            sp:varName "res"^^xsd:string ;
+                                          ] ;
+                                        sp:predicate rdfs:subClassOf ;
+                                        sp:subject [
+                                            sp:varName "parent"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        sp:object owl:Restriction ;
+                                        sp:predicate rdf:type ;
+                                        sp:subject [
+                                            sp:varName "res"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        sp:object [
+                                            sp:varName "property"^^xsd:string ;
+                                          ] ;
+                                        sp:predicate owl:onProperty ;
+                                        sp:subject [
+                                            sp:varName "res"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        rdf:type sp:TriplePath ;
+                                        sp:object [
+                                            sp:varName "c"^^xsd:string ;
+                                          ] ;
+                                        sp:path [
+                                            rdf:type sp:AltPath ;
+                                            sp:path1 owl:cardinality ;
+                                            sp:path2 owl:minCardinality ;
+                                          ] ;
+                                        sp:subject [
+                                            sp:varName "res"^^xsd:string ;
                                           ] ;
                                       ]
                                     ) ;
                                 ] ;
                               ui:child [
-                                  rdf:type ui:forEach ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text "["^^xsd:string ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 1 ;
-                                      ui:text [
-                                          rdf:type sp:if ;
-                                          sp:arg1 [
-                                              rdf:type sp:bound ;
-                                              sp:arg1 [
-                                                  sp:varName "min"^^xsd:string ;
-                                                ] ;
-                                            ] ;
-                                          sp:arg2 [
-                                              sp:varName "min"^^xsd:string ;
-                                            ] ;
-                                          sp:arg3 0 ;
-                                        ] ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 2 ;
-                                      ui:text ".."^^xsd:string ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 3 ;
-                                      ui:text [
-                                          rdf:type sp:if ;
-                                          sp:arg1 [
-                                              rdf:type sp:ne ;
-                                              sp:arg1 [
-                                                  sp:varName "max"^^xsd:string ;
-                                                ] ;
-                                              sp:arg2 -1 ;
-                                            ] ;
-                                          sp:arg2 [
-                                              sp:varName "max"^^xsd:string ;
-                                            ] ;
-                                          sp:arg3 "*" ;
-                                        ] ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 4 ;
-                                      ui:text "]"^^xsd:string ;
-                                    ] ;
+                                  rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
-                                  ui:resultSet [
-                                      sp:varName "myCardinalities"^^xsd:string ;
+                                  ui:text "["^^xsd:string ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text [
+                                      rdf:type sp:coalesce ;
+                                      sp:arg1 [
+                                          sp:varName "min"^^xsd:string ;
+                                        ] ;
+                                      sp:arg2 0 ;
                                     ] ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 2 ;
+                                  ui:text ".."^^xsd:string ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 3 ;
+                                  ui:text [
+                                      rdf:type sp:coalesce ;
+                                      sp:arg1 [
+                                          sp:varName "max"^^xsd:string ;
+                                        ] ;
+                                      sp:arg2 "*" ;
+                                    ] ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 4 ;
+                                  ui:text "]"^^xsd:string ;
                                 ] ;
                               ui:childIndex 0 ;
                             ] ;
