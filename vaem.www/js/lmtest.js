@@ -89,6 +89,43 @@ lmtest.execSPARQLMotion = function(script, params) {
 };
 
 /**
+ * Executes an SWP script on the server.
+ * The script must be globally registered (using an .sms. file).
+ * @param script  the qname of the script
+ * @param params  the parameters
+ * @param callback  a JavaScript expression that shall be executed when the script
+ *                  finishes.  Can access the result of the script with the variable 'data'.
+ */
+lmtest.execSWP = function(script, params) {
+	var params = '_viewClass=' + script + params
+	var results;
+    
+	$.ajax({
+	 url: 'swp', 
+	 type: 'get' ,
+	 data: params,
+	 async: false,
+	 success: function(data) {
+	   results = data ;
+	   }
+	});
+	return(results);
+};
+
+/**
+ * Run rules
+ */
+lmtest.run = function(payload) {
+	var resultsTab = 2 ;
+	var results;
+    
+    results=wdrules.execSWP('wdrules:RuleResults','&filePath='+ payload);
+    $("#wdrules_tabs").tabs("select",resultsTab); 
+    $("#wdrules_results").empty().append(results); 
+
+};
+
+/**
  * Clears all checkboxes within an element structure
  * @param pId  the ID of the parent element
  */
@@ -117,6 +154,7 @@ lmtest.selectAll = function() {
 lmtest.acceptSelection = function() {
      var resultList = '' ;
      var checkedRows =  $('#lm_resources input:checked');
+     
 
 // checkboxes have the prefix 'CB_'. This is removed before doing the 'td-resource_' prefix
      
@@ -126,6 +164,7 @@ lmtest.acceptSelection = function() {
          resultList = (resultList=='')? selection : resultList + ',' + selection;
         });
      alert(resultList);
+// http://localhost:8083/tbl/swp?_viewClass=lmdoc:Instance&instance=http://qudt.org/vocab/unit/A-M
 //	 generate the pages
 };
 
@@ -133,8 +172,40 @@ lmtest.acceptSelection = function() {
  * Accepts selection 
  * @param resource
  */
-lmtest.generate = function(uri) {     
-     alert(uri);
+lmtest.generate = function(uri) {   
+	  var graph="http://qudt.org/2.0/vocab/unit/atomic-and-nuclear-physics" ;
+	  var overlay="http://qudt.org/2.0/doc/qudt";
+	  var results;
+	  var params='&instance='+ uri + "&graph=" + graph + "&overlay=" + overlay;  
+	  
+	  results=lmtest.execSWP('lmdoc:Instance',params );	  
+	  
+	  var w = window.open("","_resource");
+	  
+	  w.document.open();
+	  w.document.write(results);
+	  w.document.title= uri;
+	  w.document.close();
+	  
+	  console.log(params);
+
+
+//	  $(w).load("/" + "?_viewClass=" + params);
+	 
+//	  lmtest.openDialog("Instance", results, "1000px")
+	  
+//		var win = $("<div></div>").css({height:"400px"}) ;
+		
+//	    $(win).html(data);	 
+//		lmtest.dialog = $(win).dialog({
+ //      'modal' : true,
+//	        'title' : title,
+//	        'resizable' : false,
+//	        'width': "900px",
+//	        'buttons': {}       
+//	    });
+		
+	  
 };
 
 
@@ -441,22 +512,14 @@ lmtest.navigateToHelp = function(tag) {
     location.hash = "#" + tag;
 };
 
-
 /**
  * Opens a dialog
  * @param data
  */
 lmtest.openDialog = function(title, data, width) {
-
-/* clone image and change the width of the figure to 'width' */ 
-
-    var myData = $(data).clone().attr('width', width) ;
-    
-    myData = $(myData).removeAttr('height') ; 
-    
-	var win = $("<div></div>").css({height:"900px", overflow:"auto"})
+	var win = $("<div></div>").css({height:"400px"}) ;
 	
-	$(win).append(myData);
+//    $(win).html(data);
  
 	lmtest.dialog = $(win).dialog({
         'modal' : true,
@@ -465,6 +528,8 @@ lmtest.openDialog = function(title, data, width) {
         'width': width,
         'buttons': {}       
     });
+	
+	
 
 };
 
