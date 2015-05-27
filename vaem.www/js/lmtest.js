@@ -172,9 +172,7 @@ lmtest.acceptSelection = function() {
  * Accepts selection 
  * @param resource
  */
-lmtest.generate = function(uri) {   
-	  var graph="http://qudt.org/2.0/vocab/unit/atomic-and-nuclear-physics" ;
-	  var overlay="http://qudt.org/2.0/doc/qudt";
+lmtest.generate = function(uri,graph,overlay) { 
 	  var results;
 	  var params='&instance='+ uri + "&graph=" + graph + "&overlay=" + overlay;  
 	  

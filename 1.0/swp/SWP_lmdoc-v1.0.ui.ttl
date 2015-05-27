@@ -5139,6 +5139,11 @@ lmdoc:InstancesGeneratorSection
       spl:predicate arg:graph ;
       spl:valueType rdfs:Resource ;
     ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:overlay ;
+      spl:valueType xsd:string ;
+    ] ;
   ui:prototype [
       rdf:type ui:group ;
       let:myGraphMetadata [
@@ -5292,7 +5297,18 @@ lmdoc:InstancesGeneratorSection
                                                       sp:varName "instance"^^xsd:string ;
                                                     ] ;
                                                 ] ;
-                                              sp:arg3 "')"^^xsd:string ;
+                                              sp:arg3 "','"^^xsd:string ;
+                                              sp:arg4 [
+                                                  rdf:type xsd:string ;
+                                                  sp:arg1 [
+                                                      sp:varName "graph"^^xsd:string ;
+                                                    ] ;
+                                                ] ;
+                                              sp:arg5 "','"^^xsd:string ;
+                                              sp:arg6 [
+                                                  sp:varName "overlay"^^xsd:string ;
+                                                ] ;
+                                              sp:arg7 "')"^^xsd:string ;
                                             ] ;
                                           ui:child [
                                               rdf:type ui:TextNode ;
@@ -5543,6 +5559,9 @@ lmdoc:InstancesMaintainer
                                   rdf:type lmdoc:InstancesGeneratorSection ;
                                   arg:graph [
                                       sp:varName "myGraph"^^xsd:string ;
+                                    ] ;
+                                  arg:overlay [
+                                      sp:varName "overlay"^^xsd:string ;
                                     ] ;
                                   arg:sectionHeading "Instances Generator"^^xsd:string ;
                                   ui:childIndex 0 ;
