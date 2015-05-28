@@ -49,6 +49,11 @@ dct:description
   rdf:type rdf:Property ;
   rdfs:range xsd:string ;
 .
+arg:catalog
+  rdf:type rdf:Property ;
+  rdfs:label "catalog"^^xsd:string ;
+  rdfs:range rdfs:Resource ;
+.
 arg:flags
   rdf:type owl:DatatypeProperty ;
   rdfs:range xsd:string ;
@@ -1365,6 +1370,258 @@ lmdoc:BuildMetadataRecord
         ] ;
     ] ;
   rdfs:subClassOf lmdoc:Factories ;
+.
+lmdoc:CatalogManager
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType xsd:string ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:myGraph [
+          rdf:type sp:iri ;
+          sp:arg1 [
+              sp:varName "graph"^^xsd:string ;
+            ] ;
+        ] ;
+      ui:child [
+          rdf:type html:P ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text "Graph is "^^xsd:string ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 1 ;
+              ui:text [
+                  sp:varName "myGraph"^^xsd:string ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:child [
+          rdf:type ui:setContext ;
+          ui:child [
+              rdf:type ui:group ;
+              let:myCatalog [
+                  rdf:type spl:subject ;
+                  sp:arg1 rdf:type ;
+                  sp:arg2 <http://epub.linkedmodel.org/schema/catalog#Catalog> ;
+                ] ;
+              ui:child [
+                  rdf:type ui:setContext ;
+                  ui:child [
+                      rdf:type html:H1 ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "LinkedModel Catalog"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Hr ;
+                      ui:childIndex 3 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:P ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Catalog URI= "^^xsd:string ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 1 ;
+                          ui:text [
+                              sp:varName "myCatalog"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:call ;
+                      ui:child [
+                          rdf:type ui:if ;
+                          ui:child [
+                              rdf:type html:Table ;
+                              html:class "lm-table"^^xsd:string ;
+                              ui:child [
+                                  rdf:type html:Tbody ;
+                                  html:class "lm-table-body"^^xsd:string ;
+                                  ui:child [
+                                      rdf:type ui:forEach ;
+                                      ui:child [
+                                          rdf:type html:Tr ;
+                                          ui:child [
+                                              rdf:type html:Td ;
+                                              ui:child [
+                                                  rdf:type html:Button ;
+                                                  html:class "lm-button"^^xsd:string ;
+                                                  html:onclick [
+                                                      rdf:type ui:concat ;
+                                                      sp:arg1 "lmtest.openSWP('lmdoc:GraphMetadata','&graph="^^xsd:string ;
+                                                      sp:arg2 [
+                                                          sp:varName "catalogedGraph"^^xsd:string ;
+                                                        ] ;
+                                                      sp:arg3 "')"^^xsd:string ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type ui:TextNode ;
+                                                      ui:childIndex 0 ;
+                                                      ui:text "Metadata"^^xsd:string ;
+                                                    ] ;
+                                                  ui:childIndex 0 ;
+                                                ] ;
+                                              ui:childIndex 3 ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type html:Td ;
+                                              ui:child [
+                                                  rdf:type ui:TextNode ;
+                                                  ui:childIndex 0 ;
+                                                  ui:text [
+                                                      rdf:type sp:add ;
+                                                      sp:arg1 [
+                                                          sp:varName "index"^^xsd:string ;
+                                                        ] ;
+                                                      sp:arg2 1 ;
+                                                    ] ;
+                                                ] ;
+                                              ui:childIndex 0 ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type html:Td ;
+                                              ui:child [
+                                                  rdf:type ui:TextNode ;
+                                                  ui:childIndex 0 ;
+                                                  ui:text [
+                                                      rdf:type ui:label ;
+                                                      sp:arg1 [
+                                                          sp:varName "rec"^^xsd:string ;
+                                                        ] ;
+                                                    ] ;
+                                                ] ;
+                                              ui:childIndex 1 ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type html:Td ;
+                                              ui:child [
+                                                  rdf:type ui:TextNode ;
+                                                  ui:childIndex 0 ;
+                                                  ui:text [
+                                                      sp:varName "catalogedGraph"^^xsd:string ;
+                                                    ] ;
+                                                ] ;
+                                              ui:childIndex 2 ;
+                                            ] ;
+                                          ui:childIndex 0 ;
+                                        ] ;
+                                      ui:childIndex 0 ;
+                                      ui:indexVar "index"^^xsd:string ;
+                                      ui:resultSet [
+                                          sp:varName "records"^^xsd:string ;
+                                        ] ;
+                                    ] ;
+                                  ui:childIndex 1 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type html:Thead ;
+                                  html:class "lm-table-header"^^xsd:string ;
+                                  ui:child [
+                                      rdf:type html:Tr ;
+                                      ui:child [
+                                          rdf:type html:Th ;
+                                          html:class "lm-columns-labels"^^xsd:string ;
+                                          ui:child [
+                                              rdf:type ui:TextNode ;
+                                              ui:childIndex 0 ;
+                                              ui:text "#"^^xsd:string ;
+                                            ] ;
+                                          ui:childIndex 0 ;
+                                        ] ;
+                                      ui:child [
+                                          rdf:type html:Th ;
+                                          html:class "lm-columns-labels"^^xsd:string ;
+                                          ui:child [
+                                              rdf:type ui:TextNode ;
+                                              ui:childIndex 0 ;
+                                              ui:text "Actions"^^xsd:string ;
+                                            ] ;
+                                          ui:childIndex 3 ;
+                                        ] ;
+                                      ui:child [
+                                          rdf:type html:Th ;
+                                          html:class "lm-columns-labels"^^xsd:string ;
+                                          ui:child [
+                                              rdf:type ui:TextNode ;
+                                              ui:childIndex 0 ;
+                                              ui:text "Graph"^^xsd:string ;
+                                            ] ;
+                                          ui:childIndex 2 ;
+                                        ] ;
+                                      ui:child [
+                                          rdf:type html:Th ;
+                                          html:class "lm-columns-labels"^^xsd:string ;
+                                          ui:child [
+                                              rdf:type ui:TextNode ;
+                                              ui:childIndex 0 ;
+                                              ui:text "Record"^^xsd:string ;
+                                            ] ;
+                                          ui:childIndex 1 ;
+                                        ] ;
+                                      ui:childIndex 0 ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                          ui:condition [
+                              rdf:type sp:gt ;
+                              sp:arg1 [
+                                  rdf:type spr:rowCount ;
+                                  sp:arg1 [
+                                      sp:varName "records"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                              sp:arg2 0 ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 2 ;
+                      ui:template lmdoc:getCatalogRecords ;
+                      ui:varName "records"^^xsd:string ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:Footer ;
+                      ui:childIndex 4 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:varName "catalog"^^xsd:string ;
+                  ui:varValue [
+                      sp:varName "myCatalog"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 1 ;
+          ui:queryGraph [
+              rdf:type ui:graphWithImports ;
+              sp:arg1 [
+                  sp:varName "myGraph"^^xsd:string ;
+                ] ;
+            ] ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:comment """Test with:
+
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:CatalogManager&graph=http://www.qudt.org/2.0/catalog"""^^xsd:string ;
+  rdfs:label "Catalog Manager"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Pages ;
 .
 lmdoc:Class
   rdf:type ui:NodeClass ;
@@ -10540,6 +10797,67 @@ lmdoc:getCatalogDocURL
     ] ;
   rdfs:label "get catalog doc url"^^xsd:string ;
   rdfs:subClassOf lmdoc:Functions ;
+.
+lmdoc:getCatalogRecords
+  rdf:type spin:SelectTemplate ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:orderBy (
+          [
+            rdf:type ui:label ;
+            sp:arg1 [
+                sp:varName "recType"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+      sp:resultVariables (
+          [
+            sp:varName "rec"^^xsd:string ;
+          ]
+          [
+            sp:varName "recType"^^xsd:string ;
+          ]
+          [
+            sp:varName "catalogedGraph"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "rec"^^xsd:string ;
+              ] ;
+            sp:predicate <http://www.w3.org/ns/dcat#record> ;
+            sp:subject [
+                sp:varName "cataloh"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "recType"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:type ;
+            sp:subject [
+                sp:varName "rec"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Optional ;
+            sp:elements (
+                [
+                  sp:object [
+                      sp:varName "catalogedGraph"^^xsd:string ;
+                    ] ;
+                  sp:predicate <http://epub.linkedmodel.org/schema/catalog#catalogedGraph> ;
+                  sp:subject [
+                      sp:varName "rec"^^xsd:string ;
+                    ] ;
+                ]
+              ) ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "get catalog records"^^xsd:string ;
+  rdfs:subClassOf lmdoc:SelectTemplates ;
 .
 lmdoc:getDefinition
   rdf:type spin:Function ;

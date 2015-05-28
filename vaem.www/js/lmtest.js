@@ -113,17 +113,21 @@ lmtest.execSWP = function(script, params) {
 };
 
 /**
- * Run rules
+ * Opens an SWP generated page in a new window
+ * @param params
  */
-lmtest.run = function(payload) {
-	var resultsTab = 2 ;
-	var results;
-    
-    results=wdrules.execSWP('wdrules:RuleResults','&filePath='+ payload);
-    $("#wdrules_tabs").tabs("select",resultsTab); 
-    $("#wdrules_results").empty().append(results); 
-
+lmtest.openSWP = function(script,params) { 
+	  var results;
+	  results=lmtest.execSWP(script,params );	  
+	  
+	  var w = window.open("","_graph");
+	  
+	  w.document.open();
+	  w.document.write(results);
+	  w.document.title= uri;
+	  w.document.close();  
 };
+
 
 /**
  * Clears all checkboxes within an element structure
