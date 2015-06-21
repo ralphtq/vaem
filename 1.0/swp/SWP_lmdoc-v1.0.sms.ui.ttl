@@ -28,7 +28,9 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sm: <http://topbraid.org/sparqlmotion#> .
 @prefix smf: <http://topbraid.org/sparqlmotionfunctions#> .
+@prefix sml: <http://topbraid.org/sparqlmotionlib#> .
 @prefix sp: <http://spinrdf.org/sp#> .
 @prefix spif: <http://spinrdf.org/spif#> .
 @prefix spin: <http://spinrdf.org/spin#> .
@@ -2146,6 +2148,31 @@ lmdoc:CopyrightSection
 lmdoc:CreateLinkFunctions
   rdf:type spin:Function ;
   rdfs:subClassOf swa:CreateLinkFunctions ;
+.
+lmdoc:CreateSWPDocumentForInstance
+  rdf:type sml:CreateSWPDocument ;
+  sm:next lmdoc:SaveSWPdoc ;
+  sm:outputVariable "instanceDoc"^^xsd:string ;
+  sml:view [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type lmdoc:Instance ;
+          arg:flags [
+              sp:varName "flags"^^xsd:string ;
+            ] ;
+          arg:graph [
+              sp:varName "graph"^^xsd:string ;
+            ] ;
+          arg:instance [
+              sp:varName "instance"^^xsd:string ;
+            ] ;
+          arg:overlay [
+              sp:varName "overlay"^^xsd:string ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  rdfs:label "Create SWP document for instance"^^xsd:string ;
 .
 lmdoc:DetailedClassView
   rdf:type ui:NodeClass ;
@@ -9371,6 +9398,15 @@ lmdoc:ResourceLink
   rdfs:label "Resource Link"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
 .
+lmdoc:SaveSWPdoc
+  rdf:type sml:ExportToTextFile ;
+  sm:next lmdoc:returnFromCreateSWPdocForInstance ;
+  sml:encoding "ISO-8859-1"^^xsd:string ;
+  sml:replace "true"^^xsd:boolean ;
+  sml:targetFilePath "test-instance-doc.html"^^xsd:string ;
+  sml:text "{?instanceDoc}"^^xsd:string ;
+  rdfs:label "Save SWP doc"^^xsd:string ;
+.
 lmdoc:Sections
   rdf:type ui:NodeClass ;
   spin:constraint [
@@ -10841,6 +10877,39 @@ lmdoc:countOfInstanceOfType
   rdfs:comment "Returns a count of  instancesof a given type defined in a given graph."^^xsd:string ;
   rdfs:label "All instances"^^xsd:string ;
   rdfs:subClassOf lmdoc:Functions ;
+.
+lmdoc:createInstanceDoc
+  rdf:type sm:Function ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue " "^^xsd:string ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:flags ;
+      spl:valueType xsd:string ;
+      sm:next lmdoc:CreateSWPDocumentForInstance ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:overlay ;
+      spl:valueType xsd:string ;
+      sm:next lmdoc:CreateSWPDocumentForInstance ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+      sm:next lmdoc:CreateSWPDocumentForInstance ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:instance ;
+      spl:valueType rdfs:Resource ;
+      sm:next lmdoc:CreateSWPDocumentForInstance ;
+    ] ;
+  sm:returnModule lmdoc:returnFromCreateSWPdocForInstance ;
+  rdfs:comment "create HTML doc for instance"^^xsd:string ;
+  rdfs:subClassOf sm:Functions ;
 .
 lmdoc:createLinkForMainForm
   rdf:type ui:NodeClass ;
@@ -12603,6 +12672,11 @@ lmdoc:relevantPropertyDetailsAtClass
   rdfs:comment "Gets a list of relevant properties for a given class (arg:class), ordered by ui:labels."^^xsd:string ;
   rdfs:label "Relevant property details at class"^^xsd:string ;
   rdfs:subClassOf lmdoc:MagicProperties ;
+.
+lmdoc:returnFromCreateSWPdocForInstance
+  rdf:type sml:ReturnText ;
+  sml:serialization sm:XML ;
+  rdfs:label "return from create SWP doc for instance"^^xsd:string ;
 .
 lmdoc:ruleSet
   rdf:type owl:ObjectProperty ;
