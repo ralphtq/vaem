@@ -119,6 +119,11 @@ arg:showTitle
   rdfs:range xsd:boolean ;
   rdfs:subPropertyOf sp:arg ;
 .
+arg:swpElement
+  rdf:type rdf:Property ;
+  rdfs:label "swp element"^^xsd:string ;
+  rdfs:subPropertyOf sp:arg ;
+.
 spin:RuleProperty
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
@@ -1653,17 +1658,17 @@ lmdoc:Class
     ] ;
   spin:constraint [
       rdf:type spl:Argument ;
-      spl:predicate arg:class ;
-      spl:valueType rdfs:Resource ;
-    ] ;
-  spin:constraint [
-      rdf:type spl:Argument ;
       spl:predicate arg:flags ;
       spl:valueType xsd:string ;
     ] ;
   spin:constraint [
       rdf:type spl:Argument ;
       spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:resource ;
       spl:valueType rdfs:Resource ;
     ] ;
   ui:errorPrototype [
@@ -1771,7 +1776,7 @@ lmdoc:Class
                               ui:child [
                                   rdf:type lmdoc:DetailedClassView ;
                                   arg:class [
-                                      sp:varName "class"^^xsd:string ;
+                                      sp:varName "resource"^^xsd:string ;
                                     ] ;
                                   arg:showInstances "false"^^xsd:boolean ;
                                   arg:showTitle "false"^^xsd:boolean ;
@@ -2145,34 +2150,40 @@ lmdoc:CopyrightSection
   rdfs:label "Copyright section"^^xsd:string ;
   rdfs:subClassOf lmdoc:Sections ;
 .
-lmdoc:CreateLinkFunctions
-  rdf:type spin:Function ;
-  rdfs:subClassOf swa:CreateLinkFunctions ;
-.
-lmdoc:CreateSWPDocumentForInstance
+lmdoc:CreateHTMLforResource
   rdf:type sml:CreateSWPDocument ;
   sm:next lmdoc:SaveSWPdoc ;
-  sm:outputVariable "instanceDoc"^^xsd:string ;
+  sm:outputVariable "resourceDoc"^^xsd:string ;
   sml:view [
       rdf:type ui:group ;
       ui:child [
-          rdf:type lmdoc:Instance ;
+          rdf:type ui:dynamicView ;
           arg:flags [
               sp:varName "flags"^^xsd:string ;
             ] ;
           arg:graph [
               sp:varName "graph"^^xsd:string ;
             ] ;
-          arg:instance [
-              sp:varName "instance"^^xsd:string ;
-            ] ;
           arg:overlay [
               sp:varName "overlay"^^xsd:string ;
             ] ;
+          arg:resource [
+              sp:varName "resource"^^xsd:string ;
+            ] ;
           ui:childIndex 0 ;
+          ui:class [
+              sp:varName "swpElement"^^xsd:string ;
+            ] ;
+          ui:instance [
+              sp:varName "swpElement"^^xsd:string ;
+            ] ;
         ] ;
     ] ;
-  rdfs:label "Create SWP document for instance"^^xsd:string ;
+  rdfs:label "Create HTML for resource"^^xsd:string ;
+.
+lmdoc:CreateLinkFunctions
+  rdf:type spin:Function ;
+  rdfs:subClassOf swa:CreateLinkFunctions ;
 .
 lmdoc:DetailedClassView
   rdf:type ui:NodeClass ;
@@ -5234,7 +5245,7 @@ lmdoc:Instance
     ] ;
   spin:constraint [
       rdf:type spl:Argument ;
-      spl:predicate arg:instance ;
+      spl:predicate arg:resource ;
       spl:valueType rdfs:Resource ;
     ] ;
   ui:errorPrototype [
@@ -5347,7 +5358,7 @@ lmdoc:Instance
                                   ui:child [
                                       rdf:type ui:call ;
                                       arg:subject [
-                                          sp:varName "instance"^^xsd:string ;
+                                          sp:varName "resource"^^xsd:string ;
                                         ] ;
                                       ui:child [
                                           rdf:type html:Dd ;
@@ -5386,7 +5397,7 @@ lmdoc:Instance
                                       ui:child [
                                           rdf:type lmdoc:MaybeDescription ;
                                           arg:node [
-                                              sp:varName "instance"^^xsd:string ;
+                                              sp:varName "resource"^^xsd:string ;
                                             ] ;
                                           ui:childIndex 6 ;
                                         ] ;
@@ -5398,7 +5409,7 @@ lmdoc:Instance
                                               sp:varName "rs"^^xsd:string ;
                                             ] ;
                                           arg:subject [
-                                              sp:varName "instance"^^xsd:string ;
+                                              sp:varName "resource"^^xsd:string ;
                                             ] ;
                                           ui:childIndex 10 ;
                                         ] ;
@@ -5410,7 +5421,7 @@ lmdoc:Instance
                                               sp:varName "rs"^^xsd:string ;
                                             ] ;
                                           arg:subject [
-                                              sp:varName "instance"^^xsd:string ;
+                                              sp:varName "resource"^^xsd:string ;
                                             ] ;
                                           ui:childIndex 8 ;
                                         ] ;
@@ -5418,14 +5429,14 @@ lmdoc:Instance
                                           rdf:type lmdoc:ResourceFooter ;
                                           arg:options "CSV,JSONLD,RDF,TURTLE"^^xsd:string ;
                                           arg:resource [
-                                              sp:varName "instance"^^xsd:string ;
+                                              sp:varName "resource"^^xsd:string ;
                                             ] ;
                                           ui:childIndex 12 ;
                                         ] ;
                                       ui:child [
                                           rdf:type lmdoc:ResourceHeader ;
                                           arg:node [
-                                              sp:varName "instance"^^xsd:string ;
+                                              sp:varName "resource"^^xsd:string ;
                                             ] ;
                                           ui:childIndex 0 ;
                                         ] ;
@@ -9400,11 +9411,11 @@ lmdoc:ResourceLink
 .
 lmdoc:SaveSWPdoc
   rdf:type sml:ExportToTextFile ;
-  sm:next lmdoc:returnFromCreateSWPdocForInstance ;
+  sm:next lmdoc:returnFromCreateHTMLforResource ;
   sml:encoding "ISO-8859-1"^^xsd:string ;
   sml:replace "true"^^xsd:boolean ;
   sml:targetFilePath "test-instance-doc.html"^^xsd:string ;
-  sml:text "{?instanceDoc}"^^xsd:string ;
+  sml:text "{?resourceDoc}"^^xsd:string ;
   rdfs:label "Save SWP doc"^^xsd:string ;
 .
 lmdoc:Sections
@@ -10878,7 +10889,7 @@ lmdoc:countOfInstanceOfType
   rdfs:label "All instances"^^xsd:string ;
   rdfs:subClassOf lmdoc:Functions ;
 .
-lmdoc:createInstanceDoc
+lmdoc:createHTMLdocumentForResource
   rdf:type sm:Function ;
   spin:constraint [
       rdf:type spl:Argument ;
@@ -10886,29 +10897,40 @@ lmdoc:createInstanceDoc
       spl:optional "true"^^xsd:boolean ;
       spl:predicate arg:flags ;
       spl:valueType xsd:string ;
-      sm:next lmdoc:CreateSWPDocumentForInstance ;
+      sm:next lmdoc:CreateHTMLforResource ;
     ] ;
   spin:constraint [
       rdf:type spl:Argument ;
       spl:optional "true"^^xsd:boolean ;
       spl:predicate arg:overlay ;
       spl:valueType xsd:string ;
-      sm:next lmdoc:CreateSWPDocumentForInstance ;
+      sm:next lmdoc:CreateHTMLforResource ;
     ] ;
   spin:constraint [
       rdf:type spl:Argument ;
       spl:predicate arg:graph ;
       spl:valueType rdfs:Resource ;
-      sm:next lmdoc:CreateSWPDocumentForInstance ;
+      sm:next lmdoc:CreateHTMLforResource ;
     ] ;
   spin:constraint [
       rdf:type spl:Argument ;
-      spl:predicate arg:instance ;
+      spl:predicate arg:resource ;
       spl:valueType rdfs:Resource ;
-      sm:next lmdoc:CreateSWPDocumentForInstance ;
+      sm:next lmdoc:CreateHTMLforResource ;
     ] ;
-  sm:returnModule lmdoc:returnFromCreateSWPdocForInstance ;
-  rdfs:comment "create HTML doc for instance"^^xsd:string ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:swpElement ;
+      spl:valueType ui:NodeClass ;
+      sm:next lmdoc:CreateHTMLforResource ;
+    ] ;
+  sm:returnModule lmdoc:returnFromCreateHTMLforResource ;
+  rdfs:comment """Test with:
+
+http://localhost:8083/tbl/sparqlmotion?id=createHTMLdocumentForResource&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23ScriptGraph
+
+http://localhost:8083/tbl/sparqlmotion?id=createHTMLdocumentForResource&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23SchemaGraph"""^^xsd:string ;
+  rdfs:label "create HTML document for resource"^^xsd:string ;
   rdfs:subClassOf sm:Functions ;
 .
 lmdoc:createLinkForMainForm
@@ -12673,10 +12695,10 @@ lmdoc:relevantPropertyDetailsAtClass
   rdfs:label "Relevant property details at class"^^xsd:string ;
   rdfs:subClassOf lmdoc:MagicProperties ;
 .
-lmdoc:returnFromCreateSWPdocForInstance
+lmdoc:returnFromCreateHTMLforResource
   rdf:type sml:ReturnText ;
   sml:serialization sm:XML ;
-  rdfs:label "return from create SWP doc for instance"^^xsd:string ;
+  rdfs:label "return from create HTML for resource"^^xsd:string ;
 .
 lmdoc:ruleSet
   rdf:type owl:ObjectProperty ;
