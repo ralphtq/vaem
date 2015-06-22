@@ -74,12 +74,15 @@ lmtest.navigateToInTab = function(resourceURI, queryGraphURI, targetName) {
  */
 lmtest.execSPARQLMotion = function(script, params) {
     var results;
-	params['id'] = script;
-	params['_base'] = swa.queryGraphURI;
+    
+//    params['id'] = script;
+	
+//	params['_base'] = swa.queryGraphURI;
+	
 	$.ajax({
 	 url: 'sparqlmotion', 
 	 type: 'get' ,
-	 data: params,
+	 data: 'id=' + script + params,
 	 async: false,
 	 success: function(data) {
 	   results = data ;
@@ -155,21 +158,26 @@ lmtest.selectAll = function() {
  * Accepts selection 
  * @param resource
  */
-lmtest.acceptSelection = function() {
+lmtest.acceptSelection = function(tableId, graph, overlay) {
      var resultList = '' ;
-     var checkedRows =  $('#lm_resources input:checked');
-     
-
-// checkboxes have the prefix 'CB_'. This is removed before doing the 'td-resource_' prefix
+     var checkedRows =  $('.lm-row input:checked'); 
      
      checkedRows.each(function(){
         var elementId ='#td-resource_' + this.name.substr(3,this.name.length),
-            selection = $(elementId).parent().find("td:nth-child(3)").html();
+            selection = $(elementId).html();
          resultList = (resultList=='')? selection : resultList + ',' + selection;
+         console.log ('Generating ' + selection);
+         var params="&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance" ;
+         
+         params = params + "&graph=" + escape(graph) ;
+         params = params + "&resource=" + escape(selection);
+         params = params + "&overlay=" + escape(overlay);
+         
+         lmtest.execSPARQLMotion('createHTMLdocumentForResource',params);
+         
+// http://localhost:8083/tbl/sparqlmotion?id=createHTMLdocumentForResource&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23SchemaGraph
         });
-     alert(resultList);
-// http://localhost:8083/tbl/swp?_viewClass=lmdoc:Instance&instance=http://qudt.org/vocab/unit/A-M
-//	 generate the pages
+
 };
 
 /**
@@ -178,7 +186,7 @@ lmtest.acceptSelection = function() {
  */
 lmtest.generate = function(uri,graph,overlay) { 
 	  var results;
-	  var params='&instance='+ uri + "&graph=" + graph + "&overlay=" + overlay;  
+	  var params='&resource='+ uri + "&graph=" + graph + "&overlay=" + overlay;  
 	  
 	  results=lmtest.execSWP('lmdoc:Instance',params );	  
 	  

@@ -2152,7 +2152,7 @@ lmdoc:CopyrightSection
 .
 lmdoc:CreateHTMLforResource
   rdf:type sml:CreateSWPDocument ;
-  sm:next lmdoc:SaveSWPdoc ;
+  sm:next lmdoc:buildDocFilePath ;
   sm:outputVariable "resourceDoc"^^xsd:string ;
   sml:view [
       rdf:type ui:group ;
@@ -5578,24 +5578,6 @@ lmdoc:InstancesGeneratorSection
                       html:class "lm-button"^^xsd:string ;
                       html:onclick [
                           rdf:type ui:concat ;
-                          sp:arg1 "lmdoc.acceptSelection('"^^xsd:string ;
-                          sp:arg2 [
-                              sp:varName "tableId"^^xsd:string ;
-                            ] ;
-                          sp:arg3 "')"^^xsd:string ;
-                        ] ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text "Accept Selections"^^xsd:string ;
-                        ] ;
-                      ui:childIndex 2 ;
-                    ] ;
-                  ui:child [
-                      rdf:type html:Button ;
-                      html:class "lm-button"^^xsd:string ;
-                      html:onclick [
-                          rdf:type ui:concat ;
                           sp:arg1 "lmdoc.clearSelection('"^^xsd:string ;
                           sp:arg2 [
                               sp:varName "tableId"^^xsd:string ;
@@ -5626,6 +5608,35 @@ lmdoc:InstancesGeneratorSection
                           ui:text "Select All"^^xsd:string ;
                         ] ;
                       ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Button ;
+                      html:class "lm-button"^^xsd:string ;
+                      html:onclick [
+                          rdf:type ui:concat ;
+                          sp:arg1 "lmtest.acceptSelection('"^^xsd:string ;
+                          sp:arg2 [
+                              sp:varName "tableId"^^xsd:string ;
+                            ] ;
+                          sp:arg3 "', '"^^xsd:string ;
+                          sp:arg4 [
+                              rdf:type xsd:string ;
+                              sp:arg1 [
+                                  sp:varName "graph"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          sp:arg5 "', '"^^xsd:string ;
+                          sp:arg6 [
+                              sp:varName "overlay"^^xsd:string ;
+                            ] ;
+                          sp:arg7 "')"^^xsd:string ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Accept Selections"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 2 ;
                     ] ;
                   ui:childIndex 1 ;
                 ] ;
@@ -9414,7 +9425,7 @@ lmdoc:SaveSWPdoc
   sm:next lmdoc:returnFromCreateHTMLforResource ;
   sml:encoding "ISO-8859-1"^^xsd:string ;
   sml:replace "true"^^xsd:boolean ;
-  sml:targetFilePath "test-instance-doc.html"^^xsd:string ;
+  sml:targetFilePath "{?docFilePath}"^^xsd:string ;
   sml:text "{?resourceDoc}"^^xsd:string ;
   rdfs:label "Save SWP doc"^^xsd:string ;
 .
@@ -10741,6 +10752,43 @@ lmdoc:WhereUsedSubjectsGroup
   rdfs:comment "A group of subject widgets."^^xsd:string ;
   rdfs:label "Where used subjects group"^^xsd:string ;
   rdfs:subClassOf lmdoc:Subjects ;
+.
+lmdoc:buildDocFilePath
+  rdf:type sml:BindBySelect ;
+  sm:next lmdoc:SaveSWPdoc ;
+  sml:selectQuery [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "docFilePath"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 "/" ;
+                sp:arg2 [
+                    rdf:type spif:regex ;
+                    sp:arg1 [
+                        rdf:type xsd:string ;
+                        sp:arg1 [
+                            sp:varName "resource"^^xsd:string ;
+                          ] ;
+                      ] ;
+                    sp:arg2 ".*//(.*)" ;
+                    sp:arg3 "$1" ;
+                  ] ;
+                sp:arg3 ".html" ;
+              ] ;
+            sp:variable [
+                sp:varName "docFilePath"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "build doc file path"^^xsd:string ;
 .
 lmdoc:buildResourceDocLink
   rdf:type spin:Function ;
