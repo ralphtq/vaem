@@ -1785,7 +1785,7 @@ lmdoc:Class
                               ui:child [
                                   rdf:type lmdoc:ResourceHeader ;
                                   arg:node [
-                                      sp:varName "class"^^xsd:string ;
+                                      sp:varName "resource"^^xsd:string ;
                                     ] ;
                                   ui:childIndex 0 ;
                                 ] ;
@@ -1862,7 +1862,7 @@ lmdoc:Class
   vaem:todo "remove dependency on swa.css"^^xsd:string ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:Class&graph=http://www.linkedmodel.org/2.0/schema/vaem&class=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23GraphRole"""^^xsd:string ;
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:Class&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23GraphRole"""^^xsd:string ;
   rdfs:label "Class Documentation"^^xsd:string ;
   rdfs:subClassOf lmdoc:Pages ;
 .
@@ -5532,7 +5532,7 @@ lmdoc:Instance
   vaem:todo "remove dependency on swa.css"^^xsd:string ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&instance=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23ScriptGraph"""^^xsd:string ;
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23ScriptGraph"""^^xsd:string ;
   rdfs:label "Instance Documentation"^^xsd:string ;
   rdfs:subClassOf lmdoc:Pages ;
 .
