@@ -262,20 +262,9 @@ lmdoc:AbstractSection
               rdf:type html:Div ;
               html:class "lm-abstract"^^xsd:string ;
               ui:child [
-                  rdf:type html:P ;
-                  html:class "lm-para"^^xsd:string ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text [
-                          rdf:type spl:object ;
-                          sp:arg1 [
-                              sp:varName "metadata"^^xsd:string ;
-                            ] ;
-                          sp:arg2 vaem:intent ;
-                        ] ;
-                    ] ;
+                  rdf:type ui:CommentNode ;
                   ui:childIndex 1 ;
+                  rdfs:comment "p class=\"lm-para\">{= spl:object(?metadata, vaem:intent) }</p"^^xsd:string ;
                 ] ;
               ui:child [
                   rdf:type ui:group ;
@@ -7155,6 +7144,14 @@ lmdoc:MaybeDescription
           arg:node [
               sp:varName "node"^^xsd:string ;
             ] ;
+          arg:property vaem:description ;
+          ui:childIndex 3 ;
+        ] ;
+      ui:child [
+          rdf:type lmdoc:MaybeDescriptionUsingProperty ;
+          arg:node [
+              sp:varName "node"^^xsd:string ;
+            ] ;
           arg:property rdfs:comment ;
           ui:childIndex 2 ;
         ] ;
@@ -7246,14 +7243,7 @@ lmdoc:MaybeHTMLstring
                 ] ;
               sp:arg2 lmdoc:htmlString ;
             ] ;
-          sp:arg2 [
-              rdf:type spl:object ;
-              sp:arg1 [
-                  sp:varName "node"^^xsd:string ;
-                ] ;
-              sp:arg2 vaem:description ;
-            ] ;
-          sp:arg3 "Nothing" ;
+          sp:arg2 "Nothing" ;
         ] ;
       ui:child [
           rdf:type ui:if ;
@@ -11167,7 +11157,6 @@ lmdoc:buildDocFilePath
                     sp:arg2 ".*//(.*)" ;
                     sp:arg3 "$1" ;
                   ] ;
-                sp:arg3 ".html" ;
               ] ;
             sp:variable [
                 sp:varName "docFilePath"^^xsd:string ;
