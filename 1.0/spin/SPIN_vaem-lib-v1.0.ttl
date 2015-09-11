@@ -33,6 +33,189 @@ lmlib:MagicProperties
   rdf:type spin:MagicProperty ;
   rdfs:subClassOf spin:MagicProperties ;
 .
+lmlib:getSubGraph
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "s"^^xsd:string ;
+          ]
+          [
+            sp:varName "p"^^xsd:string ;
+          ]
+          [
+            sp:varName "o"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  (
+                    [
+                      sp:object [
+                          sp:varName "o1"^^xsd:string ;
+                        ] ;
+                      sp:predicate [
+                          sp:varName "p1"^^xsd:string ;
+                        ] ;
+                      sp:subject spin:_arg1 ;
+                    ]
+                    [
+                      rdf:type sp:Filter ;
+                      sp:expression [
+                          rdf:type sp:bound ;
+                          sp:arg1 spin:_arg1 ;
+                        ] ;
+                    ]
+                    [
+                      rdf:type sp:Filter ;
+                      sp:expression [
+                          rdf:type sp:ne ;
+                          sp:arg1 [
+                              sp:varName "p1"^^xsd:string ;
+                            ] ;
+                          sp:arg2 rdf:type ;
+                        ] ;
+                    ]
+                    [
+                      rdf:type sp:Filter ;
+                      sp:expression [
+                          rdf:type sp:ne ;
+                          sp:arg1 [
+                              sp:varName "p1"^^xsd:string ;
+                            ] ;
+                          sp:arg2 rdfs:isDefinedBy ;
+                        ] ;
+                    ]
+                    [
+                      rdf:type sp:Filter ;
+                      sp:expression [
+                          rdf:type sp:ne ;
+                          sp:arg1 [
+                              sp:varName "p1"^^xsd:string ;
+                            ] ;
+                          sp:arg2 rdfs:subClassOf ;
+                        ] ;
+                    ]
+                  )
+                  [
+                    sp:object [
+                        sp:varName "o1"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdf:first ;
+                    sp:subject [
+                        sp:varName "?0"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object () ;
+                    sp:predicate rdf:rest ;
+                    sp:subject [
+                        sp:varName "?0"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "?1"^^xsd:string ;
+                      ] ;
+                    sp:predicate lmlib:getSubGraph ;
+                    sp:subject [
+                        sp:varName "?0"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "s"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdf:first ;
+                    sp:subject [
+                        sp:varName "?1"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "?2"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdf:rest ;
+                    sp:subject [
+                        sp:varName "?1"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "p"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdf:first ;
+                    sp:subject [
+                        sp:varName "?2"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "?3"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdf:rest ;
+                    sp:subject [
+                        sp:varName "?2"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "o"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdf:first ;
+                    sp:subject [
+                        sp:varName "?3"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object () ;
+                    sp:predicate rdf:rest ;
+                    sp:subject [
+                        sp:varName "?3"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "o"^^xsd:string ;
+                      ] ;
+                    sp:predicate [
+                        sp:varName "p"^^xsd:string ;
+                      ] ;
+                    sp:subject spin:_arg1 ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression spin:_arg1 ;
+                    sp:variable [
+                        sp:varName "s"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  vaem:comment """Test with:
+
+SELECT *
+WHERE {
+    (vaem:GMD_VAEM) lmlib:getSubGraph (?s ?p ?o)
+}}"""^^xsd:string ;
+  rdfs:comment "Flatten subgraph is a magic properrty that returns rdf statements (?s ?p ?o) for a node and all its object nodes recursively. The recursion excludes nodes at the range end of rdf:type, rdfs:isDefinedBy and rdfs:subClassOf properties."^^xsd:string ;
+  rdfs:label "get sub-graph"^^xsd:string ;
+  rdfs:subClassOf lmlib:MagicProperties ;
+.
 lmlib:indexOfListElement
   rdf:type spin:Function ;
   spin:constraint [
