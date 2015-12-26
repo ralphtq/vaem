@@ -74,7 +74,19 @@ pre { margin-left: 2em }
    width:100%;
 }
 
-.size-8 { font-size: 8px; }
+.spacing-5  {padding: 5px;}
+.spacing-10 {padding: 10px;}
+.spacing-20 {padding: 20px;}
+
+.light-blue-background {
+	background-color: #dfe8f6 ;
+}
+
+.dark-blue-background {
+	background-color: #000066 ;
+}
+
+.size-8  { font-size: 8px; }
 .size-10 { font-size: 10px; }
 .size-12 { font-size: 12px; }
 .size-14 { font-size: 14px; }      
@@ -95,6 +107,9 @@ pre { margin-left: 2em }
 .lm-black {color: black;}
 .lm-white {color: white;}
 .lm-light-blue {color: #acc0e5;}
+.lm-indigo {color: indigo;}
+
+.lm-bold {font-weight: bold }
 
 
 .lm-button {
@@ -114,7 +129,7 @@ pre { margin-left: 2em }
    box-shadow: rgba(0,0,0,1) 0 1px 0;
    text-shadow: rgba(0,0,0,.4) 0 1px 0;
    color: white;
-   font-size: 14px;
+   font-size: inherit ;
    font-family: Arial, sans-serif;
    text-decoration: none;
    vertical-align: middle;
@@ -465,6 +480,25 @@ article p {
 	font-size: 24.0pt;
 	text-align: center; 
  }
+ 
+div.left {float:left;}
+div.right {float:right;}
+div.clear-both {clear:both;}
+
+div.vspace-20 {margin: 20px;}
+div.vspace-40 {margin: 40px;}
+
+.pad-5  {padding: 5px;}
+.pad-10 {padding: 10px;}
+.pad-20 {padding: 20px;}
+
+div.lm-poweredby-logo {
+	background-image: url(../images/topbraid-live-logo.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	width: 250px;
+	height: 35px;
+}
 
 div.lm-abstract {
     border: 2px solid #a1a1a1;
@@ -718,11 +752,12 @@ tbody.lm-table-body {
 	vertical-align: top;
 }
 
-th.lm-column-labels {
+th.lm-column-label {
 	font-size: 12px;
+	font-weight: bold;
 	text-align:center;
 	vertical-align: middle ;
-    border: 1px dotted black; 
+    border: 1px solid black; 
   }
 
 tr.lm-inner-row {

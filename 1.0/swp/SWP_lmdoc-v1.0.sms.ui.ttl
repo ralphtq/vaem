@@ -1223,6 +1223,7 @@ lmdoc:BuildMetadataRecord
             ] ;
           ui:child [
               rdf:type html:P ;
+              html:class "lm-para"^^xsd:string ;
               ui:child [
                   rdf:type ui:TextNode ;
                   ui:childIndex 0 ;
@@ -1239,9 +1240,41 @@ lmdoc:BuildMetadataRecord
             ] ;
           ui:child [
               rdf:type ui:transaction ;
+              let:gmdU [
+                  rdf:type sp:iri ;
+                  sp:arg1 [
+                      rdf:type fn:concat ;
+                      sp:arg1 [
+                          rdf:type xsd:string ;
+                          sp:arg1 [
+                              sp:varName "graph"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      sp:arg2 "/" ;
+                      sp:arg3 [
+                          sp:varName "metadataName"^^xsd:string ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type html:P ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "URI is "^^xsd:string ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 1 ;
+                      ui:text [
+                          sp:varName "gmdU"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
               ui:child [
                   rdf:type ui:update ;
-                  ui:childIndex 0 ;
+                  ui:childIndex 1 ;
                   ui:updateQuery [
                       rdf:type sp:Modify ;
                       sp:insertPattern (
@@ -1329,28 +1362,6 @@ lmdoc:BuildMetadataRecord
                           [
                             rdf:type sp:Bind ;
                             sp:expression [
-                                rdf:type sp:iri ;
-                                sp:arg1 [
-                                    rdf:type fn:concat ;
-                                    sp:arg1 [
-                                        rdf:type xsd:string ;
-                                        sp:arg1 [
-                                            sp:varName "graph"^^xsd:string ;
-                                          ] ;
-                                      ] ;
-                                    sp:arg2 "/" ;
-                                    sp:arg3 [
-                                        sp:varName "metadataName"^^xsd:string ;
-                                      ] ;
-                                  ] ;
-                              ] ;
-                            sp:variable [
-                                sp:varName "gmdU"^^xsd:string ;
-                              ] ;
-                          ]
-                          [
-                            rdf:type sp:Bind ;
-                            sp:expression [
                                 rdf:type afn:now ;
                               ] ;
                             sp:variable [
@@ -1374,7 +1385,7 @@ lmdoc:CatalogManager
       spl:predicate arg:graph ;
       spl:valueType xsd:string ;
     ] ;
-  ui:prototype [
+  ui:errorPrototype [
       rdf:type ui:group ;
       let:myGraph [
           rdf:type sp:iri ;
@@ -1383,20 +1394,31 @@ lmdoc:CatalogManager
             ] ;
         ] ;
       ui:child [
-          rdf:type html:P ;
+          rdf:type ui:if ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
-              ui:text "Graph is "^^xsd:string ;
-            ] ;
-          ui:child [
-              rdf:type ui:TextNode ;
-              ui:childIndex 1 ;
-              ui:text [
-                  sp:varName "myGraph"^^xsd:string ;
-                ] ;
+              ui:text "No graph given"^^xsd:string ;
             ] ;
           ui:childIndex 0 ;
+          ui:condition [
+              rdf:type sp:not ;
+              sp:arg1 [
+                  rdf:type sp:bound ;
+                  sp:arg1 [
+                      sp:varName "myGraph"^^xsd:string ;
+                    ] ;
+                ] ;
+            ] ;
+        ] ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:myGraph [
+          rdf:type sp:iri ;
+          sp:arg1 [
+              sp:varName "graph"^^xsd:string ;
+            ] ;
         ] ;
       ui:child [
           rdf:type ui:setContext ;
@@ -1410,20 +1432,12 @@ lmdoc:CatalogManager
               ui:child [
                   rdf:type ui:setContext ;
                   ui:child [
-                      rdf:type html:H1 ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text "LinkedModel Catalog"^^xsd:string ;
-                        ] ;
+                      rdf:type html:Br ;
                       ui:childIndex 0 ;
                     ] ;
                   ui:child [
-                      rdf:type html:Hr ;
-                      ui:childIndex 3 ;
-                    ] ;
-                  ui:child [
-                      rdf:type html:P ;
+                      rdf:type html:H2 ;
+                      html:class "size-12"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -1439,6 +1453,10 @@ lmdoc:CatalogManager
                       ui:childIndex 1 ;
                     ] ;
                   ui:child [
+                      rdf:type html:Hr ;
+                      ui:childIndex 3 ;
+                    ] ;
+                  ui:child [
                       rdf:type ui:call ;
                       ui:child [
                           rdf:type ui:if ;
@@ -1452,48 +1470,10 @@ lmdoc:CatalogManager
                                       rdf:type ui:forEach ;
                                       ui:child [
                                           rdf:type html:Tr ;
+                                          html:class "lm-row"^^xsd:string ;
                                           ui:child [
                                               rdf:type html:Td ;
-                                              ui:child [
-                                                  rdf:type html:Button ;
-                                                  html:class "lm-button"^^xsd:string ;
-                                                  html:onclick [
-                                                      rdf:type ui:concat ;
-                                                      sp:arg1 "lmtest.openSWP('lmdoc:Graph','&graph="^^xsd:string ;
-                                                      sp:arg2 [
-                                                          sp:varName "catalogedGraph"^^xsd:string ;
-                                                        ] ;
-                                                      sp:arg3 "')"^^xsd:string ;
-                                                    ] ;
-                                                  ui:child [
-                                                      rdf:type ui:TextNode ;
-                                                      ui:childIndex 0 ;
-                                                      ui:text "Graph"^^xsd:string ;
-                                                    ] ;
-                                                  ui:childIndex 1 ;
-                                                ] ;
-                                              ui:child [
-                                                  rdf:type html:Button ;
-                                                  html:class "lm-button"^^xsd:string ;
-                                                  html:onclick [
-                                                      rdf:type ui:concat ;
-                                                      sp:arg1 "lmtest.openSWP('lmdoc:GraphMetadata','&graph="^^xsd:string ;
-                                                      sp:arg2 [
-                                                          sp:varName "catalogedGraph"^^xsd:string ;
-                                                        ] ;
-                                                      sp:arg3 "')"^^xsd:string ;
-                                                    ] ;
-                                                  ui:child [
-                                                      rdf:type ui:TextNode ;
-                                                      ui:childIndex 0 ;
-                                                      ui:text "Metadata"^^xsd:string ;
-                                                    ] ;
-                                                  ui:childIndex 0 ;
-                                                ] ;
-                                              ui:childIndex 3 ;
-                                            ] ;
-                                          ui:child [
-                                              rdf:type html:Td ;
+                                              html:class "lm-column"^^xsd:string ;
                                               ui:child [
                                                   rdf:type ui:TextNode ;
                                                   ui:childIndex 0 ;
@@ -1509,6 +1489,7 @@ lmdoc:CatalogManager
                                             ] ;
                                           ui:child [
                                               rdf:type html:Td ;
+                                              html:class "lm-column"^^xsd:string ;
                                               ui:child [
                                                   rdf:type ui:TextNode ;
                                                   ui:childIndex 0 ;
@@ -1519,10 +1500,26 @@ lmdoc:CatalogManager
                                                         ] ;
                                                     ] ;
                                                 ] ;
+                                              ui:childIndex 2 ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type html:Td ;
+                                              html:class "lm-column"^^xsd:string ;
+                                              ui:child [
+                                                  rdf:type ui:TextNode ;
+                                                  ui:childIndex 0 ;
+                                                  ui:text [
+                                                      rdf:type ui:label ;
+                                                      sp:arg1 [
+                                                          sp:varName "role"^^xsd:string ;
+                                                        ] ;
+                                                    ] ;
+                                                ] ;
                                               ui:childIndex 1 ;
                                             ] ;
                                           ui:child [
                                               rdf:type html:Td ;
+                                              html:class "lm-column"^^xsd:string ;
                                               ui:child [
                                                   rdf:type ui:TextNode ;
                                                   ui:childIndex 0 ;
@@ -1530,7 +1527,124 @@ lmdoc:CatalogManager
                                                       sp:varName "catalogedGraph"^^xsd:string ;
                                                     ] ;
                                                 ] ;
-                                              ui:childIndex 2 ;
+                                              ui:childIndex 3 ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type html:Td ;
+                                              html:class "lm-column"^^xsd:string ;
+                                              ui:child [
+                                                  rdf:type ui:if ;
+                                                  ui:child [
+                                                      rdf:type html:Br ;
+                                                      ui:childIndex 5 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type html:Button ;
+                                                      html:class "lm-button size-8"^^xsd:string ;
+                                                      html:onclick [
+                                                          rdf:type ui:concat ;
+                                                          sp:arg1 "lmtest.openSWP('lmdoc:Graph','&graph="^^xsd:string ;
+                                                          sp:arg2 [
+                                                              sp:varName "catalogedGraph"^^xsd:string ;
+                                                            ] ;
+                                                          sp:arg3 "')"^^xsd:string ;
+                                                        ] ;
+                                                      ui:child [
+                                                          rdf:type ui:TextNode ;
+                                                          ui:childIndex 0 ;
+                                                          ui:text "Generate Documentation"^^xsd:string ;
+                                                        ] ;
+                                                      ui:childIndex 4 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type html:Button ;
+                                                      html:class "lm-button size-8"^^xsd:string ;
+                                                      html:onclick [
+                                                          rdf:type ui:concat ;
+                                                          sp:arg1 "lmtest.openSWP('lmdoc:GraphMetadata','&graph="^^xsd:string ;
+                                                          sp:arg2 [
+                                                              sp:varName "catalogedGraph"^^xsd:string ;
+                                                            ] ;
+                                                          sp:arg3 "')"^^xsd:string ;
+                                                        ] ;
+                                                      ui:child [
+                                                          rdf:type ui:TextNode ;
+                                                          ui:childIndex 0 ;
+                                                          ui:text "Metadata Specification"^^xsd:string ;
+                                                        ] ;
+                                                      ui:childIndex 0 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type html:Button ;
+                                                      html:class "lm-button size-8"^^xsd:string ;
+                                                      html:onclick [
+                                                          rdf:type ui:concat ;
+                                                          sp:arg1 "lmtest.openSWP('lmdoc:Preview','&graph="^^xsd:string ;
+                                                          sp:arg2 [
+                                                              sp:varName "catalogedGraph"^^xsd:string ;
+                                                            ] ;
+                                                          sp:arg3 "')"^^xsd:string ;
+                                                        ] ;
+                                                      ui:child [
+                                                          rdf:type ui:TextNode ;
+                                                          ui:childIndex 0 ;
+                                                          ui:text "Preview Documentation"^^xsd:string ;
+                                                        ] ;
+                                                      ui:childIndex 2 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type html:Div ;
+                                                      html:class "spacing-5"^^xsd:string ;
+                                                      ui:childIndex 1 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type html:Div ;
+                                                      html:class "spacing-5"^^xsd:string ;
+                                                      ui:childIndex 3 ;
+                                                    ] ;
+                                                  ui:childIndex 0 ;
+                                                  ui:condition [
+                                                      rdf:type sp:ne ;
+                                                      sp:arg1 [
+                                                          sp:varName "catalogedGraph"^^xsd:string ;
+                                                        ] ;
+                                                      sp:arg2 "" ;
+                                                    ] ;
+                                                ] ;
+                                              ui:child [
+                                                  rdf:type ui:if ;
+                                                  ui:child [
+                                                      rdf:type html:Button ;
+                                                      html:class "lm-button size-8"^^xsd:string ;
+                                                      html:onclick [
+                                                          rdf:type ui:concat ;
+                                                          sp:arg1 "window.open('"^^xsd:string ;
+                                                          sp:arg2 [
+                                                              sp:varName "latestPublishedVersion"^^xsd:string ;
+                                                            ] ;
+                                                          sp:arg3 "'); return false"^^xsd:string ;
+                                                        ] ;
+                                                      ui:child [
+                                                          rdf:type ui:TextNode ;
+                                                          ui:childIndex 0 ;
+                                                          ui:text "Published Documentation"^^xsd:string ;
+                                                        ] ;
+                                                      ui:childIndex 1 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type html:Div ;
+                                                      html:class "spacing-5"^^xsd:string ;
+                                                      ui:childIndex 0 ;
+                                                    ] ;
+                                                  ui:childIndex 1 ;
+                                                  ui:condition [
+                                                      rdf:type sp:bound ;
+                                                      sp:arg1 [
+                                                          sp:varName "latestPublishedVersion"^^xsd:string ;
+                                                        ] ;
+                                                    ] ;
+                                                ] ;
+                                              ui:childIndex 4 ;
                                             ] ;
                                           ui:childIndex 0 ;
                                         ] ;
@@ -1547,9 +1661,10 @@ lmdoc:CatalogManager
                                   html:class "lm-table-header"^^xsd:string ;
                                   ui:child [
                                       rdf:type html:Tr ;
+                                      html:class "lm-row"^^xsd:string ;
                                       ui:child [
                                           rdf:type html:Th ;
-                                          html:class "lm-columns-labels"^^xsd:string ;
+                                          html:class "lm-column-label"^^xsd:string ;
                                           ui:child [
                                               rdf:type ui:TextNode ;
                                               ui:childIndex 0 ;
@@ -1559,31 +1674,41 @@ lmdoc:CatalogManager
                                         ] ;
                                       ui:child [
                                           rdf:type html:Th ;
-                                          html:class "lm-columns-labels"^^xsd:string ;
+                                          html:class "lm-column-label"^^xsd:string ;
                                           ui:child [
                                               rdf:type ui:TextNode ;
                                               ui:childIndex 0 ;
                                               ui:text "Actions"^^xsd:string ;
                                             ] ;
-                                          ui:childIndex 3 ;
+                                          ui:childIndex 4 ;
                                         ] ;
                                       ui:child [
                                           rdf:type html:Th ;
-                                          html:class "lm-columns-labels"^^xsd:string ;
+                                          html:class "lm-column-label"^^xsd:string ;
                                           ui:child [
                                               rdf:type ui:TextNode ;
                                               ui:childIndex 0 ;
                                               ui:text "Graph"^^xsd:string ;
                                             ] ;
-                                          ui:childIndex 2 ;
+                                          ui:childIndex 3 ;
                                         ] ;
                                       ui:child [
                                           rdf:type html:Th ;
-                                          html:class "lm-columns-labels"^^xsd:string ;
+                                          html:class "lm-column-label"^^xsd:string ;
                                           ui:child [
                                               rdf:type ui:TextNode ;
                                               ui:childIndex 0 ;
                                               ui:text "Record"^^xsd:string ;
+                                            ] ;
+                                          ui:childIndex 2 ;
+                                        ] ;
+                                      ui:child [
+                                          rdf:type html:Th ;
+                                          html:class "lm-column-label"^^xsd:string ;
+                                          ui:child [
+                                              rdf:type ui:TextNode ;
+                                              ui:childIndex 0 ;
+                                              ui:text "Type"^^xsd:string ;
                                             ] ;
                                           ui:childIndex 1 ;
                                         ] ;
@@ -1628,6 +1753,11 @@ lmdoc:CatalogManager
                   sp:varName "myGraph"^^xsd:string ;
                 ] ;
             ] ;
+        ] ;
+      ui:child [
+          rdf:type lmdoc:Header ;
+          arg:title "LinkedModel Catalog"^^xsd:string ;
+          ui:childIndex 0 ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
@@ -2859,6 +2989,19 @@ lmdoc:Elements
           ui:childIndex 4 ;
         ] ;
       ui:child [
+          rdf:type html:Link ;
+          html:href [
+              rdf:type ui:concat ;
+              sp:arg1 [
+                  rdf:type ui:lib ;
+                ] ;
+              sp:arg2 "/vaem/css/lm.css"^^xsd:string ;
+            ] ;
+          html:rel "stylesheet"^^xsd:string ;
+          html:type "text/css"^^xsd:string ;
+          ui:childIndex 27 ;
+        ] ;
+      ui:child [
           rdf:type html:Meta ;
           html:content "TopBraid,RDF,OWL,SPARQL,SPIN,SWP,SPARQLMotion,LinkedData"^^xsd:string ;
           html:name "keywords"^^xsd:string ;
@@ -3808,6 +3951,88 @@ lmdoc:GraphMetadata
       spl:predicate arg:graph ;
       spl:valueType rdfs:Resource ;
     ] ;
+  ui:errorPrototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type ui:else ;
+          ui:child [
+              rdf:type ui:group ;
+              let:myGraph [
+                  rdf:type sp:iri ;
+                  sp:arg1 [
+                      sp:varName "graph"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:setContext ;
+                  ui:child [
+                      rdf:type ui:group ;
+                      let:maybeGraphMetadata [
+                          rdf:type spl:objectInGraph ;
+                          sp:arg1 [
+                              sp:varName "myGraph"^^xsd:string ;
+                            ] ;
+                          sp:arg2 vaem:hasGraphMetadata ;
+                          sp:arg3 [
+                              sp:varName "myGraph"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:if ;
+                          ui:child [
+                              rdf:type lmdoc:BuildMetadataRecord ;
+                              arg:graph [
+                                  sp:varName "myGraph"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                          ui:condition [
+                              rdf:type sp:not ;
+                              sp:arg1 [
+                                  rdf:type sp:bound ;
+                                  sp:arg1 [
+                                      sp:varName "maybeGraphMetadata"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:varName "graph"^^xsd:string ;
+                  ui:varValue [
+                      sp:varName "myGraph"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:P ;
+              html:class "lm-para"^^xsd:string ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "No Graph URI provided"^^xsd:string ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              rdf:type sp:not ;
+              sp:arg1 [
+                  rdf:type sp:bound ;
+                  sp:arg1 [
+                      sp:varName "graph"^^xsd:string ;
+                    ] ;
+                ] ;
+            ] ;
+        ] ;
+    ] ;
   ui:headIncludes [
       rdf:type ui:group ;
       ui:child [
@@ -3845,9 +4070,25 @@ lmdoc:GraphMetadata
             ] ;
         ] ;
       ui:child [
+          rdf:type html:P ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text "My graph is "^^xsd:string ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 1 ;
+              ui:text [
+                  sp:varName "myGraph"^^xsd:string ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:child [
           rdf:type ui:setContext ;
           ui:child [
-              rdf:type lmdoc:GraphMetadataContainer ;
+              rdf:type lmdoc:Header ;
               arg:title "Graph Metadata Maintainer"^^xsd:string ;
               ui:child [
                   rdf:type ui:setContext ;
@@ -3901,11 +4142,38 @@ lmdoc:GraphMetadata
                       ui:child [
                           rdf:type ui:if ;
                           ui:child [
+                              rdf:type html:P ;
+                              html:class "lm-para"^^xsd:string ;
+                              ui:child [
+                                  rdf:type html:Span ;
+                                  html:style "font-weight:italic"^^xsd:string ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text [
+                                          sp:varName "myGraph"^^xsd:string ;
+                                        ] ;
+                                    ] ;
+                                  ui:childIndex 1 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Metadata for graph "^^xsd:string ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 2 ;
+                                  ui:text " not found - building initial metadata"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
                               rdf:type lmdoc:BuildMetadataRecord ;
                               arg:graph [
                                   sp:varName "myGraph"^^xsd:string ;
                                 ] ;
-                              ui:childIndex 0 ;
+                              ui:childIndex 1 ;
                             ] ;
                           ui:childIndex 0 ;
                           ui:condition [
@@ -3933,7 +4201,7 @@ lmdoc:GraphMetadata
                 ] ;
               ui:childIndex 0 ;
             ] ;
-          ui:childIndex 0 ;
+          ui:childIndex 1 ;
           ui:varName "graph"^^xsd:string ;
           ui:varValue [
               sp:varName "myGraph"^^xsd:string ;
@@ -3949,74 +4217,6 @@ http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://qudt.o
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://qudt.org/2.0/schema/qudt/science"""^^xsd:string ;
   rdfs:label "Graph Documentation"^^xsd:string ;
   rdfs:subClassOf lmdoc:Pages ;
-.
-lmdoc:GraphMetadataContainer
-  rdf:type ui:NodeClass ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:predicate arg:title ;
-      spl:valueType xsd:string ;
-    ] ;
-  ui:prototype [
-      rdf:type html:Div ;
-      ui:child [
-          rdf:type html:Div ;
-          html:class "tbladmin-page-body"^^xsd:string ;
-          ui:child [
-              rdf:type ui:insertionPoint ;
-              ui:childIndex 0 ;
-              ui:pointId "body"^^xsd:string ;
-            ] ;
-          ui:childIndex 1 ;
-        ] ;
-      ui:child [
-          rdf:type html:Table ;
-          ui:child [
-              rdf:type html:Tr ;
-              ui:child [
-                  rdf:type html:Td ;
-                  html:class "tbladmin-title-td"^^xsd:string ;
-                  ui:child [
-                      rdf:type html:Div ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text [
-                              sp:varName "title"^^xsd:string ;
-                            ] ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 1 ;
-                ] ;
-              ui:child [
-                  rdf:type html:Td ;
-                  ui:child [
-                      rdf:type html:A ;
-                      html:href "admin"^^xsd:string ;
-                      ui:child [
-                          rdf:type html:Img ;
-                          html:alt "TopBraid"^^xsd:string ;
-                          html:height "50"^^xsd:string ;
-                          html:src [
-                              rdf:type ui:concat ;
-                              sp:arg1 [
-                                  rdf:type ui:lib ;
-                                ] ;
-                              sp:arg2 "/vaem/images/topbraid-live-logo.png"^^xsd:string ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:childIndex 0 ;
-        ] ;
-    ] ;
-  rdfs:subClassOf lmdoc:Elements ;
 .
 lmdoc:GraphMetadataView
   rdf:type ui:NodeClass ;
@@ -4644,6 +4844,56 @@ lmdoc:GraphTest
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphTest&graph=http://www.linkedmodel.org/2.0/schema/vaem"""^^xsd:string ;
   rdfs:label "Graph Documentation"^^xsd:string ;
   rdfs:subClassOf lmdoc:Pages ;
+.
+lmdoc:Header
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:title ;
+      spl:valueType xsd:string ;
+    ] ;
+  ui:prototype [
+      rdf:type html:Div ;
+      html:class "left pad-10"^^xsd:string ;
+      ui:child [
+          rdf:type html:Div ;
+          html:class "clear-both"^^xsd:string ;
+          ui:childIndex 3 ;
+        ] ;
+      ui:child [
+          rdf:type html:Div ;
+          html:class "left lm-poweredby-logo"^^xsd:string ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:child [
+          rdf:type html:Div ;
+          html:class "left pad-10 size-24 lm-indigo lm-bold"^^xsd:string ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text [
+                  sp:varName "title"^^xsd:string ;
+                ] ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type html:Div ;
+          html:class "right"^^xsd:string ;
+          ui:child [
+              rdf:type ui:insertionPoint ;
+              ui:childIndex 0 ;
+              ui:pointId "lmhdr1"^^xsd:string ;
+            ] ;
+          ui:child [
+              rdf:type ui:insertionPoint ;
+              ui:childIndex 1 ;
+              ui:pointId "lmhdr2"^^xsd:string ;
+            ] ;
+          ui:childIndex 2 ;
+        ] ;
+    ] ;
+  rdfs:subClassOf lmdoc:Elements ;
 .
 lmdoc:ImageResourceViewer
   rdf:type swa:ObjectViewerClass ;
@@ -8033,6 +8283,7 @@ lmdoc:ObjectsGroup
       spl:valueType rdfs:Resource ;
       rdfs:comment "The resource to display."^^xsd:string ;
     ] ;
+  ui:overrides swa:ObjectsGroup ;
   ui:prototype [
       rdf:type ui:group ;
       letrs:rs [
@@ -8289,6 +8540,252 @@ lmdoc:PopUpResourceView
   ui:responseType ui:HTML ;
   rdfs:label "PopUp Resource view"^^xsd:string ;
   rdfs:subClassOf lmdoc:Panes ;
+.
+lmdoc:Preview
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:flags ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:overlay ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:myGraph [
+          rdf:type sp:iri ;
+          sp:arg1 [
+              sp:varName "graph"^^xsd:string ;
+            ] ;
+        ] ;
+      ui:child [
+          rdf:type ui:setContext ;
+          ui:child [
+              rdf:type ui:group ;
+              let:myOverlay [
+                  rdf:type sp:iri ;
+                  sp:arg1 [
+                      rdf:type sp:coalesce ;
+                      sp:arg1 [
+                          sp:varName "overlay"^^xsd:string ;
+                        ] ;
+                      sp:arg2 ui:tempGraph ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:setContext ;
+                  ui:child [
+                      rdf:type ui:group ;
+                      let:myGraphMetadata [
+                          rdf:type spl:objectInGraph ;
+                          sp:arg1 [
+                              sp:varName "myGraph"^^xsd:string ;
+                            ] ;
+                          sp:arg2 vaem:hasGraphMetadata ;
+                          sp:arg3 [
+                              sp:varName "myGraph"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:group ;
+                          let:namespacePrefix [
+                              rdf:type spl:objectInGraph ;
+                              sp:arg1 [
+                                  sp:varName "myGraphMetadata"^^xsd:string ;
+                                ] ;
+                              sp:arg2 vaem:name ;
+                              sp:arg3 [
+                                  sp:varName "myGraph"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Hr ;
+                              ui:childIndex 5 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Section ;
+                              html:class "informative"^^xsd:string ;
+                              html:id "overview-of-ontology"^^xsd:string ;
+                              ui:child [
+                                  rdf:type lmdoc:IndexSection ;
+                                  arg:graph [
+                                      sp:varName "myGraph"^^xsd:string ;
+                                    ] ;
+                                  arg:sectionHeading "Resource Index"^^xsd:string ;
+                                  ui:childIndex 0 ;
+                                  vaem:namespacePrefix [
+                                      sp:varName "namespacePrefix"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 8 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Section ;
+                              html:class "introductory"^^xsd:string ;
+                              html:id "abstract"^^xsd:string ;
+                              html:property "dct:abstract"^^xsd:string ;
+                              html:rel "bibo:Chapter"^^xsd:string ;
+                              html:resource "#ref"^^xsd:string ;
+                              html:typeof "bibo:Chapter"^^xsd:string ;
+                              ui:child [
+                                  rdf:type lmdoc:AbstractSection ;
+                                  arg:metadata [
+                                      sp:varName "myGraphMetadata"^^xsd:string ;
+                                    ] ;
+                                  arg:sectionHeading "Abstract"^^xsd:string ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 3 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Section ;
+                              html:id "namespaces-1"^^xsd:string ;
+                              html:rel "bibo:Chapter"^^xsd:string ;
+                              html:resource "#ref"^^xsd:string ;
+                              html:typeof "bibo:Chapter"^^xsd:string ;
+                              ui:child [
+                                  rdf:type lmdoc:ImportedNamespaces ;
+                                  arg:graph [
+                                      sp:varName "myGraph"^^xsd:string ;
+                                    ] ;
+                                  arg:sectionHeading "Imported Graphs"^^xsd:string ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 6 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Section ;
+                              html:id "non-imported-myGraphMetadatas"^^xsd:string ;
+                              html:rel "bibo:Chapter"^^xsd:string ;
+                              html:resource "#ref"^^xsd:string ;
+                              html:typeof "bibo:Chapter"^^xsd:string ;
+                              ui:child [
+                                  rdf:type lmdoc:NonImportedResources ;
+                                  arg:metadata [
+                                      sp:varName "myGraphMetadata"^^xsd:string ;
+                                    ] ;
+                                  arg:sectionHeading "Non-imported Resources"^^xsd:string ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 7 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:CommentNode ;
+                              ui:childIndex 4 ;
+                              rdfs:comment """section id=\"toc\">
+<lmdoc:TableOfContents arg:sectionHeading=\"Table of Contents\"/>
+</section"""^^xsd:string ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:if ;
+                              ui:child [
+                                  rdf:type html:P ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text "Current query graph is "^^xsd:string ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 1 ;
+                                      ui:text [
+                                          rdf:type ui:currentQueryGraph ;
+                                        ] ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 2 ;
+                              ui:condition [
+                                  rdf:type fn:contains ;
+                                  sp:arg1 [
+                                      sp:varName "flags"^^xsd:string ;
+                                    ] ;
+                                  sp:arg2 "Sqg" ;
+                                ] ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:if ;
+                              ui:child [
+                                  rdf:type html:P ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text "Graph metadata is "^^xsd:string ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 1 ;
+                                      ui:text [
+                                          sp:varName "myGraphMetaData"^^xsd:string ;
+                                        ] ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 1 ;
+                              ui:condition [
+                                  rdf:type fn:contains ;
+                                  sp:arg1 [
+                                      sp:varName "flags"^^xsd:string ;
+                                    ] ;
+                                  sp:arg2 "Sgm" ;
+                                ] ;
+                            ] ;
+                          ui:child [
+                              rdf:type lmdoc:Footer ;
+                              ui:childIndex 9 ;
+                            ] ;
+                          ui:child [
+                              rdf:type lmdoc:GraphHeader ;
+                              arg:metadata [
+                                  sp:varName "myGraphMetadata"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:queryGraph [
+                      rdf:type ui:unionOfGraphs ;
+                      sp:arg1 [
+                          sp:varName "myGraph"^^xsd:string ;
+                        ] ;
+                      sp:arg2 [
+                          rdf:type ui:graphWithImports ;
+                          sp:arg1 <http://www.linkedmodel.org/1.1/swp/lmdoc> ;
+                        ] ;
+                      sp:arg3 [
+                          rdf:type ui:graphWithImports ;
+                          sp:arg1 [
+                              sp:varName "myOverlay"^^xsd:string ;
+                            ] ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:varName "graph"^^xsd:string ;
+          ui:varValue [
+              sp:varName "myGraph"^^xsd:string ;
+            ] ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:comment """Test with:
+
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:Preview&graph=http://www.linkedmodel.org/2.0/schema/vaem"""^^xsd:string ;
+  rdfs:label "Preview Graph Documentation"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Pages ;
 .
 lmdoc:PropertiesSection
   rdf:type ui:NodeClass ;
@@ -9672,6 +10169,62 @@ lmdoc:ResourceFooter
   rdfs:label "Resource Footer"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
 .
+lmdoc:ResourceFormBody
+  rdf:type ui:ResourceViewClass ;
+  ui:overrides swa:ResourceFormBody ;
+  ui:private "true"^^xsd:boolean ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type ui:call ;
+          arg:subject [
+              sp:varName "resource"^^xsd:string ;
+            ] ;
+          ui:child [
+              rdf:type swa:ObjectsGroup ;
+              arg:filterFunction swa:isAnnotationProperty ;
+              arg:label "Annotations"^^xsd:string ;
+              arg:predicates [
+                  sp:varName "rs"^^xsd:string ;
+                ] ;
+              arg:subject [
+                  sp:varName "resource"^^xsd:string ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type swa:ObjectsGroup ;
+              arg:filterFunction swa:isNonAnnotationProperty ;
+              arg:label "Properties"^^xsd:string ;
+              arg:predicates [
+                  sp:varName "rs"^^xsd:string ;
+                ] ;
+              arg:subject [
+                  sp:varName "resource"^^xsd:string ;
+                ] ;
+              ui:childIndex 3 ;
+            ] ;
+          ui:child [
+              rdf:type html:Div ;
+              html:class "vspace-20"^^xsd:string ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:child [
+              rdf:type html:Div ;
+              html:class "vspace-20"^^xsd:string ;
+              ui:childIndex 2 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:template [
+              rdf:type swa:modeProperty ;
+              arg:predicate swa:formObjectPredicateSelectionTemplate ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:comment "The lmdoc view for rdfs:Resource, with widget groups for Annotation Properties and Other Properties."^^xsd:string ;
+  rdfs:label "Resource form body"^^xsd:string ;
+  rdfs:subClassOf swa:ResourceFormBody ;
+.
 lmdoc:ResourceHeader
   rdf:type ui:NodeClass ;
   spin:constraint [
@@ -9876,6 +10429,753 @@ lmdoc:SubjectWidgetRow
 lmdoc:Subjects
   rdf:type ui:NodeClass ;
   rdfs:subClassOf lmdoc:AbstractSubject ;
+.
+lmdoc:SwitchableForm
+  rdf:type swa:FormClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:allowHistoryMode ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to have a \"Show history\" check box show up in view mode. This mode is currently only supported by the teamwork framework, not general SWA."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:allowLogMessage ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to also show a check box in edit mode, where the user can enter a commit message when pressing Save Changes"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:allowProvenanceMode ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to have a \"Show provenance\" check box show up in view mode. This mode is currently only supported by the Insight product, not general SWA."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:editable ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to add an option to allow the user to switch the form to edit mode."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:editing ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to make the form editing by default."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:formId ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The id of the form if this is in edit mode."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:matchIds ;
+      spl:valueType xsd:string ;
+      rdfs:comment "An optional list of matchIds that shall be tried first when selecting the actual view. This allows users to define multiple forms for the same class, while specific SwitchableForms can pick which one of them they would like to use. If specified, then there should not be any commas at the end, but are allowed between the values."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:resource ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The resource to display."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:showFooter ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "If set to true, a footer will always show up, even if ?showResourceActions and ?editable are false."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:showResourceActions ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to also display a button to run ResourceActions."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:showURI ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to display the URI of the resource on the right hand side of the header. Even if left to false (default), the URI will be the tool tip text of the header."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:suppressHeader ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to suppress any header."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:viewModeName ;
+      spl:valueType xsd:string ;
+      rdfs:comment "An optional name of the mode that shall be activated if the form is in view mode. This can be used to replace the default view with a specialized mode, e.g. history mode in EVN."^^xsd:string ;
+    ] ;
+  ui:overrides swa:SwitchableForm ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:extraMatchIds [
+          rdf:type sp:if ;
+          sp:arg1 [
+              rdf:type sp:bound ;
+              sp:arg1 [
+                  sp:varName "matchIds"^^xsd:string ;
+                ] ;
+            ] ;
+          sp:arg2 [
+              rdf:type sp:concat ;
+              sp:arg1 [
+                  sp:varName "matchIds"^^xsd:string ;
+                ] ;
+              sp:arg2 "," ;
+            ] ;
+          sp:arg3 [
+              sp:varName "none"^^xsd:string ;
+            ] ;
+        ] ;
+      let:fid [
+          rdf:type sp:coalesce ;
+          sp:arg1 [
+              sp:varName "formId"^^xsd:string ;
+            ] ;
+          sp:arg2 [
+              rdf:type ui:uniqueId ;
+            ] ;
+        ] ;
+      let:headerLabelFunction [
+          rdf:type sp:coalesce ;
+          sp:arg1 [
+              rdf:type ui:contextValue ;
+              sp:arg1 "headerLabelFunction" ;
+            ] ;
+          sp:arg2 swa:DefaultHeaderLabelFunction ;
+        ] ;
+      ui:child [
+          rdf:type html:Div ;
+          ui:child [
+              rdf:type ui:insertionPoint ;
+              ui:childIndex 0 ;
+              ui:pointId "extraFooter"^^xsd:string ;
+            ] ;
+          ui:childIndex 2 ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          let:ei [
+              rdf:type sp:coalesce ;
+              sp:arg1 [
+                  sp:varName "editing"^^xsd:string ;
+                ] ;
+              sp:arg2 "false"^^xsd:boolean ;
+            ] ;
+          ui:child [
+              rdf:type html:Div ;
+              html:class "swa-form-footer"^^xsd:string ;
+              ui:child [
+                  rdf:type swa:Button ;
+                  arg:disabled [
+                      rdf:type sp:not ;
+                      sp:arg1 [
+                          sp:varName "editable"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  arg:iconClass "ui-icon ui-icon-wrench"^^xsd:string ;
+                  arg:id [
+                      rdf:type ui:concat ;
+                      sp:arg1 [
+                          sp:varName "fid"^^xsd:string ;
+                        ] ;
+                      sp:arg2 "-editButton"^^xsd:string ;
+                    ] ;
+                  arg:label "Edit"^^xsd:string ;
+                  arg:onClick [
+                      rdf:type ui:concat ;
+                      sp:arg1 "swa.switchToEditForm('"^^xsd:string ;
+                      sp:arg2 [
+                          sp:varName "fid"^^xsd:string ;
+                        ] ;
+                      sp:arg3 "')"^^xsd:string ;
+                    ] ;
+                  arg:style [
+                      rdf:type sp:if ;
+                      sp:arg1 [
+                          sp:varName "ei"^^xsd:string ;
+                        ] ;
+                      sp:arg2 "visibility: hidden" ;
+                      sp:arg3 [
+                          sp:varName "none"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Div ;
+                  html:style "float: right"^^xsd:string ;
+                  ui:child [
+                      rdf:type ui:insertionPoint ;
+                      ui:childIndex 0 ;
+                      ui:pointId "bottomBar"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 3 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Span ;
+                  html:id [
+                      rdf:type ui:concat ;
+                      sp:arg1 [
+                          sp:varName "fid"^^xsd:string ;
+                        ] ;
+                      sp:arg2 "-editModeButtonBar"^^xsd:string ;
+                    ] ;
+                  html:style [
+                      rdf:type sp:if ;
+                      sp:arg1 [
+                          sp:varName "ei"^^xsd:string ;
+                        ] ;
+                      sp:arg2 [
+                          sp:varName "none"^^xsd:string ;
+                        ] ;
+                      sp:arg3 "display: none" ;
+                    ] ;
+                  ui:child [
+                      rdf:type swa:Button ;
+                      arg:class "test-save-button"^^xsd:string ;
+                      arg:iconClass "ui-icon ui-icon-check"^^xsd:string ;
+                      arg:id [
+                          rdf:type ui:concat ;
+                          sp:arg1 [
+                              sp:varName "fid"^^xsd:string ;
+                            ] ;
+                          sp:arg2 "-saveButton"^^xsd:string ;
+                        ] ;
+                      arg:label "Save Changes"^^xsd:string ;
+                      arg:onClick [
+                          rdf:type ui:concat ;
+                          sp:arg1 "swa.submitForm('"^^xsd:string ;
+                          sp:arg2 [
+                              sp:varName "fid"^^xsd:string ;
+                            ] ;
+                          sp:arg3 "', null, swa.checkRestartWarning())"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type swa:Button ;
+                      arg:iconClass "ui-icon ui-icon-cancel"^^xsd:string ;
+                      arg:id [
+                          rdf:type ui:concat ;
+                          sp:arg1 [
+                              sp:varName "fid"^^xsd:string ;
+                            ] ;
+                          sp:arg2 "-cancelButton"^^xsd:string ;
+                        ] ;
+                      arg:label "Cancel"^^xsd:string ;
+                      arg:onClick [
+                          rdf:type ui:concat ;
+                          sp:arg1 "swa.switchToViewForm('"^^xsd:string ;
+                          sp:arg2 [
+                              sp:varName "fid"^^xsd:string ;
+                            ] ;
+                          sp:arg3 "')"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 3 ;
+                    ] ;
+                  ui:child [
+                      rdf:type swa:Space ;
+                      ui:childIndex 2 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type swa:Space ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          rdf:type swa:Space ;
+                          ui:childIndex 4 ;
+                        ] ;
+                      ui:child [
+                          rdf:type swa:Space ;
+                          ui:childIndex 5 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Input ;
+                          html:id "logMessageBox"^^xsd:string ;
+                          html:onclick "swa.rememberLogMessageBoxStatus()"^^xsd:string ;
+                          html:style "width: 13px; height: 13px; padding: 0; margin:0; vertical-align: middle; position: relative; top: -1px; *overflow: hidden;"^^xsd:string ;
+                          html:type "checkbox"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Script ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "swa.restoreLogMessageBoxStatus();"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Span ;
+                          html:class "swa-base-font"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Enter log message"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 3 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:condition [
+                          sp:varName "allowLogMessage"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 2 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type swa:ResourceActionsButton ;
+                      arg:id [
+                          rdf:type ui:concat ;
+                          sp:arg1 [
+                              sp:varName "fid"^^xsd:string ;
+                            ] ;
+                          sp:arg2 "-actionsButton"^^xsd:string ;
+                        ] ;
+                      arg:resource [
+                          sp:varName "resource"^^xsd:string ;
+                        ] ;
+                      arg:style [
+                          rdf:type sp:if ;
+                          sp:arg1 [
+                              sp:varName "ei"^^xsd:string ;
+                            ] ;
+                          sp:arg2 "visibility: hidden" ;
+                          sp:arg3 [
+                              sp:varName "none"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      arg:toolTip [
+                          rdf:type ui:concat ;
+                          sp:arg1 "Actions for "^^xsd:string ;
+                          sp:arg2 [
+                              rdf:type ui:label ;
+                              sp:arg1 [
+                                  sp:varName "resource"^^xsd:string ;
+                                ] ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type swa:Space ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:condition [
+                      sp:varName "showResourceActions"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa-history-checkbox"^^xsd:string ;
+                      html:id [
+                          rdf:type ui:concat ;
+                          sp:arg1 [
+                              sp:varName "fid"^^xsd:string ;
+                            ] ;
+                          sp:arg2 "-historyModeBoxDiv"^^xsd:string ;
+                        ] ;
+                      html:style [
+                          rdf:type sp:if ;
+                          sp:arg1 [
+                              sp:varName "ei"^^xsd:string ;
+                            ] ;
+                          sp:arg2 "visibility: hidden" ;
+                          sp:arg3 [
+                              sp:varName "none"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Input ;
+                          html:id [
+                              rdf:type ui:concat ;
+                              sp:arg1 [
+                                  sp:varName "fid"^^xsd:string ;
+                                ] ;
+                              sp:arg2 "-historyModeBox"^^xsd:string ;
+                            ] ;
+                          html:onclick [
+                              rdf:type ui:concat ;
+                              sp:arg1 "swa.switchToViewForm('"^^xsd:string ;
+                              sp:arg2 [
+                                  sp:varName "fid"^^xsd:string ;
+                                ] ;
+                              sp:arg3 "')"^^xsd:string ;
+                            ] ;
+                          html:style "width: 13px; height: 13px; padding: 0; margin:0; vertical-align: bottom; position: relative; top: -2px; *overflow: hidden;"^^xsd:string ;
+                          html:type "checkbox"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 1 ;
+                          ui:text " Show History"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 4 ;
+                  ui:condition [
+                      sp:varName "allowHistoryMode"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa-provenance-checkbox"^^xsd:string ;
+                      html:id [
+                          rdf:type ui:concat ;
+                          sp:arg1 [
+                              sp:varName "fid"^^xsd:string ;
+                            ] ;
+                          sp:arg2 "-provenanceModeBoxDiv"^^xsd:string ;
+                        ] ;
+                      html:style [
+                          rdf:type sp:if ;
+                          sp:arg1 [
+                              sp:varName "ei"^^xsd:string ;
+                            ] ;
+                          sp:arg2 "visibility: hidden" ;
+                          sp:arg3 [
+                              sp:varName "none"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Input ;
+                          html:id [
+                              rdf:type ui:concat ;
+                              sp:arg1 [
+                                  sp:varName "fid"^^xsd:string ;
+                                ] ;
+                              sp:arg2 "-provenanceModeBox"^^xsd:string ;
+                            ] ;
+                          html:onclick [
+                              rdf:type ui:concat ;
+                              sp:arg1 "swa.switchToViewForm('"^^xsd:string ;
+                              sp:arg2 [
+                                  sp:varName "fid"^^xsd:string ;
+                                ] ;
+                              sp:arg3 "')"^^xsd:string ;
+                            ] ;
+                          html:style "width: 13px; height: 13px; padding: 0; margin:0; vertical-align: bottom; position: relative; top: -2px; *overflow: hidden;"^^xsd:string ;
+                          html:type "checkbox"^^xsd:string ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 1 ;
+                          ui:text " Show Data Sources"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 5 ;
+                  ui:condition [
+                      sp:varName "allowProvenanceMode"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 3 ;
+          ui:condition [
+              rdf:type sp:or ;
+              sp:arg1 [
+                  rdf:type sp:or ;
+                  sp:arg1 [
+                      sp:varName "editable"^^xsd:string ;
+                    ] ;
+                  sp:arg2 [
+                      sp:varName "showResourceActions"^^xsd:string ;
+                    ] ;
+                ] ;
+              sp:arg2 [
+                  sp:varName "showFooter"^^xsd:string ;
+                ] ;
+            ] ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type swa:FormHeader ;
+              arg:label [
+                  rdf:type spif:invoke ;
+                  sp:arg1 [
+                      sp:varName "headerLabelFunction"^^xsd:string ;
+                    ] ;
+                  sp:arg2 [
+                      sp:varName "resource"^^xsd:string ;
+                    ] ;
+                ] ;
+              arg:toolTip [
+                  sp:varName "resource"^^xsd:string ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:Span ;
+                      html:class "swa-form-header-uri"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "resource"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:condition [
+                      sp:varName "showURI"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              rdf:type sp:or ;
+              sp:arg1 [
+                  rdf:type sp:not ;
+                  sp:arg1 [
+                      rdf:type sp:bound ;
+                      sp:arg1 [
+                          sp:varName "suppressHeader"^^xsd:string ;
+                        ] ;
+                    ] ;
+                ] ;
+              sp:arg2 [
+                  rdf:type sp:not ;
+                  sp:arg1 [
+                      sp:varName "suppressHeader"^^xsd:string ;
+                    ] ;
+                ] ;
+            ] ;
+        ] ;
+      ui:child [
+          rdf:type ui:loadable ;
+          html:class "ui-layout-content"^^xsd:string ;
+          ui:child [
+              rdf:type ui:else ;
+              ui:child [
+                  rdf:type ui:setContext ;
+                  ui:child [
+                      rdf:type html:Form ;
+                      html:class "swa-form"^^xsd:string ;
+                      html:id [
+                          sp:varName "fid"^^xsd:string ;
+                        ] ;
+                      html:resource [
+                          sp:varName "resource"^^xsd:string ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:class "swa-form-body"^^xsd:string ;
+                          ui:child [
+                              rdf:type swa:DataViewsSection ;
+                              arg:resource [
+                                  sp:varName "resource"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:resourceView ;
+                              ui:childIndex 0 ;
+                              ui:matchIds [
+                                  rdf:type ui:concat ;
+                                  sp:arg1 [
+                                      sp:varName "extraMatchIds"^^xsd:string ;
+                                    ] ;
+                                  sp:arg2 "view,form"^^xsd:string ;
+                                ] ;
+                              ui:resource [
+                                  sp:varName "resource"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:varName "mode"^^xsd:string ;
+                  ui:varValue [
+                      rdf:type sp:coalesce ;
+                      sp:arg1 [
+                          sp:varName "viewModeName"^^xsd:string ;
+                        ] ;
+                      sp:arg2 "view" ;
+                    ] ;
+                ] ;
+              ui:childIndex 2 ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type html:Div ;
+                  html:class "swa-uri"^^xsd:string ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text [
+                          sp:varName "resource"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:condition [
+                  sp:varName "showURI"^^xsd:string ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type ui:setContext ;
+                  ui:child [
+                      rdf:type html:Form ;
+                      html:autocomplete "off"^^xsd:string ;
+                      html:class "swa-form"^^xsd:string ;
+                      html:id [
+                          sp:varName "fid"^^xsd:string ;
+                        ] ;
+                      html:resource [
+                          rdf:type swa:resourceURIOrBNodeId ;
+                          arg:resource [
+                              sp:varName "resource"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:class "swa-form-body"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:else ;
+                              ui:child [
+                                  rdf:type ui:classView ;
+                                  ui:childIndex 0 ;
+                                  ui:class [
+                                      rdf:type swa:resourceType ;
+                                    ] ;
+                                  ui:matchIds [
+                                      rdf:type ui:concat ;
+                                      sp:arg1 [
+                                          sp:varName "extraMatchIds"^^xsd:string ;
+                                        ] ;
+                                      sp:arg2 "edit,form"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:if ;
+                              ui:child [
+                                  rdf:type ui:resourceView ;
+                                  ui:childIndex 0 ;
+                                  ui:matchIds [
+                                      rdf:type ui:concat ;
+                                      sp:arg1 [
+                                          sp:varName "extraMatchIds"^^xsd:string ;
+                                        ] ;
+                                      sp:arg2 "edit,form"^^xsd:string ;
+                                    ] ;
+                                  ui:resource [
+                                      sp:varName "resource"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                              ui:condition [
+                                  rdf:type sp:bound ;
+                                  sp:arg1 [
+                                      sp:varName "resource"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:if ;
+                          ui:child [
+                              rdf:type html:Input ;
+                              html:name "_base"^^xsd:string ;
+                              html:type "hidden"^^xsd:string ;
+                              html:value [
+                                  rdf:type ui:currentQueryGraph ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                          ui:condition [
+                              sp:varName "editable"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:if ;
+                          ui:child [
+                              rdf:type html:Input ;
+                              html:name "resourceType"^^xsd:string ;
+                              html:type "hidden"^^xsd:string ;
+                              html:value [
+                                  rdf:type swa:resourceType ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 1 ;
+                          ui:condition [
+                              rdf:type sp:not ;
+                              sp:arg1 [
+                                  rdf:type sp:bound ;
+                                  sp:arg1 [
+                                      sp:varName "resource"^^xsd:string ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:varName "mode"^^xsd:string ;
+                  ui:varValue "edit"^^xsd:string ;
+                ] ;
+              ui:childIndex 1 ;
+              ui:condition [
+                  sp:varName "editing"^^xsd:string ;
+                ] ;
+            ] ;
+          ui:childIndex 1 ;
+          ui:loadId [
+              rdf:type ui:concat ;
+              sp:arg1 [
+                  sp:varName "fid"^^xsd:string ;
+                ] ;
+              sp:arg2 "-loadable"^^xsd:string ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:comment "A form displaying details of a given resource. The form displays a header on top, with label and type of the resource. If arg:editable is set to true, the form will have a button at the bottom to switch it to edit mode."^^xsd:string ;
+  rdfs:label "View form"^^xsd:string ;
+  rdfs:subClassOf swa:SwitchableForm ;
 .
 lmdoc:TOCEntry
   rdf:type ui:NodeClass ;
@@ -10573,7 +11873,6 @@ lmdoc:ViewElements
 lmdoc:Viewers
   rdf:type ui:NodeClass ;
   rdfs:label "Viewers"^^xsd:string ;
-  rdfs:subClassOf iess:Elements ;
 .
 lmdoc:WhereUsedLabeledSubjects
   rdf:type ui:NodeClass ;
@@ -11431,7 +12730,7 @@ lmdoc:getCatalogRecords
           [
             rdf:type ui:label ;
             sp:arg1 [
-                sp:varName "recType"^^xsd:string ;
+                sp:varName "role"^^xsd:string ;
               ] ;
           ]
         ) ;
@@ -11440,7 +12739,10 @@ lmdoc:getCatalogRecords
             sp:varName "rec"^^xsd:string ;
           ]
           [
-            sp:varName "recType"^^xsd:string ;
+            sp:varName "role"^^xsd:string ;
+          ]
+          [
+            sp:varName "latestPublishedVersion"^^xsd:string ;
           ]
           [
             sp:varName "catalogedGraph"^^xsd:string ;
@@ -11453,17 +12755,36 @@ lmdoc:getCatalogRecords
               ] ;
             sp:predicate <http://www.w3.org/ns/dcat#record> ;
             sp:subject [
-                sp:varName "cataloh"^^xsd:string ;
+                sp:varName "catalog"^^xsd:string ;
               ] ;
           ]
           [
-            sp:object [
-                sp:varName "recType"^^xsd:string ;
-              ] ;
-            sp:predicate rdf:type ;
-            sp:subject [
-                sp:varName "rec"^^xsd:string ;
-              ] ;
+            rdf:type sp:Optional ;
+            sp:elements (
+                [
+                  sp:object [
+                      sp:varName "role"^^xsd:string ;
+                    ] ;
+                  sp:predicate vaem:hasGraphRole ;
+                  sp:subject [
+                      sp:varName "rec"^^xsd:string ;
+                    ] ;
+                ]
+              ) ;
+          ]
+          [
+            rdf:type sp:Optional ;
+            sp:elements (
+                [
+                  sp:object [
+                      sp:varName "latestPublishedVersion"^^xsd:string ;
+                    ] ;
+                  sp:predicate vaem:latestPublishedVersion ;
+                  sp:subject [
+                      sp:varName "rec"^^xsd:string ;
+                    ] ;
+                ]
+              ) ;
           ]
           [
             rdf:type sp:Optional ;

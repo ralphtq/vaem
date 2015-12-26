@@ -121,8 +121,7 @@ lmtest.execSWP = function(script, params) {
  */
 lmtest.openSWP = function(script,params) { 
 	  var results;
-	  results=lmtest.execSWP(script,params );	  
-	  
+	  results=lmtest.execSWP(script,params );	  	  
 	  var w = window.open("","_graph");
 	  
 	  w.document.open();
