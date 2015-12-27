@@ -40,6 +40,7 @@
 @prefix spr: <http://spinrdf.org/spr#> .
 @prefix swa: <http://topbraid.org/swa#> .
 @prefix swon: <http://uispin.org/swon#> .
+@prefix tops: <http://www.topbraid.org/tops#> .
 @prefix tui: <http://uispin.org/tui#> .
 @prefix ui: <http://uispin.org/ui#> .
 @prefix uix: <http://topbraidlive.org/uix#> .
@@ -55,6 +56,10 @@ arg:catalog
   rdf:type rdf:Property ;
   rdfs:label "catalog"^^xsd:string ;
   rdfs:range rdfs:Resource ;
+.
+arg:columns
+  rdf:type rdf:Property ;
+  rdfs:subPropertyOf sp:arg ;
 .
 arg:flags
   rdf:type owl:DatatypeProperty ;
@@ -7667,6 +7672,249 @@ lmdoc:MaybeHTMLstring
   rdfs:label "Maybe an HTML string"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
 .
+lmdoc:MultiColumnList
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:columns ;
+      spl:valueType xsd:integer ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:resultSet ;
+      spl:valueType sp:Select ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:count [
+          rdf:type spr:rowCount ;
+          sp:arg1 [
+              sp:varName "resultSet"^^xsd:string ;
+            ] ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:Table ;
+              html:style "border-radius:1em; border: 10px;margin-left:2em; background-color:  #f2f2f2"^^xsd:string ;
+              let:max [
+                  rdf:type sp:floor ;
+                  sp:arg1 [
+                      rdf:type sp:divide ;
+                      sp:arg1 [
+                          rdf:type xsd:integer ;
+                          sp:arg1 [
+                              sp:varName "count"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      sp:arg2 [
+                          rdf:type xsd:integer ;
+                          sp:arg1 [
+                              sp:varName "columns"^^xsd:string ;
+                            ] ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type html:Tbody ;
+                  html:style "border: 1px;"^^xsd:string ;
+                  ui:child [
+                      rdf:type ui:forEach ;
+                      ui:child [
+                          rdf:type html:Tr ;
+                          html:style "border: 0px; padding: 0px;"^^xsd:string ;
+                          ui:child [
+                              rdf:type ui:forEach ;
+                              ui:child [
+                                  rdf:type html:Td ;
+                                  html:style "border: 0px; padding:1px 5px 1px 10px;"^^xsd:string ;
+                                  ui:child [
+                                      rdf:type ui:if ;
+                                      ui:child [
+                                          rdf:type lmdoc:ResourceLink ;
+                                          arg:resource [
+                                              rdf:type spr:cell ;
+                                              sp:arg1 [
+                                                  sp:varName "resultSet"^^xsd:string ;
+                                                ] ;
+                                              sp:arg2 [
+                                                  sp:varName "row"^^xsd:string ;
+                                                ] ;
+                                              sp:arg3 0 ;
+                                            ] ;
+                                          ui:childIndex 0 ;
+                                        ] ;
+                                      ui:childIndex 0 ;
+                                      ui:condition [
+                                          rdf:type sp:lt ;
+                                          sp:arg1 [
+                                              sp:varName "row"^^xsd:string ;
+                                            ] ;
+                                          sp:arg2 [
+                                              sp:varName "count"^^xsd:string ;
+                                            ] ;
+                                        ] ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 0 ;
+                              ui:resultSet [
+                                  rdf:type sp:Select ;
+                                  sp:resultVariables (
+                                      [
+                                        sp:varName "row"^^xsd:string ;
+                                      ]
+                                    ) ;
+                                  sp:where (
+                                      [
+                                        sp:object [
+                                            sp:varName "?0"^^xsd:string ;
+                                          ] ;
+                                        sp:predicate tops:for ;
+                                        sp:subject [
+                                            sp:varName "innerIndex"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        sp:object 1 ;
+                                        sp:predicate rdf:first ;
+                                        sp:subject [
+                                            sp:varName "?0"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        sp:object [
+                                            sp:varName "?1"^^xsd:string ;
+                                          ] ;
+                                        sp:predicate rdf:rest ;
+                                        sp:subject [
+                                            sp:varName "?0"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        sp:object [
+                                            sp:varName "columns"^^xsd:string ;
+                                          ] ;
+                                        sp:predicate rdf:first ;
+                                        sp:subject [
+                                            sp:varName "?1"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        sp:object () ;
+                                        sp:predicate rdf:rest ;
+                                        sp:subject [
+                                            sp:varName "?1"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                      [
+                                        rdf:type sp:Bind ;
+                                        sp:expression [
+                                            rdf:type sp:sub ;
+                                            sp:arg1 [
+                                                rdf:type sp:add ;
+                                                sp:arg1 [
+                                                    sp:varName "rowOffset"^^xsd:string ;
+                                                  ] ;
+                                                sp:arg2 [
+                                                    sp:varName "innerIndex"^^xsd:string ;
+                                                  ] ;
+                                              ] ;
+                                            sp:arg2 1 ;
+                                          ] ;
+                                        sp:variable [
+                                            sp:varName "row"^^xsd:string ;
+                                          ] ;
+                                      ]
+                                    ) ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:resultSet [
+                          rdf:type sp:Select ;
+                          sp:resultVariables (
+                              [
+                                sp:varName "rowOffset"^^xsd:string ;
+                              ]
+                            ) ;
+                          sp:where (
+                              [
+                                sp:object [
+                                    sp:varName "?0"^^xsd:string ;
+                                  ] ;
+                                sp:predicate tops:for ;
+                                sp:subject [
+                                    sp:varName "index"^^xsd:string ;
+                                  ] ;
+                              ]
+                              [
+                                sp:object 0 ;
+                                sp:predicate rdf:first ;
+                                sp:subject [
+                                    sp:varName "?0"^^xsd:string ;
+                                  ] ;
+                              ]
+                              [
+                                sp:object [
+                                    sp:varName "?1"^^xsd:string ;
+                                  ] ;
+                                sp:predicate rdf:rest ;
+                                sp:subject [
+                                    sp:varName "?0"^^xsd:string ;
+                                  ] ;
+                              ]
+                              [
+                                sp:object [
+                                    sp:varName "max"^^xsd:string ;
+                                  ] ;
+                                sp:predicate rdf:first ;
+                                sp:subject [
+                                    sp:varName "?1"^^xsd:string ;
+                                  ] ;
+                              ]
+                              [
+                                sp:object () ;
+                                sp:predicate rdf:rest ;
+                                sp:subject [
+                                    sp:varName "?1"^^xsd:string ;
+                                  ] ;
+                              ]
+                              [
+                                rdf:type sp:Bind ;
+                                sp:expression [
+                                    rdf:type sp:mul ;
+                                    sp:arg1 [
+                                        sp:varName "columns"^^xsd:string ;
+                                      ] ;
+                                    sp:arg2 [
+                                        sp:varName "index"^^xsd:string ;
+                                      ] ;
+                                  ] ;
+                                sp:variable [
+                                    sp:varName "rowOffset"^^xsd:string ;
+                                  ] ;
+                              ]
+                            ) ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              rdf:type sp:gt ;
+              sp:arg1 [
+                  sp:varName "count"^^xsd:string ;
+                ] ;
+              sp:arg2 0 ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:subClassOf lmdoc:SubElements ;
+.
 lmdoc:MyBNodeViewer
   rdf:type swa:ObjectViewerClass ;
   swa:objectWidgetWeight [
@@ -7815,244 +8063,10 @@ lmdoc:NonImportedResources
                       ui:childIndex 1 ;
                     ] ;
                   ui:child [
-                      rdf:type html:Table ;
-                      html:style "border-radius:1em; border: 10px;margin-left:2em; background-color:  #f2f2f2"^^xsd:string ;
-                      let:max [
-                          rdf:type sp:floor ;
-                          sp:arg1 [
-                              rdf:type sp:divide ;
-                              sp:arg1 [
-                                  rdf:type xsd:integer ;
-                                  sp:arg1 [
-                                      sp:varName "count"^^xsd:string ;
-                                    ] ;
-                                ] ;
-                              sp:arg2 4 ;
-                            ] ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:Tbody ;
-                          html:style "border: 1px;"^^xsd:string ;
-                          ui:child [
-                              rdf:type ui:forEach ;
-                              ui:child [
-                                  rdf:type html:Tr ;
-                                  html:style "border: 0px; padding: 0px;"^^xsd:string ;
-                                  ui:child [
-                                      rdf:type html:Td ;
-                                      html:style "border: 0px; padding:1px 5px 1px 10px;"^^xsd:string ;
-                                      let:cell [
-                                          rdf:type spr:cell ;
-                                          sp:arg1 [
-                                              sp:varName "nonImportedResources"^^xsd:string ;
-                                            ] ;
-                                          sp:arg2 [
-                                              rdf:type sp:add ;
-                                              sp:arg1 [
-                                                  sp:varName "row"^^xsd:string ;
-                                                ] ;
-                                              sp:arg2 0 ;
-                                            ] ;
-                                          sp:arg3 0 ;
-                                        ] ;
-                                      ui:child [
-                                          rdf:type lmdoc:ResourceLink ;
-                                          arg:resource [
-                                              sp:varName "cell"^^xsd:string ;
-                                            ] ;
-                                          ui:childIndex 0 ;
-                                        ] ;
-                                      ui:childIndex 0 ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type html:Td ;
-                                      html:style "border: 0px; padding:1px 5px 1px 10px;"^^xsd:string ;
-                                      ui:child [
-                                          rdf:type ui:if ;
-                                          ui:child [
-                                              rdf:type lmdoc:ResourceLink ;
-                                              arg:resource [
-                                                  rdf:type spr:cell ;
-                                                  sp:arg1 [
-                                                      sp:varName "nonImportedResources"^^xsd:string ;
-                                                    ] ;
-                                                  sp:arg2 [
-                                                      rdf:type sp:add ;
-                                                      sp:arg1 [
-                                                          sp:varName "row"^^xsd:string ;
-                                                        ] ;
-                                                      sp:arg2 1 ;
-                                                    ] ;
-                                                  sp:arg3 0 ;
-                                                ] ;
-                                              ui:childIndex 0 ;
-                                            ] ;
-                                          ui:childIndex 0 ;
-                                          ui:condition [
-                                              rdf:type sp:lt ;
-                                              sp:arg1 [
-                                                  rdf:type sp:add ;
-                                                  sp:arg1 [
-                                                      sp:varName "row"^^xsd:string ;
-                                                    ] ;
-                                                  sp:arg2 1 ;
-                                                ] ;
-                                              sp:arg2 [
-                                                  sp:varName "count"^^xsd:string ;
-                                                ] ;
-                                            ] ;
-                                        ] ;
-                                      ui:childIndex 1 ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type html:Td ;
-                                      html:style "border: 0px; padding:1px 5px 1px 10px;"^^xsd:string ;
-                                      ui:child [
-                                          rdf:type ui:if ;
-                                          ui:child [
-                                              rdf:type lmdoc:ResourceLink ;
-                                              arg:resource [
-                                                  rdf:type spr:cell ;
-                                                  sp:arg1 [
-                                                      sp:varName "nonImportedResources"^^xsd:string ;
-                                                    ] ;
-                                                  sp:arg2 [
-                                                      rdf:type sp:add ;
-                                                      sp:arg1 [
-                                                          sp:varName "row"^^xsd:string ;
-                                                        ] ;
-                                                      sp:arg2 2 ;
-                                                    ] ;
-                                                  sp:arg3 0 ;
-                                                ] ;
-                                              ui:childIndex 0 ;
-                                            ] ;
-                                          ui:childIndex 0 ;
-                                          ui:condition [
-                                              rdf:type sp:lt ;
-                                              sp:arg1 [
-                                                  rdf:type sp:add ;
-                                                  sp:arg1 [
-                                                      sp:varName "row"^^xsd:string ;
-                                                    ] ;
-                                                  sp:arg2 2 ;
-                                                ] ;
-                                              sp:arg2 [
-                                                  sp:varName "count"^^xsd:string ;
-                                                ] ;
-                                            ] ;
-                                        ] ;
-                                      ui:childIndex 2 ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type html:Td ;
-                                      html:style "border: 0px; padding:1px 5px 1px 10px;"^^xsd:string ;
-                                      ui:child [
-                                          rdf:type ui:if ;
-                                          ui:child [
-                                              rdf:type lmdoc:ResourceLink ;
-                                              arg:resource [
-                                                  rdf:type spr:cell ;
-                                                  sp:arg1 [
-                                                      sp:varName "nonImportedResources"^^xsd:string ;
-                                                    ] ;
-                                                  sp:arg2 [
-                                                      rdf:type sp:add ;
-                                                      sp:arg1 [
-                                                          sp:varName "row"^^xsd:string ;
-                                                        ] ;
-                                                      sp:arg2 3 ;
-                                                    ] ;
-                                                  sp:arg3 0 ;
-                                                ] ;
-                                              ui:childIndex 0 ;
-                                            ] ;
-                                          ui:childIndex 0 ;
-                                          ui:condition [
-                                              rdf:type sp:lt ;
-                                              sp:arg1 [
-                                                  rdf:type sp:add ;
-                                                  sp:arg1 [
-                                                      sp:varName "row"^^xsd:string ;
-                                                    ] ;
-                                                  sp:arg2 3 ;
-                                                ] ;
-                                              sp:arg2 [
-                                                  sp:varName "count"^^xsd:string ;
-                                                ] ;
-                                            ] ;
-                                        ] ;
-                                      ui:childIndex 3 ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:childIndex 0 ;
-                              ui:resultSet [
-                                  rdf:type sp:Select ;
-                                  sp:resultVariables (
-                                      [
-                                        sp:varName "row"^^xsd:string ;
-                                      ]
-                                    ) ;
-                                  sp:where (
-                                      [
-                                        sp:object [
-                                            sp:varName "?0"^^xsd:string ;
-                                          ] ;
-                                        sp:predicate <http://www.topbraid.org/tops#for> ;
-                                        sp:subject [
-                                            sp:varName "index"^^xsd:string ;
-                                          ] ;
-                                      ]
-                                      [
-                                        sp:object 0 ;
-                                        sp:predicate rdf:first ;
-                                        sp:subject [
-                                            sp:varName "?0"^^xsd:string ;
-                                          ] ;
-                                      ]
-                                      [
-                                        sp:object [
-                                            sp:varName "?1"^^xsd:string ;
-                                          ] ;
-                                        sp:predicate rdf:rest ;
-                                        sp:subject [
-                                            sp:varName "?0"^^xsd:string ;
-                                          ] ;
-                                      ]
-                                      [
-                                        sp:object [
-                                            sp:varName "max"^^xsd:string ;
-                                          ] ;
-                                        sp:predicate rdf:first ;
-                                        sp:subject [
-                                            sp:varName "?1"^^xsd:string ;
-                                          ] ;
-                                      ]
-                                      [
-                                        sp:object () ;
-                                        sp:predicate rdf:rest ;
-                                        sp:subject [
-                                            sp:varName "?1"^^xsd:string ;
-                                          ] ;
-                                      ]
-                                      [
-                                        rdf:type sp:Bind ;
-                                        sp:expression [
-                                            rdf:type sp:mul ;
-                                            sp:arg1 4 ;
-                                            sp:arg2 [
-                                                sp:varName "index"^^xsd:string ;
-                                              ] ;
-                                          ] ;
-                                        sp:variable [
-                                            sp:varName "row"^^xsd:string ;
-                                          ] ;
-                                      ]
-                                    ) ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 0 ;
+                      rdf:type lmdoc:MultiColumnList ;
+                      arg:columns 5 ;
+                      arg:resultSet [
+                          sp:varName "nonImportedResources"^^xsd:string ;
                         ] ;
                       ui:childIndex 2 ;
                     ] ;
