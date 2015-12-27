@@ -118,15 +118,16 @@ lmtest.execSWP = function(script, params) {
 /**
  * Opens an SWP generated page in a new window
  * @param params
+ * @title window title
  */
-lmtest.openSWP = function(script,params) { 
+lmtest.openSWP = function(script,params,title) { 
 	  var results;
 	  results=lmtest.execSWP(script,params );	  	  
 	  var w = window.open("","_graph");
 	  
 	  w.document.open();
 	  w.document.write(results);
-	  w.document.title= uri;
+	  w.document.title= title;
 	  w.document.close();  
 };
 
