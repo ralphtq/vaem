@@ -129,6 +129,10 @@ arg:swpElement
   rdfs:label "swp element"^^xsd:string ;
   rdfs:subPropertyOf sp:arg ;
 .
+arg:titleFunction
+  rdf:type rdf:Property ;
+  rdfs:subPropertyOf sp:arg ;
+.
 spin:RuleProperty
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
@@ -5300,109 +5304,64 @@ lmdoc:IndexSection
               sp:varName "graph"^^xsd:string ;
             ] ;
           ui:child [
-              rdf:type ui:if ;
+              rdf:type html:H3 ;
               ui:child [
-                  rdf:type html:Dd ;
-                  ui:child [
-                      rdf:type ui:forEach ;
-                      ui:child [
-                          rdf:type lmdoc:ResourceLink ;
-                          arg:resource [
-                              sp:varName "class"^^xsd:string ;
-                            ] ;
-                          arg:title [
-                              rdf:type lmdoc:getDescription ;
-                              arg:resource [
-                                  sp:varName "class"^^xsd:string ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:childIndex 0 ;
-                      ui:resultSet [
-                          sp:varName "classes"^^xsd:string ;
-                        ] ;
-                      ui:separator " | "^^xsd:string ;
-                    ] ;
-                  ui:childIndex 1 ;
-                ] ;
-              ui:child [
-                  rdf:type html:Dt ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text "Classes:"^^xsd:string ;
-                    ] ;
+                  rdf:type ui:TextNode ;
                   ui:childIndex 0 ;
+                  ui:text "Instances"^^xsd:string ;
                 ] ;
               ui:childIndex 0 ;
-              ui:condition [
-                  rdf:type sp:gt ;
-                  sp:arg1 [
-                      rdf:type spr:rowCount ;
-                      sp:arg1 [
-                          sp:varName "classes"^^xsd:string ;
-                        ] ;
-                    ] ;
-                  sp:arg2 0 ;
-                ] ;
-            ] ;
-          ui:childIndex 1 ;
-          ui:template lmdoc:AllClasses ;
-          ui:varName "classes"^^xsd:string ;
-        ] ;
-      ui:child [
-          rdf:type ui:call ;
-          arg:graph [
-              sp:varName "graph"^^xsd:string ;
             ] ;
           ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type html:Dd ;
-                  ui:child [
-                      rdf:type ui:forEach ;
-                      ui:child [
-                          rdf:type lmdoc:ResourceLink ;
-                          arg:resource [
-                              sp:varName "instance"^^xsd:string ;
-                            ] ;
-                          arg:title [
-                              rdf:type lmdoc:getDescription ;
-                              arg:resource [
-                                  sp:varName "instance"^^xsd:string ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:childIndex 0 ;
-                      ui:resultSet [
-                          sp:varName "instances"^^xsd:string ;
-                        ] ;
-                      ui:separator " | "^^xsd:string ;
+              rdf:type ui:group ;
+              let:count [
+                  rdf:type spr:rowCount ;
+                  sp:arg1 [
+                      sp:varName "instances"^^xsd:string ;
                     ] ;
-                  ui:childIndex 1 ;
                 ] ;
               ui:child [
-                  rdf:type html:Dt ;
+                  rdf:type ui:if ;
                   ui:child [
-                      rdf:type ui:TextNode ;
+                      rdf:type html:P ;
+                      html:class "lm-para"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "The graph defines "^^xsd:string ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 1 ;
+                          ui:text [
+                              sp:varName "count"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 2 ;
+                          ui:text " instances, as indexed below:"^^xsd:string ;
+                        ] ;
                       ui:childIndex 0 ;
-                      ui:text "Instances:"^^xsd:string ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:MultiColumnList ;
+                      arg:columns 4 ;
+                      arg:resultSet [
+                          sp:varName "instances"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 1 ;
                     ] ;
                   ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 0 ;
-              ui:condition [
-                  rdf:type sp:gt ;
-                  sp:arg1 [
-                      rdf:type spr:rowCount ;
+                  ui:condition [
+                      rdf:type sp:gt ;
                       sp:arg1 [
-                          sp:varName "instances"^^xsd:string ;
+                          sp:varName "count"^^xsd:string ;
                         ] ;
+                      sp:arg2 0 ;
                     ] ;
-                  sp:arg2 0 ;
                 ] ;
+              ui:childIndex 1 ;
             ] ;
           ui:childIndex 5 ;
           ui:template lmdoc:getInstancesOfTypeWithNamespacePrefix ;
@@ -5417,56 +5376,137 @@ lmdoc:IndexSection
               sp:varName "graph"^^xsd:string ;
             ] ;
           ui:child [
-              rdf:type ui:if ;
+              rdf:type html:H3 ;
               ui:child [
-                  rdf:type html:Dd ;
-                  ui:child [
-                      rdf:type ui:forEach ;
-                      ui:child [
-                          rdf:type lmdoc:ResourceLink ;
-                          arg:resource [
-                              sp:varName "property"^^xsd:string ;
-                            ] ;
-                          arg:title [
-                              rdf:type lmdoc:getDescription ;
-                              arg:resource [
-                                  sp:varName "property"^^xsd:string ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:childIndex 0 ;
-                      ui:resultSet [
-                          sp:varName "properties"^^xsd:string ;
-                        ] ;
-                      ui:separator " | "^^xsd:string ;
-                    ] ;
-                  ui:childIndex 1 ;
-                ] ;
-              ui:child [
-                  rdf:type html:Dt ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text "Properties:"^^xsd:string ;
-                    ] ;
+                  rdf:type ui:TextNode ;
                   ui:childIndex 0 ;
+                  ui:text "Properties"^^xsd:string ;
                 ] ;
               ui:childIndex 0 ;
-              ui:condition [
-                  rdf:type sp:gt ;
+            ] ;
+          ui:child [
+              rdf:type ui:group ;
+              let:count [
+                  rdf:type spr:rowCount ;
                   sp:arg1 [
-                      rdf:type spr:rowCount ;
-                      sp:arg1 [
+                      sp:varName "properties"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:P ;
+                      html:class "lm-para"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "The graph defines "^^xsd:string ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 1 ;
+                          ui:text [
+                              sp:varName "count"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 2 ;
+                          ui:text " properties, as indexed below:"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:MultiColumnList ;
+                      arg:columns 2 ;
+                      arg:resultSet [
                           sp:varName "properties"^^xsd:string ;
                         ] ;
+                      ui:childIndex 1 ;
                     ] ;
-                  sp:arg2 0 ;
+                  ui:childIndex 0 ;
+                  ui:condition [
+                      rdf:type sp:gt ;
+                      sp:arg1 [
+                          sp:varName "count"^^xsd:string ;
+                        ] ;
+                      sp:arg2 0 ;
+                    ] ;
                 ] ;
+              ui:childIndex 1 ;
             ] ;
           ui:childIndex 3 ;
           ui:template lmdoc:AllProperties ;
           ui:varName "properties"^^xsd:string ;
+        ] ;
+      ui:child [
+          rdf:type ui:call ;
+          arg:graph [
+              sp:varName "graph"^^xsd:string ;
+            ] ;
+          ui:child [
+              rdf:type ui:group ;
+              let:count [
+                  rdf:type spr:rowCount ;
+                  sp:arg1 [
+                      sp:varName "classes"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type html:H3 ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "Classes"^^xsd:string ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:P ;
+                      html:class "lm-para"^^xsd:string ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "The graph defines "^^xsd:string ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 1 ;
+                          ui:text [
+                              sp:varName "count"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 2 ;
+                          ui:text " classes, as indexed below:"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:MultiColumnList ;
+                      arg:columns 4 ;
+                      arg:resultSet [
+                          sp:varName "classes"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                  ui:condition [
+                      rdf:type sp:gt ;
+                      sp:arg1 [
+                          sp:varName "count"^^xsd:string ;
+                        ] ;
+                      sp:arg2 0 ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 1 ;
+          ui:template lmdoc:AllClasses ;
+          ui:varName "classes"^^xsd:string ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
@@ -7676,6 +7716,12 @@ lmdoc:MultiColumnList
   rdf:type ui:NodeClass ;
   spin:constraint [
       rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:titleFunction ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
       spl:predicate arg:columns ;
       spl:valueType xsd:integer ;
     ] ;
@@ -7692,11 +7738,22 @@ lmdoc:MultiColumnList
               sp:varName "resultSet"^^xsd:string ;
             ] ;
         ] ;
+      let:myTitleFunction [
+          rdf:type sp:coalesce ;
+          sp:arg1 [
+              sp:varName "titleFunction"^^xsd:string ;
+            ] ;
+          sp:arg2 [
+              rdf:type ui:contextValue ;
+              sp:arg1 "title-function" ;
+            ] ;
+          sp:arg3 lmdoc:defaultTitleFunction ;
+        ] ;
       ui:child [
           rdf:type ui:if ;
           ui:child [
               rdf:type html:Table ;
-              html:style "border-radius:1em; border: 10px;margin-left:2em; background-color:  #f2f2f2"^^xsd:string ;
+              html:class "lm-index-table"^^xsd:string ;
               let:max [
                   rdf:type sp:floor ;
                   sp:arg1 [
@@ -7717,119 +7774,148 @@ lmdoc:MultiColumnList
                 ] ;
               ui:child [
                   rdf:type html:Tbody ;
-                  html:style "border: 1px;"^^xsd:string ;
+                  html:class "lm-index-table"^^xsd:string ;
                   ui:child [
                       rdf:type ui:forEach ;
                       ui:child [
-                          rdf:type html:Tr ;
-                          html:style "border: 0px; padding: 0px;"^^xsd:string ;
+                          rdf:type ui:if ;
                           ui:child [
-                              rdf:type ui:forEach ;
+                              rdf:type html:Tr ;
+                              html:class "lm-index-table-row"^^xsd:string ;
                               ui:child [
-                                  rdf:type html:Td ;
-                                  html:style "border: 0px; padding:1px 5px 1px 10px;"^^xsd:string ;
+                                  rdf:type ui:forEach ;
                                   ui:child [
-                                      rdf:type ui:if ;
+                                      rdf:type html:Td ;
+                                      html:class "lm-index-table-cell"^^xsd:string ;
                                       ui:child [
-                                          rdf:type lmdoc:ResourceLink ;
-                                          arg:resource [
-                                              rdf:type spr:cell ;
-                                              sp:arg1 [
-                                                  sp:varName "resultSet"^^xsd:string ;
+                                          rdf:type ui:if ;
+                                          ui:child [
+                                              rdf:type ui:group ;
+                                              let:cell [
+                                                  rdf:type spr:cell ;
+                                                  sp:arg1 [
+                                                      sp:varName "resultSet"^^xsd:string ;
+                                                    ] ;
+                                                  sp:arg2 [
+                                                      sp:varName "row"^^xsd:string ;
+                                                    ] ;
+                                                  sp:arg3 0 ;
                                                 ] ;
-                                              sp:arg2 [
-                                                  sp:varName "row"^^xsd:string ;
+                                              ui:child [
+                                                  rdf:type lmdoc:ResourceLink ;
+                                                  arg:resource [
+                                                      sp:varName "cell"^^xsd:string ;
+                                                    ] ;
+                                                  arg:title [
+                                                      rdf:type smf:invoke ;
+                                                      sp:arg1 [
+                                                          sp:varName "myTitleFunction"^^xsd:string ;
+                                                        ] ;
+                                                      sp:arg2 [
+                                                          sp:varName "cell"^^xsd:string ;
+                                                        ] ;
+                                                    ] ;
+                                                  ui:childIndex 0 ;
                                                 ] ;
-                                              sp:arg3 0 ;
+                                              ui:childIndex 0 ;
                                             ] ;
                                           ui:childIndex 0 ;
+                                          ui:condition [
+                                              rdf:type sp:lt ;
+                                              sp:arg1 [
+                                                  sp:varName "row"^^xsd:string ;
+                                                ] ;
+                                              sp:arg2 [
+                                                  sp:varName "count"^^xsd:string ;
+                                                ] ;
+                                            ] ;
                                         ] ;
                                       ui:childIndex 0 ;
-                                      ui:condition [
-                                          rdf:type sp:lt ;
-                                          sp:arg1 [
-                                              sp:varName "row"^^xsd:string ;
-                                            ] ;
-                                          sp:arg2 [
-                                              sp:varName "count"^^xsd:string ;
-                                            ] ;
-                                        ] ;
                                     ] ;
                                   ui:childIndex 0 ;
+                                  ui:resultSet [
+                                      rdf:type sp:Select ;
+                                      sp:resultVariables (
+                                          [
+                                            sp:varName "row"^^xsd:string ;
+                                          ]
+                                        ) ;
+                                      sp:where (
+                                          [
+                                            sp:object [
+                                                sp:varName "?0"^^xsd:string ;
+                                              ] ;
+                                            sp:predicate tops:for ;
+                                            sp:subject [
+                                                sp:varName "innerIndex"^^xsd:string ;
+                                              ] ;
+                                          ]
+                                          [
+                                            sp:object 1 ;
+                                            sp:predicate rdf:first ;
+                                            sp:subject [
+                                                sp:varName "?0"^^xsd:string ;
+                                              ] ;
+                                          ]
+                                          [
+                                            sp:object [
+                                                sp:varName "?1"^^xsd:string ;
+                                              ] ;
+                                            sp:predicate rdf:rest ;
+                                            sp:subject [
+                                                sp:varName "?0"^^xsd:string ;
+                                              ] ;
+                                          ]
+                                          [
+                                            sp:object [
+                                                sp:varName "columns"^^xsd:string ;
+                                              ] ;
+                                            sp:predicate rdf:first ;
+                                            sp:subject [
+                                                sp:varName "?1"^^xsd:string ;
+                                              ] ;
+                                          ]
+                                          [
+                                            sp:object () ;
+                                            sp:predicate rdf:rest ;
+                                            sp:subject [
+                                                sp:varName "?1"^^xsd:string ;
+                                              ] ;
+                                          ]
+                                          [
+                                            rdf:type sp:Bind ;
+                                            sp:expression [
+                                                rdf:type sp:sub ;
+                                                sp:arg1 [
+                                                    rdf:type sp:add ;
+                                                    sp:arg1 [
+                                                        sp:varName "rowOffset"^^xsd:string ;
+                                                      ] ;
+                                                    sp:arg2 [
+                                                        sp:varName "innerIndex"^^xsd:string ;
+                                                      ] ;
+                                                  ] ;
+                                                sp:arg2 1 ;
+                                              ] ;
+                                            sp:variable [
+                                                sp:varName "row"^^xsd:string ;
+                                              ] ;
+                                          ]
+                                        ) ;
+                                    ] ;
                                 ] ;
                               ui:childIndex 0 ;
-                              ui:resultSet [
-                                  rdf:type sp:Select ;
-                                  sp:resultVariables (
-                                      [
-                                        sp:varName "row"^^xsd:string ;
-                                      ]
-                                    ) ;
-                                  sp:where (
-                                      [
-                                        sp:object [
-                                            sp:varName "?0"^^xsd:string ;
-                                          ] ;
-                                        sp:predicate tops:for ;
-                                        sp:subject [
-                                            sp:varName "innerIndex"^^xsd:string ;
-                                          ] ;
-                                      ]
-                                      [
-                                        sp:object 1 ;
-                                        sp:predicate rdf:first ;
-                                        sp:subject [
-                                            sp:varName "?0"^^xsd:string ;
-                                          ] ;
-                                      ]
-                                      [
-                                        sp:object [
-                                            sp:varName "?1"^^xsd:string ;
-                                          ] ;
-                                        sp:predicate rdf:rest ;
-                                        sp:subject [
-                                            sp:varName "?0"^^xsd:string ;
-                                          ] ;
-                                      ]
-                                      [
-                                        sp:object [
-                                            sp:varName "columns"^^xsd:string ;
-                                          ] ;
-                                        sp:predicate rdf:first ;
-                                        sp:subject [
-                                            sp:varName "?1"^^xsd:string ;
-                                          ] ;
-                                      ]
-                                      [
-                                        sp:object () ;
-                                        sp:predicate rdf:rest ;
-                                        sp:subject [
-                                            sp:varName "?1"^^xsd:string ;
-                                          ] ;
-                                      ]
-                                      [
-                                        rdf:type sp:Bind ;
-                                        sp:expression [
-                                            rdf:type sp:sub ;
-                                            sp:arg1 [
-                                                rdf:type sp:add ;
-                                                sp:arg1 [
-                                                    sp:varName "rowOffset"^^xsd:string ;
-                                                  ] ;
-                                                sp:arg2 [
-                                                    sp:varName "innerIndex"^^xsd:string ;
-                                                  ] ;
-                                              ] ;
-                                            sp:arg2 1 ;
-                                          ] ;
-                                        sp:variable [
-                                            sp:varName "row"^^xsd:string ;
-                                          ] ;
-                                      ]
-                                    ) ;
-                                ] ;
                             ] ;
                           ui:childIndex 0 ;
+                          ui:condition [
+                              rdf:type sp:lt ;
+                              sp:arg1 [
+                                  sp:varName "rowOffset"^^xsd:string ;
+                                ] ;
+                              sp:arg2 [
+                                  sp:varName "count"^^xsd:string ;
+                                ] ;
+                            ] ;
                         ] ;
                       ui:childIndex 0 ;
                       ui:resultSet [
@@ -9153,7 +9239,10 @@ lmdoc:Preview
                   ui:queryGraph [
                       rdf:type ui:unionOfGraphs ;
                       sp:arg1 [
-                          sp:varName "myGraph"^^xsd:string ;
+                          rdf:type ui:graphWithImports ;
+                          sp:arg1 [
+                              sp:varName "myGraph"^^xsd:string ;
+                            ] ;
                         ] ;
                       sp:arg2 [
                           rdf:type ui:graphWithImports ;
@@ -13056,6 +13145,54 @@ lmdoc:createLinkForMainForm
   rdf:type ui:NodeClass ;
   rdfs:subClassOf lmdoc:CreateLinkFunctions ;
 .
+lmdoc:defaultTitleFunction
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "title"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:coalesce ;
+                sp:arg1 [
+                    rdf:type spl:object ;
+                    sp:arg1 [
+                        sp:varName "resource"^^xsd:string ;
+                      ] ;
+                    sp:arg2 dct:description ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type spl:object ;
+                    sp:arg1 [
+                        sp:varName "resource"^^xsd:string ;
+                      ] ;
+                    sp:arg2 rdfs:comment ;
+                  ] ;
+                sp:arg3 [
+                    rdf:type xsd:string ;
+                    sp:arg1 [
+                        sp:varName "resource"^^xsd:string ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "title"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:resource ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  rdfs:subClassOf lmdoc:Functions ;
+.
 lmdoc:getCatalogDocURL
   rdf:type spin:Function ;
   spin:body [
@@ -13404,16 +13541,16 @@ lmdoc:getInstancesOfTypeWithNamespacePrefix
           ]
         ) ;
       sp:where (
-          [
-            sp:object [
-                sp:varName "graph"^^xsd:string ;
-              ] ;
-            sp:predicate rdfs:isDefinedBy ;
-            sp:subject [
-                sp:varName "instance"^^xsd:string ;
-              ] ;
-          ]
           (
+            [
+              sp:object [
+                  sp:varName "graph"^^xsd:string ;
+                ] ;
+              sp:predicate rdfs:isDefinedBy ;
+              sp:subject [
+                  sp:varName "instance"^^xsd:string ;
+                ] ;
+            ]
             [
               sp:object [
                   sp:varName "type"^^xsd:string ;
@@ -13421,6 +13558,21 @@ lmdoc:getInstancesOfTypeWithNamespacePrefix
               sp:predicate rdf:type ;
               sp:subject [
                   sp:varName "instance"^^xsd:string ;
+                ] ;
+            ]
+            [
+              rdf:type sp:Filter ;
+              sp:expression [
+                  rdf:type sp:notExists ;
+                  sp:elements (
+                      [
+                        sp:object "true"^^xsd:boolean ;
+                        sp:predicate vaem:exclude ;
+                        sp:subject [
+                            sp:varName "type"^^xsd:string ;
+                          ] ;
+                      ]
+                    ) ;
                 ] ;
             ]
             [

@@ -237,6 +237,8 @@ li.lm-toce {
  dt { pause-before: 63ms; }
 }
 
+/* --- Tables --- */
+
 table {
 	    border-collapse:collapse;
 	  }
@@ -261,7 +263,168 @@ table.definition {
 table.definition td.prop {
 	    width:10em;
 	    vertical-align: middle ;
-	  }
+}
+
+table.simple {
+    border-spacing: 0;
+    border-collapse:    collapse;
+    border-bottom:  3px solid #005a9c;
+}
+
+.simple th {
+    background: #005a9c;
+    color:  #fff;
+    padding:    3px 5px;
+    text-align: left;
+}
+
+.simple th[scope="row"] {
+    background: inherit;
+    color:  inherit;
+    border-top: 1px solid #ddd;
+}
+
+.simple td {
+    padding:    3px 10px;
+    border-top: 1px solid #ddd;
+}
+
+table.lm-table { 
+	border: 1px solid black; 
+	border-collapse: collapse; 
+	font-family: Tahoma; 
+	padding: 10px; 
+	vertical-align: top;
+	background-color: white
+	}
+
+table.lm-table2 { 
+	border: 1px solid black; 
+	border-collapse: collapse; 
+	font-family: Tahoma; 
+	font-size: 10px; 
+	padding: 4px; 
+	vertical-align: top;
+	}
+
+table.lm-table3 {
+	width: 100% ;
+	border-width: 1px;
+	border-spacing: 1px;
+	border: 1px solid black; 
+	border-color: black;
+	border-collapse: collapse;
+	background-color: #ffffff;
+}
+
+tr,td.lm-borders {
+	border-width: 1px;
+	padding: 1px;
+	border: 1px solid black; 
+	border-color: black;
+	vertical-align:middle;
+}
+	
+td.lm-table-row-label {
+    border: 1px solid black; 
+	border-collapse: collapse; 
+	font-family: Tahoma; 
+	font-size: 9pt; 
+	padding: 4px 4px; 
+	vertical-align: top;
+	background-color: #bfbfbf;
+	color: #0B0B3B;
+}
+
+th.lm-big-header {
+  font-size: 14px;
+  text-align:center;
+  }
+
+thead.lm-table-header {
+	margin-top: 6.0pt;
+	margin-right: 0in;
+	margin-bottom: 10.0pt;
+	margin-left: 0in;
+	text-align: center;
+	line-height: 12.0pt;
+	tab-stops: 0in 1.0in 2.0in 3.0in;
+	text-autospace: none;
+	font-size: 11.0pt;
+	font-family: Tahoma;
+	font-weight: bold;
+	color: #0B0B3B;
+	background-color: #bfbfbf;
+}
+
+tbody.lm-table-body {
+    border: 1px solid black; 
+	border-collapse: collapse; 
+	font-family: Tahoma; 
+	font-size: 9pt; 
+	padding: 2px 2px; 
+	vertical-align: top;
+}
+
+th.lm-column-label {
+	font-size: 12px;
+	font-weight: bold;
+	text-align:center;
+	vertical-align: middle ;
+    border: 1px solid black; 
+  }
+
+tr.lm-inner-row {
+	font-size: 10px;
+	text-align:center;
+	vertical-align:middle ;
+  }
+
+tr.lm-row {
+	font-size: 10px;
+	text-align:left;
+	vertical-align:middle ;
+	border: 1px solid black; 
+  }
+
+td.lm-column {
+	font-size: 10px;
+	text-align:center;
+	vertical-align:middle ;
+	border: 1px dotted black; 
+	text-align:left;
+  }
+
+.simple tr:nth-child(even) {
+    background: #f0f6ff;
+}
+
+table.lm-index-table { 
+	border-radius:1em;
+	border: 1px; 
+	border-collapse: collapse; 
+	font-family: Tahoma; 
+	padding: 10px; 
+    margin-left:2em; 
+    background-color: #f2f2f2
+}
+
+tr.lm-index-table-row { 
+	border: 0px; 
+	padding: 0px;
+	vertical-align:top ;
+}
+
+tr:first-child  tr:las-child { 
+	padding: 10px;
+}
+
+td.lm-index-table-cell { 
+	border: 0px; 
+	padding:2px 5px 2px 10px;
+}
+
+/* --- PRE --- */
 
 pre {
 		padding: 1em;
@@ -386,34 +549,6 @@ ul.tof, ol.tof {
     font-style:   italic;
 }
 
-/* --- TABLE --- */
-table.simple {
-    border-spacing: 0;
-    border-collapse:    collapse;
-    border-bottom:  3px solid #005a9c;
-}
-
-.simple th {
-    background: #005a9c;
-    color:  #fff;
-    padding:    3px 5px;
-    text-align: left;
-}
-
-.simple th[scope="row"] {
-    background: inherit;
-    color:  inherit;
-    border-top: 1px solid #ddd;
-}
-
-.simple td {
-    padding:    3px 10px;
-    border-top: 1px solid #ddd;
-}
-
-.simple tr:nth-child(even) {
-    background: #f0f6ff;
-}
 
 .section dd > p:first-child {
     margin-top: 0;
@@ -675,111 +810,7 @@ div.lm-buttons-dock {
   border-radius: 15px;
   }
 
-table.lm-table { 
-	border: 1px solid black; 
-	border-collapse: collapse; 
-	font-family: Tahoma; 
-	padding: 10px; 
-	vertical-align: top;
-	background-color: white
-	}
 
-table.lm-table2 { 
-	border: 1px solid black; 
-	border-collapse: collapse; 
-	font-family: Tahoma; 
-	font-size: 10px; 
-	padding: 4px; 
-	vertical-align: top;
-	}
-
-table.lm-table3 {
-	width: 100% ;
-	border-width: 1px;
-	border-spacing: 1px;
-	border: 1px solid black; 
-	border-color: black;
-	border-collapse: collapse;
-	background-color: #ffffff;
-}
-
-tr,td.lm-borders {
-	border-width: 1px;
-	padding: 1px;
-	border: 1px solid black; 
-	border-color: black;
-	vertical-align:middle;
-}
-	
-td.lm-table-row-label {
-    border: 1px solid black; 
-	border-collapse: collapse; 
-	font-family: Tahoma; 
-	font-size: 9pt; 
-	padding: 4px 4px; 
-	vertical-align: top;
-	background-color: #bfbfbf;
-	color: #0B0B3B;
-}
-
-th.lm-big-header {
-  font-size: 14px;
-  text-align:center;
-  }
-
-thead.lm-table-header {
-	margin-top: 6.0pt;
-	margin-right: 0in;
-	margin-bottom: 10.0pt;
-	margin-left: 0in;
-	text-align: center;
-	line-height: 12.0pt;
-	tab-stops: 0in 1.0in 2.0in 3.0in;
-	text-autospace: none;
-	font-size: 11.0pt;
-	font-family: Tahoma;
-	font-weight: bold;
-	color: #0B0B3B;
-	background-color: #bfbfbf;
-}
-
-tbody.lm-table-body {
-    border: 1px solid black; 
-	border-collapse: collapse; 
-	font-family: Tahoma; 
-	font-size: 9pt; 
-	padding: 2px 2px; 
-	vertical-align: top;
-}
-
-th.lm-column-label {
-	font-size: 12px;
-	font-weight: bold;
-	text-align:center;
-	vertical-align: middle ;
-    border: 1px solid black; 
-  }
-
-tr.lm-inner-row {
-	font-size: 10px;
-	text-align:center;
-	vertical-align:middle ;
-  }
-
-tr.lm-row {
-	font-size: 10px;
-	text-align:left;
-	vertical-align:middle ;
-	border: 1px solid black; 
-  }
-
-td.lm-column {
-	font-size: 10px;
-	text-align:center;
-	vertical-align:middle ;
-	border: 1px dotted black; 
-	text-align:left;
-  }
 
 .twenty-five-percent {
    width: 25% ;
@@ -913,11 +944,13 @@ p.lm-resource-description {
     padding: 4px;
     background: url('img/box-h1.png') no-repeat;
 }
+
 #border-grey-top {
     border-bottom: #919191 solid 3px;
     padding: 6px;
     margin: 0;
 }
+
 #border-grey-bottom {
     border-top: #919191 solid 3px;
     padding: 6px 0 12px 0;
