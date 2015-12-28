@@ -113,32 +113,32 @@ pre { margin-left: 2em }
 
 
 .lm-button {
- border-top: 1px solid #96d1f8;
-   background: #000090;
-   background: -webkit-gradient(linear, left top, left bottom, from(#96d1f8), to(#000090));
-   background: -webkit-linear-gradient(top, #96d1f8, #000090);
-   background: -moz-linear-gradient(top, #96d1f8, #000090);
-   background: -ms-linear-gradient(top, #96d1f8, #000090);
-   background: -o-linear-gradient(top, #96d1f8, #000090);
-   padding: 3px 6px;
-   -webkit-border-radius: 12px;
-   -moz-border-radius: 12px;
-   border-radius: 12px;
-   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-   box-shadow: rgba(0,0,0,1) 0 1px 0;
-   text-shadow: rgba(0,0,0,.4) 0 1px 0;
-   color: white;
-   font-size: inherit ;
-   font-family: Arial, sans-serif;
-   text-decoration: none;
-   vertical-align: middle;
+  background: #d1e8f0;
+  background-image: -webkit-linear-gradient(top, #d1e8f0, #d4d8db);
+  background-image: -moz-linear-gradient(top, #d1e8f0, #d4d8db);
+  background-image: -ms-linear-gradient(top, #d1e8f0, #d4d8db);
+  background-image: -o-linear-gradient(top, #d1e8f0, #d4d8db);
+  background-image: linear-gradient(to bottom, #d1e8f0, #d4d8db);
+  -webkit-border-radius: 12;
+  -moz-border-radius: 12;
+  border-radius: 12px;
+  font-family: Arial;
+  color: #000000;
+  font-size: 10px;
+  font-weight: normal;
+  padding: 5px 8px 5px 8px;
+  text-decoration: none;
+  text-shadow: none;
    }
    
 .lm-button:hover {
-   border-top-color: #28597a;
-   background: #28597a;
-   color: #ccc;
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
    }
    
 .lm-button:active {
@@ -240,7 +240,6 @@ li.lm-toce {
 /* --- Tables --- */
 
 table {
-	    border-collapse:collapse;
 	  }
 
 td, th {
@@ -291,7 +290,7 @@ table.simple {
 
 table.lm-table { 
 	border: 1px solid black; 
-	border-collapse: collapse; 
+/*	border-collapse: collapse; */
 	font-family: Tahoma; 
 	padding: 10px; 
 	vertical-align: top;
@@ -358,8 +357,7 @@ thead.lm-table-header {
 }
 
 tbody.lm-table-body {
-    border: 1px solid black; 
-	border-collapse: collapse; 
+/*	border-collapse: collapse; */
 	font-family: Tahoma; 
 	font-size: 9pt; 
 	padding: 2px 2px; 
@@ -384,15 +382,46 @@ tr.lm-row {
 	font-size: 10px;
 	text-align:left;
 	vertical-align:middle ;
-	border: 1px solid black; 
+	border-width: 2px; 
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: none;
+    border-left-style: solid;
+	border-collapse: collapse;
+  }
+ 
+ tr.lm-row-buttons {
+	font-size: 10px;
+	text-align:left;
+	vertical-align:middle ;
+	border-width: 2px; 
+    border-top-style: none;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+	border-collapse: collapse;
   }
 
 td.lm-column {
 	font-size: 10px;
-	text-align:center;
 	vertical-align:middle ;
-	border: 1px dotted black; 
+	border-width: 1px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: none;
+    border-left-style: solid;
 	text-align:left;
+  }
+  
+ td.lm-column-buttons {
+	font-size: 10px;
+	text-align: left;
+	vertical-align:middle ;
+	border-width: 1px;
+    border-top-style: none;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
   }
 
 .simple tr:nth-child(even) {

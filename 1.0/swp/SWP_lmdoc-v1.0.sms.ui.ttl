@@ -1537,11 +1537,96 @@ lmdoc:CatalogManager
                                           ui:child [
                                               rdf:type html:Td ;
                                               html:class "lm-column"^^xsd:string ;
+                                              ui:childIndex 4 ;
+                                            ] ;
+                                          ui:childIndex 0 ;
+                                        ] ;
+                                      ui:child [
+                                          rdf:type ui:if ;
+                                          ui:child [
+                                              rdf:type html:Tr ;
+                                              html:class "lm-row-buttons"^^xsd:string ;
                                               ui:child [
-                                                  rdf:type ui:if ;
+                                                  rdf:type html:Td ;
+                                                  html:class "lm-column-buttons"^^xsd:string ;
+                                                  html:colspan "4"^^xsd:string ;
                                                   ui:child [
-                                                      rdf:type html:Br ;
+                                                      rdf:type swa:Space ;
+                                                      ui:childIndex 1 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type swa:Space ;
+                                                      ui:childIndex 3 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type swa:Space ;
                                                       ui:childIndex 5 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type swa:Space ;
+                                                      ui:childIndex 7 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type swa:Space ;
+                                                      ui:childIndex 9 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type html:Button ;
+                                                      html:class "lm-button size-8"^^xsd:string ;
+                                                      html:onclick [
+                                                          rdf:type ui:concat ;
+                                                          sp:arg1 "lmtest.openSWP('lmdoc:ClassessMaintainer','&graph="^^xsd:string ;
+                                                          sp:arg2 [
+                                                              sp:varName "catalogedGraph"^^xsd:string ;
+                                                            ] ;
+                                                          sp:arg3 "&overlay="^^xsd:string ;
+                                                          sp:arg4 [
+                                                              sp:varName "overlayGraph"^^xsd:string ;
+                                                            ] ;
+                                                          sp:arg5 "','"^^xsd:string ;
+                                                          sp:arg6 [
+                                                              rdf:type ui:label ;
+                                                              sp:arg1 [
+                                                                  sp:varName "rec"^^xsd:string ;
+                                                                ] ;
+                                                            ] ;
+                                                          sp:arg7 "')"^^xsd:string ;
+                                                        ] ;
+                                                      ui:child [
+                                                          rdf:type ui:TextNode ;
+                                                          ui:childIndex 0 ;
+                                                          ui:text "Classes Maintenance"^^xsd:string ;
+                                                        ] ;
+                                                      ui:childIndex 2 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type html:Button ;
+                                                      html:class "lm-button size-8"^^xsd:string ;
+                                                      html:onclick [
+                                                          rdf:type ui:concat ;
+                                                          sp:arg1 "lmtest.openSWP('lmdoc:ClassessMaintainer','&graph="^^xsd:string ;
+                                                          sp:arg2 [
+                                                              sp:varName "catalogedGraph"^^xsd:string ;
+                                                            ] ;
+                                                          sp:arg3 "&overlay="^^xsd:string ;
+                                                          sp:arg4 [
+                                                              sp:varName "overlayGraph"^^xsd:string ;
+                                                            ] ;
+                                                          sp:arg5 "','"^^xsd:string ;
+                                                          sp:arg6 [
+                                                              rdf:type ui:label ;
+                                                              sp:arg1 [
+                                                                  sp:varName "rec"^^xsd:string ;
+                                                                ] ;
+                                                            ] ;
+                                                          sp:arg7 "')"^^xsd:string ;
+                                                        ] ;
+                                                      ui:child [
+                                                          rdf:type ui:TextNode ;
+                                                          ui:childIndex 0 ;
+                                                          ui:text "Properties Maintenance"^^xsd:string ;
+                                                        ] ;
+                                                      ui:childIndex 4 ;
                                                     ] ;
                                                   ui:child [
                                                       rdf:type html:Button ;
@@ -1570,7 +1655,7 @@ lmdoc:CatalogManager
                                                           ui:childIndex 0 ;
                                                           ui:text "Generate Documentation"^^xsd:string ;
                                                         ] ;
-                                                      ui:childIndex 4 ;
+                                                      ui:childIndex 10 ;
                                                     ] ;
                                                   ui:child [
                                                       rdf:type html:Button ;
@@ -1589,6 +1674,35 @@ lmdoc:CatalogManager
                                                           ui:text "Metadata Specification"^^xsd:string ;
                                                         ] ;
                                                       ui:childIndex 0 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type html:Button ;
+                                                      html:class "lm-button size-8"^^xsd:string ;
+                                                      html:onclick [
+                                                          rdf:type ui:concat ;
+                                                          sp:arg1 "lmtest.openSWP('lmdoc:InstancesMaintainer','&graph="^^xsd:string ;
+                                                          sp:arg2 [
+                                                              sp:varName "catalogedGraph"^^xsd:string ;
+                                                            ] ;
+                                                          sp:arg3 "&overlay="^^xsd:string ;
+                                                          sp:arg4 [
+                                                              sp:varName "overlayGraph"^^xsd:string ;
+                                                            ] ;
+                                                          sp:arg5 "','"^^xsd:string ;
+                                                          sp:arg6 [
+                                                              rdf:type ui:label ;
+                                                              sp:arg1 [
+                                                                  sp:varName "rec"^^xsd:string ;
+                                                                ] ;
+                                                            ] ;
+                                                          sp:arg7 "')"^^xsd:string ;
+                                                        ] ;
+                                                      ui:child [
+                                                          rdf:type ui:TextNode ;
+                                                          ui:childIndex 0 ;
+                                                          ui:text "Instances Maintenance"^^xsd:string ;
+                                                        ] ;
+                                                      ui:childIndex 6 ;
                                                     ] ;
                                                   ui:child [
                                                       rdf:type html:Button ;
@@ -1617,63 +1731,66 @@ lmdoc:CatalogManager
                                                           ui:childIndex 0 ;
                                                           ui:text "Preview Documentation"^^xsd:string ;
                                                         ] ;
-                                                      ui:childIndex 2 ;
+                                                      ui:childIndex 8 ;
                                                     ] ;
                                                   ui:child [
-                                                      rdf:type html:Div ;
-                                                      html:class "spacing-5"^^xsd:string ;
-                                                      ui:childIndex 1 ;
-                                                    ] ;
-                                                  ui:child [
-                                                      rdf:type html:Div ;
-                                                      html:class "spacing-5"^^xsd:string ;
-                                                      ui:childIndex 3 ;
-                                                    ] ;
-                                                  ui:childIndex 0 ;
-                                                  ui:condition [
-                                                      rdf:type sp:ne ;
-                                                      sp:arg1 [
-                                                          sp:varName "catalogedGraph"^^xsd:string ;
-                                                        ] ;
-                                                      sp:arg2 "" ;
-                                                    ] ;
-                                                ] ;
-                                              ui:child [
-                                                  rdf:type ui:if ;
-                                                  ui:child [
-                                                      rdf:type html:Button ;
-                                                      html:class "lm-button size-8"^^xsd:string ;
-                                                      html:onclick [
-                                                          rdf:type ui:concat ;
-                                                          sp:arg1 "window.open('"^^xsd:string ;
-                                                          sp:arg2 [
-                                                              sp:varName "latestPublishedVersion"^^xsd:string ;
-                                                            ] ;
-                                                          sp:arg3 "'); return false"^^xsd:string ;
+                                                      rdf:type ui:if ;
+                                                      ui:child [
+                                                          rdf:type swa:Space ;
+                                                          ui:childIndex 0 ;
                                                         ] ;
                                                       ui:child [
-                                                          rdf:type ui:TextNode ;
-                                                          ui:childIndex 0 ;
-                                                          ui:text "Published Documentation"^^xsd:string ;
+                                                          rdf:type html:Button ;
+                                                          html:class "lm-button size-8"^^xsd:string ;
+                                                          html:onclick [
+                                                              rdf:type ui:concat ;
+                                                              sp:arg1 "window.open('"^^xsd:string ;
+                                                              sp:arg2 [
+                                                                  sp:varName "latestPublishedVersion"^^xsd:string ;
+                                                                ] ;
+                                                              sp:arg3 "'); return false"^^xsd:string ;
+                                                            ] ;
+                                                          ui:child [
+                                                              rdf:type ui:TextNode ;
+                                                              ui:childIndex 0 ;
+                                                              ui:text "Published Documentation"^^xsd:string ;
+                                                            ] ;
+                                                          ui:childIndex 1 ;
                                                         ] ;
-                                                      ui:childIndex 1 ;
-                                                    ] ;
-                                                  ui:child [
-                                                      rdf:type html:Div ;
-                                                      html:class "spacing-5"^^xsd:string ;
-                                                      ui:childIndex 0 ;
+                                                      ui:childIndex 11 ;
+                                                      ui:condition [
+                                                          rdf:type sp:bound ;
+                                                          sp:arg1 [
+                                                              sp:varName "latestPublishedVersion"^^xsd:string ;
+                                                            ] ;
+                                                        ] ;
                                                     ] ;
                                                   ui:childIndex 1 ;
-                                                  ui:condition [
-                                                      rdf:type sp:bound ;
-                                                      sp:arg1 [
-                                                          sp:varName "latestPublishedVersion"^^xsd:string ;
-                                                        ] ;
+                                                ] ;
+                                              ui:child [
+                                                  rdf:type html:Td ;
+                                                  html:style "border:none"^^xsd:string ;
+                                                  ui:childIndex 0 ;
+                                                ] ;
+                                              ui:childIndex 0 ;
+                                            ] ;
+                                          ui:childIndex 1 ;
+                                          ui:condition [
+                                              rdf:type sp:or ;
+                                              sp:arg1 [
+                                                  rdf:type sp:ne ;
+                                                  sp:arg1 [
+                                                      sp:varName "catalogedGraph"^^xsd:string ;
+                                                    ] ;
+                                                  sp:arg2 "" ;
+                                                ] ;
+                                              sp:arg2 [
+                                                  rdf:type sp:bound ;
+                                                  sp:arg1 [
+                                                      sp:varName "latestPublishedVersion"^^xsd:string ;
                                                     ] ;
                                                 ] ;
-                                              ui:childIndex 4 ;
                                             ] ;
-                                          ui:childIndex 0 ;
                                         ] ;
                                       ui:childIndex 0 ;
                                       ui:indexVar "index"^^xsd:string ;
@@ -1705,7 +1822,7 @@ lmdoc:CatalogManager
                                           ui:child [
                                               rdf:type ui:TextNode ;
                                               ui:childIndex 0 ;
-                                              ui:text "Actions"^^xsd:string ;
+                                              ui:text "Constraint Checks"^^xsd:string ;
                                             ] ;
                                           ui:childIndex 4 ;
                                         ] ;
@@ -2108,6 +2225,326 @@ lmdoc:ClassInstances
   rdfs:label "Class Instances"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
 .
+lmdoc:ClassesGeneratorSection
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:overlay ;
+      spl:valueType xsd:string ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:myGraphMetadata [
+          rdf:type spl:object ;
+          sp:arg1 [
+              sp:varName "graph"^^xsd:string ;
+            ] ;
+          sp:arg2 vaem:hasGraphMetadata ;
+        ] ;
+      let:tableId "lm_resources"^^xsd:string ;
+      ui:child [
+          rdf:type html:Div ;
+          html:style "margin: 40px 0 25px 0;"^^xsd:string ;
+          ui:childIndex 2 ;
+        ] ;
+      ui:child [
+          rdf:type ui:call ;
+          arg:graph [
+              sp:varName "graph"^^xsd:string ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type html:Div ;
+                  html:style "padding:20px;"^^xsd:string ;
+                  ui:child [
+                      rdf:type html:Button ;
+                      html:class "lm-button"^^xsd:string ;
+                      html:onclick [
+                          rdf:type ui:concat ;
+                          sp:arg1 "lmdoc.clearSelection('"^^xsd:string ;
+                          sp:arg2 [
+                              sp:varName "tableId"^^xsd:string ;
+                            ] ;
+                          sp:arg3 "')"^^xsd:string ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Clear Selections"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Button ;
+                      html:class "lm-button"^^xsd:string ;
+                      html:onclick [
+                          rdf:type ui:concat ;
+                          sp:arg1 "lmdoc.selectAll('"^^xsd:string ;
+                          sp:arg2 [
+                              sp:varName "tableId"^^xsd:string ;
+                            ] ;
+                          sp:arg3 "')"^^xsd:string ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Select All"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Button ;
+                      html:class "lm-button"^^xsd:string ;
+                      html:onclick [
+                          rdf:type ui:concat ;
+                          sp:arg1 "lmtest.acceptSelection('"^^xsd:string ;
+                          sp:arg2 [
+                              sp:varName "tableId"^^xsd:string ;
+                            ] ;
+                          sp:arg3 "', '"^^xsd:string ;
+                          sp:arg4 [
+                              rdf:type xsd:string ;
+                              sp:arg1 [
+                                  sp:varName "graph"^^xsd:string ;
+                                ] ;
+                            ] ;
+                          sp:arg5 "', '"^^xsd:string ;
+                          sp:arg6 [
+                              sp:varName "overlay"^^xsd:string ;
+                            ] ;
+                          sp:arg7 "')"^^xsd:string ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Accept Selections"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 2 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type html:H2 ;
+                  html:id [
+                      rdf:type lmdoc:makeAnchorFromString ;
+                      arg:label [
+                          sp:varName "sectionHeading"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text [
+                          sp:varName "sectionHeading"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Table ;
+                  html:class "lm-table"^^xsd:string ;
+                  html:id [
+                      sp:varName "tableId"^^xsd:string ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Tbody ;
+                      ui:child [
+                          rdf:type ui:forEach ;
+                          ui:child [
+                              rdf:type html:Div ;
+                              let:id [
+                                  rdf:type ui:uniqueId ;
+                                ] ;
+                              ui:child [
+                                  rdf:type html:Tr ;
+                                  html:class "lm-row"^^xsd:string ;
+                                  ui:child [
+                                      rdf:type html:Td ;
+                                      html:class "lm-column"^^xsd:string ;
+                                      html:id [
+                                          rdf:type fn:concat ;
+                                          sp:arg1 "td-resource_" ;
+                                          sp:arg2 [
+                                              sp:varName "id"^^xsd:string ;
+                                            ] ;
+                                        ] ;
+                                      ui:child [
+                                          rdf:type ui:TextNode ;
+                                          ui:childIndex 0 ;
+                                          ui:text [
+                                              rdf:type xsd:string ;
+                                              sp:arg1 [
+                                                  sp:varName "class"^^xsd:string ;
+                                                ] ;
+                                            ] ;
+                                        ] ;
+                                      ui:childIndex 1 ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type html:Td ;
+                                      html:class "lm-column"^^xsd:string ;
+                                      ui:child [
+                                          rdf:type html:Button ;
+                                          html:class "lm-button"^^xsd:string ;
+                                          html:onclick [
+                                              rdf:type ui:concat ;
+                                              sp:arg1 "lmtest.generate('"^^xsd:string ;
+                                              sp:arg2 [
+                                                  rdf:type xsd:string ;
+                                                  sp:arg1 [
+                                                      sp:varName "class"^^xsd:string ;
+                                                    ] ;
+                                                ] ;
+                                              sp:arg3 "','"^^xsd:string ;
+                                              sp:arg4 [
+                                                  rdf:type xsd:string ;
+                                                  sp:arg1 [
+                                                      sp:varName "graph"^^xsd:string ;
+                                                    ] ;
+                                                ] ;
+                                              sp:arg5 "','"^^xsd:string ;
+                                              sp:arg6 [
+                                                  sp:varName "overlay"^^xsd:string ;
+                                                ] ;
+                                              sp:arg7 "')"^^xsd:string ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type ui:TextNode ;
+                                              ui:childIndex 0 ;
+                                              ui:text "View"^^xsd:string ;
+                                            ] ;
+                                          ui:childIndex 0 ;
+                                        ] ;
+                                      ui:childIndex 2 ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type html:Td ;
+                                      html:class "lm-column"^^xsd:string ;
+                                      ui:child [
+                                          rdf:type html:Input ;
+                                          html:name [
+                                              rdf:type ui:concat ;
+                                              sp:arg1 [
+                                                  rdf:type fn:concat ;
+                                                  sp:arg1 "CB_" ;
+                                                  sp:arg2 [
+                                                      sp:varName "id"^^xsd:string ;
+                                                    ] ;
+                                                ] ;
+                                              sp:arg2 " "^^xsd:string ;
+                                            ] ;
+                                          html:type "checkbox"^^xsd:string ;
+                                          ui:childIndex 0 ;
+                                        ] ;
+                                      ui:childIndex 3 ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type html:Td ;
+                                      html:class "lm-column"^^xsd:string ;
+                                      ui:child [
+                                          rdf:type ui:TextNode ;
+                                          ui:childIndex 0 ;
+                                          ui:text [
+                                              sp:varName "qName"^^xsd:string ;
+                                            ] ;
+                                        ] ;
+                                      ui:childIndex 0 ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                          ui:resultSet [
+                              sp:varName "classes"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Thead ;
+                      html:class "lm-table-header"^^xsd:string ;
+                      ui:child [
+                          rdf:type html:Tr ;
+                          html:class "lm-row"^^xsd:string ;
+                          ui:child [
+                              rdf:type html:Th ;
+                              html:class "lm-column-labels"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Class"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Th ;
+                              html:class "lm-column-labels"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Generate"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 3 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Th ;
+                              html:class "lm-column-labels"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Quick Look"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 2 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Th ;
+                              html:class "lm-column-labels"^^xsd:string ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "URI"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 2 ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:condition [
+                  rdf:type sp:gt ;
+                  sp:arg1 [
+                      rdf:type spr:rowCount ;
+                      sp:arg1 [
+                          sp:varName "classes"^^xsd:string ;
+                        ] ;
+                    ] ;
+                  sp:arg2 0 ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:template lmdoc:AllClasses ;
+          ui:varName "classes"^^xsd:string ;
+        ] ;
+      ui:child [
+          rdf:type lmdoc:VSpace ;
+          arg:margin "40px;"^^xsd:string ;
+          ui:childIndex 1 ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:label "Classes generator section"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Sections ;
+.
 lmdoc:ClassesSection
   rdf:type ui:NodeClass ;
   spin:constraint [
@@ -2219,6 +2656,234 @@ lmdoc:ClassesSection
                         <lmdoc:ObjectsGroup arg:filterFunction=\"swa:isNonAnnotationProperty\" arg:graph=\"{= ?graph }\" arg:label=\"Properties\" arg:predicates=\"{= ?rs }\" arg:subject=\"{= ?class }\"/>"""^^xsd:string ;
   rdfs:label "Classes section"^^xsd:string ;
   rdfs:subClassOf lmdoc:Sections ;
+.
+lmdoc:ClassessMaintainer
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:overlay ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:flags ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:myGraph [
+          rdf:type sp:iri ;
+          sp:arg1 [
+              sp:varName "graph"^^xsd:string ;
+            ] ;
+        ] ;
+      ui:child [
+          rdf:type ui:group ;
+          let:myGraphMetadata [
+              rdf:type spl:objectInGraph ;
+              sp:arg1 [
+                  sp:varName "myGraph"^^xsd:string ;
+                ] ;
+              sp:arg2 vaem:hasGraphMetadata ;
+              sp:arg3 [
+                  sp:varName "myGraph"^^xsd:string ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:group ;
+              let:myOverlay [
+                  rdf:type sp:iri ;
+                  sp:arg1 [
+                      rdf:type sp:coalesce ;
+                      sp:arg1 [
+                          sp:varName "overlay"^^xsd:string ;
+                        ] ;
+                      sp:arg2 ui:tempGraph ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:setContext ;
+                  ui:child [
+                      rdf:type ui:setContext ;
+                      ui:child [
+                          rdf:type html:H1 ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Classes Maintainer"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 3 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Section ;
+                          html:class "details"^^xsd:string ;
+                          html:id "details"^^xsd:string ;
+                          ui:child [
+                              rdf:type html:Div ;
+                              html:style "font-size:small;"^^xsd:string ;
+                              ui:child [
+                                  rdf:type html:A ;
+                                  html:href "http://www.topquadrant.com/technology/sparql-web-pages-swp/"^^xsd:string ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text "TopBraid SPARQL Web Pages (SWP)"^^xsd:string ;
+                                    ] ;
+                                  ui:childIndex 3 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Generated "^^xsd:string ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text [
+                                      rdf:type xsd:date ;
+                                      sp:arg1 [
+                                          rdf:type afn:now ;
+                                        ] ;
+                                    ] ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 2 ;
+                                  ui:text " using"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 2 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Hr ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Section ;
+                              html:class "informative"^^xsd:string ;
+                              html:id "instances"^^xsd:string ;
+                              ui:child [
+                                  rdf:type lmdoc:ClassesGeneratorSection ;
+                                  arg:graph [
+                                      sp:varName "myGraph"^^xsd:string ;
+                                    ] ;
+                                  arg:overlay [
+                                      sp:varName "overlay"^^xsd:string ;
+                                    ] ;
+                                  arg:sectionHeading "Instances Generator"^^xsd:string ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 5 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Section ;
+                          html:class "introductory"^^xsd:string ;
+                          html:id "abstract"^^xsd:string ;
+                          ui:child [
+                              rdf:type lmdoc:AbstractSection ;
+                              arg:metadata [
+                                  sp:varName "myGraphMetadata"^^xsd:string ;
+                                ] ;
+                              arg:sectionHeading "Abstract"^^xsd:string ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 4 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:if ;
+                          ui:child [
+                              rdf:type debug-swa:DumpTriplesForResourceAsSubject ;
+                              arg:resource [
+                                  rdf:type ui:concat ;
+                                  sp:arg1 [
+                                      sp:varName "myGraphMetadata"^^xsd:string ;
+                                    ] ;
+                                  sp:arg2 " "^^xsd:string ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 2 ;
+                          ui:condition [
+                              rdf:type fn:contains ;
+                              sp:arg1 [
+                                  sp:varName "flags"^^xsd:string ;
+                                ] ;
+                              sp:arg2 "Sgmd" ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:if ;
+                          ui:child [
+                              rdf:type html:P ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Current query graph is "^^xsd:string ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text [
+                                      rdf:type ui:currentQueryGraph ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 1 ;
+                          ui:condition [
+                              rdf:type fn:contains ;
+                              sp:arg1 [
+                                  sp:varName "flags"^^xsd:string ;
+                                ] ;
+                              sp:arg2 "Sqg" ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:GraphHeader ;
+                          arg:metadata [
+                              sp:varName "myGraphMetadata"^^xsd:string ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:queryGraph [
+                          rdf:type ui:unionOfGraphs ;
+                          sp:arg1 [
+                              sp:varName "myGraph"^^xsd:string ;
+                            ] ;
+                          sp:arg2 [
+                              rdf:type ui:graphWithImports ;
+                              sp:arg1 <http://www.linkedmodel.org/1.1/swp/lmdoc> ;
+                            ] ;
+                          sp:arg3 [
+                              rdf:type ui:graphWithImports ;
+                              sp:arg1 [
+                                  sp:varName "myOverlay"^^xsd:string ;
+                                ] ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:varName "flags"^^xsd:string ;
+                  ui:varValue [
+                      sp:varName "flags"^^xsd:string ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:label "Classes Mainrainer"^^xsd:string ;
+  rdfs:subClassOf lmdoc:Pages ;
 .
 lmdoc:CopyrightSection
   rdf:type ui:NodeClass ;
