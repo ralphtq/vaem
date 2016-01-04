@@ -184,9 +184,9 @@ lmtest.acceptSelection = function(tableId, graph, overlay) {
  * Accepts selection 
  * @param resource
  */
-lmtest.generate = function(uri,graph,overlay,descriptionProperty) { 
+lmtest.generate = function(uri,graph,overlay) { 
 	  var results;
-	  var params='&resource='+ uri + "&graph=" + graph + "&overlay=" + overlay + "&descriptionProperty=" + descriptionProperty; 
+	  var params='&resource='+ uri + "&graph=" + graph + "&overlay=" + overlay ; 
 	  
 	  results=lmtest.execSWP('lmdoc:Instance',params );	  
 	  
