@@ -154,18 +154,6 @@ spin:RuleProperty
 <http://topbraid.org/xhtml#Area>
   rdf:type rdfs:Resource ;
 .
-<http://voag.linkedmodel.org/schema/voag#Figure_1>
-  rdf:type owl:Class ;
-  rdfs:subClassOf voag:Figure ;
-.
-<http://voag.linkedmodel.org/schema/voag#Figure_2>
-  rdf:type owl:Class ;
-  rdfs:subClassOf <http://voag.linkedmodel.org/schema/voag#Figure_1> ;
-.
-<http://voag.linkedmodel.org/schema/voag#Figure_3>
-  rdf:type owl:Class ;
-  rdfs:subClassOf <http://voag.linkedmodel.org/schema/voag#Figure_2> ;
-.
 voag:Graph
   rdf:type owl:Class ;
   ui:instanceView [
@@ -2023,56 +2011,17 @@ lmdoc:Class
                               sp:arg2 vaem:hasGraphMetadata ;
                             ] ;
                           ui:child [
-                              rdf:type html:Hr ;
+                              rdf:type lmdoc:DetailedClassView ;
+                              arg:class [
+                                  sp:varName "resource"^^xsd:string ;
+                                ] ;
+                              arg:showInstances "false"^^xsd:boolean ;
+                              arg:showTitle "false"^^xsd:boolean ;
                               ui:childIndex 2 ;
                             ] ;
                           ui:child [
-                              rdf:type html:Section ;
-                              html:class "details"^^xsd:string ;
-                              html:id "details"^^xsd:string ;
-                              html:property "dct:abstract"^^xsd:string ;
-                              html:rel "bibo:Chapter"^^xsd:string ;
-                              html:resource "#ref"^^xsd:string ;
-                              html:typeof "bibo:Chapter"^^xsd:string ;
-                              ui:child [
-                                  rdf:type lmdoc:DetailedClassView ;
-                                  arg:class [
-                                      sp:varName "resource"^^xsd:string ;
-                                    ] ;
-                                  arg:showInstances "false"^^xsd:boolean ;
-                                  arg:showTitle "false"^^xsd:boolean ;
-                                  ui:childIndex 1 ;
-                                ] ;
-                              ui:child [
-                                  rdf:type lmdoc:ResourceHeader ;
-                                  arg:node [
-                                      sp:varName "resource"^^xsd:string ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:childIndex 3 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Section ;
-                              html:class "introductory"^^xsd:string ;
-                              html:id "abstract"^^xsd:string ;
-                              html:property "dct:abstract"^^xsd:string ;
-                              html:rel "bibo:Chapter"^^xsd:string ;
-                              html:resource "#ref"^^xsd:string ;
-                              html:typeof "bibo:Chapter"^^xsd:string ;
-                              ui:child [
-                                  rdf:type lmdoc:AbstractSection ;
-                                  arg:metadata [
-                                      sp:varName "myGraphMetadata"^^xsd:string ;
-                                    ] ;
-                                  arg:sectionHeading "Abstract"^^xsd:string ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:childIndex 1 ;
-                            ] ;
-                          ui:child [
                               rdf:type lmdoc:Footer ;
-                              ui:childIndex 4 ;
+                              ui:childIndex 3 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:PartHeader ;
@@ -2080,6 +2029,13 @@ lmdoc:Class
                                   sp:varName "myGraphMetadata"^^xsd:string ;
                                 ] ;
                               ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type lmdoc:ResourceHeader ;
+                              arg:node [
+                                  sp:varName "resource"^^xsd:string ;
+                                ] ;
+                              ui:childIndex 1 ;
                             ] ;
                           ui:childIndex 0 ;
                         ] ;
@@ -2576,6 +2532,7 @@ lmdoc:ClassesMaintainer
               sp:varName "overlay"^^xsd:string ;
             ] ;
           arg:template lmdoc:AllClasses ;
+          arg:view lmdoc:Class ;
           ui:childIndex 0 ;
         ] ;
     ] ;
@@ -6460,7 +6417,6 @@ lmdoc:Instance
         ] ;
     ] ;
   ui:responseType ui:HTML ;
-  vaem:todo "don't use this for classes - need to change lmtest:generate js to call 'class' - this needs change on the code that invokes lmtest.gemerate"^^xsd:string ;
   vaem:todo "remove dependency on swa.css"^^xsd:string ;
   rdfs:comment """Test with:
 
@@ -7009,6 +6965,7 @@ lmdoc:InstancesMaintainer
               sp:varName "overlay"^^xsd:string ;
             ] ;
           arg:template lmdoc:getInstancesOfTypeWithNamespacePrefix ;
+          arg:view lmdoc:Instance ;
           ui:childIndex 0 ;
         ] ;
     ] ;
@@ -11206,6 +11163,12 @@ lmdoc:ResourcesGenerator
       spl:predicate arg:template ;
       spl:valueType spin:SelectTemplate ;
     ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:view ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The view class to use"^^xsd:string ;
+    ] ;
   ui:prototype [
       rdf:type ui:group ;
       let:myGraphMetadata [
@@ -11362,9 +11325,16 @@ lmdoc:ResourcesGenerator
                                                 ] ;
                                               sp:arg5 "','"^^xsd:string ;
                                               sp:arg6 [
+                                                  rdf:type ui:encodeURL ;
+                                                  sp:arg1 [
+                                                      sp:varName "view"^^xsd:string ;
+                                                    ] ;
+                                                ] ;
+                                              sp:arg7 "','"^^xsd:string ;
+                                              sp:arg8 [
                                                   sp:varName "overlay"^^xsd:string ;
                                                 ] ;
-                                              sp:arg7 "')"^^xsd:string ;
+                                              sp:arg9 "')"^^xsd:string ;
                                             ] ;
                                           ui:child [
                                               rdf:type ui:TextNode ;
@@ -11555,6 +11525,12 @@ lmdoc:ResourcesMaintainer
       spl:predicate arg:template ;
       spl:valueType rdfs:Resource ;
     ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:view ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The view class to use"^^xsd:string ;
+    ] ;
   ui:prototype [
       rdf:type ui:group ;
       let:myGraph [
@@ -11666,6 +11642,9 @@ lmdoc:ResourcesMaintainer
                                         ] ;
                                       arg:template [
                                           sp:varName "template"^^xsd:string ;
+                                        ] ;
+                                      arg:view [
+                                          sp:varName "view"^^xsd:string ;
                                         ] ;
                                       ui:childIndex 0 ;
                                     ] ;
