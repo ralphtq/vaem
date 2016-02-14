@@ -3565,56 +3565,56 @@ lmdoc:Elements
       ui:child [
           rdf:type html:Link ;
           html:href "http://linkedmodel.org/css/spin/spin.css"^^xsd:string ;
-          ui:childIndex 3 ;
+          ui:childIndex 4 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
           html:href "http://linkedmodel.org/jquery/css/jquery.contextmenu.css"^^xsd:string ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
-          ui:childIndex 10 ;
+          ui:childIndex 11 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
           html:href "http://linkedmodel.org/jquery/css/jquery.jqplot.min.css"^^xsd:string ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
-          ui:childIndex 12 ;
+          ui:childIndex 13 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
           html:href "http://linkedmodel.org/jquery/css/smoothness/jquery-ui.css"^^xsd:string ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
-          ui:childIndex 9 ;
+          ui:childIndex 10 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
           html:href "http://linkedmodel.org/jquery/css/ui.jqgrid.css"^^xsd:string ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
-          ui:childIndex 11 ;
+          ui:childIndex 12 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
           html:href "http://linkedmodel.org/swa/css/swa.css"^^xsd:string ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
-          ui:childIndex 8 ;
+          ui:childIndex 9 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
           html:href "http://linkedmodel.org/swa/css/swaspin.css"^^xsd:string ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
-          ui:childIndex 6 ;
+          ui:childIndex 7 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
           html:href "http://linkedmodel.org/vaem/css/lm.css"^^xsd:string ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
-          ui:childIndex 4 ;
+          ui:childIndex 5 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
@@ -3627,18 +3627,30 @@ lmdoc:Elements
             ] ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
-          ui:childIndex 27 ;
+          ui:childIndex 28 ;
         ] ;
       ui:child [
           rdf:type html:Meta ;
           html:content "TopBraid,RDF,OWL,SPARQL,SPIN,SWP,SPARQLMotion,LinkedData"^^xsd:string ;
           html:name "keywords"^^xsd:string ;
-          ui:childIndex 1 ;
+          ui:childIndex 2 ;
         ] ;
       ui:child [
           rdf:type html:Meta ;
           html:content "TopQuadrant"^^xsd:string ;
           html:name "author"^^xsd:string ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content "lmdoc:Elements"^^xsd:string ;
+          html:name "manifest-end"^^xsd:string ;
+          ui:childIndex 29 ;
+        ] ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content "lmdoc:Elements"^^xsd:string ;
+          html:name "manifest-start"^^xsd:string ;
           ui:childIndex 0 ;
         ] ;
       ui:child [
@@ -3651,86 +3663,86 @@ lmdoc:Elements
                 ] ;
             ] ;
           html:name "description"^^xsd:string ;
-          ui:childIndex 2 ;
+          ui:childIndex 3 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:language "javascript"^^xsd:string ;
           html:src "http://linkedmodel.org/jquery/js/jquery.jqplot.min.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 22 ;
+          ui:childIndex 23 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/jquery/js/i18n/grid.locale-en.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 15 ;
+          ui:childIndex 16 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/jquery/js/jquery-ui.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 14 ;
+          ui:childIndex 15 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/jquery/js/jquery.contextmenu.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 17 ;
+          ui:childIndex 18 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/jquery/js/jquery.cookie.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 18 ;
+          ui:childIndex 19 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/jquery/js/jquery.hotkeys.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 19 ;
+          ui:childIndex 20 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/jquery/js/jquery.jqGrid.min.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 16 ;
+          ui:childIndex 17 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/jquery/js/jquery.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 13 ;
+          ui:childIndex 14 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/jquery/js/jquery.jstree.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 21 ;
+          ui:childIndex 22 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/jquery/js/jquery.layout.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 20 ;
+          ui:childIndex 21 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/openajax/js/OpenAjax.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 24 ;
+          ui:childIndex 25 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/swa/js/swa.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 25 ;
+          ui:childIndex 26 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/swa/js/swaspin.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 7 ;
+          ui:childIndex 8 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
@@ -3742,7 +3754,7 @@ lmdoc:Elements
               sp:arg2 "/vaem/js/lmtest.js"^^xsd:string ;
             ] ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 26 ;
+          ui:childIndex 27 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
@@ -3751,11 +3763,11 @@ lmdoc:Elements
               ui:childIndex 0 ;
               ui:text "$.jqplot.config.enablePlugins = true;"^^xsd:string ;
             ] ;
-          ui:childIndex 23 ;
+          ui:childIndex 24 ;
         ] ;
       ui:child [
           rdf:type ui:CommentNode ;
-          ui:childIndex 5 ;
+          ui:childIndex 6 ;
           rdfs:comment "[if lt IE 9]><script src='https://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]"^^xsd:string ;
         ] ;
     ] ;
@@ -4666,14 +4678,14 @@ lmdoc:GraphMetadata
       ui:child [
           rdf:type html:Link ;
           html:href "http://linkedmodel.org/css/spin/spin.css"^^xsd:string ;
-          ui:childIndex 1 ;
+          ui:childIndex 2 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
           html:href "http://linkedmodel.org/vaem/css/lm.css"^^xsd:string ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
-          ui:childIndex 2 ;
+          ui:childIndex 3 ;
         ] ;
       ui:child [
           rdf:type html:Link ;
@@ -4686,6 +4698,18 @@ lmdoc:GraphMetadata
             ] ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content "lmdoc:GraphMetadata"^^xsd:string ;
+          html:name "manifest-end"^^xsd:string ;
+          ui:childIndex 4 ;
+        ] ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content "lmdoc:GraphMetadata"^^xsd:string ;
+          html:name "manifest-start"^^xsd:string ;
           ui:childIndex 0 ;
         ] ;
     ] ;
