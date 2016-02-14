@@ -2951,7 +2951,26 @@ lmdoc:DetailedClassView
       rdf:type ui:setContext ;
       ui:child [
           rdf:type html:Div ;
-          html:class "lm-resource-box"^^xsd:string ;
+          ui:child [
+              rdf:type swa:FocusClassDiagram ;
+              arg:focusClass [
+                  sp:varName "class"^^xsd:string ;
+                ] ;
+              arg:systemLabels "true"^^xsd:boolean ;
+              ui:childIndex 12 ;
+              ui:id "diagram"^^xsd:string ;
+              ui:priority -10 ;
+            ] ;
+          ui:child [
+              rdf:type html:Div ;
+              html:class "swa-sub-title"^^xsd:string ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "Class Diagram"^^xsd:string ;
+                ] ;
+              ui:childIndex 11 ;
+            ] ;
           ui:child [
               rdf:type html:Div ;
               html:class "swa-sub-title"^^xsd:string ;
@@ -3098,17 +3117,7 @@ lmdoc:DetailedClassView
                           ui:child [
                               rdf:type ui:TextNode ;
                               ui:childIndex 0 ;
-                              ui:text "Relevant Properties for "^^xsd:string ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 1 ;
-                              ui:text [
-                                  rdf:type ui:label ;
-                                  sp:arg1 [
-                                      sp:varName "class"^^xsd:string ;
-                                    ] ;
-                                ] ;
+                              ui:text "Relevant Properties"^^xsd:string ;
                             ] ;
                           ui:childIndex 0 ;
                         ] ;
@@ -3264,13 +3273,11 @@ lmdoc:DetailedClassView
               rdf:type ui:if ;
               ui:child [
                   rdf:type html:Div ;
-                  html:class "lm-header-box"^^xsd:string ;
                   ui:child [
                       rdf:type lmdoc:ResourceDocAnchor ;
                       arg:node [
                           sp:varName "class"^^xsd:string ;
                         ] ;
-                      arg:typeLabel "Class "^^xsd:string ;
                       ui:childIndex 0 ;
                     ] ;
                   ui:childIndex 0 ;
@@ -3492,7 +3499,7 @@ lmdoc:DetailedClassView
                   arg:margin "40px;"^^xsd:string ;
                   ui:childIndex 0 ;
                 ] ;
-              ui:childIndex 10 ;
+              ui:childIndex 13 ;
               ui:condition [
                   sp:varName "showInstances"^^xsd:string ;
                 ] ;
@@ -3510,7 +3517,7 @@ lmdoc:DetailedClassView
               arg:resource [
                   sp:varName "class"^^xsd:string ;
                 ] ;
-              ui:childIndex 12 ;
+              ui:childIndex 15 ;
             ] ;
           ui:child [
               rdf:type lmdoc:VSpace ;
@@ -3525,13 +3532,23 @@ lmdoc:DetailedClassView
           ui:child [
               rdf:type lmdoc:VSpace ;
               arg:margin "40px;"^^xsd:string ;
-              ui:childIndex 11 ;
+              ui:childIndex 10 ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:VSpace ;
+              arg:margin "40px;"^^xsd:string ;
+              ui:childIndex 14 ;
             ] ;
           ui:childIndex 0 ;
         ] ;
       ui:varName "createLinkFunction"^^xsd:string ;
       ui:varValue lmdoc:createLinkForMainForm ;
     ] ;
+  rdfs:comment """<div class=\"lm-resource-box\">
+        <ui:if ui:condition=\"{= ?showTitle }\">
+            <div class=\"lm-header-box\">
+                <lmdoc:ResourceDocAnchor arg:node=\"{= ?class }\" arg:typeLabel=\"Class \"/>
+            </div>"""^^xsd:string ;
   rdfs:label "Detailed Class View"^^xsd:string ;
   rdfs:subClassOf lmdoc:SubElements ;
 .
@@ -11830,7 +11847,7 @@ lmdoc:ResourcesMaintainer
                               html:id "details"^^xsd:string ;
                               ui:child [
                                   rdf:type html:Div ;
-                                  html:style "font-size:small;"^^xsd:string ;
+                                  html:style "font-size: small;"^^xsd:string ;
                                   ui:child [
                                       rdf:type html:A ;
                                       html:href "http://www.topquadrant.com/technology/sparql-web-pages-swp/"^^xsd:string ;
