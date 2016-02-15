@@ -181,7 +181,7 @@ lmtest.acceptSelection = function(tableId, graph, overlay) {
 };
 
 /**
- * Accepts selection 
+ * Generates resource view in new tab 
  * @param resource
  */
 lmtest.generate = function(uri,graph, view, overlay) { 
@@ -195,353 +195,43 @@ lmtest.generate = function(uri,graph, view, overlay) {
 	  w.document.open();
 	  w.document.write(results);
 	  w.document.title= uri;
-	  w.document.close();
-	  
-	  console.log(params);
-
-
-//	  $(w).load("/" + "?_viewClass=" + params);
-	 
-//	  lmtest.openDialog("Instance", results, "1000px")
-	  
-//		var win = $("<div></div>").css({height:"400px"}) ;
-		
-//	    $(win).html(data);	 
-//		lmtest.dialog = $(win).dialog({
- //      'modal' : true,
-//	        'title' : title,
-//	        'resizable' : false,
-//	        'width': "900px",
-//	        'buttons': {}       
-//	    });
-		
-	  
+	  w.document.close();	  	  
 };
 
 
+
 /**
- * Initialize
+ * Displays a dialog showing a resource view
+ * @param formId  the id of the search form
  */
-lmtest.init = function() {
-	$("#ies-project-ontologies").empty();
-    $("#xsd_generation_configuration").empty();
-    $("#ies-generated-xsds").empty();
-	};
-
-
-/**
- * Accepts selected radio button for ontology project selection
- * @param pId  the ID of the parent element
- */
-lmtest.setProject = function(rbgId) {
-    var result = $('input[name=' + rbgId + ']:checked').val()
-	var params = '';
-	var escaped = '&project=' + result;
-	var ontologiesTab = 2 ;
-	params += '&_viewClass=iess:BuildOntologySelectionsTable&_snippet=true' + escaped;
-	if (result != null){
-
-// show project ontologies
-	
-	$.get(swa.servlet, params, function(data) {
-	  $("#ies-project-ontologies").empty();
-	  $("#ies-project-ontologies").append(data);
-	  $("#ies-project-ontologies").show();
-	  $("#ies-ontology-validation-results").hide();
-	  $("#ies-download-xsd-div").hide();
-	  $("#ies-all-ontology-graphs").hide();
-	  $("#ies-download-xsd-lib").hide();
-	  $("#ies-all-graphs-button").html('Show All Graphs').button('refresh');
-      $("#ies_tabs").tabs("select",ontologiesTab); 
-	})
-	
-	lmtest.showXSDGenerationConfigurationDetails();
-	
-	}
-	else { alert('No Project Selected')};   
-};
-
-/**
- * Show all ontologies in project
- * @param project - name of project
- */
-lmtest.showAllGraphsInProject = function(project) {
-    var id = 'ies-all-ontology-graphs'
-    var e = $('#' + id);
-	var params = '';
-	var escaped = '&project=' + project;
-	params += '&_viewClass=iess:BuildOntoloiesInProjectTable&_snippet=true' + escaped;
-	if (project != null){
-
-// show all ontologies in project
-
-     swa.insertLoadingIndicator(e);
-     e.show();
-
-	$.get(swa.servlet, params, function(data) {
-	  $("#ies-all-ontology-graphs").empty();
-	  $("#ies-all-ontology-graphs").append(data);
-	  $("#ies-all-ontology-graphs").show(); 
-	}) ;
-	
-	var onClickAction = 'lmtest.hideAllGraphsInProject("' + project + '");';
-	$('#ies-all-graphs-button').attr('onclick', onClickAction);
-	$("#ies-all-graphs-button").html('Hide All Graphs').button('refresh');	
-	}
-	else { alert('No Project Selected')};   
-};
-
-/**
- * Hide all ontologies in project
- * @param project - name of project
- */
-lmtest.hideAllGraphsInProject = function(project) {
-
-	$("#ies-all-ontology-graphs").empty();
-	$("#ies-all-ontology-graphs").show();
-	
-	var onClickAction = 'lmtest.showAllGraphsInProject("' + project + '");';
-	$('#ies-all-graphs-button').attr('onclick', onClickAction);
-	$("#ies-all-graphs-button").html('Show All Graphs').button('refresh');	
-	  
-};
-
-/**
-* Build configuration blind for the project
-*
-*/
-lmtest.showXSDGenerationConfigurationDetails = function() {
-	var params = '&_viewClass=iess:BuildXSDGenerationConfigurationTab&_snippet=true';
-	
-	$.get(swa.servlet, params, function(data) {
-	  $("#xsd_generation_configuration").empty();
-	  $("#xsd_generation_configuration").append(data);
-	  $("#xsd_generation_configuration").show();
-	}) 
-};
-
-
-/**
- * Continue to pre-generation ontology validation
- */
-lmtest.continueToOntologyValidation = function() {
-	var xsdValidationTab = 3 ;
-
-    $("#ies_tabs").tabs("select",xsdValidationTab); 
-    lmtest.updateJob();
-    lmtest.showXSDGenerationOntologyValidationResults();
-
-};
-
-/**
- * Continue to generation of XSD Schemas step - redundant
- */
-lmtest.continueToGenerateXSDs = function() {
-	var xsdValidationTab = 3 ;
-	
-	$("#ies-download-xsd-div").hide();
-	$("#ies-download-xsd-lib").hide();
-    $("#ies_tabs").tabs("select",xsdValidationTab); 
-    lmtest.updateJob();
-    lmtest.showSelectedOntologies();
-    lmtest.showXSDGenerationOntologyValidationResults();
-
-};
-
-/**
-* Update Session and Job details
-*
-*/
-lmtest.updateJob = function() {
-	var params = '&_viewClass=iess:UpdateJob&_snippet=true';
-	
-	$.get(swa.servlet, params, function(data) {
-	}) 
-};
-
-
-/**
- * Create ZIP of XSDs
- *
- */
-lmtest.createZIPofXSDs = function(param) {
-    var id = 'ies-download-xsd-div' ;
-    var e = $('#' + id);
-	var params = '&_viewClass=iess:BuildGeneratedXSDsTab&_snippet=true';
-    
-	swa.insertLoadingIndicator(e);
-    e.show();
-	
-// call a SM script:
-
-    var results = lmtest.execSPARQLMotion('iessm:zipXSDFiles',{});
-    console.log(results);
-    lmtest.buildDownloadRegionForXSDSchemas() ;   
-	  };
-
-/**
- * Create ZIP of XSD Lib
- *
- */
-lmtest.createZIPofXSDLib = function(param) {
-    var id = 'ies-download-xsd-lib' ;
-    var e = $('#' + id);
-	var params = '&_viewClass=iess:BuildDownloadXSD-LibDiv&_snippet=true';
-    
-    swa.insertLoadingIndicator(e);
-    e.show();
-	
-// call a SM script:
-
-    var results = lmtest.execSPARQLMotion('iessm:zipXSDLibraryFiles',{});
-    console.log(results);
-	$.get(swa.servlet, params, function(data) {
-	$("#ies-download-xsd-lib").empty();
-	$("#ies-download-xsd-lib").append(data);    
-    $("#ies-download-xsd-lib").show();
-	})    
-	  };
-
-
-/**
-* Build download button for XSD Schemas
-*
-*/
-lmtest.buildDownloadRegionForXSDSchemas = function() {
-	var params = '&_viewClass=iess:BuildDownloadXSD-SchemasDiv&_snippet=true';
-	
-	$.get(swa.servlet, params, function(data) {
-	$("#ies-download-xsd-div").empty();
-	$("#ies-download-xsd-div").append(data);    
-    $("#ies-download-xsd-div").show();
-	}) 
-};
-
-/**
- * Generate XSDs
- *
- */
-lmtest.generateXSDs = function(param) {
-    var id = 'ies-busy-with-xsd-generation' ;
-    var e = $('#' + id);
-	var params = '&_viewClass=iess:BuildGeneratedXSDsTab&_snippet=true';
-	var xmlSchemasTab = 4 ;
-	
-     swa.insertLoadingIndicator(e);
-     e.show();
-	
-// call a SM script:
-
-    var results = lmtest.execSPARQLMotion('iessm:generateXSDs',{});
-    console.log(results);
-    
-    e.empty();
-    e.show();
-
-// now update the XML Schemas Generated Tab
-
-      lmtest.showXSDGenerationDetails() ;
-      
-	  $("#ies_tabs").tabs("select",xmlSchemasTab);
-	  };
-
-/**
-* Show Generated XSD files
-*
-*/
-lmtest.showXSDGenerationDetails = function() {
-	var params = '&_viewClass=iess:BuildGeneratedXSDsTab&_snippet=true';
-	
-	$.get(swa.servlet, params, function(data) {
- 	  $("#ies-generated-xsds").empty();
-	  $("#ies-generated-xsds").append(data);
-	  $("#ies-generated-xsds").show();
-	}) 
-};
-
-/**
-* Show Selected Ontologies of the Project
-*
-*/
-lmtest.showSelectedOntologies = function() {
-	var params = '&_viewClass=iess:BuildXSDGenerationSelectedOntologiesBlind&_snippet=true';
-	
-	$.get(swa.servlet, params, function(data) {
-	  $("#xsd_generation_selected_ontologies").empty();
-	  $("#xsd_generation_selected_ontologies").append(data);
-	  $("#xsd_generation_selected_ontologies").show();
-	}) 
-};
-
-/**
-* Build Ontology Validation for the project
-*
-*/
-lmtest.showXSDGenerationOntologyValidationResults = function() {
-    var id = 'ies-ontology-validation-results' ;
-    var e = $('#' + id);
-	var params = '&_viewClass=iess:BuildXSDGenerationOntologyValidationTab&_snippet=true';
-
-    swa.insertLoadingIndicator(e);
-    e.show();
-	
-	$.get(swa.servlet, params, function(data) {
-	  e.empty();
-	  e.append(data);
-	  e.show();
-	}) 
-};
-
-/**
- * Get resources corresponding to checked boxes for a given id. 
- * @param formId  the form id
- * @param targetId  the target id
- * @param onSelect  the value for onSelect of the generated grid 
- */
-lmtest.sendSelectedOntologies = function(ontologies) {
-	var params = '';
-	var escaped = '&ontologyList=' + escape(ontologies);
-    var validationTab = 3 ;
-    
-	params += '&_viewClass=iess:ConfirmSelectedOntologies&_snippet=true' + escaped;
-	$.get(swa.servlet, params, function(data) {
-	  $("#ies-ontology-selections").empty();
-	  $("#ies-ontology-selections").append(data);
-	  $("#ies-ontology-selections").show();
-	  $("#ies_tabs").tabs("select",validationTab);
-	});
-};
-
-/*
-*
-*/
-lmtest.navigateToHelp = function(tag) {
-    var helpTab = 8 ;
-    
-    $("#ies_tabs").tabs("select",helpTab);   
-    location.hash = "#" + tag;
+lmtest.openResourceViewDialog = function(uri,graph, view, overlay) { 
+	  var results;
+	  var params='&resource='+ uri + "&graph=" + graph + "&overlay=" + overlay + "&_snippet=true" ;   
+	  console.log(params) ;
+	  console.log(view) ;
+	  data=lmtest.execSWP(view,params );	 	  	 
+ 	  lmtest.openDialog("", data, 1000,850,{})		  
 };
 
 /**
  * Opens a dialog
  * @param data
  */
-lmtest.openDialog = function(title, data, width) {
-	var win = $("<div></div>").css({height:"400px"}) ;
+lmtest.openDialog = function(title, data, width, height) {
+	var win = $("<div></div>") ;
 	
-//    $(win).html(data);
+    $(win).html(data);
  
 	lmtest.dialog = $(win).dialog({
         'modal' : true,
         'title' : title,
         'resizable' : false,
         'width': width,
+        'height': height,
         'buttons': {}       
     });
-	
-	
-
 };
+
 
 /**
  * Uses ui:loadable to display swp-generated content
