@@ -3858,7 +3858,7 @@ lmdoc:Elements
             ] ;
           html:rel "stylesheet"^^xsd:string ;
           html:type "text/css"^^xsd:string ;
-          ui:childIndex 28 ;
+          ui:childIndex 29 ;
         ] ;
       ui:child [
           rdf:type html:Meta ;
@@ -3876,7 +3876,7 @@ lmdoc:Elements
           rdf:type html:Meta ;
           html:content "lmdoc:Elements"^^xsd:string ;
           html:name "manifest-end"^^xsd:string ;
-          ui:childIndex 29 ;
+          ui:childIndex 30 ;
         ] ;
       ui:child [
           rdf:type html:Meta ;
@@ -3965,6 +3965,12 @@ lmdoc:Elements
         ] ;
       ui:child [
           rdf:type html:Script ;
+          html:src "http://linkedmodel.org/swa/js/dagre.js"^^xsd:string ;
+          html:type "text/javascript"^^xsd:string ;
+          ui:childIndex 27 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
           html:src "http://linkedmodel.org/swa/js/swa.js"^^xsd:string ;
           html:type "text/javascript"^^xsd:string ;
           ui:childIndex 26 ;
@@ -3985,7 +3991,7 @@ lmdoc:Elements
               sp:arg2 "/vaem/js/lmtest.js"^^xsd:string ;
             ] ;
           html:type "text/javascript"^^xsd:string ;
-          ui:childIndex 27 ;
+          ui:childIndex 28 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
