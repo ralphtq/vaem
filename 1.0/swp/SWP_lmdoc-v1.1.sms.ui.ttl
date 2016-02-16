@@ -2134,6 +2134,7 @@ lmdoc:Class
                               arg:class [
                                   sp:varName "resource"^^xsd:string ;
                                 ] ;
+                              arg:showDiagram "true"^^xsd:boolean ;
                               arg:showInstances "false"^^xsd:boolean ;
                               arg:showTitle "false"^^xsd:boolean ;
                               ui:childIndex 2 ;
@@ -2734,7 +2735,7 @@ lmdoc:ClassesGeneratorSection
                           html:class "lm-row"^^xsd:string ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -2744,7 +2745,7 @@ lmdoc:ClassesGeneratorSection
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -2754,7 +2755,7 @@ lmdoc:ClassesGeneratorSection
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -2764,7 +2765,7 @@ lmdoc:ClassesGeneratorSection
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -6140,7 +6141,7 @@ lmdoc:ImportedNamespaces
                           html:class "lm-row"^^xsd:string ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -6150,7 +6151,7 @@ lmdoc:ImportedNamespaces
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -6614,7 +6615,7 @@ lmdoc:InheritanceTable
                           rdf:type ui:TextNode ;
                           ui:childIndex 2 ;
                           ui:text """ 
-            """^^xsd:string ;
+        """^^xsd:string ;
                         ] ;
                       ui:childIndex 0 ;
                     ] ;
@@ -6633,7 +6634,7 @@ lmdoc:InheritanceTable
                   html:class "lm-row"^^xsd:string ;
                   ui:child [
                       rdf:type html:Th ;
-                      html:class "lm-column-labels"^^xsd:string ;
+                      html:class "lm-column-label"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -6643,7 +6644,7 @@ lmdoc:InheritanceTable
                     ] ;
                   ui:child [
                       rdf:type html:Th ;
-                      html:class "lm-column-labels"^^xsd:string ;
+                      html:class "lm-column-label"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -6653,7 +6654,7 @@ lmdoc:InheritanceTable
                     ] ;
                   ui:child [
                       rdf:type html:Th ;
-                      html:class "lm-column-labels"^^xsd:string ;
+                      html:class "lm-column-label"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -7236,7 +7237,7 @@ lmdoc:InstancesGeneratorSection
                           html:class "lm-row"^^xsd:string ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -7246,7 +7247,7 @@ lmdoc:InstancesGeneratorSection
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -7256,7 +7257,7 @@ lmdoc:InstancesGeneratorSection
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -7266,7 +7267,7 @@ lmdoc:InstancesGeneratorSection
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -7889,7 +7890,7 @@ lmdoc:InstancesTable
                           html:class "lm-row"^^xsd:string ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -7899,7 +7900,7 @@ lmdoc:InstancesTable
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -7909,7 +7910,7 @@ lmdoc:InstancesTable
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -9772,7 +9773,7 @@ lmdoc:ObjectsGroup
                       html:class "lm-table-header"^^xsd:string ;
                       ui:child [
                           rdf:type html:Th ;
-                          html:class "lm-column-labels"^^xsd:string ;
+                          html:class "lm-column-label"^^xsd:string ;
                           ui:child [
                               rdf:type ui:TextNode ;
                               ui:childIndex 0 ;
@@ -9782,7 +9783,7 @@ lmdoc:ObjectsGroup
                         ] ;
                       ui:child [
                           rdf:type html:Th ;
-                          html:class "lm-column-labels"^^xsd:string ;
+                          html:class "lm-column-label"^^xsd:string ;
                           ui:child [
                               rdf:type ui:TextNode ;
                               ui:childIndex 0 ;
@@ -10689,7 +10690,7 @@ lmdoc:PropertiesTable
                   html:class "lm-row"^^xsd:string ;
                   ui:child [
                       rdf:type html:Th ;
-                      html:class "lm-column-labels"^^xsd:string ;
+                      html:class "lm-column-label"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -10699,7 +10700,7 @@ lmdoc:PropertiesTable
                     ] ;
                   ui:child [
                       rdf:type html:Th ;
-                      html:class "lm-column-labels"^^xsd:string ;
+                      html:class "lm-column-label"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -10709,7 +10710,7 @@ lmdoc:PropertiesTable
                     ] ;
                   ui:child [
                       rdf:type html:Th ;
-                      html:class "lm-column-labels"^^xsd:string ;
+                      html:class "lm-column-label"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -10719,7 +10720,7 @@ lmdoc:PropertiesTable
                     ] ;
                   ui:child [
                       rdf:type html:Th ;
-                      html:class "lm-column-labels"^^xsd:string ;
+                      html:class "lm-column-label"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -10729,7 +10730,7 @@ lmdoc:PropertiesTable
                     ] ;
                   ui:child [
                       rdf:type html:Th ;
-                      html:class "lm-column-labels"^^xsd:string ;
+                      html:class "lm-column-label"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -10739,7 +10740,7 @@ lmdoc:PropertiesTable
                     ] ;
                   ui:child [
                       rdf:type html:Th ;
-                      html:class "lm-column-labels"^^xsd:string ;
+                      html:class "lm-column-label"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -12148,7 +12149,7 @@ lmdoc:ResourcesGenerator
                           html:class "lm-row"^^xsd:string ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -12158,7 +12159,7 @@ lmdoc:ResourcesGenerator
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -12168,7 +12169,7 @@ lmdoc:ResourcesGenerator
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -12178,7 +12179,7 @@ lmdoc:ResourcesGenerator
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -12188,7 +12189,7 @@ lmdoc:ResourcesGenerator
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -12198,7 +12199,7 @@ lmdoc:ResourcesGenerator
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-labels"^^xsd:string ;
+                              html:class "lm-column-label"^^xsd:string ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -14276,7 +14277,7 @@ lmdoc:WhereUsedSubjects
                   html:class "lm-table-header"^^xsd:string ;
                   ui:child [
                       rdf:type html:Th ;
-                      html:class "lm-column-labels"^^xsd:string ;
+                      html:class "lm-column-label"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -14286,7 +14287,7 @@ lmdoc:WhereUsedSubjects
                     ] ;
                   ui:child [
                       rdf:type html:Th ;
-                      html:class "lm-column-labels"^^xsd:string ;
+                      html:class "lm-column-label"^^xsd:string ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
@@ -15580,9 +15581,24 @@ lmdoc:mySuperClass
         ) ;
       sp:where (
           [
-            sp:object owl:Class ;
+            sp:object [
+                sp:varName "class"^^xsd:string ;
+              ] ;
             sp:predicate rdf:type ;
             sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object owl:Class ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject [
+                sp:varName "class"^^xsd:string ;
+              ] ;
           ]
           [
             rdf:type sp:TriplePath ;
