@@ -18,6 +18,15 @@ body {
   background-repeat: no-repeat;
 }
 
+.hidden {
+	display: none
+}
+
+a:hover, a:focus {
+	color: #009933;
+	outline: none;
+}
+
 a:link { 
 	text-decoration: none;
 	color: #00C; 
@@ -110,6 +119,12 @@ pre { margin-left: 2em }
 .lm-indigo {color: indigo;}
 
 .lm-bold {font-weight: bold }
+
+.lm-simulated-link {
+	text-decoration: underline;
+	color: darkblue;
+	cursor: pointer
+}
 
 
 .lm-button {

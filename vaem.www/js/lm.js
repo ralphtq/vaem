@@ -18,6 +18,49 @@ var lm = {
 };
 
 /**
+ * Generate content for popups showing a resource summary
+ * @param formId  the id of the search form
+ */
+lm.popupResourceSummary = function(loadId) { 
+     var buttons = [{
+         text: "Access Details on TopBraid Server",
+         click: function() {
+          alert('Call to TopBraid Server to be implemented soon...')
+         }
+       },
+       {
+        text: "Close",
+        click: function() {
+           $( this ).dialog( "close" );
+            }
+        }
+       ];
+	 lm.openModalDialog(loadId,"", 800,600,buttons)		  
+};
+
+
+/**
+ * Opens a floating window dialog
+ */
+lm.openModalDialog = function(loadId, title, width, height, buttons) {
+	var div = $('#' + loadId);
+	var options = {
+			modal: true,
+			title: title
+		};
+	if(buttons) {
+		options.buttons = buttons;
+	}
+	if(width) {
+		options.width = width;
+	}
+	if(height) {
+		options.height = height;
+	}
+	div.dialog(options);
+};
+
+/**
  * Open the JSP pages for IES Administration
  */
 lm.openAdministrationPage = function() {

@@ -201,12 +201,33 @@ lmtest.generate = function(uri,graph, view, overlay) {
 
 
 /**
+ * Generate content for popups showing a resource summary
+ * @param formId  the id of the search form
+ */
+lmtest.popupResourceSummary = function(loadId) { 
+     var buttons = [{
+         text: "Full Details",
+         click: function() {
+          alert('Call to TopBraid Server to be implemented soon...')
+         }
+       },
+       {
+        text: "Close",
+        click: function() {
+           $( this ).dialog( "close" );
+            }
+        }
+       ];
+	 lmtest.openModalDialog(loadId,"", 800,600,buttons)		  
+};
+
+/**
  * Displays a dialog showing a resource view
  * @param formId  the id of the search form
  */
-lmtest.openResourceViewDialog = function(uri,graph, view, overlay) { 
+lmtest.openResourceViewDialog = function(uri,graph, view) { 
 	  var results;
-	  var params='&resource='+ uri + "&graph=" + graph + "&overlay=" + overlay + "&_snippet=true" ;   
+	  var params='&resource='+ uri + "&graph=" + graph + "&_snippet=true"  ;   
 	  console.log(params) ;
 	  console.log(view) ;
 	  data=lmtest.execSWP(view,params );	 	  	 
@@ -217,7 +238,7 @@ lmtest.openResourceViewDialog = function(uri,graph, view, overlay) {
  * Opens a dialog
  * @param data
  */
-lmtest.openDialog = function(title, data, width, height) {
+lmtest.openDialog = function(title, data, width, height, buttons) {
 	var win = $("<div></div>") ;
 	
     $(win).html(data);
@@ -228,7 +249,7 @@ lmtest.openDialog = function(title, data, width, height) {
         'resizable' : false,
         'width': width,
         'height': height,
-        'buttons': {}       
+        'buttons': buttons      
     });
 };
 
@@ -260,7 +281,7 @@ lmtest.openModalDialog = function(loadId, title, width, height, buttons) {
 		options.height = height;
 	}
 	div.dialog(options);
-}
+};
 
 /**
  * Changes the selected resource in the center form.
