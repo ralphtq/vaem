@@ -973,9 +973,18 @@ debug-swa:DumpTriplesForProperty
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
+                          ui:text "#"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Th ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
                           ui:text "O"^^xsd:string ;
                         ] ;
-                      ui:childIndex 1 ;
+                      ui:childIndex 2 ;
                     ] ;
                   ui:child [
                       rdf:type html:Th ;
@@ -984,7 +993,7 @@ debug-swa:DumpTriplesForProperty
                           ui:childIndex 0 ;
                           ui:text "S"^^xsd:string ;
                         ] ;
-                      ui:childIndex 0 ;
+                      ui:childIndex 1 ;
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
@@ -1000,10 +1009,25 @@ debug-swa:DumpTriplesForProperty
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
                           ui:text [
+                              rdf:type sp:add ;
+                              sp:arg1 [
+                                  sp:varName "index"^^xsd:string ;
+                                ] ;
+                              sp:arg2 1 ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Td ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
                               sp:varName "o"^^xsd:string ;
                             ] ;
                         ] ;
-                      ui:childIndex 1 ;
+                      ui:childIndex 2 ;
                     ] ;
                   ui:child [
                       rdf:type html:Td ;
@@ -1014,11 +1038,12 @@ debug-swa:DumpTriplesForProperty
                               sp:varName "s"^^xsd:string ;
                             ] ;
                         ] ;
-                      ui:childIndex 0 ;
+                      ui:childIndex 1 ;
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
               ui:childIndex 1 ;
+              ui:indexVar "index"^^xsd:string ;
               ui:limit [
                   sp:varName "limit"^^xsd:string ;
                 ] ;
@@ -1052,6 +1077,186 @@ debug-swa:DumpTriplesForProperty
     ] ;
   ui:responseType ui:HTML ;
   rdfs:label "Dump triples for specific property"^^xsd:string ;
+  rdfs:subClassOf debug-swa:Parts ;
+.
+debug-swa:DumpTriplesForPropertyofType
+  rdf:type ui:NodeClass ;
+  rdf:type ui:Service ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:property ;
+      spl:valueType rdf:Property ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:resource ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate ui:limit ;
+      spl:valueType xsd:integer ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type html:H3 ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text "Dump Triples for objects of type "^^xsd:string ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 1 ;
+              ui:text [
+                  rdf:type smf:qname ;
+                  sp:arg1 [
+                      sp:varName "resource"^^xsd:string ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 2 ;
+              ui:text " and property "^^xsd:string ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 3 ;
+              ui:text [
+                  rdf:type smf:qname ;
+                  sp:arg1 [
+                      sp:varName "property"^^xsd:string ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:child [
+          rdf:type html:Table ;
+          ui:child [
+              rdf:type html:Thead ;
+              ui:child [
+                  rdf:type html:Tr ;
+                  ui:child [
+                      rdf:type html:Th ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "#"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Th ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "O"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 2 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Th ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "S"^^xsd:string ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:child [
+              rdf:type ui:forEach ;
+              ui:child [
+                  rdf:type html:Tr ;
+                  ui:child [
+                      rdf:type html:Td ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              rdf:type sp:add ;
+                              sp:arg1 [
+                                  sp:varName "index"^^xsd:string ;
+                                ] ;
+                              sp:arg2 1 ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Td ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "o"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 2 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Td ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "s"^^xsd:string ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 1 ;
+              ui:indexVar "index"^^xsd:string ;
+              ui:limit [
+                  sp:varName "limit"^^xsd:string ;
+                ] ;
+              ui:resultSet [
+                  rdf:type sp:Select ;
+                  sp:resultVariables (
+                      [
+                        sp:varName "s"^^xsd:string ;
+                      ]
+                      [
+                        sp:varName "o"^^xsd:string ;
+                      ]
+                    ) ;
+                  sp:where (
+                      [
+                        sp:object [
+                            sp:varName "resource"^^xsd:string ;
+                          ] ;
+                        sp:predicate rdf:type ;
+                        sp:subject [
+                            sp:varName "s"^^xsd:string ;
+                          ] ;
+                      ]
+                      [
+                        sp:object [
+                            sp:varName "o"^^xsd:string ;
+                          ] ;
+                        sp:predicate [
+                            sp:varName "property"^^xsd:string ;
+                          ] ;
+                        sp:subject [
+                            sp:varName "s"^^xsd:string ;
+                          ] ;
+                      ]
+                    ) ;
+                ] ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:label "Dump triples for property of type"^^xsd:string ;
   rdfs:subClassOf debug-swa:Parts ;
 .
 debug-swa:DumpTriplesForResourceAsObject
