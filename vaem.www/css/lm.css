@@ -432,7 +432,7 @@ tr.lm-row {
 	text-align:left;
 	vertical-align:middle ;
 	border-width: 2px; 
-    border-top-style: none;
+    border-top-style: solid;
     border-right-style: solid;
     border-bottom-style: solid;
     border-left-style: solid;
@@ -452,10 +452,10 @@ td.lm-column {
   
  td.lm-column-buttons {
 	font-size: 10px;
-	text-align: left;
+	text-align: center;
 	vertical-align:middle ;
 	border-width: 1px;
-    border-top-style: none;
+    border-top-style: dashed;
     border-right-style: solid;
     border-bottom-style: solid;
     border-left-style: solid;
