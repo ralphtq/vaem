@@ -25,7 +25,7 @@ lm.popupResourceSummary = function(loadId) {
      var buttons = [{
          text: "Access Details on TopBraid Server",
          click: function() {
-          alert('Call to TopBraid Server to be implemented soon...')
+          alert('Call to TopBraid Server to be implemented later ...')
          }
        },
        {

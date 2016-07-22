@@ -208,7 +208,7 @@ lmtest.popupResourceSummary = function(loadId) {
      var buttons = [{
          text: "Full Details",
          click: function() {
-          alert('Call to TopBraid Server to be implemented soon...')
+          alert('Call to TopBraid Server to be implemented later ...')
          }
        },
        {
