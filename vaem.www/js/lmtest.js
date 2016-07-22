@@ -187,10 +187,8 @@ lmtest.acceptSelection = function(tableId, graph, overlay) {
 lmtest.generate = function(uri,graph, view, overlay) { 
 	  var results;
 	  var params='&resource='+ uri + "&graph=" + graph + "&overlay=" + overlay ; 
-	  
-	  results=lmtest.execSWP(view,params );	  
-	  
-	  var w = window.open("","_resource");
+	  results=lmtest.execSWP(view,params );
+	  var w = window.open("","_blank");
 	  
 	  w.document.open();
 	  w.document.write(results);
@@ -225,11 +223,9 @@ lmtest.popupResourceSummary = function(loadId) {
  * Displays a dialog showing a resource view
  * @param formId  the id of the search form
  */
-lmtest.openResourceViewDialog = function(uri,graph, view) { 
+lmtest.openResourceViewDialog = function(uri,graph, view, overlay) { 
 	  var results;
-	  var params='&resource='+ uri + "&graph=" + graph + "&_snippet=true"  ;   
-	  console.log(params) ;
-	  console.log(view) ;
+	  var params='&resource='+ uri + "&graph=" + graph + "&overlay=" + overlay + "&_snippet=true"  ;
 	  data=lmtest.execSWP(view,params );	 	  	 
  	  lmtest.openDialog("", data, 1000,850,{})		  
 };
