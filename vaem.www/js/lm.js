@@ -35,7 +35,7 @@ lm.popupResourceSummary = function(loadId) {
             }
         }
        ];
-	 lm.openModalDialog(loadId,"", 800,600,buttons)		  
+	 lm.openModalDialog(loadId,"", 800,800,buttons)		  
 };
 
 
@@ -46,7 +46,9 @@ lm.openModalDialog = function(loadId, title, width, height, buttons) {
 	var div = $('#' + loadId);
 	var options = {
 			modal: true,
-			title: title
+			title: title,
+			resizeable: true,
+			draggable: true
 		};
 	if(buttons) {
 		options.buttons = buttons;

@@ -40,6 +40,7 @@
 @prefix spl: <http://spinrdf.org/spl#> .
 @prefix spr: <http://spinrdf.org/spr#> .
 @prefix swa: <http://topbraid.org/swa#> .
+@prefix swauml: <http://topbraid.org/swauml#> .
 @prefix swon: <http://uispin.org/swon#> .
 @prefix tops: <http://www.topbraid.org/tops#> .
 @prefix tui: <http://uispin.org/tui#> .
@@ -2534,6 +2535,311 @@ http://localhost:8083/tbl/swp?_viewClass=lmdoc:Class&graph=http://www.linkedmode
   rdfs:label "Class Documentation" ;
   rdfs:subClassOf lmdoc:Pages ;
 .
+lmdoc:ClassDiagramShowingInheritanceOnly
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:focusClass ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The focus class of interest." ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      letrs:classes [
+          rdf:type sp:Select ;
+          sp:resultVariables (
+              [
+                sp:varName "class" ;
+              ]
+            ) ;
+          sp:where (
+              [
+                rdf:type sp:TriplePath ;
+                sp:object [
+                    sp:varName "class" ;
+                  ] ;
+                sp:path [
+                    rdf:type sp:ModPath ;
+                    sp:modMax -2 ;
+                    sp:modMin 0 ;
+                    sp:subPath rdfs:subClassOf ;
+                  ] ;
+                sp:subject [
+                    sp:varName "focusClass" ;
+                  ] ;
+              ]
+              [
+                rdf:type sp:Filter ;
+                sp:expression [
+                    rdf:type sp:and ;
+                    sp:arg1 [
+                        rdf:type sp:isIRI ;
+                        sp:arg1 [
+                            sp:varName "class" ;
+                          ] ;
+                      ] ;
+                    sp:arg2 [
+                        rdf:type sp:or ;
+                        sp:arg1 [
+                            rdf:type sp:not ;
+                            sp:arg1 [
+                                rdf:type swauml:isRootClass ;
+                                sp:arg1 [
+                                    sp:varName "class" ;
+                                  ] ;
+                              ] ;
+                          ] ;
+                        sp:arg2 [
+                            rdf:type sp:eq ;
+                            sp:arg1 [
+                                sp:varName "focusClass" ;
+                              ] ;
+                            sp:arg2 [
+                                sp:varName "class" ;
+                              ] ;
+                          ] ;
+                      ] ;
+                  ] ;
+              ]
+            ) ;
+        ] ;
+      ui:child [
+          rdf:type ui:setContext ;
+          let:id [
+              rdf:type ui:uniqueId ;
+            ] ;
+          letrs:superClassEdges [
+              rdf:type sp:Select ;
+              sp:resultVariables (
+                  [
+                    sp:varName "class" ;
+                  ]
+                  [
+                    sp:varName "superClass" ;
+                  ]
+                ) ;
+              sp:where (
+                  (
+                    [
+                      sp:object [
+                          sp:varName "rowIndex" ;
+                        ] ;
+                      sp:predicate spr:rowIndices ;
+                      sp:subject [
+                          sp:varName "classes" ;
+                        ] ;
+                    ]
+                    [
+                      rdf:type sp:Bind ;
+                      sp:expression [
+                          rdf:type spr:cell ;
+                          sp:arg1 [
+                              sp:varName "classes" ;
+                            ] ;
+                          sp:arg2 [
+                              sp:varName "rowIndex" ;
+                            ] ;
+                          sp:arg3 0 ;
+                        ] ;
+                      sp:variable [
+                          sp:varName "class" ;
+                        ] ;
+                    ]
+                  )
+                  [
+                    sp:object [
+                        sp:varName "superClass" ;
+                      ] ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject [
+                        sp:varName "class" ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:Filter ;
+                    sp:expression [
+                        rdf:type swauml:contains ;
+                        sp:arg1 [
+                            sp:varName "classes" ;
+                          ] ;
+                        sp:arg2 [
+                            sp:varName "superClass" ;
+                          ] ;
+                      ] ;
+                  ]
+                ) ;
+            ] ;
+          ui:child [
+              rdf:type html:Div ;
+              html:class "swauml-diagram" ;
+              html:id [
+                  sp:varName "id" ;
+                ] ;
+              ui:child [
+                  rdf:type html:Svg ;
+                  html:height "100%" ;
+                  html:width "100%" ;
+                  ui:child [
+                      rdf:type html:Defs ;
+                      ui:child [
+                          rdf:type html:Marker ;
+                          html:id "associationMarker" ;
+                          html:markerHeight "10" ;
+                          html:markerWidth "10" ;
+                          html:orient "auto" ;
+                          html:refX "10" ;
+                          html:refY "5" ;
+                          ui:child [
+                              rdf:type html:Path ;
+                              html:class "swauml-association-edge-marker" ;
+                              html:d "M10,5 L0,10 L0,0 Z" ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Marker ;
+                          html:id "subClassMarker" ;
+                          html:markerHeight "20" ;
+                          html:markerWidth "20" ;
+                          html:orient "auto" ;
+                          html:refX "0" ;
+                          html:refY "10" ;
+                          ui:child [
+                              rdf:type html:Polygon ;
+                              html:class "swauml-subclass-edge-marker" ;
+                              html:points "0,10 10,6 10,14" ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:forEach ;
+                      ui:child [
+                          rdf:type swauml:SubClassEdge ;
+                          arg:subClass [
+                              sp:varName "class" ;
+                            ] ;
+                          arg:superClass [
+                              sp:varName "superClass" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 1 ;
+                      ui:resultSet [
+                          sp:varName "superClassEdges" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:forEach ;
+                  ui:child [
+                      rdf:type swauml:ClassNode ;
+                      arg:attributesFilterFunction [
+                          sp:varName "attributesFilterFunction" ;
+                        ] ;
+                      arg:class [
+                          sp:varName "class" ;
+                        ] ;
+                      arg:focused [
+                          rdf:type sp:eq ;
+                          sp:arg1 [
+                              sp:varName "class" ;
+                            ] ;
+                          sp:arg2 [
+                              sp:varName "focusClass" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                  ui:resultSet [
+                      sp:varName "classes" ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:child [
+              rdf:type html:Script ;
+              ui:child [
+                  rdf:type swon:Array ;
+                  ui:child [
+                      rdf:type ui:forEach ;
+                      ui:child [
+                          rdf:type swon:Object ;
+                          ui:child [
+                              rdf:type swon:Value ;
+                              arg:name "subClass" ;
+                              arg:value [
+                                  sp:varName "class" ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:child [
+                              rdf:type swon:Value ;
+                              arg:name "superClass" ;
+                              arg:value [
+                                  sp:varName "superClass" ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:resultSet [
+                          sp:varName "superClassEdges" ;
+                        ] ;
+                      ui:separator "," ;
+                    ] ;
+                  ui:childIndex 3 ;
+                ] ;
+              ui:child [
+                  rdf:type swon:Array ;
+                  ui:childIndex 5 ;
+                ] ;
+              ui:child [
+                  rdf:type swon:Comma ;
+                  ui:childIndex 4 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "swa.initClassDiagram(\"" ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 1 ;
+                  ui:text [
+                      sp:varName "id" ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 2 ;
+                  ui:text "\"," ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 6 ;
+                  ui:text """
+   )""" ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:varName "swaSystemLabels" ;
+          ui:varValue [
+              sp:varName "systemLabels" ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:label "Class diagram showing inheritance only" ;
+  rdfs:subClassOf swa:AbstractClassDiagram ;
+.
 lmdoc:ClassInstances
   rdf:type ui:NodeClass ;
   spin:constraint [
@@ -4370,19 +4676,6 @@ lmdoc:Elements
           ui:childIndex 5 ;
         ] ;
       ui:child [
-          rdf:type html:Link ;
-          html:href [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/vaem/css/lm.css" ;
-            ] ;
-          html:rel "stylesheet" ;
-          html:type "text/css" ;
-          ui:childIndex 30 ;
-        ] ;
-      ui:child [
           rdf:type html:Meta ;
           html:content "TopBraid,RDF,OWL,SPARQL,SPIN,SWP,SPARQLMotion,LinkedData" ;
           html:name "keywords" ;
@@ -4398,7 +4691,7 @@ lmdoc:Elements
           rdf:type html:Meta ;
           html:content "lmdoc:Elements" ;
           html:name "manifest-end" ;
-          ui:childIndex 31 ;
+          ui:childIndex 30 ;
         ] ;
       ui:child [
           rdf:type html:Meta ;
@@ -4482,19 +4775,19 @@ lmdoc:Elements
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/openajax/js/OpenAjax.js" ;
           html:type "text/javascript" ;
-          ui:childIndex 26 ;
+          ui:childIndex 27 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/swa/js/dagre.js" ;
           html:type "text/javascript" ;
-          ui:childIndex 28 ;
+          ui:childIndex 29 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/swa/js/swa.js" ;
           html:type "text/javascript" ;
-          ui:childIndex 27 ;
+          ui:childIndex 28 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
@@ -4510,15 +4803,9 @@ lmdoc:Elements
         ] ;
       ui:child [
           rdf:type html:Script ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/vaem/js/lmtest.js" ;
-            ] ;
+          html:src "http://linkedmodel.org/vaem/js/lmtest.js" ;
           html:type "text/javascript" ;
-          ui:childIndex 29 ;
+          ui:childIndex 25 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
@@ -4527,7 +4814,7 @@ lmdoc:Elements
               ui:childIndex 0 ;
               ui:text "$.jqplot.config.enablePlugins = true;" ;
             ] ;
-          ui:childIndex 25 ;
+          ui:childIndex 26 ;
         ] ;
       ui:child [
           rdf:type ui:CommentNode ;
@@ -6837,6 +7124,7 @@ lmdoc:ImportedNamespaces
               ui:child [
                   rdf:type html:Table ;
                   html:class "lm-table" ;
+                  html:style "width: 50%" ;
                   ui:child [
                       rdf:type html:Tbody ;
                       ui:child [
@@ -9917,6 +10205,20 @@ lmdoc:MyBNodeViewer
   rdfs:comment "My object viewer for blank nodes." ;
   rdfs:label "BNode viewer" ;
   rdfs:subClassOf swa:BNodeViewer ;
+.
+lmdoc:NoAssociations
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Ask ;
+      sp:where (
+          [
+            rdf:type sp:Filter ;
+            sp:expression "false"^^xsd:boolean ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "No associations" ;
+  rdfs:subClassOf swa:AssociationsFilterFunctions ;
 .
 lmdoc:NonImportedResources
   rdf:type ui:NodeClass ;
@@ -13879,6 +14181,11 @@ lmdoc:SummaryClassView
                     ] ;
                 ] ;
               ui:childIndex 0 ;
+            ] ;
+          ui:child [
+              rdf:type ui:CommentNode ;
+              ui:childIndex 5 ;
+              rdfs:comment "lmdoc:ClassDiagramShowingInheritanceOnly arg:focusClass=\"{= ?class }\" arg:systemLabels=\"true\"/" ;
             ] ;
           ui:child [
               rdf:type lmdoc:MaybeDescription ;

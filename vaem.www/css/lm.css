@@ -1,7 +1,7 @@
 /*
  filename: lm.css
  Version: 1.0
- Last Modified: Apr 24, 2016
+ Last Modified: Sep 20, 2016
  Author: Ralph Hodgson
  Derived from: http://www.w3.org/StyleSheets/TR/W3C-REC.css
                http://www.w3.org/TR/vocab-org/
@@ -331,7 +331,8 @@ table.lm-table {
 	font-family: Tahoma; 
 	padding: 10px; 
 	vertical-align: top;
-	background-color: white
+	background-color: white;
+	width: 100%
 	}
 
 table.lm-table2 { 
