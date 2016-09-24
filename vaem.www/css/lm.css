@@ -652,6 +652,9 @@ article p {
     border-style: solid;
     border-width: 1px;
     padding: 2px;
+    display: inline;
+    color: black;
+    background-color: whitesmoke;
 }
 
 .dashedbox {
