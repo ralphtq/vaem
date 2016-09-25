@@ -1,6 +1,10 @@
 /**
  * The JavaScript library for the LM components.
  * 
+ * filename: lm.js
+ * last modified: Sep 24, 2016
+ * editor; Ralph Hodgson
+ *
  * Note that this is under active development and some parts of this API
  * are more stable than others.
  * 
@@ -18,60 +22,9 @@ var lm = {
 };
 
 /**
- * Generate content for popups showing a resource summary
- * @param formId  the id of the search form
- */
-lm.popupResourceSummary = function(loadId) { 
-     var buttons = [{
-         text: "Access Details on TopBraid Server",
-         click: function() {
-          alert('Call to TopBraid Server to be implemented later ...')
-         }
-       },
-       {
-        text: "Close",
-        click: function() {
-           $( this ).dialog( "close" );
-            }
-        }
-       ];
-	 lm.openModalDialog(loadId,"", 800,800,buttons)		  
-};
-
-
-/**
- * Opens a floating window dialog
- */
-lm.openModalDialog = function(loadId, title, width, height, buttons) {
-	var div = $('#' + loadId);
-	var options = {
-			modal: true,
-			title: title,
-			resizeable: true,
-			draggable: true
-		};
-	if(buttons) {
-		options.buttons = buttons;
-	}
-	if(width) {
-		options.width = width;
-	}
-	if(height) {
-		options.height = height;
-	}
-	div.dialog(options);
-};
-
-/**
- * Open the JSP pages for IES Administration
- */
-lm.openAdministrationPage = function() {
-	lm.openPage('admin/');
-};
-
-/**
  * Open a page on server
  */
+ 
 lm.openPage = function(relativeURL) {
    var base = document.getElementsByTagName('base')[0];
     if (base && base.href && (base.href.length > 0)) {
@@ -86,6 +39,46 @@ lm.openPage = function(relativeURL) {
     }
     page = base + relativeURL ;
 	window.open(page, '_blank');
+};
+
+/**
+ * Opens an SWP generated page in a new window
+ * @param params
+ * @title window title
+ */
+lm.openSWP = function(script,params,title) { 
+	  var results;
+	  results=lm.execSWP(script,params );	  	  
+	  var w = window.open("","_graph");
+	  
+	  w.document.open();
+	  w.document.write(results);
+	  w.document.title= title;
+	  w.document.close();  
+};
+
+/**
+ * Executes an SWP script on the server.
+ * The script must be globally registered (using an .sms. file).
+ * @param script  the qname of the script
+ * @param params  the parameters
+ * @param callback  a JavaScript expression that shall be executed when the script
+ *                  finishes.  Can access the result of the script with the variable 'data'.
+ */
+lm.execSWP = function(script, params) {
+	var params = '_viewClass=' + script + params
+	var results;
+    
+	$.ajax({
+	 url: 'swp', 
+	 type: 'get' ,
+	 data: params,
+	 async: false,
+	 success: function(data) {
+	   results = data ;
+	   }
+	});
+	return(results);
 };
 
 /**
@@ -113,6 +106,68 @@ lm.navigateToInTab = function(resourceURI, queryGraphURI, targetName) {
 		'&_resource=' + escape(resourceURI), targetName);
 };
 
+/**
+ * Generate content for popups showing a resource summary
+ * @param formId  the id of the search form
+ */
+lm.popupResourceSummary = function(loadId) { 
+     var buttons = [{
+         text: "Access Details on TopBraid Server",
+         click: function() {
+          alert('Call to TopBraid Server to be implemented later ...')
+         }
+       },
+       {
+        text: "Close",
+        click: function() {
+           $( this ).dialog( "close" );
+            }
+        }
+       ];
+	 lm.openModalDialog(loadId,"", 800,800,buttons)		  
+};
+
+/**
+ * Clears all checkboxes within an element structure
+ * @param pId  the ID of the parent element
+ */
+lm.clearSelection = function() {
+	var ontologiesTab = 2 ;
+	
+	$('#lm_resources input[type=checkbox]').attr('checked',false) ;
+};
+
+/**
+ * Select all checkboxes within an element structure
+ * @param pId  the ID of the parent element
+ */
+lm.selectAll = function() {
+	$('#lm_resources input[type=checkbox]').attr('checked',true) ;
+};
+
+/**
+ * Accepts selection 
+ * @param resource
+ */
+lm.acceptSelection = function(tableId, graph, overlay) {
+     var resultList = '' ;
+     var checkedRows =  $('.lm-row input:checked'); 
+     
+     checkedRows.each(function(){
+        var elementId ='#td-resource_' + this.name.substr(3,this.name.length),
+            selection = $(elementId).html();
+         resultList = (resultList=='')? selection : resultList + ',' + selection;
+         console.log ('Generating ' + selection);
+         var params="&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance" ;
+         
+         params = params + "&graph=" + escape(graph) ;
+         params = params + "&resource=" + escape(selection);
+         params = params + "&overlay=" + escape(overlay);
+         
+         lm.execSPARQLMotion('createHTMLdocumentForResource',params);
+         // http://localhost:8083/tbl/sparqlmotion?id=createHTMLdocumentForResource&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23SchemaGraph
+        });
+};
 
 /**
  * Executes a SPARQLMotion script on the server.
@@ -124,12 +179,15 @@ lm.navigateToInTab = function(resourceURI, queryGraphURI, targetName) {
  */
 lm.execSPARQLMotion = function(script, params) {
     var results;
-	params['id'] = script;
-	params['_base'] = swa.queryGraphURI;
+    
+//    params['id'] = script;
+	
+//	params['_base'] = swa.queryGraphURI;
+	
 	$.ajax({
 	 url: 'sparqlmotion', 
 	 type: 'get' ,
-	 data: params,
+	 data: 'id=' + script + params,
 	 async: false,
 	 success: function(data) {
 	   results = data ;
@@ -139,345 +197,19 @@ lm.execSPARQLMotion = function(script, params) {
 };
 
 /**
- * Clears all checkboxes within an element structure
- * @param pId  the ID of the parent element
+ * Generates resource view in new tab 
+ * @param resource
  */
-lm.clearSelection = function() {
-	var ontologiesTab = 2 ;
-	
-	$('#TBL_Ontology-Schemas input[type=checkbox]').attr('checked',false) ;
-	$("#ies-ontology-selections").hide();
-	$("#ies-ontology-validation-results").hide();
-	$("#ies_tabs").tabs("select",ontologiesTab); 
-};
-
-/**
- * Select all checkboxes within an element structure
- * @param pId  the ID of the parent element
- */
-lm.selectAll = function() {
-	$('#TBL_Ontology-Schemas input[type=checkbox]').attr('checked',true) ;
-	 $("#ies-ontology-selections").hide();
-};
-
-
-/**
- * Initializes IES
- */
-lm.init = function() {
-	$("#ies-project-ontologies").empty();
-    $("#xsd_generation_configuration").empty();
-    $("#ies-generated-xsds").empty();
-	};
-
-
-/**
- * Accepts selected radio button for ontology project selection
- * @param pId  the ID of the parent element
- */
-lm.setProject = function(rbgId) {
-    var result = $('input[name=' + rbgId + ']:checked').val()
-	var params = '';
-	var escaped = '&project=' + result;
-	var ontologiesTab = 2 ;
-	params += '&_viewClass=iess:BuildOntologySelectionsTable&_snippet=true' + escaped;
-	if (result != null){
-
-// show project ontologies
-	
-	$.get(swa.servlet, params, function(data) {
-	  $("#ies-project-ontologies").empty();
-	  $("#ies-project-ontologies").append(data);
-	  $("#ies-project-ontologies").show();
-	  $("#ies-ontology-validation-results").hide();
-	  $("#ies-download-xsd-div").hide();
-	  $("#ies-all-ontology-graphs").hide();
-	  $("#ies-download-xsd-lib").hide();
-	  $("#ies-all-graphs-button").html('Show All Graphs').button('refresh');
-      $("#ies_tabs").tabs("select",ontologiesTab); 
-	})
-	
-	lm.showXSDGenerationConfigurationDetails();
-	
-	}
-	else { alert('No Project Selected')};   
-};
-
-/**
- * Show all ontologies in project
- * @param project - name of project
- */
-lm.showAllGraphsInProject = function(project) {
-    var id = 'ies-all-ontology-graphs'
-    var e = $('#' + id);
-	var params = '';
-	var escaped = '&project=' + project;
-	params += '&_viewClass=iess:BuildOntoloiesInProjectTable&_snippet=true' + escaped;
-	if (project != null){
-
-// show all ontologies in project
-
-     swa.insertLoadingIndicator(e);
-     e.show();
-
-	$.get(swa.servlet, params, function(data) {
-	  $("#ies-all-ontology-graphs").empty();
-	  $("#ies-all-ontology-graphs").append(data);
-	  $("#ies-all-ontology-graphs").show(); 
-	}) ;
-	
-	var onClickAction = 'lm.hideAllGraphsInProject("' + project + '");';
-	$('#ies-all-graphs-button').attr('onclick', onClickAction);
-	$("#ies-all-graphs-button").html('Hide All Graphs').button('refresh');	
-	}
-	else { alert('No Project Selected')};   
-};
-
-/**
- * Hide all ontologies in project
- * @param project - name of project
- */
-lm.hideAllGraphsInProject = function(project) {
-
-	$("#ies-all-ontology-graphs").empty();
-	$("#ies-all-ontology-graphs").show();
-	
-	var onClickAction = 'lm.showAllGraphsInProject("' + project + '");';
-	$('#ies-all-graphs-button').attr('onclick', onClickAction);
-	$("#ies-all-graphs-button").html('Show All Graphs').button('refresh');	
+lm.generate = function(uri,graph, view, overlay) { 
+	  var results;
+	  var params='&resource='+ uri + "&graph=" + graph + "&overlay=" + overlay ; 
+	  results=lm.execSWP(view,params );
+	  var w = window.open("","_blank");
 	  
-};
-
-/**
-* Build configuration blind for the project
-*
-*/
-lm.showXSDGenerationConfigurationDetails = function() {
-	var params = '&_viewClass=iess:BuildXSDGenerationConfigurationTab&_snippet=true';
-	
-	$.get(swa.servlet, params, function(data) {
-	  $("#xsd_generation_configuration").empty();
-	  $("#xsd_generation_configuration").append(data);
-	  $("#xsd_generation_configuration").show();
-	}) 
-};
-
-/**
- * Accepts selection of ontologies
- * @param pId  the ID of the parent element
- */
-lm.acceptSelection = function(pId) {
-     var resultList = '' ;
-     var checkedRows =  $('#TBL_Ontology-Schemas input:checked');
-
-// checkboxes have the prefix 'CB_'. This is removed before doing the 'TD-ONT_' prefix
-     
-     checkedRows.each(function(){
-        var selection = $('#TD-ONT_' + this.name.substr(3,this.name.length)).parent().index().toString();
-        resultList = (resultList=='')? selection : resultList + ',' + selection;
-        });
-	 lm.sendSelectedOntologies(resultList);
-};
-
-/**
- * Continue to pre-generation ontology validation
- */
-lm.continueToOntologyValidation = function() {
-	var xsdValidationTab = 3 ;
-
-    $("#ies_tabs").tabs("select",xsdValidationTab); 
-    lm.updateJob();
-    lm.showXSDGenerationOntologyValidationResults();
-
-};
-
-/**
- * Continue to generation of XSD Schemas step - redundant
- */
-lm.continueToGenerateXSDs = function() {
-	var xsdValidationTab = 3 ;
-	
-	$("#ies-download-xsd-div").hide();
-	$("#ies-download-xsd-lib").hide();
-    $("#ies_tabs").tabs("select",xsdValidationTab); 
-    lm.updateJob();
-    lm.showSelectedOntologies();
-    lm.showXSDGenerationOntologyValidationResults();
-
-};
-
-/**
-* Update Session and Job details
-*
-*/
-lm.updateJob = function() {
-	var params = '&_viewClass=iess:UpdateJob&_snippet=true';
-	
-	$.get(swa.servlet, params, function(data) {
-	}) 
-};
-
-
-/**
- * Create ZIP of XSDs
- *
- */
-lm.createZIPofXSDs = function(param) {
-    var id = 'ies-download-xsd-div' ;
-    var e = $('#' + id);
-	var params = '&_viewClass=iess:BuildGeneratedXSDsTab&_snippet=true';
-    
-	swa.insertLoadingIndicator(e);
-    e.show();
-	
-// call a SM script:
-
-    var results = lm.execSPARQLMotion('iessm:zipXSDFiles',{});
-    console.log(results);
-    lm.buildDownloadRegionForXSDSchemas() ;   
-	  };
-
-/**
- * Create ZIP of XSD Lib
- *
- */
-lm.createZIPofXSDLib = function(param) {
-    var id = 'ies-download-xsd-lib' ;
-    var e = $('#' + id);
-	var params = '&_viewClass=iess:BuildDownloadXSD-LibDiv&_snippet=true';
-    
-    swa.insertLoadingIndicator(e);
-    e.show();
-	
-// call a SM script:
-
-    var results = lm.execSPARQLMotion('iessm:zipXSDLibraryFiles',{});
-    console.log(results);
-	$.get(swa.servlet, params, function(data) {
-	$("#ies-download-xsd-lib").empty();
-	$("#ies-download-xsd-lib").append(data);    
-    $("#ies-download-xsd-lib").show();
-	})    
-	  };
-
-
-/**
-* Build download button for XSD Schemas
-*
-*/
-lm.buildDownloadRegionForXSDSchemas = function() {
-	var params = '&_viewClass=iess:BuildDownloadXSD-SchemasDiv&_snippet=true';
-	
-	$.get(swa.servlet, params, function(data) {
-	$("#ies-download-xsd-div").empty();
-	$("#ies-download-xsd-div").append(data);    
-    $("#ies-download-xsd-div").show();
-	}) 
-};
-
-/**
- * Generate XSDs
- *
- */
-lm.generateXSDs = function(param) {
-    var id = 'ies-busy-with-xsd-generation' ;
-    var e = $('#' + id);
-	var params = '&_viewClass=iess:BuildGeneratedXSDsTab&_snippet=true';
-	var xmlSchemasTab = 4 ;
-	
-     swa.insertLoadingIndicator(e);
-     e.show();
-	
-// call a SM script:
-
-    var results = lm.execSPARQLMotion('iessm:generateXSDs',{});
-    console.log(results);
-    
-    e.empty();
-    e.show();
-
-// now update the XML Schemas Generated Tab
-
-      lm.showXSDGenerationDetails() ;
-      
-	  $("#ies_tabs").tabs("select",xmlSchemasTab);
-	  };
-
-/**
-* Show Generated XSD files
-*
-*/
-lm.showXSDGenerationDetails = function() {
-	var params = '&_viewClass=iess:BuildGeneratedXSDsTab&_snippet=true';
-	
-	$.get(swa.servlet, params, function(data) {
- 	  $("#ies-generated-xsds").empty();
-	  $("#ies-generated-xsds").append(data);
-	  $("#ies-generated-xsds").show();
-	}) 
-};
-
-/**
-* Show Selected Ontologies of the Project
-*
-*/
-lm.showSelectedOntologies = function() {
-	var params = '&_viewClass=iess:BuildXSDGenerationSelectedOntologiesBlind&_snippet=true';
-	
-	$.get(swa.servlet, params, function(data) {
-	  $("#xsd_generation_selected_ontologies").empty();
-	  $("#xsd_generation_selected_ontologies").append(data);
-	  $("#xsd_generation_selected_ontologies").show();
-	}) 
-};
-
-/**
-* Build Ontology Validation for the project
-*
-*/
-lm.showXSDGenerationOntologyValidationResults = function() {
-    var id = 'ies-ontology-validation-results' ;
-    var e = $('#' + id);
-	var params = '&_viewClass=iess:BuildXSDGenerationOntologyValidationTab&_snippet=true';
-
-    swa.insertLoadingIndicator(e);
-    e.show();
-	
-	$.get(swa.servlet, params, function(data) {
-	  e.empty();
-	  e.append(data);
-	  e.show();
-	}) 
-};
-
-/**
- * Get resources corresponding to checked boxes for a given id. 
- * @param formId  the form id
- * @param targetId  the target id
- * @param onSelect  the value for onSelect of the generated grid 
- */
-lm.sendSelectedOntologies = function(ontologies) {
-	var params = '';
-	var escaped = '&ontologyList=' + escape(ontologies);
-    var validationTab = 3 ;
-    
-	params += '&_viewClass=iess:ConfirmSelectedOntologies&_snippet=true' + escaped;
-	$.get(swa.servlet, params, function(data) {
-	  $("#ies-ontology-selections").empty();
-	  $("#ies-ontology-selections").append(data);
-	  $("#ies-ontology-selections").show();
-	  $("#ies_tabs").tabs("select",validationTab);
-	});
-};
-
-/*
-*
-*/
-lm.navigateToHelp = function(tag) {
-    var helpTab = 8 ;
-    
-    $("#ies_tabs").tabs("select",helpTab);   
-    location.hash = "#" + tag;
+	  w.document.open();
+	  w.document.write(results);
+	  w.document.title= uri;
+	  w.document.close();	  	  
 };
 
 
@@ -519,10 +251,12 @@ lm.openHelperDialog = function(title, data) {
  * Opens a floating window dialog
  */
 lm.openModalDialog = function(loadId, title, width, height, buttons) {
-	var div = $('#' + loadId);
+	var theContent = $('#'+loadId) ;
 	var options = {
 			modal: true,
-			title: title
+			title: title,
+			resizeable: true,
+			draggable: true
 		};
 	if(buttons) {
 		options.buttons = buttons;
@@ -533,8 +267,9 @@ lm.openModalDialog = function(loadId, title, width, height, buttons) {
 	if(height) {
 		options.height = height;
 	}
-	div.dialog(options);
-}
+	theContent.dialog(options);
+};
+
 
 /**
  * Changes the selected resource in the center form.
@@ -660,4 +395,4 @@ lm.viewOntology = function(baseURI, targetName) {
 	window.open(swa.servlet + '?_viewClass=iess:OntologyBrowserPage&ontology=' + escape(baseURI), targetName);
 };
 
-// $('#TBL_Ontology-Schemas input:checked').each(function(){alert('TD-ONT_' + this.name.substr(3,this.name.length))})
+// ends
