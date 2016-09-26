@@ -128,6 +128,27 @@ lm.popupResourceSummary = function(loadId) {
 };
 
 /**
+ * Generate content for popups 
+ * @param formId  the id of the search form
+ */
+lm.popup = function(loadId, title, width, height) {
+     var buttons = [{
+         text: "Access more on TopBraid Server",
+         click: function() {
+          alert('Call to TopBraid Server to be implemented later ...')
+         }
+       },
+       {
+        text: "Close",
+        click: function() {
+           $( this ).dialog( "close" );
+            }
+        }
+       ];
+	 lm.openModalDialog(loadId,title,width,height,buttons)		  
+};
+
+/**
  * Clears all checkboxes within an element structure
  * @param pId  the ID of the parent element
  */

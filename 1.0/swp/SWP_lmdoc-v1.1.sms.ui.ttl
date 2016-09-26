@@ -85,6 +85,12 @@ arg:heading
   rdf:type rdf:Property ;
   rdfs:subPropertyOf sp:arg ;
 .
+arg:includeWebLink
+  rdf:type rdf:Property ;
+  rdfs:label "Instance Web Link" ;
+  rdfs:range xsd:boolean ;
+  rdfs:subPropertyOf sp:arg ;
+.
 arg:instancesTemplate
   rdf:type rdf:Property ;
   rdfs:subPropertyOf sp:arg ;
@@ -232,6 +238,13 @@ smf:convertRDFToText
 <http://topbraid.org/xhtml#Area>
   rdf:type rdfs:Resource ;
 .
+lmlib:ImportRDFFromWorkspace_1
+  rdf:type sml:ImportRDFFromWorkspace ;
+  sm:next lmdoc:CreateHTMLforResource ;
+  sml:baseURI "http://uispin.org/html" ;
+  sml:ignoreImports "false"^^xsd:boolean ;
+  rdfs:label "Import HTML ontology" ;
+.
 voag:Graph
   rdf:type owl:Class ;
   ui:instanceView [
@@ -280,6 +293,70 @@ voag:Graph
   vaem:namespacePrefix "lmdoc" ;
   vaem:owner "TopQuadrant" ;
   vaem:revision "1.1" ;
+.
+lmdoc:AbstractObject
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue "160px" ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:labelWidth ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The label width, defaults to 160px. Set to \"inline\" to have the preferred width, i.e. it will occupy exactly the needed space." ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:editWidget ;
+      spl:valueType swa:ObjectEditorClass ;
+      rdfs:comment "The preferred widget if in edit mode." ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:hideIfEmpty ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to suppress this if the given subject has no value for the given predicate. Has no effect if we are not in view mode." ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:hideInModes ;
+      spl:valueType xsd:string ;
+      rdfs:comment "An optional comma-separated list of mode names (e.g. \"edit\", \"search\", \"view\") enumerating those views in which this widget shall be hidden." ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:label ;
+      spl:valueType xsd:string ;
+      rdfs:comment "A label, overriding the default label." ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:linear ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "By default (false), the label and the widget will be laid out in a tabular style, with all widgets nicely aligned underneath one another. If set to true, then no such alignment will happen. (In previous versions of SWA this was represented using arg:tabular)." ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:searchWidget ;
+      spl:valueType swa:ObjectFacetClass ;
+      rdfs:comment "The preferred facet widget." ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:viewWidget ;
+      spl:valueType swa:ObjectViewerClass ;
+      rdfs:comment "The preferred widget if in view mode." ;
+    ] ;
+  ui:abstract "true"^^xsd:boolean ;
+  rdfs:comment "Base class of lmdoc:Object and lmdoc:Objects, to declare the arguments that the subclasses have in common." ;
+  rdfs:label "Abstract object" ;
+  rdfs:subClassOf lmdoc:ObjectElements ;
 .
 lmdoc:AbstractSection
   rdf:type ui:NodeClass ;
@@ -2342,7 +2419,7 @@ lmdoc:CatalogTable
           ui:childIndex 0 ;
         ] ;
     ] ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:Class
   rdf:type ui:NodeClass ;
@@ -2935,7 +3012,7 @@ lmdoc:ClassInstances
     ] ;
   ui:responseType ui:HTML ;
   rdfs:label "Class Instances" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ClassSummary
   rdf:type ui:NodeClass ;
@@ -3121,7 +3198,7 @@ lmdoc:ClassSummary
 
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:ClassSummary&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23GraphRole""" ;
   rdfs:label "Class Summary" ;
-  rdfs:subClassOf lmdoc:Pages ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ClassesGeneratorSection
   rdf:type ui:NodeClass ;
@@ -3763,6 +3840,7 @@ lmdoc:CreateHTMLforResource
   rdf:type sml:CreateSWPDocument ;
   sm:next lmdoc:buildDocFilePath ;
   sm:outputVariable "resourceDoc" ;
+  sml:snippet "false"^^xsd:boolean ;
   sml:view [
       rdf:type ui:group ;
       ui:child [
@@ -3781,9 +3859,6 @@ lmdoc:CreateHTMLforResource
             ] ;
           ui:childIndex 0 ;
           ui:class [
-              sp:varName "swpElement" ;
-            ] ;
-          ui:instance [
               sp:varName "swpElement" ;
             ] ;
         ] ;
@@ -4485,7 +4560,7 @@ lmdoc:DetailedClassView
                 <lmdoc:ResourceDocAnchor arg:node=\"{= ?class }\" arg:typeLabel=\"Class \"/>
             </div>""" ;
   rdfs:label "Detailed Class View" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
   rdfs:subClassOf lmdoc:Viewers ;
 .
 lmdoc:DetailedInstanceView
@@ -4620,220 +4695,6 @@ lmdoc:Elements
       spl:valueType rdfs:Resource ;
     ] ;
   ui:abstract "true"^^xsd:boolean ;
-  ui:headIncludes [
-      rdf:type ui:group ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href "http://linkedmodel.org/css/spin/spin.css" ;
-          ui:childIndex 4 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href "http://linkedmodel.org/jquery/css/jquery.contextmenu.css" ;
-          html:rel "stylesheet" ;
-          html:type "text/css" ;
-          ui:childIndex 11 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href "http://linkedmodel.org/jquery/css/jquery.jqplot.min.css" ;
-          html:rel "stylesheet" ;
-          html:type "text/css" ;
-          ui:childIndex 14 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href "http://linkedmodel.org/jquery/css/smoothness/jquery-ui.css" ;
-          html:rel "stylesheet" ;
-          html:type "text/css" ;
-          ui:childIndex 10 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href "http://linkedmodel.org/jquery/css/ui.jqgrid.css" ;
-          html:rel "stylesheet" ;
-          html:type "text/css" ;
-          ui:childIndex 12 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href "http://linkedmodel.org/swa/assets/lib/bootstrap/css/bootstrap.min.css" ;
-          html:rel "stylesheet" ;
-          html:type "text/css" ;
-          ui:childIndex 13 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href "http://linkedmodel.org/swa/css/swa.css" ;
-          html:rel "stylesheet" ;
-          html:type "text/css" ;
-          ui:childIndex 9 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href "http://linkedmodel.org/swa/css/swaspin.css" ;
-          html:rel "stylesheet" ;
-          html:type "text/css" ;
-          ui:childIndex 7 ;
-        ] ;
-      ui:child [
-          rdf:type html:Link ;
-          html:href "http://linkedmodel.org/vaem/css/lm.css" ;
-          html:rel "stylesheet" ;
-          html:type "text/css" ;
-          ui:childIndex 5 ;
-        ] ;
-      ui:child [
-          rdf:type html:Meta ;
-          html:content "TopBraid,RDF,OWL,SPARQL,SPIN,SWP,SPARQLMotion,LinkedData" ;
-          html:name "keywords" ;
-          ui:childIndex 2 ;
-        ] ;
-      ui:child [
-          rdf:type html:Meta ;
-          html:content "TopQuadrant" ;
-          html:name "author" ;
-          ui:childIndex 1 ;
-        ] ;
-      ui:child [
-          rdf:type html:Meta ;
-          html:content "lmdoc:Elements" ;
-          html:name "manifest-end" ;
-          ui:childIndex 32 ;
-        ] ;
-      ui:child [
-          rdf:type html:Meta ;
-          html:content "lmdoc:Elements" ;
-          html:name "manifest-start" ;
-          ui:childIndex 0 ;
-        ] ;
-      ui:child [
-          rdf:type html:Meta ;
-          html:content [
-              rdf:type ui:concat ;
-              sp:arg1 "Generated from RDF/OWL by TopBraid SWP on " ;
-              sp:arg2 [
-                  rdf:type afn:now ;
-                ] ;
-            ] ;
-          html:name "description" ;
-          ui:childIndex 3 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/i18n/grid.locale-en.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 17 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery-ui.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 16 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.contextmenu.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 19 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.cookie.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 20 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.hotkeys.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 21 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.jqGrid.min.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 18 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.jqplot.min.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 24 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 15 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.jstree.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 23 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.layout.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 22 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/openajax/js/OpenAjax.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 29 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/swa/js/dagre.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 31 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/swa/js/swa.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 30 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/swa/js/swaspin.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 8 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/vaem/js/lm.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 25 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          ui:child [
-              rdf:type ui:TextNode ;
-              ui:childIndex 0 ;
-              ui:text "$.jqplot.config.enablePlugins = true;" ;
-            ] ;
-          ui:childIndex 28 ;
-        ] ;
-      ui:child [
-          rdf:type ui:CommentNode ;
-          ui:childIndex 26 ;
-          rdfs:comment "script src=\"{= ui:lib() }/vaem/js/lm.js\" type=\"text/javascript\"/" ;
-        ] ;
-      ui:child [
-          rdf:type ui:CommentNode ;
-          ui:childIndex 27 ;
-          rdfs:comment "script src=\"http://linkedmodel.org/swa/assets/lib/bootstrap/js/bootstrap.min.js\" type=\"text/javascript\"/" ;
-        ] ;
-      ui:child [
-          rdf:type ui:CommentNode ;
-          ui:childIndex 6 ;
-          rdfs:comment "[if lt IE 9]><script src='https://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]" ;
-        ] ;
-    ] ;
   ui:overrides swa:Elements ;
   ui:responseType ui:HTML ;
   rdfs:label "Elements" ;
@@ -4959,31 +4820,42 @@ lmdoc:Footer
                   ui:childIndex 0 ;
                   ui:text "TopBraid SPARQL Web Pages (SWP)" ;
                 ] ;
-              ui:childIndex 5 ;
+              ui:childIndex 7 ;
+            ] ;
+          ui:child [
+              rdf:type html:Em ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "lmdoc" ;
+                ] ;
+              ui:childIndex 3 ;
             ] ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
-              ui:text "Generated " ;
+              ui:text "Page generated " ;
             ] ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 1 ;
               ui:text [
-                  rdf:type xsd:date ;
-                  sp:arg1 [
-                      rdf:type afn:now ;
-                    ] ;
+                  rdf:type afn:now ;
                 ] ;
             ] ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 2 ;
-              ui:text " by lmdoc version " ;
+              ui:text " by" ;
             ] ;
           ui:child [
               rdf:type ui:TextNode ;
-              ui:childIndex 3 ;
+              ui:childIndex 4 ;
+              ui:text "version " ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 5 ;
               ui:text [
                   rdf:type spl:object ;
                   sp:arg1 lmdoc:GMD_LMDOC ;
@@ -4992,8 +4864,8 @@ lmdoc:Footer
             ] ;
           ui:child [
               rdf:type ui:TextNode ;
-              ui:childIndex 4 ;
-              ui:text " using " ;
+              ui:childIndex 6 ;
+              ui:text " with " ;
             ] ;
           ui:childIndex 1 ;
         ] ;
@@ -6972,7 +6844,7 @@ lmdoc:Header
           ui:pointId "lmhdr2" ;
         ] ;
     ] ;
-  rdfs:subClassOf lmdoc:Elements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ImageResourceViewer
   rdf:type swa:ObjectViewerClass ;
@@ -7512,6 +7384,7 @@ lmdoc:IndexSection
                           ui:child [
                               rdf:type lmdoc:MultiColumnList ;
                               arg:columns 4 ;
+                              arg:includeWebLink "true"^^xsd:boolean ;
                               arg:resultSet [
                                   sp:varName "classes" ;
                                 ] ;
@@ -7615,6 +7488,7 @@ lmdoc:IndexSection
                           ui:child [
                               rdf:type lmdoc:MultiColumnList ;
                               arg:columns 4 ;
+                              arg:includeWebLink "true"^^xsd:boolean ;
                               arg:resultSet [
                                   sp:varName "instances" ;
                                 ] ;
@@ -7721,6 +7595,7 @@ lmdoc:IndexSection
                           ui:child [
                               rdf:type lmdoc:MultiColumnList ;
                               arg:columns 4 ;
+                              arg:includeWebLink "true"^^xsd:boolean ;
                               arg:resultSet [
                                   sp:varName "properties" ;
                                 ] ;
@@ -7912,7 +7787,7 @@ lmdoc:InheritanceTable
     ] ;
   ui:responseType ui:HTML ;
   rdfs:label "Inheritance table" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:Instance
   rdf:type ui:NodeClass ;
@@ -7996,6 +7871,21 @@ lmdoc:Instance
             ] ;
           ui:childIndex 0 ;
           ui:condition "(!bound(?graph))" ;
+        ] ;
+    ] ;
+  ui:headIncludes [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content "lmdoc:Instance" ;
+          html:name "manifest-start" ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content "lmdoc:Instance" ;
+          html:name "manifest-start" ;
+          ui:childIndex 1 ;
         ] ;
     ] ;
   ui:prototype [
@@ -8425,7 +8315,7 @@ lmdoc:InstanceSummary
     ] ;
   ui:responseType ui:HTML ;
   rdfs:label "Instance summary" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:InstancesGeneratorSection
   rdf:type ui:NodeClass ;
@@ -9644,7 +9534,7 @@ lmdoc:Label
   ui:responseType ui:HTML ;
   rdfs:comment "Displays an arbitrary RDF node. If the node is a resource, then this will use the configured resource display with id=\"label\" (e.g., the tui:Link). Literals of type xsd:anyURI are turned into hyperlinks. All other literals will be rendered as a simple text node with CSS class tuiLabel, with the text derived using ui:label()." ;
   rdfs:label "Label" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:LabelList
   rdf:type ui:NodeClass ;
@@ -9730,7 +9620,7 @@ lmdoc:LabelList
   ui:responseType ui:HTML ;
   rdfs:comment "A list of values from a given result set. The individual values will be rendered into lmdoc:Labels." ;
   rdfs:label "Label list" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:LabeledObjects
   rdf:type ui:NodeClass ;
@@ -9799,7 +9689,7 @@ lmdoc:LabeledObjects
         ] ;
     ] ;
   rdfs:label "Labeled objects" ;
-  rdfs:subClassOf swa:Objects ;
+  rdfs:subClassOf lmdoc:Objects ;
 .
 lmdoc:Link
   rdf:type ui:NodeClass ;
@@ -9853,7 +9743,7 @@ lmdoc:Link
   ui:responseType ui:HTML ;
   rdfs:comment "A hyperlink to a resource, using the display label of the resource as text. Additional arguments may be passed in 'lmdoc:optionalArgs' for the rest call." ;
   rdfs:label "Link" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:LiteralViewer
   rdf:type swa:ObjectViewerClass ;
@@ -9984,7 +9874,7 @@ lmdoc:MaybeDescription
   ui:responseType ui:HTML ;
   rdfs:comment "Maybe Description" ;
   rdfs:label "Maybe Description" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:MaybeDescriptionUsingProperty
   rdf:type ui:NodeClass ;
@@ -10079,7 +9969,7 @@ lmdoc:MaybeDescriptionUsingProperty
     ] ;
   ui:responseType ui:HTML ;
   rdfs:label "Maybe Description using property" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:MaybeHTMLstring
   rdf:type ui:NodeClass ;
@@ -10128,7 +10018,7 @@ lmdoc:MaybeHTMLstring
     ] ;
   ui:responseType ui:HTML ;
   rdfs:label "Maybe an HTML string" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:MultiColumnList
   rdf:type ui:NodeClass ;
@@ -10142,6 +10032,11 @@ lmdoc:MultiColumnList
       rdf:type spl:Argument ;
       spl:predicate arg:columns ;
       spl:valueType xsd:integer ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:includeWebLink ;
+      spl:valueType xsd:boolean ;
     ] ;
   spin:constraint [
       rdf:type spl:Argument ;
@@ -10200,6 +10095,9 @@ lmdoc:MultiColumnList
                           html:class "col-xs-12 col-sm-6 col-md-4 col-lg-3" ;
                           ui:child [
                               rdf:type lmdoc:ResourceLink ;
+                              arg:includeWebLink [
+                                  sp:varName "includeWebLink" ;
+                                ] ;
                               arg:resource [
                                   sp:varName "resource" ;
                                 ] ;
@@ -10235,7 +10133,7 @@ lmdoc:MultiColumnList
             ] ;
         ] ;
     ] ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:MyBNodeViewer
   rdf:type swa:ObjectViewerClass ;
@@ -10401,6 +10299,7 @@ lmdoc:NonImportedResources
                   ui:child [
                       rdf:type lmdoc:MultiColumnList ;
                       arg:columns 5 ;
+                      arg:includeWebLink "true"^^xsd:boolean ;
                       arg:resultSet [
                           sp:varName "nonImportedResources" ;
                         ] ;
@@ -10424,8 +10323,26 @@ lmdoc:NonImportedResources
   rdfs:label "non-imported resources" ;
   rdfs:subClassOf lmdoc:Sections ;
 .
+lmdoc:Object
+  rdf:type ui:NodeClass ;
+  ui:prototype [
+      rdf:type lmdoc:LabeledObjects ;
+      arg:single "true" ;
+      ui:args "*" ;
+    ] ;
+  rdfs:comment "Inserts a widget for a single value of a given predicate at the given subject. This element should only be used if the property doesn't have a max cardinality of 1 anyway, to overload the default behavior." ;
+  rdfs:label "Object" ;
+  rdfs:subClassOf lmdoc:AbstractObject ;
+.
 lmdoc:ObjectElements
   rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:elementId ;
+      spl:valueType xsd:string ;
+      rdfs:comment "An optional HTML ID for the element containing this object." ;
+    ] ;
   spin:constraint [
       rdf:type spl:Argument ;
       spl:optional "true"^^xsd:boolean ;
@@ -10442,16 +10359,32 @@ lmdoc:ObjectElements
     ] ;
   spin:constraint [
       rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:subject ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The subject resource of the form or widget. May be left empty in which case the subjectType will be used." ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
       spl:predicate arg:predicate ;
       spl:valueType rdf:Property ;
       rdfs:comment "The predicate." ;
     ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:predicate ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "The predicate." ;
+    ] ;
+  ui:abstract "true"^^xsd:boolean ;
+  ui:private "true"^^xsd:boolean ;
+  rdfs:comment "Abstract superclass for all elements that take a subject/predicate combination and then display or edit the objects." ;
+  rdfs:label "Object elements" ;
   rdfs:subClassOf lmdoc:ViewElements ;
 .
 lmdoc:ObjectViewer
   rdf:type swa:ObjectViewerClass ;
-  ui:overrides swa:ObjectViewer ;
-  ui:private "false"^^xsd:boolean ;
+  ui:private "true"^^xsd:boolean ;
   ui:prototype [
       rdf:type html:Div ;
       html:class "swa-object-widget" ;
@@ -10570,7 +10503,41 @@ lmdoc:ObjectViewer
 - ?kind: \"literal\", \"blank\", \"uri\" or \"image\"
 - ?predicate: the property being displayed""" ;
   rdfs:label "Object viewer" ;
-  rdfs:subClassOf swa:ObjectViewer ;
+  rdfs:subClassOf lmdoc:ObjectWidget ;
+.
+lmdoc:ObjectWidget
+  rdf:type swa:ObjectWidgetClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:object ;
+      rdfs:comment "The object to display or edit." ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:uid ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The uid used to identify the triple." ;
+    ] ;
+  ui:private "true"^^xsd:boolean ;
+  ui:prototype [
+      rdf:type ui:dynamicView ;
+      arg:object [
+          sp:varName "object" ;
+        ] ;
+      arg:predicate [
+          sp:varName "predicate" ;
+        ] ;
+      arg:subject [
+          sp:varName "subject" ;
+        ] ;
+      ui:class [
+          rdf:type swa:modeProperty ;
+          arg:predicate swa:objectWidgetClass ;
+        ] ;
+    ] ;
+  rdfs:comment "A component representing a single RDF node. Depending on the mode, this may for example be an ObjectViewer or ObjectEditor." ;
+  rdfs:label "Object widget" ;
   rdfs:subClassOf lmdoc:ObjectElements ;
 .
 lmdoc:ObjectWidgetRow
@@ -10654,10 +10621,17 @@ lmdoc:Objects
     ] ;
   rdfs:comment "A two-columned structure with a label on the left and zero or more objects on the right." ;
   rdfs:label "Objects" ;
-  rdfs:subClassOf swa:AbstractObject ;
+  rdfs:subClassOf lmdoc:AbstractObject ;
 .
 lmdoc:ObjectsBody
   rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:elementId ;
+      spl:valueType xsd:string ;
+      rdfs:comment "An optional HTML ID for the element containing this object." ;
+    ] ;
   spin:constraint [
       rdf:type spl:Argument ;
       spl:optional "true"^^xsd:boolean ;
@@ -10672,6 +10646,19 @@ lmdoc:ObjectsBody
       spl:valueType xsd:boolean ;
       rdfs:comment "True to allow at most one value." ;
     ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:subject ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The subject resource of the form or widget. May be left empty in which case the subjectType will be used." ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:predicate ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "The predicate." ;
+    ] ;
   ui:private "true"^^xsd:boolean ;
   ui:prototype [
       rdf:type ui:group ;
@@ -10681,7 +10668,7 @@ lmdoc:ObjectsBody
               rdf:type html:Div ;
               html:class "swa-object-row" ;
               ui:child [
-                  rdf:type swa:ObjectWidgetRow ;
+                  rdf:type lmdoc:ObjectWidgetRow ;
                   arg:predicate [
                       sp:varName "predicate" ;
                     ] ;
@@ -11207,10 +11194,236 @@ lmdoc:ObjectsGroup
     ] ;
   rdfs:comment "A group of lmdoc:Objects elements where the predicates are computed by taking a result set (e.g. of all relevant properties) and applying a filter on top of it, e.g. to only show the annotation properties among those that are relevant." ;
   rdfs:label "Objects group" ;
-  rdfs:subClassOf swa:ObjectsGroup ;
+  rdfs:subClassOf lmdoc:ViewElements ;
 .
 lmdoc:Pages
   rdf:type ui:NodeClass ;
+  ui:headIncludes [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/css/spin/spin.css" ;
+          ui:childIndex 4 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/jquery/css/jquery.contextmenu.css" ;
+          html:rel "stylesheet" ;
+          html:type "text/css" ;
+          ui:childIndex 11 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/jquery/css/jquery.jqplot.min.css" ;
+          html:rel "stylesheet" ;
+          html:type "text/css" ;
+          ui:childIndex 14 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/jquery/css/smoothness/jquery-ui.css" ;
+          html:rel "stylesheet" ;
+          html:type "text/css" ;
+          ui:childIndex 10 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/jquery/css/ui.jqgrid.css" ;
+          html:rel "stylesheet" ;
+          html:type "text/css" ;
+          ui:childIndex 12 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/swa/assets/lib/bootstrap/css/bootstrap.min.css" ;
+          html:rel "stylesheet" ;
+          html:type "text/css" ;
+          ui:childIndex 13 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/swa/assets/lib/font-awesome/css/font-awesome.min.css" ;
+          html:rel "stylesheet" ;
+          html:type "text/css" ;
+          ui:childIndex 15 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/swa/css/swa.css" ;
+          html:rel "stylesheet" ;
+          html:type "text/css" ;
+          ui:childIndex 9 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/swa/css/swaspin.css" ;
+          html:rel "stylesheet" ;
+          html:type "text/css" ;
+          ui:childIndex 7 ;
+        ] ;
+      ui:child [
+          rdf:type html:Link ;
+          html:href "http://linkedmodel.org/vaem/css/lm.css" ;
+          html:rel "stylesheet" ;
+          html:type "text/css" ;
+          ui:childIndex 5 ;
+        ] ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content "TopBraid,RDF,OWL,SPARQL,SPIN,SWP,SPARQLMotion,LinkedData" ;
+          html:name "keywords" ;
+          ui:childIndex 2 ;
+        ] ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content "TopQuadrant" ;
+          html:name "author" ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content "lmdoc:Pages" ;
+          html:name "manifest-end" ;
+          ui:childIndex 34 ;
+        ] ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content "lmdoc:Pages" ;
+          html:name "manifest-start" ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:child [
+          rdf:type html:Meta ;
+          html:content [
+              rdf:type ui:concat ;
+              sp:arg1 "Generated from RDF/OWL by TopBraid SWP on " ;
+              sp:arg2 [
+                  rdf:type afn:now ;
+                ] ;
+            ] ;
+          html:name "description" ;
+          ui:childIndex 3 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/i18n/grid.locale-en.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 19 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery-ui.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 18 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.contextmenu.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 21 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.cookie.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 22 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.hotkeys.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 23 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.jqGrid.min.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 20 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.jqplot.min.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 26 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 17 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.jstree.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 25 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/jquery/js/jquery.layout.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 24 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/openajax/js/OpenAjax.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 31 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/swa/js/dagre.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 33 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/swa/js/swa.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 32 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/swa/js/swaspin.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 8 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/vaem/js/lm.js" ;
+          html:type "text/javascript" ;
+          ui:childIndex 27 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text "$.jqplot.config.enablePlugins = true;" ;
+            ] ;
+          ui:childIndex 30 ;
+        ] ;
+      ui:child [
+          rdf:type ui:CommentNode ;
+          ui:childIndex 16 ;
+          rdfs:comment "link href=\"{= ui:lib() }/font-awesome/css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\"/" ;
+        ] ;
+      ui:child [
+          rdf:type ui:CommentNode ;
+          ui:childIndex 28 ;
+          rdfs:comment "script src=\"{= ui:lib() }/vaem/js/lm.js\" type=\"text/javascript\"/" ;
+        ] ;
+      ui:child [
+          rdf:type ui:CommentNode ;
+          ui:childIndex 29 ;
+          rdfs:comment "script src=\"http://linkedmodel.org/swa/assets/lib/bootstrap/js/bootstrap.min.js\" type=\"text/javascript\"/" ;
+        ] ;
+      ui:child [
+          rdf:type ui:CommentNode ;
+          ui:childIndex 6 ;
+          rdfs:comment "[if lt IE 9]><script src='https://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]" ;
+        ] ;
+    ] ;
   rdfs:subClassOf lmdoc:Elements ;
 .
 lmdoc:Panes
@@ -11255,6 +11468,11 @@ lmdoc:PartHeader
     ] ;
   rdfs:label "Part header" ;
   rdfs:subClassOf lmdoc:Sections ;
+.
+lmdoc:Parts
+  rdf:type ui:NodeClass ;
+  rdfs:label "Parts" ;
+  rdfs:subClassOf lmdoc:Elements ;
 .
 lmdoc:PopUpResourceView
   rdf:type ui:NodeClass ;
@@ -12323,7 +12541,7 @@ lmdoc:PropertiesTable
         ] ;
     ] ;
   rdfs:label "Properties table" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:PropertyDetailsTable
   rdf:type ui:NodeClass ;
@@ -12812,7 +13030,7 @@ lmdoc:PropertyDetailsTable
         ] ;
     ] ;
   rdfs:label "Property details table" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ReferencesToResourceInGivenGraph
   rdf:type spin:SelectTemplate ;
@@ -12923,7 +13141,7 @@ lmdoc:ResourceDocAnchor
   ui:responseType ui:HTML ;
   rdfs:comment "An anchor in the documentaiton entry for a resource." ;
   rdfs:label "Resource Doc Ancor" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ResourceDocLink
   rdf:type ui:NodeClass ;
@@ -12994,7 +13212,7 @@ lmdoc:ResourceDocLink
   ui:responseType ui:HTML ;
   rdfs:comment "A hyperlink to the documentation entry for a resource." ;
   rdfs:label "Resource Doc Link" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ResourceFooter
   rdf:type ui:NodeClass ;
@@ -13009,153 +13227,44 @@ lmdoc:ResourceFooter
       spl:valueType rdfs:Resource ;
     ] ;
   ui:prototype [
-      rdf:type html:Div ;
-      html:class "lm-buttons-dock" ;
+      rdf:type ui:group ;
       ui:child [
-          rdf:type html:Div ;
-          html:style "clear:both;" ;
-          ui:childIndex 2 ;
-        ] ;
-      ui:child [
-          rdf:type html:Div ;
-          html:style "float:left; text-align:middle; padding:10px;" ;
-          ui:child [
-              rdf:type ui:TextNode ;
-              ui:childIndex 0 ;
-              ui:text """View as: 
-""" ;
-            ] ;
-          ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type lmdoc:ViewAsCSV ;
-                  arg:resource [
-                      sp:varName "resource" ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 1 ;
-              ui:condition [
-                  rdf:type fn:contains ;
-                  sp:arg1 [
-                      sp:varName "options" ;
-                    ] ;
-                  sp:arg2 "CSV" ;
-                ] ;
-            ] ;
-          ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type lmdoc:ViewAsJSON ;
-                  arg:resource [
-                      sp:varName "resource" ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 4 ;
-              ui:condition [
-                  rdf:type fn:contains ;
-                  sp:arg1 [
-                      sp:varName "options" ;
-                    ] ;
-                  sp:arg2 "json" ;
-                ] ;
-            ] ;
-          ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type lmdoc:ViewAsJSON-LD ;
-                  arg:resource [
-                      sp:varName "resource" ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 5 ;
-              ui:condition [
-                  rdf:type fn:contains ;
-                  sp:arg1 [
-                      sp:varName "options" ;
-                    ] ;
-                  sp:arg2 "JSONLD" ;
-                ] ;
-            ] ;
-          ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type lmdoc:ViewAsRDFXML ;
-                  arg:resource [
-                      sp:varName "resource" ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 2 ;
-              ui:condition [
-                  rdf:type fn:contains ;
-                  sp:arg1 [
-                      sp:varName "options" ;
-                    ] ;
-                  sp:arg2 "RDF" ;
-                ] ;
-            ] ;
-          ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type lmdoc:ViewAsTurtle ;
-                  arg:resource [
-                      sp:varName "resource" ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 3 ;
-              ui:condition [
-                  rdf:type fn:contains ;
-                  sp:arg1 [
-                      sp:varName "options" ;
-                    ] ;
-                  sp:arg2 "TURTLE" ;
-                ] ;
-            ] ;
-          ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type lmdoc:ViewAsXML ;
-                  arg:resource [
-                      sp:varName "resource" ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 6 ;
-              ui:condition [
-                  rdf:type fn:contains ;
-                  sp:arg1 [
-                      sp:varName "options" ;
-                    ] ;
-                  sp:arg2 "XML" ;
-                ] ;
-            ] ;
-          ui:childIndex 1 ;
-        ] ;
-      ui:child [
-          rdf:type html:Div ;
-          html:style "float:left;" ;
-          ui:child [
-              rdf:type html:A ;
-              html:href "#lmdoc_top" ;
-              ui:child [
-                  rdf:type html:Img ;
-                  html:src "http://linkedmodel.org/lib/lm/images/icons/doc-back-arrow.png" ;
-                  html:width "24px;" ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
+          rdf:type ui:CommentNode ;
           ui:childIndex 0 ;
+          rdfs:comment """div class=\"lm-buttons-dock\">
+        <div style=\"float:left;\">
+            <a href=\"#lmdoc_top\">
+                <img src=\"http://linkedmodel.org/lib/lm/images/icons/doc-back-arrow.png\" width=\"24px;\"/>
+            </a>
+        </div>
+        <div style=\"float:left; text-align:middle; padding:10px;\">View as:&nbsp;
+<ui:if ui:condition=\"{= fn:contains(?options, &quot;CSV&quot;) }\">
+                <lmdoc:ViewAsCSV arg:resource=\"{= ?resource }\"/>
+            </ui:if>
+            <ui:if ui:condition=\"{= fn:contains(?options, &quot;RDF&quot;) }\">
+                <lmdoc:ViewAsRDFXML arg:resource=\"{= ?resource }\"/>
+            </ui:if>
+            <ui:if ui:condition=\"{= fn:contains(?options, &quot;TURTLE&quot;) }\">
+                <lmdoc:ViewAsTurtle arg:resource=\"{= ?resource }\"/>
+            </ui:if>
+            <ui:if ui:condition=\"{= fn:contains(?options, &quot;json&quot;) }\">
+                <lmdoc:ViewAsJSON arg:resource=\"{= ?resource }\"/>
+            </ui:if>
+            <ui:if ui:condition=\"{= fn:contains(?options, &quot;JSONLD&quot;) }\">
+                <lmdoc:ViewAsJSON-LD arg:resource=\"{= ?resource }\"/>
+            </ui:if>
+            <ui:if ui:condition=\"{= fn:contains(?options, &quot;XML&quot;) }\">
+                <lmdoc:ViewAsXML arg:resource=\"{= ?resource }\"/>
+            </ui:if>
+        </div>
+        <div style=\"clear:both;\"/>
+    </div""" ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
   rdfs:comment "Resource footer" ;
   rdfs:label "Resource Footer" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ResourceFormBody
   rdf:type ui:ResourceViewClass ;
@@ -13279,7 +13388,7 @@ lmdoc:ResourceHeader
   ui:responseType ui:HTML ;
   rdfs:comment "Format a header for a resource" ;
   rdfs:label "Resource Header" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ResourceLink
   rdf:type ui:NodeClass ;
@@ -13288,6 +13397,11 @@ lmdoc:ResourceLink
       spl:optional "true"^^xsd:boolean ;
       spl:predicate arg:label ;
       spl:valueType xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:includeWebLink ;
+      spl:valueType xsd:boolean ;
     ] ;
   spin:constraint [
       rdf:type spl:Argument ;
@@ -13318,11 +13432,17 @@ lmdoc:ResourceLink
                   rdf:type html:Span ;
                   ui:child [
                       rdf:type html:A ;
-                      html:href [
-                          rdf:type xsd:string ;
-                          sp:arg1 [
-                              sp:varName "resource" ;
+                      html:class "lm-simulated-link" ;
+                      html:onclick [
+                          rdf:type ui:concat ;
+                          sp:arg1 "javascript: lm.popupResourceSummary('div-" ;
+                          sp:arg2 [
+                              rdf:type lmdoc:makeAnchorFromResource ;
+                              arg:resource [
+                                  sp:varName "resource" ;
+                                ] ;
                             ] ;
+                          sp:arg3 "')" ;
                         ] ;
                       ui:child [
                           rdf:type ui:TextNode ;
@@ -13336,9 +13456,45 @@ lmdoc:ResourceLink
                         ] ;
                       ui:childIndex 0 ;
                     ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 1 ;
+                      ui:text [
+                          sp:varName "label" ;
+                        ] ;
+                    ] ;
                   ui:childIndex 0 ;
                 ] ;
               ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type html:Span ;
+                  html:class "pad10px" ;
+                  ui:child [
+                      rdf:type html:A ;
+                      html:href [
+                          rdf:type xsd:string ;
+                          sp:arg1 [
+                              sp:varName "resource" ;
+                            ] ;
+                        ] ;
+                      html:target "_blank" ;
+                      ui:child [
+                          rdf:type html:I ;
+                          html:aria-hidden "true" ;
+                          html:class "fa fa-external-link-square lightBlue" ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 2 ;
+              ui:condition [
+                  sp:varName "includeWebLink" ;
+                ] ;
             ] ;
           ui:child [
               rdf:type ui:if ;
@@ -13389,13 +13545,9 @@ lmdoc:ResourceLink
         ] ;
     ] ;
   ui:responseType ui:HTML ;
-  rdfs:comment """<ui:else>
-            <span>
-                <a class=\"lm-simulated-link\" onclick=\"javascript: lm.popupResourceSummary('div-{= lmdoc:makeAnchorFromResource(?resource) }')\">{= smf:qname(?resource) }</a>{= ?label }</span>
-        </ui:else>""" ;
   rdfs:comment "A hyperlink to a resource, using the QName of the resource as text. " ;
   rdfs:label "Resource Link" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ResourceViews
   rdf:type ui:ResourceViewClass ;
@@ -13907,45 +14059,6 @@ lmdoc:ResourcesMaintainer
                               html:class "details" ;
                               html:id "details" ;
                               ui:child [
-                                  rdf:type html:Div ;
-                                  html:style "font-size: small;" ;
-                                  ui:child [
-                                      rdf:type html:A ;
-                                      html:href "http://www.topquadrant.com/technology/sparql-web-pages-swp/" ;
-                                      ui:child [
-                                          rdf:type ui:TextNode ;
-                                          ui:childIndex 0 ;
-                                          ui:text "TopBraid SPARQL Web Pages (SWP)" ;
-                                        ] ;
-                                      ui:childIndex 3 ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text "Generated " ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 1 ;
-                                      ui:text [
-                                          rdf:type xsd:date ;
-                                          sp:arg1 [
-                                              rdf:type afn:now ;
-                                            ] ;
-                                        ] ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 2 ;
-                                      ui:text " using" ;
-                                    ] ;
-                                  ui:childIndex 2 ;
-                                ] ;
-                              ui:child [
-                                  rdf:type html:Hr ;
-                                  ui:childIndex 1 ;
-                                ] ;
-                              ui:child [
                                   rdf:type html:Section ;
                                   html:class "informative" ;
                                   html:id [
@@ -13974,6 +14087,10 @@ lmdoc:ResourcesMaintainer
                                       ui:childIndex 0 ;
                                     ] ;
                                   ui:childIndex 0 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type lmdoc:Footer ;
+                                  ui:childIndex 1 ;
                                 ] ;
                               ui:childIndex 5 ;
                             ] ;
@@ -14085,7 +14202,7 @@ lmdoc:ResourcesMaintainer
     ] ;
   ui:responseType ui:HTML ;
   rdfs:label "Resources Maintainer" ;
-  rdfs:subClassOf lmdoc:Pages ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:SaveSWPdoc
   rdf:type sml:ExportToTextFile ;
@@ -14113,10 +14230,6 @@ lmdoc:Services
   rdf:type ui:Service ;
   rdfs:label "Services" ;
   rdfs:subClassOf ui:Services ;
-.
-lmdoc:SubElements
-  rdf:type ui:NodeClass ;
-  rdfs:subClassOf lmdoc:Elements ;
 .
 lmdoc:SubjectElements
   rdf:type ui:NodeClass ;
@@ -14271,7 +14384,7 @@ lmdoc:SummaryClassView
         ] ;
     ] ;
   rdfs:label "Summary Class View" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:SwitchableForm
   rdf:type swa:FormClass ;
@@ -15083,7 +15196,7 @@ lmdoc:TOCEntry
   ui:responseType ui:HTML ;
   rdfs:comment "Creates a TOC Entry" ;
   rdfs:label "Label" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:TableOfContents
   rdf:type ui:NodeClass ;
@@ -15333,7 +15446,7 @@ lmdoc:URIResourceViewer
       swa:weight 50 ;
     ] ;
   ui:overrides swa:URIResourceViewer ;
-  ui:private "false"^^xsd:boolean ;
+  ui:private "true"^^xsd:boolean ;
   ui:prototype [
       rdf:type ui:group ;
       let:myGraph [
@@ -15458,26 +15571,8 @@ lmdoc:URIResourceViewer
           ui:childIndex 0 ;
         ] ;
     ] ;
-  rdfs:comment """<ui:group let:myGraph=\"{= ui:contextValue(&quot;graph&quot;) }\">
-    <ui:group let:myLabel=\"{= IF(bound(?label), fn:concat(&quot; [&quot;, ?label, &quot;]&quot;), &quot;&quot;) }\">
-        <div class=\"swa-shifted-label\" title=\"{= ?object }\">
-            <ui:if ui:condition=\"{= bound(?myGraph) }\">
-                <ui:if ui:condition=\"{= lmdoc:IsDefinedInGraph(?myGraph, ?object) }\">
-                    <lmdoc:ResourceDocLink arg:label=\"{= ?myLabel }\" arg:resource=\"{= ?object }\"/>
-                    <ui:resourceView ui:matchIds=\"lmdoc-summary\" ui:resource=\"{= ?object }\"/>
-                </ui:if>
-                <ui:else>
-                    <lmdoc:ResourceLink arg:label=\"{= ?myLabel }\" arg:resource=\"{= ?object }\" arg:title=\"{= xsd:string(?object) }\"/>
-                </ui:else>
-            </ui:if>
-            <ui:else>
-                <lmdoc:ResourceLink arg:label=\"{= ?myLabel }\" arg:resource=\"{= ?object }\" arg:title=\"{= xsd:string(?object) }\"/>
-            </ui:else>
-        </div>
-    </ui:group>
-</ui:group>""" ;
   rdfs:label "URI resource viewer" ;
-  rdfs:subClassOf swa:URIResourceViewer ;
+  rdfs:subClassOf lmdoc:ObjectViewer ;
 .
 lmdoc:VSpace
   rdf:type ui:NodeClass ;
@@ -15502,7 +15597,7 @@ lmdoc:VSpace
   ui:responseType ui:HTML ;
   rdfs:comment "Vertical space" ;
   rdfs:label "Vertical Space" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ViewAsCSV
   rdf:type ui:NodeClass ;
@@ -15516,9 +15611,8 @@ lmdoc:ViewAsCSV
       rdf:type ui:group ;
       ui:child [
           rdf:type html:A ;
-          html:href "javascript:void(0);" ;
-          html:onclick "lm.openModalDialog('lm-export-csv','Export CSV',600,800,{});" ;
-          html:style "padding-right:20px;" ;
+          html:class "lm-simulated-link" ;
+          html:onclick "javascript: lm.popup('lm-export-csv','Export CSV',600,800)" ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
@@ -15537,46 +15631,7 @@ lmdoc:ViewAsCSV
                   ui:childIndex 0 ;
                   ui:text "Work in progress" ;
                 ] ;
-              ui:childIndex 1 ;
-            ] ;
-          ui:child [
-              rdf:type ui:update ;
               ui:childIndex 0 ;
-              ui:updateQuery [
-                  rdf:type sp:Modify ;
-                  sp:insertPattern (
-                      [
-                        rdf:type sp:NamedGraph ;
-                        sp:elements (
-                            [
-                              sp:object [
-                                  sp:varName "o" ;
-                                ] ;
-                              sp:predicate [
-                                  sp:varName "p" ;
-                                ] ;
-                              sp:subject [
-                                  sp:varName "resource" ;
-                                ] ;
-                            ]
-                          ) ;
-                        sp:graphNameNode ui:tempGraph ;
-                      ]
-                    ) ;
-                  sp:where (
-                      [
-                        sp:object [
-                            sp:varName "o" ;
-                          ] ;
-                        sp:predicate [
-                            sp:varName "p" ;
-                          ] ;
-                        sp:subject [
-                            sp:varName "resource" ;
-                          ] ;
-                      ]
-                    ) ;
-                ] ;
             ] ;
           ui:childIndex 1 ;
         ] ;
@@ -15584,7 +15639,7 @@ lmdoc:ViewAsCSV
   ui:responseType ui:HTML ;
   rdfs:comment "Action to view as CSV" ;
   rdfs:label "View as CSV" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ViewAsJSON
   rdf:type ui:NodeClass ;
@@ -15598,9 +15653,8 @@ lmdoc:ViewAsJSON
       rdf:type ui:group ;
       ui:child [
           rdf:type html:A ;
-          html:href "javascript:void(0);" ;
-          html:onclick "lm.openModalDialog('lm-export-json','Export JSON',600,800,{})" ;
-          html:style "padding-right:20px;" ;
+          html:class "lm-simulated-link" ;
+          html:onclick "javascript: lm.popup('lm-export-json','Export JSON',600,800)" ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
@@ -15668,7 +15722,7 @@ lmdoc:ViewAsJSON
   rdfs:comment "Action to view as JSON" ;
   rdfs:comment "lm.openModalDialog = function(loadId, title, width, height, buttons)" ;
   rdfs:label "View as JSON" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ViewAsJSON-LD
   rdf:type ui:NodeClass ;
@@ -15682,9 +15736,8 @@ lmdoc:ViewAsJSON-LD
       rdf:type ui:group ;
       ui:child [
           rdf:type html:A ;
-          html:href "javascript:void(0);" ;
-          html:onclick "lm.openModalDialog('lm-export-json-ld','Export JSON-LD',600,800,{});" ;
-          html:style "padding-right:20px;" ;
+          html:class "lm-simulated-link" ;
+          html:onclick "javascript: lm.popup('lm-export-json-ld','Export JSON-LD',600,800)" ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
@@ -15750,7 +15803,7 @@ lmdoc:ViewAsJSON-LD
   ui:responseType ui:HTML ;
   rdfs:comment "Action to view as JSON-LD" ;
   rdfs:label "View as JSON-LD" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ViewAsRDFXML
   rdf:type ui:NodeClass ;
@@ -15764,9 +15817,8 @@ lmdoc:ViewAsRDFXML
       rdf:type ui:group ;
       ui:child [
           rdf:type html:A ;
-          html:href "javascript:void(0);" ;
-          html:onclick "lm.openModalDialog('lm-export-rdf-xml','Export RDF/XML',600,800,{});" ;
-          html:style "padding-right:20px;" ;
+          html:class "lm-simulated-link" ;
+          html:onclick "javascript: lm.popup('lm-export-rdf-xml','Export RDF/XML',600,800)" ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
@@ -15867,7 +15919,7 @@ lmdoc:ViewAsRDFXML
   ui:responseType ui:HTML ;
   rdfs:comment "Action to view as RDF/XML" ;
   rdfs:label "View as RDF/XML" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ViewAsTurtle
   rdf:type ui:NodeClass ;
@@ -15881,13 +15933,12 @@ lmdoc:ViewAsTurtle
       rdf:type ui:group ;
       ui:child [
           rdf:type html:A ;
-          html:href "javascript:void(0);" ;
-          html:onclick "lm.openModalDialog('lm-export-turtle','Export Turtle',600,800,{});" ;
-          html:style "padding-right:20px;" ;
+          html:class "lm-simulated-link" ;
+          html:onclick "javascript: lm.popup('lm-export-turtle','Export TURTLE',600,800)" ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
-              ui:text "Turtle" ;
+              ui:text "TURTLE" ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -15895,41 +15946,6 @@ lmdoc:ViewAsTurtle
           rdf:type html:Div ;
           html:class "hidden" ;
           html:id "lm-export-turtle" ;
-          ui:child [
-              rdf:type html:P ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text "Test:" ;
-                ] ;
-              ui:childIndex 1 ;
-            ] ;
-          ui:child [
-              rdf:type html:Pre ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text "<MyType about=\"" ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 1 ;
-                  ui:text [
-                      rdf:type ui:label ;
-                      sp:arg1 [
-                          sp:varName "resource" ;
-                        ] ;
-                    ] ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 2 ;
-                  ui:text """>
-  ...
-</MyType>""" ;
-                ] ;
-              ui:childIndex 2 ;
-            ] ;
           ui:child [
               rdf:type ui:update ;
               ui:childIndex 0 ;
@@ -15984,7 +16000,7 @@ lmdoc:ViewAsTurtle
   ui:responseType ui:HTML ;
   rdfs:comment "Action to view as Turtle" ;
   rdfs:label "View as Turtle" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ViewAsXML
   rdf:type ui:NodeClass ;
@@ -16018,7 +16034,7 @@ lmdoc:ViewAsXML
   ui:responseType ui:HTML ;
   rdfs:comment "Action to view as XML" ;
   rdfs:label "View as XML" ;
-  rdfs:subClassOf lmdoc:SubElements ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ViewElements
   rdf:type ui:NodeClass ;
@@ -16800,9 +16816,7 @@ lmdoc:createHTMLdocumentForResource
   sm:returnModule lmdoc:returnFromCreateHTMLforResource ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/sparqlmotion?id=createHTMLdocumentForResource&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23ScriptGraph
-
-http://localhost:8083/tbl/sparqlmotion?id=createHTMLdocumentForResource&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23SchemaGraph""" ;
+http://localhost:8083/tbl/sparqlmotion?id=createHTMLdocumentForResource&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23ScriptGraph""" ;
   rdfs:label "create HTML document for resource" ;
   rdfs:subClassOf sm:Functions ;
 .

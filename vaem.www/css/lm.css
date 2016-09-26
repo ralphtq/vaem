@@ -26,7 +26,8 @@
 .pr5px {padding-right: 5px;}
 .pr10px {padding-right: 10px;}
 
-
+.lightBlue {color:lightBlue}
+.gray {color:gray}
 
 
 body {
@@ -159,9 +160,7 @@ pre { margin-left: 2em }
   -webkit-border-radius: 12;
   -moz-border-radius: 12;
   border-radius: 12px;
-  font-family: Arial;
   color: #000000;
-  font-size: 10px;
   font-weight: normal;
   padding: 5px 8px 5px 8px;
   text-decoration: none;
@@ -335,24 +334,6 @@ table.lm-table {
 	width: 100%
 	}
 
-table.lm-table2 { 
-	border: 1px solid black; 
-	border-collapse: collapse; 
-	font-family: Tahoma; 
-	font-size: 10px; 
-	padding: 4px; 
-	vertical-align: top;
-	}
-
-table.lm-table3 {
-	width: 100% ;
-	border-width: 1px;
-	border-spacing: 1px;
-	border: 1px solid black; 
-	border-color: black;
-	border-collapse: collapse;
-	background-color: #ffffff;
-}
 
 tr,td.lm-borders {
 	border-width: 1px;
@@ -366,7 +347,6 @@ td.lm-table-row-label {
     border: 1px solid black; 
 	border-collapse: collapse; 
 	font-family: Tahoma; 
-	font-size: 9pt; 
 	padding: 4px 4px; 
 	vertical-align: top;
 	background-color: #bfbfbf;
@@ -397,13 +377,11 @@ thead.lm-table-header {
 tbody.lm-table-body {
 /*	border-collapse: collapse; */
 	font-family: Tahoma; 
-	font-size: 9pt; 
 	padding: 2px 2px; 
 	vertical-align: top;
 }
 
 th.lm-column-label {
-	font-size: 12px;
 	font-weight: bold;
 	text-align:center;
 	vertical-align: middle ;
@@ -411,13 +389,11 @@ th.lm-column-label {
   }
 
 tr.lm-inner-row {
-	font-size: 10px;
 	text-align:center;
 	vertical-align:middle ;
   }
 
 tr.lm-row {
-	font-size: 10px;
 	text-align:left;
 	vertical-align:middle ;
 	border-width: 2px; 
@@ -429,7 +405,6 @@ tr.lm-row {
   }
  
  tr.lm-row-buttons {
-	font-size: 10px;
 	text-align:left;
 	vertical-align:middle ;
 	border-width: 2px; 
@@ -441,7 +416,6 @@ tr.lm-row {
   }
 
 td.lm-column {
-	font-size: 12px;
 	vertical-align:middle ;
 	border-width: 1px;
     border-top-style: solid;
@@ -452,7 +426,6 @@ td.lm-column {
   }
   
  td.lm-column-buttons {
-	font-size: 10px;
 	text-align: center;
 	vertical-align:middle ;
 	border-width: 1px;
@@ -738,7 +711,7 @@ div.lm-resource-box {
  }
 
 div.lm-header-box {
-    width: 320px;
+    width: 480px;
     padding: 10px;
     border: 1px solid gray;
     margin: 0px;
