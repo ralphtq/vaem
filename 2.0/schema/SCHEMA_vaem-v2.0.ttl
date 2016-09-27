@@ -324,7 +324,17 @@ vaem:GraphMetaData
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty vaem:publishedDate ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:rdfxmlFileURL ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty vaem:releaseDate ;
     ] ;
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
@@ -720,6 +730,16 @@ vaem:previousPublishedVersion
   rdfs:label "previous published version" ;
   rdfs:range xsd:anyURI ;
 .
+vaem:publishedDate
+  rdf:type owl:DatatypeProperty ;
+  dct:description "The property \"vaem:publishedDate\" specifies the date and time that the ontology was published. This is distinct from a release date in the sense that \"release\" may not imply being published."^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "published date" ;
+  rdfs:range xsd:date ;
+  rdfs:seeAlso vaem:releaseDate ;
+  rdfs:subPropertyOf vaem:date ;
+.
 vaem:rationale
   rdf:type owl:DatatypeProperty ;
   dct:description "A description of a justification for some other assertion or value"^^rdf:HTML ;
@@ -745,10 +765,12 @@ vaem:reifiableBy
 .
 vaem:releaseDate
   rdf:type owl:DatatypeProperty ;
-  dct:description "The property \"vaem:releaseDate\" is intended for general use as the name implies.  The range of the property is set as \"vaem:dateUnion\" so as to allow a value to have a number of forms from a  year only to a full timestamp"^^rdf:HTML ;
+  dct:description "The property \"vaem:releaseDate\" specifies the date and time that the ontology was released. This is distinct from a publication date in the sense that \"release\" may not imply being published."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "release date" ;
+  rdfs:range xsd:date ;
+  rdfs:seeAlso vaem:publishedDate ;
   rdfs:subPropertyOf vaem:date ;
 .
 vaem:revision
