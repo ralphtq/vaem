@@ -16205,42 +16205,11 @@ lmdoc:ViewAsTurtle
               ui:childIndex 1 ;
             ] ;
           ui:child [
-              rdf:type ui:update ;
+              rdf:type ui:resourceView ;
               ui:childIndex 0 ;
-              ui:updateQuery [
-                  rdf:type sp:Modify ;
-                  sp:insertPattern (
-                      [
-                        rdf:type sp:NamedGraph ;
-                        sp:elements (
-                            [
-                              sp:object [
-                                  sp:varName "o" ;
-                                ] ;
-                              sp:predicate [
-                                  sp:varName "p" ;
-                                ] ;
-                              sp:subject [
-                                  sp:varName "resource" ;
-                                ] ;
-                            ]
-                          ) ;
-                        sp:graphNameNode ui:tempGraph ;
-                      ]
-                    ) ;
-                  sp:where (
-                      [
-                        sp:object [
-                            sp:varName "o" ;
-                          ] ;
-                        sp:predicate [
-                            sp:varName "p" ;
-                          ] ;
-                        sp:subject [
-                            sp:varName "resource" ;
-                          ] ;
-                      ]
-                    ) ;
+              ui:matchIds "form" ;
+              ui:resource [
+                  sp:varName "resource" ;
                 ] ;
             ] ;
           ui:childIndex 1 ;
@@ -16260,24 +16229,30 @@ lmdoc:ViewAsXML
       rdfs:comment "The URI resource to display." ;
     ] ;
   ui:prototype [
-      rdf:type html:A ;
-      html:href "javascript:void(0);" ;
-      html:onclick [
-          rdf:type ui:concat ;
-          sp:arg1 "alert('Linked Data XML view for " ;
-          sp:arg2 [
-              rdf:type smf:qname ;
-              sp:arg1 [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type html:A ;
+          html:class "lm-simulated-link" ;
+          html:onclick "javascript: lm.popup('lm-export-xml','Export XML',600,800)" ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text "XML" ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:child [
+          rdf:type html:Div ;
+          html:id "lm-export-xml" ;
+          ui:child [
+              rdf:type ui:resourceView ;
+              ui:childIndex 0 ;
+              ui:matchIds "form" ;
+              ui:resource [
                   sp:varName "resource" ;
                 ] ;
             ] ;
-          sp:arg3 " to be done'); return false;" ;
-        ] ;
-      html:style "padding-right:20px;" ;
-      ui:child [
-          rdf:type ui:TextNode ;
-          ui:childIndex 0 ;
-          ui:text "XML" ;
+          ui:childIndex 1 ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
