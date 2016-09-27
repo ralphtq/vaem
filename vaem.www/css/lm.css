@@ -182,6 +182,10 @@ pre { margin-left: 2em }
    background: #1b435e;
    }
 
+.lm-buttons-dock .lm-simulated-link + div[id*="lm-export"] {
+	display: none;
+}
+
 .checkmark {
     display:inline-block;
     width: 22px;

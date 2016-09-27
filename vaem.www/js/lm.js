@@ -185,8 +185,7 @@ lm.acceptSelection = function(tableId, graph, overlay) {
          params = params + "&resource=" + escape(selection);
          params = params + "&overlay=" + escape(overlay);
          
-         lm.execSPARQLMotion('createHTMLdocumentForResource',params);
-         // http://localhost:8083/tbl/sparqlmotion?id=createHTMLdocumentForResource&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23SchemaGraph
+         lm.execSWP('lmdoc:CreateHTMLforResource',params);
         });
 };
 
@@ -274,7 +273,7 @@ lm.openHelperDialog = function(title, data) {
 lm.openModalDialog = function(loadId, title, width, height, buttons) {
 	var theContent = $('#'+loadId) ;
 	var options = {
-			modal: true,
+			modal: false,
 			title: title,
 			resizeable: true,
 			draggable: true
