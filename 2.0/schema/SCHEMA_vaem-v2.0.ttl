@@ -194,7 +194,7 @@ vaem:GMD_VAEM
   rdf:type vaem:GraphMetaData ;
   dct:abstract "VAEM stands for \"Vocabulary for Attaching Essential Metadata\". What VAEM regards as essential metadata is data about dates and times, confidentiality, and other characterisitic qualifiers of the ontology, but also references to where a ontology is documented and where to find ontology registration for governance, attribution and provenance. VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix \"dct\". VAEM is OWL-DL compliant." ;
   dct:created "2011-04-20"^^xsd:date ;
-  dct:modified "2016-09-25"^^xsd:date ;
+  dct:modified "2016-09-27"^^xsd:date ;
   dct:title "VAEM Version 2.0 Metadata" ;
   vaem:description "VAEM stands for \"Vocabulary for Attaching Essential Metadata\". What VAEM regards as essential metadata is data about dates and times, confidentiality, and other characterisitic qualifiers of the ontology, but also references to where a ontology is documented and where to find ontology registration for governance, attribution and provenance. VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix \"dct\"."^^rdf:HTML ;
   vaem:hasGraphRole vaem:SchemaGraph ;
@@ -446,6 +446,14 @@ vaem:ServicesGraph
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Services Graph" ;
+.
+vaem:ShapesGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph of SHAPE SHACL constraints."^^rdf:HTML ;
+  vaem:filePrefix "SHAPEES" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "SHAPES Graph" ;
 .
 vaem:TopQuadrant
   rdf:type vaem:Party ;
