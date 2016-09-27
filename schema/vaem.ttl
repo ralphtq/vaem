@@ -1,4 +1,5 @@
 # baseURI: http://www.linkedmodel.org/schema/vaem
+# prefix: vaem
 
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -200,7 +201,7 @@ vaem:GMD_VAEM
   vaem:hasGraphRole vaem:SchemaGraph ;
   vaem:hasOwner vaem:TopQuadrant ;
   vaem:hasSteward vaem:TopQuadrant ;
-  vaem:intent "The purpose of VAEM is to provide, by import, a foundation for commonly needed resources for metadata on an ontology." ;
+  vaem:intent "The purpose of VAEM is to provide a foundation for commonly needed resources for metadata on an ontology." ;
   vaem:isMetadataFor <http://www.linkedmodel.org/2.0/schema/vaem> ;
   vaem:latestPublishedVersion "http://www.linkedmodel.org/doc/2015/SCHEMA_vaem-v2.0"^^xsd:anyURI ;
   vaem:logo "http://www.linkedmodel.org/lib/lm/images/logos/vaem_logo_300x110.png"^^xsd:anyURI ;
@@ -209,6 +210,7 @@ vaem:GMD_VAEM
   vaem:namespacePrefix "vaem" ;
   vaem:owner "TopQuadrant, Inc." ;
   vaem:previousPublishedVersion "http://linkedmodel.org/doc/vaem/1.2/"^^xsd:anyURI ;
+  vaem:releaseDate "2016-09-27"^^xsd:date ;
   vaem:revision "2.0" ;
   vaem:title "Vocabulary for Attaching Essential Metadata (VAEM) - Version 2.0" ;
   vaem:turtleFileURL "http://www.linkedmodel.org/2.0/schema/SCHEMA_vaem-v2.0.ttl"^^xsd:anyURI ;

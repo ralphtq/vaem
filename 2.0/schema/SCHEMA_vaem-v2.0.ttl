@@ -209,6 +209,7 @@ vaem:GMD_VAEM
   vaem:namespacePrefix "vaem" ;
   vaem:owner "TopQuadrant, Inc." ;
   vaem:previousPublishedVersion "http://linkedmodel.org/doc/vaem/1.2/"^^xsd:anyURI ;
+  vaem:releaseDate "2016-09-27"^^xsd:date ;
   vaem:revision "2.0" ;
   vaem:title "Vocabulary for Attaching Essential Metadata (VAEM) - Version 2.0" ;
   vaem:turtleFileURL "http://www.linkedmodel.org/2.0/schema/SCHEMA_vaem-v2.0.ttl"^^xsd:anyURI ;
