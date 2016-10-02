@@ -2088,7 +2088,7 @@ lmdoc:CatalogTable
                                         ] ;
                                       ui:child [
                                           rdf:type html:Button ;
-                                          html:class "lm-button size-8" ;
+                                          html:class "lm-button size-12" ;
                                           html:onclick [
                                               rdf:type ui:concat ;
                                               sp:arg1 "lm.openSWP('lmdoc:ClassesMaintainer','&graph=" ;
@@ -2117,7 +2117,7 @@ lmdoc:CatalogTable
                                         ] ;
                                       ui:child [
                                           rdf:type html:Button ;
-                                          html:class "lm-button size-8" ;
+                                          html:class "lm-button size-12" ;
                                           html:onclick [
                                               rdf:type ui:concat ;
                                               sp:arg1 "lm.openSWP('lmdoc:Graph','&graph=" ;
@@ -2146,7 +2146,7 @@ lmdoc:CatalogTable
                                         ] ;
                                       ui:child [
                                           rdf:type html:Button ;
-                                          html:class "lm-button size-8" ;
+                                          html:class "lm-button size-12" ;
                                           html:onclick [
                                               rdf:type ui:concat ;
                                               sp:arg1 "lm.openSWP('lmdoc:GraphMetadata','&graph=" ;
@@ -2164,7 +2164,7 @@ lmdoc:CatalogTable
                                         ] ;
                                       ui:child [
                                           rdf:type html:Button ;
-                                          html:class "lm-button size-8" ;
+                                          html:class "lm-button size-12" ;
                                           html:onclick [
                                               rdf:type ui:concat ;
                                               sp:arg1 "lm.openSWP('lmdoc:InstancesMaintainer','&graph=" ;
@@ -2193,7 +2193,7 @@ lmdoc:CatalogTable
                                         ] ;
                                       ui:child [
                                           rdf:type html:Button ;
-                                          html:class "lm-button size-8" ;
+                                          html:class "lm-button size-12" ;
                                           html:onclick [
                                               rdf:type ui:concat ;
                                               sp:arg1 "lm.openSWP('lmdoc:Preview','&catalogEntry=" ;
@@ -2242,7 +2242,7 @@ lmdoc:CatalogTable
                                         ] ;
                                       ui:child [
                                           rdf:type html:Button ;
-                                          html:class "lm-button size-8" ;
+                                          html:class "lm-button size-12" ;
                                           html:onclick [
                                               rdf:type ui:concat ;
                                               sp:arg1 "lm.openSWP('lmdoc:PropertiesMaintainer','&graph=" ;
@@ -2277,7 +2277,7 @@ lmdoc:CatalogTable
                                             ] ;
                                           ui:child [
                                               rdf:type html:Button ;
-                                              html:class "lm-button size-8" ;
+                                              html:class "lm-button size-12" ;
                                               html:onclick [
                                                   rdf:type ui:concat ;
                                                   sp:arg1 "window.open('" ;
@@ -3012,6 +3012,41 @@ lmdoc:ClassInstances
     ] ;
   ui:responseType ui:HTML ;
   rdfs:label "Class Instances" ;
+  rdfs:subClassOf lmdoc:Parts ;
+.
+lmdoc:ClassPopupSummary
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:resource ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type lmdoc:DetailedClassView ;
+          arg:class [
+              sp:varName "resource" ;
+            ] ;
+          arg:showDiagram "false"^^xsd:boolean ;
+          arg:showInstances "false"^^xsd:boolean ;
+          arg:showTitle "false"^^xsd:boolean ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type lmdoc:Footer ;
+          ui:childIndex 2 ;
+        ] ;
+      ui:child [
+          rdf:type lmdoc:ResourceHeader ;
+          arg:resource [
+              sp:varName "resource" ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:label "Class Summary" ;
   rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ClassSummary
@@ -4750,7 +4785,7 @@ lmdoc:DetailedInstanceView
               html:class "ies_resource_summary" ;
               ui:child [
                   rdf:type html:P ;
-                  html:class "ies_qname" ;
+                  html:class "size-10" ;
                   ui:child [
                       rdf:type ui:TextNode ;
                       ui:childIndex 0 ;
@@ -4769,6 +4804,26 @@ lmdoc:DetailedInstanceView
                   ui:childIndex 1 ;
                 ] ;
               ui:child [
+                  rdf:type html:P ;
+                  html:class "size-10" ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "URI is " ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 1 ;
+                      ui:text [
+                          rdf:type sp:str ;
+                          sp:arg1 [
+                              sp:varName "resource" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 2 ;
+                ] ;
+              ui:child [
                   rdf:type ui:call ;
                   arg:object [
                       sp:varName "resource" ;
@@ -4784,7 +4839,7 @@ lmdoc:DetailedInstanceView
                         ] ;
                       ui:childIndex 0 ;
                     ] ;
-                  ui:childIndex 3 ;
+                  ui:childIndex 4 ;
                   ui:template [
                       rdf:type swa:modeProperty ;
                       arg:predicate swa:formSubjectPredicateSelectionTemplate ;
@@ -4819,7 +4874,7 @@ lmdoc:DetailedInstanceView
                         ] ;
                       ui:childIndex 1 ;
                     ] ;
-                  ui:childIndex 2 ;
+                  ui:childIndex 3 ;
                   ui:template [
                       rdf:type swa:modeProperty ;
                       arg:predicate swa:formObjectPredicateSelectionTemplate ;
@@ -13973,110 +14028,187 @@ lmdoc:ResourcesGenerator
                                       rdf:type html:Td ;
                                       html:class "lm-column" ;
                                       ui:child [
-                                          rdf:type html:Button ;
-                                          html:class "lm-button" ;
-                                          html:onclick [
-                                              rdf:type ui:concat ;
-                                              sp:arg1 "lm.generate('" ;
+                                          rdf:type html:Div ;
+                                          html:class "lm-buttons-dock" ;
+                                          let:resourceDiv [
+                                              rdf:type sp:concat ;
+                                              sp:arg1 "lm-export-" ;
                                               sp:arg2 [
-                                                  rdf:type xsd:string ;
-                                                  sp:arg1 [
-                                                      sp:varName "resource" ;
-                                                    ] ;
+                                                  sp:varName "id" ;
                                                 ] ;
-                                              sp:arg3 "','" ;
-                                              sp:arg4 [
-                                                  rdf:type xsd:string ;
-                                                  sp:arg1 [
-                                                      sp:varName "graph" ;
-                                                    ] ;
-                                                ] ;
-                                              sp:arg5 "','" ;
-                                              sp:arg6 [
-                                                  rdf:type ui:encodeURL ;
-                                                  sp:arg1 [
-                                                      sp:varName "view" ;
-                                                    ] ;
-                                                ] ;
-                                              sp:arg7 "','" ;
-                                              sp:arg8 [
-                                                  sp:varName "overlay" ;
-                                                ] ;
-                                              sp:arg9 "')" ;
                                             ] ;
                                           ui:child [
-                                              rdf:type ui:TextNode ;
+                                              rdf:type html:Button ;
+                                              html:class "lm-button lm-simulated-link" ;
+                                              html:onclick [
+                                                  rdf:type ui:concat ;
+                                                  sp:arg1 "javascript: lm.popup('" ;
+                                                  sp:arg2 [
+                                                      sp:varName "resourceDiv" ;
+                                                    ] ;
+                                                  sp:arg3 "','" ;
+                                                  sp:arg4 [
+                                                      rdf:type ui:label ;
+                                                      sp:arg1 [
+                                                          sp:varName "resource" ;
+                                                        ] ;
+                                                    ] ;
+                                                  sp:arg5 "',600,600)" ;
+                                                ] ;
+                                              ui:child [
+                                                  rdf:type ui:TextNode ;
+                                                  ui:childIndex 0 ;
+                                                  ui:text "Popup View" ;
+                                                ] ;
                                               ui:childIndex 0 ;
-                                              ui:text "Go" ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type html:Button ;
+                                              html:class "lm-button" ;
+                                              html:onclick [
+                                                  rdf:type ui:concat ;
+                                                  sp:arg1 "lm.generate('" ;
+                                                  sp:arg2 [
+                                                      rdf:type xsd:string ;
+                                                      sp:arg1 [
+                                                          sp:varName "resource" ;
+                                                        ] ;
+                                                    ] ;
+                                                  sp:arg3 "','" ;
+                                                  sp:arg4 [
+                                                      rdf:type xsd:string ;
+                                                      sp:arg1 [
+                                                          sp:varName "graph" ;
+                                                        ] ;
+                                                    ] ;
+                                                  sp:arg5 "','" ;
+                                                  sp:arg6 [
+                                                      rdf:type ui:encodeURL ;
+                                                      sp:arg1 [
+                                                          sp:varName "view" ;
+                                                        ] ;
+                                                    ] ;
+                                                  sp:arg7 "','" ;
+                                                  sp:arg8 [
+                                                      sp:varName "overlay" ;
+                                                    ] ;
+                                                  sp:arg9 "')" ;
+                                                ] ;
+                                              ui:child [
+                                                  rdf:type ui:TextNode ;
+                                                  ui:childIndex 0 ;
+                                                  ui:text "Page View" ;
+                                                ] ;
+                                              ui:childIndex 2 ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type html:Div ;
+                                              html:id [
+                                                  sp:varName "resourceDiv" ;
+                                                ] ;
+                                              ui:child [
+                                                  rdf:type html:Div ;
+                                                  html:id "content_container" ;
+                                                  ui:child [
+                                                      rdf:type ui:setContext ;
+                                                      ui:child [
+                                                          rdf:type ui:resourceView ;
+                                                          ui:childIndex 0 ;
+                                                          ui:matchIds "lmdoc-popup" ;
+                                                          ui:resource [
+                                                              rdf:type sp:iri ;
+                                                              sp:arg1 [
+                                                                  sp:varName "resource" ;
+                                                                ] ;
+                                                            ] ;
+                                                        ] ;
+                                                      ui:childIndex 0 ;
+                                                      ui:queryGraph [
+                                                          rdf:type ui:unionOfGraphs ;
+                                                          sp:arg1 [
+                                                              rdf:type ui:graphWithImports ;
+                                                              sp:arg1 [
+                                                                  sp:varName "graph" ;
+                                                                ] ;
+                                                            ] ;
+                                                          sp:arg2 [
+                                                              rdf:type ui:graphWithImports ;
+                                                              sp:arg1 [
+                                                                  rdf:type sp:iri ;
+                                                                  sp:arg1 [
+                                                                      sp:varName "overlay" ;
+                                                                    ] ;
+                                                                ] ;
+                                                            ] ;
+                                                        ] ;
+                                                    ] ;
+                                                  ui:childIndex 0 ;
+                                                ] ;
+                                              ui:childIndex 1 ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type html:Div ;
+                                              ui:child [
+                                                  rdf:type html:Div ;
+                                                  html:class "clear-both" ;
+                                                  ui:childIndex 2 ;
+                                                ] ;
+                                              ui:child [
+                                                  rdf:type html:Div ;
+                                                  html:class "left pt24px pr8px pl8px" ;
+                                                  ui:child [
+                                                      rdf:type html:Span ;
+                                                      html:class "size-14" ;
+                                                      ui:child [
+                                                          rdf:type ui:TextNode ;
+                                                          ui:childIndex 0 ;
+                                                          ui:text "Generate" ;
+                                                        ] ;
+                                                      ui:childIndex 0 ;
+                                                    ] ;
+                                                  ui:childIndex 0 ;
+                                                ] ;
+                                              ui:child [
+                                                  rdf:type html:Div ;
+                                                  html:class "sliderCheckbox left" ;
+                                                  ui:child [
+                                                      rdf:type html:Input ;
+                                                      html:id [
+                                                          rdf:type fn:concat ;
+                                                          sp:arg1 "CB_" ;
+                                                          sp:arg2 [
+                                                              sp:varName "id" ;
+                                                            ] ;
+                                                        ] ;
+                                                      html:name [
+                                                          rdf:type fn:concat ;
+                                                          sp:arg1 "CB_" ;
+                                                          sp:arg2 [
+                                                              sp:varName "id" ;
+                                                            ] ;
+                                                        ] ;
+                                                      html:type "checkbox" ;
+                                                      html:value "None" ;
+                                                      ui:childIndex 0 ;
+                                                    ] ;
+                                                  ui:child [
+                                                      rdf:type html:Label ;
+                                                      html:for [
+                                                          rdf:type fn:concat ;
+                                                          sp:arg1 "CB_" ;
+                                                          sp:arg2 [
+                                                              sp:varName "id" ;
+                                                            ] ;
+                                                        ] ;
+                                                      ui:childIndex 1 ;
+                                                    ] ;
+                                                  ui:childIndex 1 ;
+                                                ] ;
+                                              ui:childIndex 3 ;
                                             ] ;
                                           ui:childIndex 0 ;
                                         ] ;
                                       ui:childIndex 3 ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type html:Td ;
-                                      html:class "lm-column" ;
-                                      ui:child [
-                                          rdf:type html:Button ;
-                                          html:class "lm-button" ;
-                                          html:onclick [
-                                              rdf:type ui:concat ;
-                                              sp:arg1 "lm.openResourceViewDialog('" ;
-                                              sp:arg2 [
-                                                  rdf:type xsd:string ;
-                                                  sp:arg1 [
-                                                      sp:varName "resource" ;
-                                                    ] ;
-                                                ] ;
-                                              sp:arg3 "','" ;
-                                              sp:arg4 [
-                                                  rdf:type xsd:string ;
-                                                  sp:arg1 [
-                                                      sp:varName "graph" ;
-                                                    ] ;
-                                                ] ;
-                                              sp:arg5 "','" ;
-                                              sp:arg6 [
-                                                  rdf:type ui:encodeURL ;
-                                                  sp:arg1 [
-                                                      sp:varName "summaryView" ;
-                                                    ] ;
-                                                ] ;
-                                              sp:arg7 "','" ;
-                                              sp:arg8 [
-                                                  sp:varName "overlay" ;
-                                                ] ;
-                                              sp:arg9 "')" ;
-                                            ] ;
-                                          ui:child [
-                                              rdf:type ui:TextNode ;
-                                              ui:childIndex 0 ;
-                                              ui:text "Go" ;
-                                            ] ;
-                                          ui:childIndex 0 ;
-                                        ] ;
-                                      ui:childIndex 4 ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type html:Td ;
-                                      html:class "lm-column" ;
-                                      ui:child [
-                                          rdf:type html:Input ;
-                                          html:name [
-                                              rdf:type ui:concat ;
-                                              sp:arg1 [
-                                                  rdf:type fn:concat ;
-                                                  sp:arg1 "CB_" ;
-                                                  sp:arg2 [
-                                                      sp:varName "id" ;
-                                                    ] ;
-                                                ] ;
-                                              sp:arg2 " " ;
-                                            ] ;
-                                          html:type "checkbox" ;
-                                          ui:childIndex 0 ;
-                                        ] ;
-                                      ui:childIndex 5 ;
                                     ] ;
                                   ui:child [
                                       rdf:type html:Td ;
@@ -14140,29 +14272,9 @@ lmdoc:ResourcesGenerator
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
-                                  ui:text "Generate" ;
-                                ] ;
-                              ui:childIndex 5 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Th ;
-                              html:class "lm-column-label" ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Open in New Tab" ;
+                                  ui:text "Actions" ;
                                 ] ;
                               ui:childIndex 3 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Th ;
-                              html:class "lm-column-label" ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Quick Look" ;
-                                ] ;
-                              ui:childIndex 4 ;
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
@@ -19103,6 +19215,16 @@ rdfs:Class
   ui:instanceView [
       rdf:type ui:group ;
       ui:child [
+          rdf:type lmdoc:ClassPopupSummary ;
+          arg:resource spin:_this ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:id "lmdoc-popup" ;
+      ui:priority -20 ;
+    ] ;
+  ui:instanceView [
+      rdf:type ui:group ;
+      ui:child [
           rdf:type lmdoc:DetailedClassView ;
           arg:class spin:_this ;
           arg:showConstructors "false"^^xsd:boolean ;
@@ -19156,6 +19278,11 @@ rdfs:Resource
               rdf:type ui:TextNode ;
               ui:childIndex 1 ;
               ui:text spin:_this ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 2 ;
+              ui:text "?" ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -19274,6 +19401,12 @@ rdfs:Resource
       rdf:type lmdoc:DetailedInstanceView ;
       arg:resource spin:_this ;
       ui:id "form" ;
+      ui:priority 9 ;
+    ] ;
+  ui:instanceView [
+      rdf:type lmdoc:DetailedInstanceView ;
+      arg:resource spin:_this ;
+      ui:id "lmdoc-popup" ;
       ui:priority 9 ;
     ] ;
 .
