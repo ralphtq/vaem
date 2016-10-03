@@ -170,6 +170,12 @@ arg:titleFunction
   rdf:type rdf:Property ;
   rdfs:subPropertyOf sp:arg ;
 .
+arg:topElement
+  rdf:type rdf:Property ;
+  rdfs:label "top element" ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf sp:arg ;
+.
 spin:RuleProperty
   rdfs:subClassOf [
       rdf:type owl:Restriction ;
@@ -4780,6 +4786,28 @@ lmdoc:DetailedInstanceView
       ui:child [
           rdf:type html:Div ;
           html:class "tuiView" ;
+          let:top "lmdoc-top-detailed-instance-view" ;
+          ui:child [
+              rdf:type html:A ;
+              html:id [
+                  sp:varName "top" ;
+                ] ;
+              ui:child [
+                  rdf:type html:H2 ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text [
+                          rdf:type ui:label ;
+                          sp:arg1 [
+                              sp:varName "resource" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
           ui:child [
               rdf:type html:Div ;
               html:class "ies_resource_summary" ;
@@ -4824,26 +4852,11 @@ lmdoc:DetailedInstanceView
                   ui:childIndex 2 ;
                 ] ;
               ui:child [
-                  rdf:type ui:call ;
-                  arg:object [
-                      sp:varName "resource" ;
-                    ] ;
-                  ui:child [
-                      rdf:type swa:SubjectsGroup ;
-                      arg:label "Incoming References" ;
-                      arg:object [
-                          sp:varName "resource" ;
-                        ] ;
-                      arg:predicates [
-                          sp:varName "rs" ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 4 ;
-                  ui:template [
-                      rdf:type swa:modeProperty ;
-                      arg:predicate swa:formSubjectPredicateSelectionTemplate ;
-                    ] ;
+                  rdf:type ui:CommentNode ;
+                  ui:childIndex 6 ;
+                  rdfs:comment """ui:call arg:object=\"{= ?resource }\" ui:template=\"{= swa:modeProperty(swa:formSubjectPredicateSelectionTemplate) }\">
+<swa:SubjectsGroup arg:label=\"Incoming References\" arg:object=\"{= ?resource }\" arg:predicates=\"{= ?rs }\"/>
+</ui:call""" ;
                 ] ;
               ui:child [
                   rdf:type ui:call ;
@@ -4887,23 +4900,29 @@ lmdoc:DetailedInstanceView
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
+              ui:child [
+                  rdf:type lmdoc:ResourceFooter ;
+                  arg:options "JSON, JSONLD,RDF/XML,TURTLE" ;
+                  arg:resource [
+                      sp:varName "resource" ;
+                    ] ;
+                  arg:topElement [
+                      sp:varName "top" ;
+                    ] ;
+                  ui:childIndex 5 ;
+                ] ;
+              ui:child [
+                  rdf:type lmdoc:VSpace ;
+                  arg:margin "40px;" ;
+                  ui:childIndex 4 ;
+                ] ;
               ui:childIndex 1 ;
             ] ;
-          ui:child [
-              rdf:type html:H2 ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text [
-                      rdf:type ui:label ;
-                      sp:arg1 [
-                          sp:varName "resource" ;
-                        ] ;
-                    ] ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
           ui:childIndex 0 ;
+        ] ;
+      ui:child [
+          rdf:type lmdoc:Footer ;
+          ui:childIndex 1 ;
         ] ;
       ui:varName "createLinkFunction" ;
       ui:varValue lmdoc:createLinkForMainForm ;
@@ -13422,6 +13441,11 @@ lmdoc:ResourceFooter
       spl:predicate arg:resource ;
       spl:valueType rdfs:Resource ;
     ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:topElement ;
+      spl:valueType xsd:string ;
+    ] ;
   ui:prototype [
       rdf:type ui:group ;
       ui:child [
@@ -13474,7 +13498,7 @@ lmdoc:ResourceFooter
                       sp:arg1 [
                           sp:varName "options" ;
                         ] ;
-                      sp:arg2 "json" ;
+                      sp:arg2 "JSON" ;
                     ] ;
                 ] ;
               ui:child [
@@ -13510,7 +13534,7 @@ lmdoc:ResourceFooter
                       sp:arg1 [
                           sp:varName "options" ;
                         ] ;
-                      sp:arg2 "RDF" ;
+                      sp:arg2 "RDF/XML" ;
                     ] ;
                 ] ;
               ui:child [
@@ -13552,20 +13576,13 @@ lmdoc:ResourceFooter
               ui:childIndex 1 ;
             ] ;
           ui:child [
-              rdf:type html:Div ;
-              html:style "float:left;" ;
-              ui:child [
-                  rdf:type html:A ;
-                  html:href "#lmdoc_top" ;
-                  ui:child [
-                      rdf:type html:Img ;
-                      html:src "http://linkedmodel.org/lib/lm/images/icons/doc-back-arrow.png" ;
-                      html:width "24px;" ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
+              rdf:type ui:CommentNode ;
               ui:childIndex 0 ;
+              rdfs:comment """div style=\"float:left;\">
+    <a href=\"#{= ?topElement }\">
+        <img src=\"http://linkedmodel.org/lib/lm/images/icons/doc-back-arrow.png\" width=\"24px;\"/>
+    </a>
+</div""" ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -14596,6 +14613,31 @@ lmdoc:Services
   rdf:type ui:Service ;
   rdfs:label "Services" ;
   rdfs:subClassOf ui:Services ;
+.
+lmdoc:ShowAsTurtle
+  rdf:type ui:Service ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type ui:setContext ;
+          ui:child [
+              rdf:type ui:return ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:queryGraph [
+              sp:varName "graph" ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:comment "A service for returning a graph in Turtle format" ;
+  rdfs:label "Show as Turtle" ;
+  rdfs:subClassOf ui:TurtleServices ;
 .
 lmdoc:SubjectElements
   rdf:type ui:NodeClass ;
@@ -16016,10 +16058,29 @@ lmdoc:ViewAsJSON
     ] ;
   ui:prototype [
       rdf:type ui:group ;
+      let:nl "" ;
+      let:space " " ;
+      let:title [
+          rdf:type sp:concat ;
+          sp:arg1 "JSON for " ;
+          sp:arg2 [
+              rdf:type smf:qname ;
+              sp:arg1 [
+                  sp:varName "resource" ;
+                ] ;
+            ] ;
+        ] ;
       ui:child [
           rdf:type html:A ;
           html:class "lm-simulated-link" ;
-          html:onclick "javascript: lm.popup('lm-export-json','Export JSON',600,800)" ;
+          html:onclick [
+              rdf:type ui:concat ;
+              sp:arg1 "javascript: lm.popup('lm-export-json','" ;
+              sp:arg2 [
+                  sp:varName "title" ;
+                ] ;
+              sp:arg3 "',600,800)" ;
+            ] ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
@@ -16031,11 +16092,233 @@ lmdoc:ViewAsJSON
           rdf:type html:Div ;
           html:id "lm-export-json" ;
           ui:child [
-              rdf:type html:P ;
+              rdf:type ui:bind ;
               ui:child [
-                  rdf:type ui:TextNode ;
+                  rdf:type html:Pre ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text [
+                          sp:varName "output" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:stringify ;
+                  ui:child [
+                      rdf:type swon:Object ;
+                      ui:child [
+                          rdf:type swon:Value ;
+                          arg:name "qname" ;
+                          arg:value [
+                              rdf:type smf:qname ;
+                              sp:arg1 [
+                                  sp:varName "resource" ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 4 ;
+                        ] ;
+                      ui:child [
+                          rdf:type swon:Value ;
+                          arg:name "resource" ;
+                          arg:value [
+                              rdf:type ui:label ;
+                              sp:arg1 [
+                                  sp:varName "resource" ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type swon:Value ;
+                          arg:name "uri" ;
+                          arg:value [
+                              rdf:type sp:str ;
+                              sp:arg1 [
+                                  sp:varName "resource" ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 8 ;
+                        ] ;
+                      ui:child [
+                          rdf:type swon:Values ;
+                          arg:name "properties" ;
+                          ui:child [
+                              rdf:type ui:forEach ;
+                              ui:child [
+                                  rdf:type swon:Value ;
+                                  arg:name [
+                                      rdf:type ui:label ;
+                                      sp:arg1 [
+                                          sp:varName "p" ;
+                                        ] ;
+                                    ] ;
+                                  arg:value [
+                                      rdf:type sp:if ;
+                                      sp:arg1 [
+                                          rdf:type sp:isIRI ;
+                                          sp:arg1 [
+                                              sp:varName "o" ;
+                                            ] ;
+                                        ] ;
+                                      sp:arg2 [
+                                          rdf:type smf:qname ;
+                                          sp:arg1 [
+                                              sp:varName "o" ;
+                                            ] ;
+                                        ] ;
+                                      sp:arg3 [
+                                          rdf:type sp:str ;
+                                          sp:arg1 [
+                                              sp:varName "o" ;
+                                            ] ;
+                                        ] ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text [
+                                      sp:varName "space" ;
+                                    ] ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 2 ;
+                                  ui:text """
+""" ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 3 ;
+                                  ui:text [
+                                      sp:varName "space" ;
+                                    ] ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 4 ;
+                                  ui:text [
+                                      sp:varName "space" ;
+                                    ] ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 5 ;
+                                  ui:text [
+                                      sp:varName "space" ;
+                                    ] ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 6 ;
+                                  ui:text [
+                                      sp:varName "space" ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                              ui:resultSet [
+                                  rdf:type sp:Select ;
+                                  sp:orderBy (
+                                      [
+                                        rdf:type ui:label ;
+                                        sp:arg1 [
+                                            sp:varName "p" ;
+                                          ] ;
+                                      ]
+                                    ) ;
+                                  sp:resultVariables (
+                                      [
+                                        sp:varName "p" ;
+                                      ]
+                                      [
+                                        sp:varName "o" ;
+                                      ]
+                                    ) ;
+                                  sp:where (
+                                      [
+                                        sp:object [
+                                            sp:varName "o" ;
+                                          ] ;
+                                        sp:predicate [
+                                            sp:varName "p" ;
+                                          ] ;
+                                        sp:subject [
+                                            sp:varName "resource" ;
+                                          ] ;
+                                      ]
+                                    ) ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 12 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 1 ;
+                          ui:text [
+                              sp:varName "space" ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 10 ;
+                          ui:text """
+""" ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 11 ;
+                          ui:text [
+                              sp:varName "space" ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 2 ;
+                          ui:text """
+""" ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 3 ;
+                          ui:text [
+                              sp:varName "space" ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 5 ;
+                          ui:text [
+                              sp:varName "space" ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 6 ;
+                          ui:text """
+""" ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 7 ;
+                          ui:text [
+                              sp:varName "space" ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 9 ;
+                          ui:text [
+                              sp:varName "space" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
                   ui:childIndex 0 ;
-                  ui:text "Work in progress" ;
+                  ui:full "false"^^xsd:boolean ;
+                  ui:varName "output" ;
                 ] ;
               ui:childIndex 1 ;
             ] ;
@@ -16098,10 +16381,27 @@ lmdoc:ViewAsJSON-LD
     ] ;
   ui:prototype [
       rdf:type ui:group ;
+      let:title [
+          rdf:type sp:concat ;
+          sp:arg1 "JSON-LD for " ;
+          sp:arg2 [
+              rdf:type smf:qname ;
+              sp:arg1 [
+                  sp:varName "resource" ;
+                ] ;
+            ] ;
+        ] ;
       ui:child [
           rdf:type html:A ;
           html:class "lm-simulated-link" ;
-          html:onclick "javascript: lm.popup('lm-export-json-ld','Export JSON-LD',600,800)" ;
+          html:onclick [
+              rdf:type ui:concat ;
+              sp:arg1 "javascript: lm.popup('lm-export-json-ld','" ;
+              sp:arg2 [
+                  sp:varName "title" ;
+                ] ;
+              sp:arg3 "',600,800)" ;
+            ] ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
@@ -16113,13 +16413,28 @@ lmdoc:ViewAsJSON-LD
           rdf:type html:Div ;
           html:id "lm-export-json-ld" ;
           ui:child [
-              rdf:type html:P ;
+              rdf:type ui:setContext ;
               ui:child [
-                  rdf:type ui:TextNode ;
+                  rdf:type ui:group ;
+                  let:output [
+                      rdf:type smf:convertRDFToText ;
+                      sp:arg1 sml:JSONLD ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Pre ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "output" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
                   ui:childIndex 0 ;
-                  ui:text "Work in progress" ;
                 ] ;
               ui:childIndex 1 ;
+              ui:queryGraph ui:tempGraphPopup ;
             ] ;
           ui:child [
               rdf:type ui:update ;
@@ -16142,7 +16457,7 @@ lmdoc:ViewAsJSON-LD
                                 ] ;
                             ]
                           ) ;
-                        sp:graphNameNode ui:tempGraph ;
+                        sp:graphNameNode ui:tempGraphPopup ;
                       ]
                     ) ;
                   sp:where (
@@ -16178,10 +16493,27 @@ lmdoc:ViewAsRDFXML
     ] ;
   ui:prototype [
       rdf:type ui:group ;
+      let:title [
+          rdf:type sp:concat ;
+          sp:arg1 "RDF/XML for " ;
+          sp:arg2 [
+              rdf:type smf:qname ;
+              sp:arg1 [
+                  sp:varName "resource" ;
+                ] ;
+            ] ;
+        ] ;
       ui:child [
           rdf:type html:A ;
           html:class "lm-simulated-link" ;
-          html:onclick "javascript: lm.popup('lm-export-rdf-xml','Export RDF/XML',600,800)" ;
+          html:onclick [
+              rdf:type ui:concat ;
+              sp:arg1 "javascript: lm.popup('lm-export-rdf-xml','" ;
+              sp:arg2 [
+                  sp:varName "title" ;
+                ] ;
+              sp:arg3 "',600,800)" ;
+            ] ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
@@ -16193,48 +16525,28 @@ lmdoc:ViewAsRDFXML
           rdf:type html:Div ;
           html:id "lm-export-rdf-xml" ;
           ui:child [
-              rdf:type html:P ;
+              rdf:type ui:setContext ;
               ui:child [
-                  rdf:type ui:TextNode ;
+                  rdf:type ui:group ;
+                  let:output [
+                      rdf:type smf:convertRDFToText ;
+                      sp:arg1 sml:RDFXML ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Pre ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "output" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
                   ui:childIndex 0 ;
-                  ui:text "Test:" ;
                 ] ;
               ui:childIndex 1 ;
-            ] ;
-          ui:child [
-              rdf:type html:P ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text "Work in progress" ;
-                ] ;
-              ui:childIndex 3 ;
-            ] ;
-          ui:child [
-              rdf:type html:Pre ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text "<MyType about=\"" ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 1 ;
-                  ui:text [
-                      rdf:type ui:label ;
-                      sp:arg1 [
-                          sp:varName "resource" ;
-                        ] ;
-                    ] ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 2 ;
-                  ui:text """>
-  ...
-</MyType>""" ;
-                ] ;
-              ui:childIndex 2 ;
+              ui:queryGraph ui:tempGraphPopup ;
             ] ;
           ui:child [
               rdf:type ui:update ;
@@ -16257,7 +16569,7 @@ lmdoc:ViewAsRDFXML
                                 ] ;
                             ]
                           ) ;
-                        sp:graphNameNode ui:tempGraph ;
+                        sp:graphNameNode ui:tempGraphPopup ;
                       ]
                     ) ;
                   sp:where (
@@ -16293,10 +16605,27 @@ lmdoc:ViewAsTurtle
     ] ;
   ui:prototype [
       rdf:type ui:group ;
+      let:title [
+          rdf:type sp:concat ;
+          sp:arg1 "TURTLE for " ;
+          sp:arg2 [
+              rdf:type smf:qname ;
+              sp:arg1 [
+                  sp:varName "resource" ;
+                ] ;
+            ] ;
+        ] ;
       ui:child [
           rdf:type html:A ;
           html:class "lm-simulated-link" ;
-          html:onclick "javascript: lm.popup('lm-export-turtle','Export TURTLE',600,800)" ;
+          html:onclick [
+              rdf:type ui:concat ;
+              sp:arg1 "javascript: lm.popup('lm-export-turtle','" ;
+              sp:arg2 [
+                  sp:varName "title" ;
+                ] ;
+              sp:arg3 "',600,800)" ;
+            ] ;
           ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
@@ -16308,21 +16637,126 @@ lmdoc:ViewAsTurtle
           rdf:type html:Div ;
           html:id "lm-export-turtle" ;
           ui:child [
-              rdf:type html:P ;
+              rdf:type ui:debug ;
               ui:child [
-                  rdf:type ui:TextNode ;
+                  rdf:type ui:dumpGraph ;
                   ui:childIndex 0 ;
-                  ui:text "Work in progress" ;
+                  ui:filePath "/qudt.org/debug/resources-popup.ttl" ;
+                  ui:graph ui:tempGraph ;
                 ] ;
               ui:childIndex 1 ;
             ] ;
           ui:child [
-              rdf:type ui:resourceView ;
-              ui:childIndex 0 ;
-              ui:matchIds "form" ;
-              ui:resource [
-                  sp:varName "resource" ;
+              rdf:type ui:setContext ;
+              ui:child [
+                  rdf:type ui:group ;
+                  let:output [
+                      rdf:type smf:convertRDFToText ;
+                      sp:arg1 sml:Turtle ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Pre ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "output" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
                 ] ;
+              ui:childIndex 2 ;
+              ui:queryGraph ui:tempGraph ;
+            ] ;
+          ui:child [
+              rdf:type ui:transaction ;
+              ui:child [
+                  rdf:type ui:update ;
+                  ui:childIndex 0 ;
+                  ui:updateQuery [
+                      rdf:type sp:Modify ;
+                      sp:deletePattern (
+                          [
+                            rdf:type sp:NamedGraph ;
+                            sp:elements (
+                                [
+                                  sp:object [
+                                      sp:varName "o" ;
+                                    ] ;
+                                  sp:predicate [
+                                      sp:varName "p" ;
+                                    ] ;
+                                  sp:subject [
+                                      sp:varName "s" ;
+                                    ] ;
+                                ]
+                              ) ;
+                            sp:graphNameNode ui:tempGraph ;
+                          ]
+                        ) ;
+                      sp:where (
+                          [
+                            rdf:type sp:NamedGraph ;
+                            sp:elements (
+                                [
+                                  sp:object [
+                                      sp:varName "o" ;
+                                    ] ;
+                                  sp:predicate [
+                                      sp:varName "p" ;
+                                    ] ;
+                                  sp:subject [
+                                      sp:varName "s" ;
+                                    ] ;
+                                ]
+                              ) ;
+                            sp:graphNameNode ui:tempGraph ;
+                          ]
+                        ) ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:update ;
+                  ui:childIndex 1 ;
+                  ui:updateQuery [
+                      rdf:type sp:Modify ;
+                      sp:insertPattern (
+                          [
+                            rdf:type sp:NamedGraph ;
+                            sp:elements (
+                                [
+                                  sp:object [
+                                      sp:varName "o" ;
+                                    ] ;
+                                  sp:predicate [
+                                      sp:varName "p" ;
+                                    ] ;
+                                  sp:subject [
+                                      sp:varName "resource" ;
+                                    ] ;
+                                ]
+                              ) ;
+                            sp:graphNameNode ui:tempGraph ;
+                          ]
+                        ) ;
+                      sp:where (
+                          [
+                            sp:object [
+                                sp:varName "o" ;
+                              ] ;
+                            sp:predicate [
+                                sp:varName "p" ;
+                              ] ;
+                            sp:subject [
+                                sp:varName "resource" ;
+                              ] ;
+                          ]
+                        ) ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
             ] ;
           ui:childIndex 1 ;
         ] ;
@@ -16357,12 +16791,13 @@ lmdoc:ViewAsXML
           rdf:type html:Div ;
           html:id "lm-export-xml" ;
           ui:child [
-              rdf:type ui:resourceView ;
-              ui:childIndex 0 ;
-              ui:matchIds "form" ;
-              ui:resource [
-                  sp:varName "resource" ;
+              rdf:type html:P ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "The conversion to XML requires an XML Schema to be agreed. This is work-in-progress." ;
                 ] ;
+              ui:childIndex 0 ;
             ] ;
           ui:childIndex 1 ;
         ] ;

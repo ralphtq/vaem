@@ -153,9 +153,7 @@ lm.popup = function(loadId, title, width, height) {
  * @param pId  the ID of the parent element
  */
 lm.clearSelection = function() {
-	var ontologiesTab = 2 ;
-	
-	$('#lm_resources input[type=checkbox]').attr('checked',false) ;
+	$('sliderCheckbox input[type=checkbox]').attr('checked',false) ;
 };
 
 /**
@@ -163,7 +161,7 @@ lm.clearSelection = function() {
  * @param pId  the ID of the parent element
  */
 lm.selectAll = function() {
-	$('#lm_resources input[type=checkbox]').attr('checked',true) ;
+	$('sliderCheckbox input[type=checkbox]').attr('checked',true) ;
 };
 
 /**
