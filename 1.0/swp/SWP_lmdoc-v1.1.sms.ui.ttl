@@ -3088,9 +3088,9 @@ lmdoc:ClassPopupSummary
           rdf:type ui:if ;
           ui:child [
               rdf:type html:Div ;
-              html:class "pt40px pl40px" ;
+              html:class "pt10px pl20px" ;
               ui:child [
-                  rdf:type swa:Object ;
+                  rdf:type lmdoc:Object ;
                   arg:predicate prov:wasInfluencedBy ;
                   arg:subject [
                       sp:varName "resource" ;
@@ -3328,6 +3328,151 @@ lmdoc:ClassSummary
 
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:ClassSummary&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23GraphRole""" ;
   rdfs:label "Class Summary" ;
+  rdfs:subClassOf lmdoc:Parts ;
+.
+lmdoc:ClassSummaryView
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue "false"^^xsd:boolean ;
+      spl:predicate arg:showConstructors ;
+      spl:valueType xsd:boolean ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue "false"^^xsd:boolean ;
+      spl:predicate arg:showInstances ;
+      spl:valueType xsd:boolean ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue "false"^^xsd:boolean ;
+      spl:predicate arg:showRules ;
+      spl:valueType xsd:boolean ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue "true"^^xsd:boolean ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:showDiagram ;
+      spl:valueType xsd:boolean ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:defaultValue "true"^^xsd:boolean ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:showTitle ;
+      spl:valueType xsd:boolean ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:class ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type html:Div ;
+          html:id [
+              rdf:type ui:concat ;
+              sp:arg1 "div-" ;
+              sp:arg2 [
+                  rdf:type lmdoc:makeAnchorFromResource ;
+                  arg:resource [
+                      sp:varName "class" ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type html:Div ;
+              html:class "swa-sub-title" ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "Description" ;
+                ] ;
+              ui:childIndex 2 ;
+            ] ;
+          ui:child [
+              rdf:type html:P ;
+              html:class "size-24" ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text [
+                      rdf:type smf:qname ;
+                      sp:arg1 [
+                          sp:varName "class" ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:child [
+              rdf:type ui:CommentNode ;
+              ui:childIndex 6 ;
+              rdfs:comment "lmdoc:ClassDiagramShowingInheritanceOnly arg:focusClass=\"{= ?class }\" arg:systemLabels=\"true\"/" ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type html:Div ;
+                  html:class "pt10px pl20px" ;
+                  ui:child [
+                      rdf:type lmdoc:Object ;
+                      arg:predicate prov:wasInfluencedBy ;
+                      arg:subject [
+                          sp:varName "class" ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 2 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Div ;
+                  html:class "swa-sub-title" ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "References" ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type lmdoc:VSpace ;
+                  arg:margin "20px;" ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 4 ;
+              ui:condition [
+                  rdf:type lmdoc:hasValueForProperty ;
+                  sp:arg1 [
+                      sp:varName "class" ;
+                    ] ;
+                  sp:arg2 prov:wasInfluencedBy ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:MaybeDescription ;
+              arg:resource [
+                  sp:varName "class" ;
+                ] ;
+              ui:childIndex 3 ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:VSpace ;
+              arg:margin "30px;" ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:VSpace ;
+              arg:margin "30px;" ;
+              ui:childIndex 5 ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  rdfs:label "Class Summary View" ;
   rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:ClassesGeneratorSection
@@ -3852,7 +3997,7 @@ lmdoc:ClassesSummarySection
               ui:child [
                   rdf:type ui:forEach ;
                   ui:child [
-                      rdf:type lmdoc:SummaryClassView ;
+                      rdf:type lmdoc:ClassSummaryView ;
                       arg:class [
                           sp:varName "resource" ;
                         ] ;
@@ -5629,7 +5774,7 @@ lmdoc:Graph
                                                               ui:childIndex 2 ;
                                                             ] ;
                                                           ui:child [
-                                                              rdf:type lmdoc:PropertiesSummarySection ;
+                                                              rdf:type lmdoc:PropertiesSummaryView ;
                                                               arg:graph [
                                                                   sp:varName "myGraph" ;
                                                                 ] ;
@@ -8555,7 +8700,7 @@ http://localhost:8083/tbl/swp?_viewClass=lmdoc:Instance&graph=http://www.linkedm
   rdfs:label "Instance Documentation" ;
   rdfs:subClassOf lmdoc:Pages ;
 .
-lmdoc:InstanceSummary
+lmdoc:InstanceSummaryView
   rdf:type ui:NodeClass ;
   spin:constraint [
       rdf:type spl:Argument ;
@@ -8600,7 +8745,7 @@ lmdoc:InstanceSummary
               html:id "summary_page" ;
               ui:child [
                   rdf:type html:Div ;
-                  html:class "pt40px pl40px" ;
+                  html:class "pt10px pl20px" ;
                   ui:child [
                       rdf:type swa:Object ;
                       arg:predicate rdf:type ;
@@ -8640,7 +8785,7 @@ lmdoc:InstanceSummary
                   rdf:type ui:if ;
                   ui:child [
                       rdf:type html:Div ;
-                      html:class "pt40px pl40px" ;
+                      html:class "pt10px pl20px" ;
                       ui:child [
                           rdf:type swa:Object ;
                           arg:predicate prov:wasInfluencedBy ;
@@ -8648,6 +8793,16 @@ lmdoc:InstanceSummary
                               sp:varName "myResource" ;
                             ] ;
                           ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 2 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa-sub-title" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "References" ;
                         ] ;
                       ui:childIndex 1 ;
                     ] ;
@@ -8728,7 +8883,7 @@ lmdoc:InstanceSummary
         ] ;
     ] ;
   ui:responseType ui:HTML ;
-  rdfs:label "Instance summary" ;
+  rdfs:label "Instance Summary View" ;
   rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:InstancesGeneratorSection
@@ -9275,7 +9430,7 @@ lmdoc:InstancesMaintainer
           arg:overlay [
               sp:varName "overlay" ;
             ] ;
-          arg:summaryView lmdoc:InstanceSummary ;
+          arg:summaryView lmdoc:InstanceSummaryView ;
           arg:template lmdoc:getInstancesOfType ;
           arg:view lmdoc:Instance ;
           ui:childIndex 0 ;
@@ -9538,16 +9693,16 @@ lmdoc:InstancesSummarySection
                     ] ;
                   ui:child [
                       rdf:type html:Div ;
-                      html:class "pt40px pl40px" ;
+                      html:class "pt41px pl20px" ;
                       ui:child [
-                          rdf:type swa:Object ;
+                          rdf:type lmdoc:Object ;
                           arg:predicate rdf:type ;
                           arg:subject [
                               sp:varName "resource" ;
                             ] ;
                           ui:childIndex 0 ;
                         ] ;
-                      ui:childIndex 5 ;
+                      ui:childIndex 6 ;
                     ] ;
                   ui:child [
                       rdf:type html:Div ;
@@ -9558,6 +9713,16 @@ lmdoc:InstancesSummarySection
                           ui:text "Description" ;
                         ] ;
                       ui:childIndex 2 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa-sub-title" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Type" ;
+                        ] ;
+                      ui:childIndex 5 ;
                     ] ;
                   ui:child [
                       rdf:type html:P ;
@@ -9580,12 +9745,22 @@ lmdoc:InstancesSummarySection
                           rdf:type html:Div ;
                           html:class "pt40px pl40px" ;
                           ui:child [
-                              rdf:type swa:Object ;
+                              rdf:type lmdoc:Object ;
                               arg:predicate prov:wasInfluencedBy ;
                               arg:subject [
                                   sp:varName "resource" ;
                                 ] ;
                               ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:class "swa-sub-title" ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "References" ;
                             ] ;
                           ui:childIndex 1 ;
                         ] ;
@@ -9594,7 +9769,7 @@ lmdoc:InstancesSummarySection
                           arg:margin "20px;" ;
                           ui:childIndex 0 ;
                         ] ;
-                      ui:childIndex 6 ;
+                      ui:childIndex 7 ;
                       ui:condition [
                           rdf:type lmdoc:hasValueForProperty ;
                           sp:arg1 [
@@ -9623,7 +9798,7 @@ lmdoc:InstancesSummarySection
                   ui:child [
                       rdf:type lmdoc:VSpace ;
                       arg:margin "30px;" ;
-                      ui:childIndex 7 ;
+                      ui:childIndex 8 ;
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
@@ -10085,62 +10260,45 @@ lmdoc:LabeledObjects
   ui:prototype [
       rdf:type ui:group ;
       ui:child [
-          rdf:type html:Tr ;
+          rdf:type html:Div ;
           html:class "lm-row" ;
           ui:child [
-              rdf:type html:Td ;
-              html:class "lm-column align-top" ;
+              rdf:type ui:setContext ;
               ui:child [
-                  rdf:type lmdoc:URIResourceViewer ;
-                  arg:label [
-                      rdf:type sp:if ;
-                      sp:arg1 [
-                          rdf:type sp:bound ;
-                          sp:arg1 [
-                              sp:varName "label" ;
-                            ] ;
-                        ] ;
-                      sp:arg2 [
-                          sp:varName "label" ;
-                        ] ;
-                      sp:arg3 [
-                          rdf:type ui:label ;
-                          sp:arg1 [
-                              sp:varName "predicate" ;
-                            ] ;
-                        ] ;
-                    ] ;
-                  arg:object [
-                      sp:varName "predicate" ;
-                    ] ;
+                  rdf:type lmdoc:ObjectsBody ;
+                  ui:args "*" ;
                   ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:child [
-              rdf:type html:Td ;
-              html:class "lm-column" ;
-              html:id [
-                  rdf:type ui:concat ;
-                  sp:arg1 [
-                      sp:varName "pid" ;
-                    ] ;
-                  sp:arg2 "-body" ;
-                ] ;
-              ui:child [
-                  rdf:type ui:setContext ;
-                  ui:child [
-                      rdf:type lmdoc:ObjectsBody ;
-                      ui:args "*" ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 0 ;
-                  ui:varName "viewWidget" ;
-                  ui:varValue [
-                      sp:varName "viewWidget" ;
-                    ] ;
                 ] ;
               ui:childIndex 1 ;
+              ui:varName "viewWidget" ;
+              ui:varValue [
+                  sp:varName "viewWidget" ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:URIResourceViewer ;
+              arg:label [
+                  rdf:type sp:if ;
+                  sp:arg1 [
+                      rdf:type sp:bound ;
+                      sp:arg1 [
+                          sp:varName "label" ;
+                        ] ;
+                    ] ;
+                  sp:arg2 [
+                      sp:varName "label" ;
+                    ] ;
+                  sp:arg3 [
+                      rdf:type ui:label ;
+                      sp:arg1 [
+                          sp:varName "predicate" ;
+                        ] ;
+                    ] ;
+                ] ;
+              arg:object [
+                  sp:varName "predicate" ;
+                ] ;
+              ui:childIndex 0 ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -10844,7 +11002,7 @@ lmdoc:ObjectViewer
   ui:private "true"^^xsd:boolean ;
   ui:prototype [
       rdf:type html:Div ;
-      html:class "swa-object-widget" ;
+      html:class "lmdoc-object-widget" ;
       let:class [
           rdf:type sp:coalesce ;
           sp:arg1 [
@@ -10865,94 +11023,105 @@ lmdoc:ObjectViewer
             ] ;
         ] ;
       ui:child [
-          rdf:type ui:else ;
+          rdf:type html:Div ;
+          html:class "lmdoc-indented-level1" ;
+          html:title [
+              rdf:type sp:str ;
+              sp:arg1 [
+                  sp:varName "object" ;
+                ] ;
+            ] ;
           ui:child [
-              rdf:type ui:if ;
+              rdf:type ui:else ;
               ui:child [
-                  rdf:type ui:TextNode ;
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "[Error: no ObjectViewer found for " ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 1 ;
+                      ui:text [
+                          rdf:type ui:label ;
+                          sp:arg1 [
+                              sp:varName "subject" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 2 ;
+                      ui:text ", " ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 3 ;
+                      ui:text [
+                          rdf:type ui:label ;
+                          sp:arg1 [
+                              sp:varName "predicate" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 4 ;
+                      ui:text ", " ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 5 ;
+                      ui:text [
+                          rdf:type ui:label ;
+                          sp:arg1 [
+                              sp:varName "object" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 6 ;
+                      ui:text "]" ;
+                    ] ;
                   ui:childIndex 0 ;
-                  ui:text "[Error: no ObjectViewer found for " ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 1 ;
-                  ui:text [
-                      rdf:type ui:label ;
-                      sp:arg1 [
-                          sp:varName "subject" ;
-                        ] ;
-                    ] ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 2 ;
-                  ui:text ", " ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 3 ;
-                  ui:text [
-                      rdf:type ui:label ;
-                      sp:arg1 [
-                          sp:varName "predicate" ;
-                        ] ;
-                    ] ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 4 ;
-                  ui:text ", " ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 5 ;
-                  ui:text [
-                      rdf:type ui:label ;
+                  ui:condition [
+                      rdf:type sp:bound ;
                       sp:arg1 [
                           sp:varName "object" ;
                         ] ;
                     ] ;
                 ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
               ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 6 ;
-                  ui:text "]" ;
+                  rdf:type ui:dynamicView ;
+                  arg:object [
+                      sp:varName "object" ;
+                    ] ;
+                  arg:predicate [
+                      sp:varName "predicate" ;
+                    ] ;
+                  arg:subject [
+                      sp:varName "subject" ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:class [
+                      sp:varName "class" ;
+                    ] ;
                 ] ;
               ui:childIndex 0 ;
               ui:condition [
                   rdf:type sp:bound ;
                   sp:arg1 [
-                      sp:varName "object" ;
+                      sp:varName "class" ;
                     ] ;
                 ] ;
             ] ;
-          ui:childIndex 1 ;
-        ] ;
-      ui:child [
-          rdf:type ui:if ;
-          ui:child [
-              rdf:type ui:dynamicView ;
-              arg:object [
-                  sp:varName "object" ;
-                ] ;
-              arg:predicate [
-                  sp:varName "predicate" ;
-                ] ;
-              arg:subject [
-                  sp:varName "subject" ;
-                ] ;
-              ui:childIndex 0 ;
-              ui:class [
-                  sp:varName "class" ;
-                ] ;
-            ] ;
           ui:childIndex 0 ;
-          ui:condition [
-              rdf:type sp:bound ;
-              sp:arg1 [
-                  sp:varName "class" ;
-                ] ;
-            ] ;
         ] ;
     ] ;
   rdfs:comment """A read-only widget displaying a single object. In order to be selected on forms, subclasses of this class must specify a weight > 0 and an expression that returns true for the given input variable bindings:
@@ -11009,18 +11178,22 @@ lmdoc:ObjectWidgetRow
   ui:prototype [
       rdf:type ui:group ;
       ui:child [
-          rdf:type ui:dynamicView ;
-          arg:object [
-              sp:varName "object" ;
-            ] ;
-          arg:predicate [
-              sp:varName "predicate" ;
-            ] ;
-          arg:subject [
-              sp:varName "subject" ;
+          rdf:type html:Div ;
+          ui:child [
+              rdf:type ui:dynamicView ;
+              arg:object [
+                  sp:varName "object" ;
+                ] ;
+              arg:predicate [
+                  sp:varName "predicate" ;
+                ] ;
+              arg:subject [
+                  sp:varName "subject" ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:class lmdoc:ObjectViewer ;
             ] ;
           ui:childIndex 0 ;
-          ui:class lmdoc:ObjectViewer ;
         ] ;
     ] ;
   rdfs:comment "Superclass for the widget row types." ;
@@ -11123,7 +11296,7 @@ lmdoc:ObjectsBody
           rdf:type ui:else ;
           ui:child [
               rdf:type html:Div ;
-              html:class "swa-object-row" ;
+              html:class "lmdoc-object-row" ;
               ui:child [
                   rdf:type lmdoc:ObjectWidgetRow ;
                   arg:predicate [
@@ -11170,7 +11343,12 @@ lmdoc:ObjectsBody
                           rdf:type ui:forEach ;
                           ui:child [
                               rdf:type html:Div ;
-                              html:class "swa-object-row" ;
+                              html:class "lmdoc-object-row" ;
+                              ui:child [
+                                  rdf:type html:Div ;
+                                  html:class "clear-both" ;
+                                  ui:childIndex 1 ;
+                                ] ;
                               ui:child [
                                   rdf:type lmdoc:ObjectWidgetRow ;
                                   arg:object [
@@ -11216,7 +11394,7 @@ lmdoc:ObjectsBody
                                       rdf:type ui:else ;
                                       ui:child [
                                           rdf:type html:Div ;
-                                          html:class "swa-objects-show-more" ;
+                                          html:class "lmdoc-objects-show-more" ;
                                           ui:child [
                                               rdf:type html:A ;
                                               html:href "javascript:void(0)" ;
@@ -11358,7 +11536,7 @@ lmdoc:ObjectsBody
                   rdf:type ui:if ;
                   ui:child [
                       rdf:type html:Div ;
-                      html:class "swa-object-row" ;
+                      html:class "lmdoc-object-row" ;
                       ui:child [
                           rdf:type lmdoc:ObjectWidgetRow ;
                           arg:predicate [
@@ -12322,7 +12500,7 @@ lmdoc:PropertiesMaintainer
           arg:overlay [
               sp:varName "overlay" ;
             ] ;
-          arg:summaryView lmdoc:PropertiesSummarySection ;
+          arg:summaryView lmdoc:PropertiesSummaryView ;
           arg:template lmdoc:AllProperties ;
           ui:childIndex 0 ;
         ] ;
@@ -12516,7 +12694,7 @@ lmdoc:PropertiesSection
   rdfs:label "Properties section" ;
   rdfs:subClassOf lmdoc:Sections ;
 .
-lmdoc:PropertiesSummarySection
+lmdoc:PropertiesSummaryView
   rdf:type ui:NodeClass ;
   spin:constraint [
       rdf:type spl:Argument ;
@@ -12546,14 +12724,24 @@ lmdoc:PropertiesSummarySection
                     ] ;
                   ui:child [
                       rdf:type html:Div ;
-                      html:class "pt40px pl40px" ;
+                      html:class "pt10px pl20px" ;
                       ui:child [
-                          rdf:type swa:Object ;
+                          rdf:type html:Div ;
+                          html:class "swa-sub-title" ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Type" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:Object ;
                           arg:predicate rdf:type ;
                           arg:subject [
                               sp:varName "resource" ;
                             ] ;
-                          ui:childIndex 0 ;
+                          ui:childIndex 1 ;
                         ] ;
                       ui:childIndex 5 ;
                     ] ;
@@ -12586,14 +12774,24 @@ lmdoc:PropertiesSummarySection
                       rdf:type ui:if ;
                       ui:child [
                           rdf:type html:Div ;
-                          html:class "pt40px pl40px" ;
+                          html:class "pt10px pl20px" ;
                           ui:child [
-                              rdf:type swa:Object ;
+                              rdf:type lmdoc:Object ;
                               arg:predicate prov:wasInfluencedBy ;
                               arg:subject [
                                   sp:varName "resource" ;
                                 ] ;
                               ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:class "swa-sub-title" ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "References" ;
                             ] ;
                           ui:childIndex 1 ;
                         ] ;
@@ -12646,8 +12844,8 @@ lmdoc:PropertiesSummarySection
         ] ;
     ] ;
   ui:responseType ui:HTML ;
-  rdfs:label "Properties summary section" ;
-  rdfs:subClassOf lmdoc:Sections ;
+  rdfs:label "Properties Summary View" ;
+  rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:PropertiesTable
   rdf:type ui:NodeClass ;
@@ -15010,146 +15208,6 @@ lmdoc:Subjects
   rdf:type ui:NodeClass ;
   rdfs:subClassOf lmdoc:AbstractSubject ;
 .
-lmdoc:SummaryClassView
-  rdf:type ui:NodeClass ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:defaultValue "false"^^xsd:boolean ;
-      spl:predicate arg:showConstructors ;
-      spl:valueType xsd:boolean ;
-    ] ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:defaultValue "false"^^xsd:boolean ;
-      spl:predicate arg:showInstances ;
-      spl:valueType xsd:boolean ;
-    ] ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:defaultValue "false"^^xsd:boolean ;
-      spl:predicate arg:showRules ;
-      spl:valueType xsd:boolean ;
-    ] ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:defaultValue "true"^^xsd:boolean ;
-      spl:optional "true"^^xsd:boolean ;
-      spl:predicate arg:showDiagram ;
-      spl:valueType xsd:boolean ;
-    ] ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:defaultValue "true"^^xsd:boolean ;
-      spl:optional "true"^^xsd:boolean ;
-      spl:predicate arg:showTitle ;
-      spl:valueType xsd:boolean ;
-    ] ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:predicate arg:class ;
-      spl:valueType rdfs:Resource ;
-    ] ;
-  ui:prototype [
-      rdf:type ui:group ;
-      ui:child [
-          rdf:type html:Div ;
-          html:id [
-              rdf:type ui:concat ;
-              sp:arg1 "div-" ;
-              sp:arg2 [
-                  rdf:type lmdoc:makeAnchorFromResource ;
-                  arg:resource [
-                      sp:varName "class" ;
-                    ] ;
-                ] ;
-            ] ;
-          ui:child [
-              rdf:type html:Div ;
-              html:class "swa-sub-title" ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text "Description" ;
-                ] ;
-              ui:childIndex 2 ;
-            ] ;
-          ui:child [
-              rdf:type html:P ;
-              html:class "size-24" ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text [
-                      rdf:type smf:qname ;
-                      sp:arg1 [
-                          sp:varName "class" ;
-                        ] ;
-                    ] ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:child [
-              rdf:type ui:CommentNode ;
-              ui:childIndex 7 ;
-              rdfs:comment "lmdoc:ClassDiagramShowingInheritanceOnly arg:focusClass=\"{= ?class }\" arg:systemLabels=\"true\"/" ;
-            ] ;
-          ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type html:Div ;
-                  html:class "pt40px pl40px" ;
-                  ui:child [
-                      rdf:type swa:Object ;
-                      arg:predicate prov:wasInfluencedBy ;
-                      arg:subject [
-                          sp:varName "class" ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 1 ;
-                ] ;
-              ui:child [
-                  rdf:type lmdoc:VSpace ;
-                  arg:margin "20px;" ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 5 ;
-              ui:condition [
-                  rdf:type lmdoc:hasValueForProperty ;
-                  sp:arg1 [
-                      sp:varName "class" ;
-                    ] ;
-                  sp:arg2 prov:wasInfluencedBy ;
-                ] ;
-            ] ;
-          ui:child [
-              rdf:type lmdoc:MaybeDescription ;
-              arg:resource [
-                  sp:varName "class" ;
-                ] ;
-              ui:childIndex 3 ;
-            ] ;
-          ui:child [
-              rdf:type lmdoc:VSpace ;
-              arg:margin "20px;" ;
-              ui:childIndex 4 ;
-            ] ;
-          ui:child [
-              rdf:type lmdoc:VSpace ;
-              arg:margin "30px;" ;
-              ui:childIndex 1 ;
-            ] ;
-          ui:child [
-              rdf:type lmdoc:VSpace ;
-              arg:margin "30px;" ;
-              ui:childIndex 6 ;
-            ] ;
-          ui:childIndex 0 ;
-        ] ;
-    ] ;
-  rdfs:label "Summary Class View" ;
-  rdfs:subClassOf lmdoc:Parts ;
-.
 lmdoc:SwitchableForm
   rdf:type swa:FormClass ;
   spin:constraint [
@@ -16219,30 +16277,29 @@ lmdoc:URIResourceViewer
         ] ;
       ui:child [
           rdf:type ui:group ;
-          let:myLabel [
-              rdf:type sp:if ;
-              sp:arg1 [
-                  rdf:type sp:bound ;
-                  sp:arg1 [
-                      sp:varName "label" ;
+          let:myLabel "" ;
+          ui:child [
+              rdf:type ui:else ;
+              ui:child [
+                  rdf:type lmdoc:ResourceLink ;
+                  arg:label [
+                      sp:varName "myLabel" ;
                     ] ;
-                ] ;
-              sp:arg2 [
-                  rdf:type fn:concat ;
-                  sp:arg1 " [" ;
-                  sp:arg2 [
-                      sp:varName "label" ;
+                  arg:resource [
+                      sp:varName "object" ;
                     ] ;
-                  sp:arg3 "]" ;
+                  arg:title [
+                      rdf:type xsd:string ;
+                      sp:arg1 [
+                          sp:varName "object" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
                 ] ;
-              sp:arg3 "" ;
+              ui:childIndex 1 ;
             ] ;
           ui:child [
-              rdf:type html:Div ;
-              html:class "swa-shifted-label" ;
-              html:title [
-                  sp:varName "object" ;
-                ] ;
+              rdf:type ui:if ;
               ui:child [
                   rdf:type ui:else ;
                   ui:child [
@@ -16266,71 +16323,47 @@ lmdoc:URIResourceViewer
               ui:child [
                   rdf:type ui:if ;
                   ui:child [
-                      rdf:type ui:else ;
-                      ui:child [
-                          rdf:type lmdoc:ResourceLink ;
-                          arg:label [
-                              sp:varName "myLabel" ;
-                            ] ;
-                          arg:resource [
-                              sp:varName "object" ;
-                            ] ;
-                          arg:title [
-                              rdf:type xsd:string ;
-                              sp:arg1 [
-                                  sp:varName "object" ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
+                      rdf:type ui:resourceView ;
                       ui:childIndex 1 ;
+                      ui:matchIds "lmdoc-summary" ;
+                      ui:resource [
+                          sp:varName "object" ;
+                        ] ;
                     ] ;
                   ui:child [
-                      rdf:type ui:if ;
-                      ui:child [
-                          rdf:type ui:resourceView ;
-                          ui:childIndex 1 ;
-                          ui:matchIds "lmdoc-summary" ;
-                          ui:resource [
-                              sp:varName "object" ;
-                            ] ;
+                      rdf:type lmdoc:ResourceLink ;
+                      arg:label [
+                          sp:varName "myLabel" ;
                         ] ;
-                      ui:child [
-                          rdf:type lmdoc:ResourceLink ;
-                          arg:label [
-                              sp:varName "myLabel" ;
-                            ] ;
-                          arg:resource [
+                      arg:resource [
+                          sp:varName "object" ;
+                        ] ;
+                      arg:title [
+                          rdf:type xsd:string ;
+                          sp:arg1 [
                               sp:varName "object" ;
                             ] ;
-                          arg:title [
-                              rdf:type xsd:string ;
-                              sp:arg1 [
-                                  sp:varName "object" ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 0 ;
                         ] ;
                       ui:childIndex 0 ;
-                      ui:condition [
-                          rdf:type lmdoc:IsDefinedInGraph ;
-                          arg:graph [
-                              sp:varName "myGraph" ;
-                            ] ;
-                          arg:resource [
-                              sp:varName "object" ;
-                            ] ;
-                        ] ;
                     ] ;
                   ui:childIndex 0 ;
                   ui:condition [
-                      rdf:type sp:bound ;
-                      sp:arg1 [
+                      rdf:type lmdoc:IsDefinedInGraph ;
+                      arg:graph [
                           sp:varName "myGraph" ;
+                        ] ;
+                      arg:resource [
+                          sp:varName "object" ;
                         ] ;
                     ] ;
                 ] ;
               ui:childIndex 0 ;
+              ui:condition [
+                  rdf:type sp:bound ;
+                  sp:arg1 [
+                      sp:varName "myGraph" ;
+                    ] ;
+                ] ;
             ] ;
           ui:childIndex 0 ;
         ] ;
