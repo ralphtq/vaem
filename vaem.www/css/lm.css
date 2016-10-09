@@ -30,8 +30,45 @@
 .pr8px {padding-right: 8px;}
 .pr10px {padding-right: 10px;}
 
+.spacing-5  {padding: 5px;}
+.spacing-10 {padding: 10px;}
+.spacing-20 {padding: 20px;}
+
+.light-blue-background {
+	background-color: #dfe8f6 ;
+}
+
+.dark-blue-background {
+	background-color: #000066 ;
+}
+
+.size-8  { font-size: 8px; }
+.size-10 { font-size: 10px; }
+.size-12 { font-size: 12px; }
+.size-14 { font-size: 14px; }      
+.size-16 { font-size: 16px; }
+.size-18 { font-size: 18px; }
+.size-20 { font-size: 20px; }
+.size-22 { font-size: 22px; }
+.size-24 { font-size: 24px; }
+.size-36 { font-size: 36px; }
+.size-48 { font-size: 48px; }
+.size-60 { font-size: 60px; }
+.size-72 { font-size: 72px; }
+
+.lm-bg-blue { background-color: #0949AA;}
+.lm-bg-red {background-color: red;}
+.lm-bg-black {background-color: #FFFFFF;}
+.lm-orange {color: #f8a12e;}
+.lm-black {color: black;}
+.lm-white {color: white;}
+.lm-light-blue {color: #acc0e5;}
+.lm-indigo {color: indigo;}
+
 .lightBlue {color:lightBlue}
 .gray {color:gray}
+
+.lm-bold {font-weight: bold }
 
 
 body {
@@ -110,42 +147,7 @@ pre { margin-left: 2em }
    width:100%;
 }
 
-.spacing-5  {padding: 5px;}
-.spacing-10 {padding: 10px;}
-.spacing-20 {padding: 20px;}
 
-.light-blue-background {
-	background-color: #dfe8f6 ;
-}
-
-.dark-blue-background {
-	background-color: #000066 ;
-}
-
-.size-8  { font-size: 8px; }
-.size-10 { font-size: 10px; }
-.size-12 { font-size: 12px; }
-.size-14 { font-size: 14px; }      
-.size-16 { font-size: 16px; }
-.size-18 { font-size: 18px; }
-.size-20 { font-size: 20px; }
-.size-22 { font-size: 22px; }
-.size-24 { font-size: 24px; }
-.size-36 { font-size: 36px; }
-.size-48 { font-size: 48px; }
-.size-60 { font-size: 60px; }
-.size-72 { font-size: 72px; }
-
-.lm-bg-blue { background-color: #0949AA;}
-.lm-bg-red {background-color: red;}
-.lm-bg-black {background-color: #FFFFFF;}
-.lm-orange {color: #f8a12e;}
-.lm-black {color: black;}
-.lm-white {color: white;}
-.lm-light-blue {color: #acc0e5;}
-.lm-indigo {color: indigo;}
-
-.lm-bold {font-weight: bold }
 
 .lm-simulated-link {
 	text-decoration: underline;
@@ -1175,6 +1177,17 @@ p.lm-para {
 	font-size: 12.0pt;
 	font-family: Arial;
 	color: #000000;
+}
+
+p.lm-para-compressed {
+	margin-top: .1em;
+	margin-right: .1em;
+	margin-bottom: .1em;
+	margin-left: 1em;
+	text-indent: 0.0in;
+	text-align: left;
+	text-autospace: none;
+	font-family: Arial;
 }
 
 p.tablenote {

@@ -153,7 +153,7 @@ lm.popup = function(loadId, title, width, height) {
  * @param pId  the ID of the parent element
  */
 lm.clearSelection = function() {
-	$('sliderCheckbox input[type=checkbox]').attr('checked',false) ;
+	$('.sliderCheckbox input').attr('checked',false) ;
 };
 
 /**
@@ -161,7 +161,7 @@ lm.clearSelection = function() {
  * @param pId  the ID of the parent element
  */
 lm.selectAll = function() {
-	$('sliderCheckbox input[type=checkbox]').attr('checked',true) ;
+	$('.sliderCheckbox input').attr('checked',true) ;
 };
 
 /**

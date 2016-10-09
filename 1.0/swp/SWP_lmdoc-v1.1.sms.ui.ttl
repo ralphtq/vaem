@@ -26,6 +26,7 @@
 @prefix lmlib: <http://vaem.linkedmodel.org/spin/lib/> .
 @prefix o2o: <http://lib.topquadrant.com/owl/srg/o2o#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
@@ -300,6 +301,388 @@ voag:Graph
   vaem:owner "TopQuadrant" ;
   vaem:revision "1.1" ;
 .
+lmdoc:AboutNamespaces
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:metadata ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      letrs:namespaces [
+          rdf:type sp:Select ;
+          sp:orderBy (
+              [
+                sp:varName "nsPrefix" ;
+              ]
+            ) ;
+          sp:resultVariables (
+              [
+                sp:varName "ns" ;
+              ]
+              [
+                sp:varName "nsPrefix" ;
+              ]
+            ) ;
+          sp:where (
+              [
+                sp:object [
+                    sp:varName "ns" ;
+                  ] ;
+                sp:predicate vaem:namespace ;
+                sp:subject [
+                    sp:varName "metadata" ;
+                  ] ;
+              ]
+              [
+                rdf:type sp:Bind ;
+                sp:expression [
+                    rdf:type smf:prefix ;
+                    sp:arg1 [
+                        rdf:type sp:iri ;
+                        sp:arg1 [
+                            rdf:type sp:str ;
+                            sp:arg1 [
+                                sp:varName "ns" ;
+                              ] ;
+                          ] ;
+                      ] ;
+                  ] ;
+                sp:variable [
+                    sp:varName "nsPrefix" ;
+                  ] ;
+              ]
+            ) ;
+        ] ;
+      ui:child [
+          rdf:type ui:group ;
+          let:nsCount [
+              rdf:type spr:rowCount ;
+              sp:arg1 [
+                  sp:varName "namespaces" ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:else ;
+              ui:child [
+                  rdf:type html:P ;
+                  html:class "lm-para" ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "No namespace documentation." ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type ui:else ;
+                  ui:child [
+                      rdf:type html:P ;
+                      html:class "lm-para" ;
+                      ui:child [
+                          rdf:type html:Code ;
+                          html:class "boxed" ;
+                          ui:child [
+                              rdf:type ui:forEach ;
+                              ui:child [
+                                  rdf:type html:A ;
+                                  html:href [
+                                      sp:varName "ns" ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text [
+                                          sp:varName "nsPrefix" ;
+                                        ] ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 0 ;
+                              ui:resultSet [
+                                  sp:varName "namespaces" ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "The namespace prefix for resources in this ontology is: " ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:Dd ;
+                      html:class "boxed size-14" ;
+                      ui:child [
+                          rdf:type ui:forEach ;
+                          ui:child [
+                              rdf:type html:A ;
+                              html:href [
+                                  sp:varName "ns" ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      sp:varName "nsPrefix" ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                          ui:resultSet [
+                              sp:varName "namespaces" ;
+                            ] ;
+                          ui:separator ", " ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:P ;
+                      html:class "lm-para" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "The namespace prefixes for the resources in this ontology are:" ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:condition [
+                      rdf:type sp:gt ;
+                      sp:arg1 [
+                          sp:varName "nsCount" ;
+                        ] ;
+                      sp:arg2 1 ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:condition [
+                  rdf:type sp:gt ;
+                  sp:arg1 [
+                      sp:varName "nsCount" ;
+                    ] ;
+                  sp:arg2 0 ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:label "About Namespaces" ;
+  rdfs:subClassOf lmdoc:Parts ;
+.
+lmdoc:AboutPublishedGraphs
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:metadata ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      let:rdfFile [
+          rdf:type spl:object ;
+          sp:arg1 [
+              sp:varName "metadata" ;
+            ] ;
+          sp:arg2 vaem:rdfxmlFileURL ;
+        ] ;
+      let:ttlFile [
+          rdf:type spl:object ;
+          sp:arg1 [
+              sp:varName "metadata" ;
+            ] ;
+          sp:arg2 vaem:turtleFileURL ;
+        ] ;
+      ui:child [
+          rdf:type ui:else ;
+          ui:child [
+              rdf:type html:P ;
+              html:class "lm-para" ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "The graphs are not yet available." ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:P ;
+              html:class "lm-para" ;
+              let:graphType [
+                  rdf:type fn:lower-case ;
+                  sp:arg1 [
+                      rdf:type ui:label ;
+                      sp:arg1 [
+                          rdf:type spl:object ;
+                          sp:arg1 [
+                              sp:varName "metadata" ;
+                            ] ;
+                          sp:arg2 vaem:hasGraphRole ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type html:Code ;
+                  html:class "boxed" ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text [
+                          sp:varName "graphType" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text """
+The """ ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 2 ;
+                  ui:text """ is available as: 
+   
+""" ;
+                ] ;
+              ui:child [
+                  rdf:type ui:else ;
+                  ui:child [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type html:A ;
+                          html:href [
+                              sp:varName "ttlFile" ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Turtle" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:condition [
+                          rdf:type sp:ne ;
+                          sp:arg1 [
+                              rdf:type sp:str ;
+                              sp:arg1 [
+                                  sp:varName "ttlFile" ;
+                                ] ;
+                            ] ;
+                          sp:arg2 "" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 4 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:A ;
+                      html:href [
+                          sp:varName "rdfFile" ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "RDF/XML" ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type html:A ;
+                          html:href [
+                              sp:varName "ttlFile" ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Turtle" ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text """,  
+                   """ ;
+                        ] ;
+                      ui:childIndex 1 ;
+                      ui:condition [
+                          rdf:type sp:ne ;
+                          sp:arg1 [
+                              rdf:type sp:str ;
+                              sp:arg1 [
+                                  sp:varName "ttlFile" ;
+                                ] ;
+                            ] ;
+                          sp:arg2 "" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 3 ;
+                  ui:condition [
+                      rdf:type sp:ne ;
+                      sp:arg1 [
+                          rdf:type sp:str ;
+                          sp:arg1 [
+                              sp:varName "rdfFile" ;
+                            ] ;
+                        ] ;
+                      sp:arg2 "" ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              rdf:type sp:or ;
+              sp:arg1 [
+                  rdf:type sp:ne ;
+                  sp:arg1 [
+                      rdf:type sp:str ;
+                      sp:arg1 [
+                          sp:varName "rdfFile" ;
+                        ] ;
+                    ] ;
+                  sp:arg2 "" ;
+                ] ;
+              sp:arg2 [
+                  rdf:type sp:ne ;
+                  sp:arg1 [
+                      rdf:type sp:str ;
+                      sp:arg1 [
+                          sp:varName "ttlFile" ;
+                        ] ;
+                    ] ;
+                  sp:arg2 "" ;
+                ] ;
+            ] ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:label "About prublished graphs" ;
+  rdfs:subClassOf lmdoc:Parts ;
+.
 lmdoc:AbstractObject
   rdf:type ui:NodeClass ;
   spin:constraint [
@@ -374,6 +757,54 @@ lmdoc:AbstractSection
   ui:prototype [
       rdf:type ui:group ;
       ui:child [
+          rdf:type html:Div ;
+          html:class "lm-abstract" ;
+          ui:child [
+              rdf:type ui:CommentNode ;
+              ui:childIndex 1 ;
+              rdfs:comment "p class=\"lm-para\">{= spl:object(?metadata, vaem:intent) }</p" ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:AboutNamespaces ;
+              arg:metadata [
+                  sp:varName "metadata" ;
+                ] ;
+              ui:childIndex 2 ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:AboutPublishedGraphs ;
+              arg:metadata [
+                  sp:varName "metadata" ;
+                ] ;
+              ui:childIndex 3 ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:MaybeDescription ;
+              arg:resource [
+                  sp:varName "metadata" ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 2 ;
+        ] ;
+      ui:child [
+          rdf:type html:H2 ;
+          html:id [
+              rdf:type fn:lower-case ;
+              sp:arg1 [
+                  sp:varName "sectionHeading" ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text [
+                  sp:varName "sectionHeading" ;
+                ] ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
           rdf:type ui:debug ;
           ui:child [
               rdf:type ui:dumpScope ;
@@ -387,382 +818,6 @@ lmdoc:AbstractSection
                 ] ;
             ] ;
           ui:childIndex 0 ;
-        ] ;
-      ui:child [
-          rdf:type ui:group ;
-          letrs:namespaces [
-              rdf:type sp:Select ;
-              sp:orderBy (
-                  [
-                    sp:varName "nsPrefix" ;
-                  ]
-                ) ;
-              sp:resultVariables (
-                  [
-                    sp:varName "ns" ;
-                  ]
-                  [
-                    sp:varName "nsPrefix" ;
-                  ]
-                ) ;
-              sp:where (
-                  [
-                    sp:object [
-                        sp:varName "ns" ;
-                      ] ;
-                    sp:predicate vaem:namespace ;
-                    sp:subject [
-                        sp:varName "metadata" ;
-                      ] ;
-                  ]
-                  [
-                    rdf:type sp:Bind ;
-                    sp:expression [
-                        rdf:type smf:prefix ;
-                        sp:arg1 [
-                            rdf:type sp:iri ;
-                            sp:arg1 [
-                                rdf:type sp:str ;
-                                sp:arg1 [
-                                    sp:varName "ns" ;
-                                  ] ;
-                              ] ;
-                          ] ;
-                      ] ;
-                    sp:variable [
-                        sp:varName "nsPrefix" ;
-                      ] ;
-                  ]
-                ) ;
-            ] ;
-          ui:child [
-              rdf:type html:Div ;
-              html:class "lm-abstract" ;
-              ui:child [
-                  rdf:type ui:CommentNode ;
-                  ui:childIndex 1 ;
-                  rdfs:comment "p class=\"lm-para\">{= spl:object(?metadata, vaem:intent) }</p" ;
-                ] ;
-              ui:child [
-                  rdf:type ui:group ;
-                  let:nsCount [
-                      rdf:type spr:rowCount ;
-                      sp:arg1 [
-                          sp:varName "namespaces" ;
-                        ] ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:else ;
-                      ui:child [
-                          rdf:type html:P ;
-                          html:class "lm-para" ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text "No namespace documentation." ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:childIndex 1 ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:group ;
-                      let:rdfFile [
-                          rdf:type spl:object ;
-                          sp:arg1 [
-                              sp:varName "metadata" ;
-                            ] ;
-                          sp:arg2 vaem:rdfxmlFileURL ;
-                        ] ;
-                      let:ttlFile [
-                          rdf:type spl:object ;
-                          sp:arg1 [
-                              sp:varName "metadata" ;
-                            ] ;
-                          sp:arg2 vaem:turtleFileURL ;
-                        ] ;
-                      ui:child [
-                          rdf:type ui:else ;
-                          ui:child [
-                              rdf:type html:P ;
-                              html:class "lm-para" ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "The graphs are not yet available." ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 1 ;
-                        ] ;
-                      ui:child [
-                          rdf:type ui:if ;
-                          ui:child [
-                              rdf:type html:Ol ;
-                              html:class "lm-decimal" ;
-                              ui:child [
-                                  rdf:type ui:if ;
-                                  ui:child [
-                                      rdf:type html:Li ;
-                                      ui:child [
-                                          rdf:type html:A ;
-                                          html:href [
-                                              sp:varName "rdfFile" ;
-                                            ] ;
-                                          ui:child [
-                                              rdf:type ui:TextNode ;
-                                              ui:childIndex 0 ;
-                                              ui:text "RDF/XML" ;
-                                            ] ;
-                                          ui:childIndex 0 ;
-                                        ] ;
-                                      ui:childIndex 0 ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                  ui:condition [
-                                      rdf:type sp:ne ;
-                                      sp:arg1 [
-                                          rdf:type sp:str ;
-                                          sp:arg1 [
-                                              sp:varName "rdfFile" ;
-                                            ] ;
-                                        ] ;
-                                      sp:arg2 "" ;
-                                    ] ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:if ;
-                                  ui:child [
-                                      rdf:type html:Li ;
-                                      ui:child [
-                                          rdf:type html:A ;
-                                          html:href [
-                                              sp:varName "ttlFile" ;
-                                            ] ;
-                                          ui:child [
-                                              rdf:type ui:TextNode ;
-                                              ui:childIndex 0 ;
-                                              ui:text "Turtle" ;
-                                            ] ;
-                                          ui:childIndex 0 ;
-                                        ] ;
-                                      ui:child [
-                                          rdf:type ui:TextNode ;
-                                          ui:childIndex 1 ;
-                                          ui:text "." ;
-                                        ] ;
-                                      ui:childIndex 0 ;
-                                    ] ;
-                                  ui:childIndex 1 ;
-                                  ui:condition [
-                                      rdf:type sp:ne ;
-                                      sp:arg1 [
-                                          rdf:type sp:str ;
-                                          sp:arg1 [
-                                              sp:varName "ttlFile" ;
-                                            ] ;
-                                        ] ;
-                                      sp:arg2 "" ;
-                                    ] ;
-                                ] ;
-                              ui:childIndex 1 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:P ;
-                              html:class "lm-para" ;
-                              let:graphType [
-                                  rdf:type fn:lower-case ;
-                                  sp:arg1 [
-                                      rdf:type ui:label ;
-                                      sp:arg1 [
-                                          rdf:type spl:object ;
-                                          sp:arg1 [
-                                              sp:varName "metadata" ;
-                                            ] ;
-                                          sp:arg2 vaem:hasGraphRole ;
-                                        ] ;
-                                    ] ;
-                                ] ;
-                              ui:child [
-                                  rdf:type html:Code ;
-                                  html:class "boxed" ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text [
-                                          sp:varName "graphType" ;
-                                        ] ;
-                                    ] ;
-                                  ui:childIndex 1 ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text """
-The """ ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 2 ;
-                                  ui:text " is available in the following formats: " ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 0 ;
-                          ui:condition [
-                              rdf:type sp:or ;
-                              sp:arg1 [
-                                  rdf:type sp:ne ;
-                                  sp:arg1 [
-                                      rdf:type sp:str ;
-                                      sp:arg1 [
-                                          sp:varName "rdfFile" ;
-                                        ] ;
-                                    ] ;
-                                  sp:arg2 "" ;
-                                ] ;
-                              sp:arg2 [
-                                  rdf:type sp:ne ;
-                                  sp:arg1 [
-                                      rdf:type sp:str ;
-                                      sp:arg1 [
-                                          sp:varName "ttlFile" ;
-                                        ] ;
-                                    ] ;
-                                  sp:arg2 "" ;
-                                ] ;
-                            ] ;
-                        ] ;
-                      ui:childIndex 2 ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:if ;
-                      ui:child [
-                          rdf:type ui:else ;
-                          ui:child [
-                              rdf:type html:P ;
-                              html:class "lm-para" ;
-                              ui:child [
-                                  rdf:type html:Code ;
-                                  html:class "boxed" ;
-                                  ui:child [
-                                      rdf:type ui:forEach ;
-                                      ui:child [
-                                          rdf:type html:A ;
-                                          html:href [
-                                              sp:varName "ns" ;
-                                            ] ;
-                                          ui:child [
-                                              rdf:type ui:TextNode ;
-                                              ui:childIndex 0 ;
-                                              ui:text [
-                                                  sp:varName "nsPrefix" ;
-                                                ] ;
-                                            ] ;
-                                          ui:childIndex 0 ;
-                                        ] ;
-                                      ui:childIndex 0 ;
-                                      ui:resultSet [
-                                          sp:varName "namespaces" ;
-                                        ] ;
-                                    ] ;
-                                  ui:childIndex 1 ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "The namespace prefix for resources in this ontology is: " ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 1 ;
-                        ] ;
-                      ui:child [
-                          rdf:type ui:if ;
-                          ui:child [
-                              rdf:type html:Dd ;
-                              html:class "boxed size-14" ;
-                              ui:child [
-                                  rdf:type ui:forEach ;
-                                  ui:child [
-                                      rdf:type html:A ;
-                                      html:href [
-                                          sp:varName "ns" ;
-                                        ] ;
-                                      ui:child [
-                                          rdf:type ui:TextNode ;
-                                          ui:childIndex 0 ;
-                                          ui:text [
-                                              sp:varName "nsPrefix" ;
-                                            ] ;
-                                        ] ;
-                                      ui:childIndex 0 ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                  ui:resultSet [
-                                      sp:varName "namespaces" ;
-                                    ] ;
-                                  ui:separator ", " ;
-                                ] ;
-                              ui:childIndex 1 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:P ;
-                              html:class "lm-para" ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "The namespace prefixes for the resources in this ontology are:" ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 0 ;
-                          ui:condition [
-                              rdf:type sp:gt ;
-                              sp:arg1 [
-                                  sp:varName "nsCount" ;
-                                ] ;
-                              sp:arg2 1 ;
-                            ] ;
-                        ] ;
-                      ui:childIndex 0 ;
-                      ui:condition [
-                          rdf:type sp:gt ;
-                          sp:arg1 [
-                              sp:varName "nsCount" ;
-                            ] ;
-                          sp:arg2 0 ;
-                        ] ;
-                    ] ;
-                  ui:childIndex 2 ;
-                ] ;
-              ui:child [
-                  rdf:type lmdoc:MaybeDescription ;
-                  arg:resource [
-                      sp:varName "metadata" ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 1 ;
-            ] ;
-          ui:child [
-              rdf:type html:H2 ;
-              html:id [
-                  rdf:type fn:lower-case ;
-                  sp:arg1 [
-                      sp:varName "sectionHeading" ;
-                    ] ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text [
-                      sp:varName "sectionHeading" ;
-                    ] ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:childIndex 1 ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
@@ -3030,6 +3085,35 @@ lmdoc:ClassPopupSummary
   ui:prototype [
       rdf:type ui:group ;
       ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:Div ;
+              html:class "pt40px pl40px" ;
+              ui:child [
+                  rdf:type swa:Object ;
+                  arg:predicate prov:wasInfluencedBy ;
+                  arg:subject [
+                      sp:varName "resource" ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:VSpace ;
+              arg:margin "20px;" ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 2 ;
+          ui:condition [
+              rdf:type lmdoc:hasValueForProperty ;
+              sp:arg1 [
+                  sp:varName "resource" ;
+                ] ;
+              sp:arg2 prov:wasInfluencedBy ;
+            ] ;
+        ] ;
+      ui:child [
           rdf:type lmdoc:DetailedClassView ;
           arg:class [
               sp:varName "resource" ;
@@ -3041,7 +3125,7 @@ lmdoc:ClassPopupSummary
         ] ;
       ui:child [
           rdf:type lmdoc:Footer ;
-          ui:childIndex 2 ;
+          ui:childIndex 4 ;
         ] ;
       ui:child [
           rdf:type lmdoc:ResourceHeader ;
@@ -3049,6 +3133,11 @@ lmdoc:ClassPopupSummary
               sp:varName "resource" ;
             ] ;
           ui:childIndex 0 ;
+        ] ;
+      ui:child [
+          rdf:type lmdoc:VSpace ;
+          arg:margin "30px;" ;
+          ui:childIndex 3 ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
@@ -3819,16 +3908,35 @@ lmdoc:CopyrightSection
               rdf:type ui:if ;
               ui:child [
                   rdf:type html:P ;
-                  html:class "copyright" ;
+                  html:class "lm-para-compressed size-12 pt20px pl5px" ;
                   ui:child [
                       rdf:type ui:TextNode ;
                       ui:childIndex 0 ;
-                      ui:text """Copyright ©2011-2016 
-""" ;
+                      ui:text "Copyright © 2011 - " ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 1 ;
+                      ui:text [
+                          rdf:type afn:substr ;
+                          sp:arg1 [
+                              rdf:type sp:str ;
+                              sp:arg1 [
+                                  rdf:type afn:now ;
+                                ] ;
+                            ] ;
+                          sp:arg2 0 ;
+                          sp:arg3 4 ;
+                        ] ;
                     ] ;
                   ui:child [
                       rdf:type ui:TextNode ;
                       ui:childIndex 2 ;
+                      ui:text " " ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 4 ;
                       ui:text """
    , All Rights Reserved.
 """ ;
@@ -3849,7 +3957,7 @@ lmdoc:CopyrightSection
                             ] ;
                           ui:childIndex 0 ;
                         ] ;
-                      ui:childIndex 1 ;
+                      ui:childIndex 3 ;
                       ui:resultSet [
                           sp:varName "rs" ;
                         ] ;
@@ -4813,43 +4921,53 @@ lmdoc:DetailedInstanceView
               html:class "ies_resource_summary" ;
               ui:child [
                   rdf:type html:P ;
-                  html:class "size-10" ;
+                  html:class "size-12" ;
                   ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text "QName is " ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 1 ;
-                      ui:text [
-                          rdf:type smf:qname ;
-                          sp:arg1 [
-                              sp:varName "resource" ;
+                      rdf:type html:Span ;
+                      html:class "boxed" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              rdf:type sp:str ;
+                              sp:arg1 [
+                                  sp:varName "resource" ;
+                                ] ;
                             ] ;
                         ] ;
+                      ui:childIndex 1 ;
                     ] ;
-                  ui:childIndex 1 ;
-                ] ;
-              ui:child [
-                  rdf:type html:P ;
-                  html:class "size-10" ;
                   ui:child [
                       rdf:type ui:TextNode ;
                       ui:childIndex 0 ;
                       ui:text "URI is " ;
                     ] ;
+                  ui:childIndex 2 ;
+                ] ;
+              ui:child [
+                  rdf:type html:P ;
+                  html:class "size-12" ;
                   ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 1 ;
-                      ui:text [
-                          rdf:type sp:str ;
-                          sp:arg1 [
-                              sp:varName "resource" ;
+                      rdf:type html:Span ;
+                      html:class "boxed" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              rdf:type smf:qname ;
+                              sp:arg1 [
+                                  sp:varName "resource" ;
+                                ] ;
                             ] ;
                         ] ;
+                      ui:childIndex 1 ;
                     ] ;
-                  ui:childIndex 2 ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "QName is " ;
+                    ] ;
+                  ui:childIndex 1 ;
                 ] ;
               ui:child [
                   rdf:type ui:CommentNode ;
@@ -5748,243 +5866,6 @@ lmdoc:GraphHeader
                       html:class "head" ;
                       html:id "respecHeader" ;
                       ui:child [
-                          rdf:type html:Dl ;
-                          ui:child [
-                              rdf:type html:Dd ;
-                              html:class "p-author h-card vcard" ;
-                              html:rel "bibo:editor" ;
-                              ui:child [
-                                  rdf:type html:Span ;
-                                  html:typeof "foaf:Person" ;
-                                  ui:child [
-                                      rdf:type html:A ;
-                                      html:class "p-org org h-org h-card" ;
-                                      html:href "http://www.topquadrant.com/" ;
-                                      html:rel "foaf:workplaceHomepage" ;
-                                      ui:child [
-                                          rdf:type ui:TextNode ;
-                                          ui:childIndex 0 ;
-                                          ui:text "TopQuadrant, Inc" ;
-                                        ] ;
-                                      ui:childIndex 2 ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type html:Span ;
-                                      html:class "p-name fn" ;
-                                      html:property "foaf:name" ;
-                                      ui:child [
-                                          rdf:type ui:TextNode ;
-                                          ui:childIndex 0 ;
-                                          ui:text "Ralph Hodgson" ;
-                                        ] ;
-                                      ui:childIndex 0 ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 1 ;
-                                      ui:text ", " ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:childIndex 7 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dd ;
-                              html:class "p-author h-card vcard" ;
-                              ui:child [
-                                  rdf:type html:Span ;
-                                  html:typeof "foaf:Person" ;
-                                  ui:child [
-                                      rdf:type html:Span ;
-                                      html:class "p-name fn" ;
-                                      html:property "foaf:name" ;
-                                      ui:child [
-                                          rdf:type ui:forEach ;
-                                          ui:child [
-                                              rdf:type ui:TextNode ;
-                                              ui:childIndex 0 ;
-                                              ui:text [
-                                                  sp:varName "name" ;
-                                                ] ;
-                                            ] ;
-                                          ui:childIndex 0 ;
-                                          ui:resultSet [
-                                              rdf:type sp:Select ;
-                                              sp:orderBy (
-                                                  [
-                                                    sp:varName "name" ;
-                                                  ]
-                                                ) ;
-                                              sp:resultVariables (
-                                                  [
-                                                    sp:varName "name" ;
-                                                  ]
-                                                ) ;
-                                              sp:where (
-                                                  [
-                                                    sp:object [
-                                                        sp:varName "name" ;
-                                                      ] ;
-                                                    sp:predicate dct:contributor ;
-                                                    sp:subject [
-                                                        sp:varName "myGraphMetadata" ;
-                                                      ] ;
-                                                  ]
-                                                ) ;
-                                            ] ;
-                                          ui:separator ", " ;
-                                        ] ;
-                                      ui:childIndex 0 ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:childIndex 9 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dd ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text [
-                                      rdf:type spl:object ;
-                                      sp:arg1 [
-                                          sp:varName "myGraphMetadata" ;
-                                        ] ;
-                                      sp:arg2 dct:modified ;
-                                    ] ;
-                                ] ;
-                              ui:childIndex 11 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dd ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text [
-                                      rdf:type spl:object ;
-                                      sp:arg1 [
-                                          sp:varName "myGraphMetadata" ;
-                                        ] ;
-                                      sp:arg2 vaem:revision ;
-                                    ] ;
-                                ] ;
-                              ui:childIndex 1 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dd ;
-                              ui:child [
-                                  rdf:type ui:if ;
-                                  ui:child [
-                                      rdf:type html:A ;
-                                      html:href [
-                                          sp:varName "previousVersion" ;
-                                        ] ;
-                                      ui:child [
-                                          rdf:type ui:TextNode ;
-                                          ui:childIndex 0 ;
-                                          ui:text [
-                                              sp:varName "previousVersion" ;
-                                            ] ;
-                                        ] ;
-                                      ui:childIndex 0 ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                  ui:condition [
-                                      rdf:type sp:ne ;
-                                      sp:arg1 [
-                                          sp:varName "previousVersion" ;
-                                        ] ;
-                                      sp:arg2 "none" ;
-                                    ] ;
-                                ] ;
-                              ui:childIndex 5 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dd ;
-                              ui:child [
-                                  rdf:type ui:if ;
-                                  ui:child [
-                                      rdf:type html:A ;
-                                      html:href [
-                                          sp:varName "thisVersion" ;
-                                        ] ;
-                                      ui:child [
-                                          rdf:type ui:TextNode ;
-                                          ui:childIndex 0 ;
-                                          ui:text [
-                                              sp:varName "thisVersion" ;
-                                            ] ;
-                                        ] ;
-                                      ui:childIndex 0 ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                  ui:condition [
-                                      rdf:type sp:ne ;
-                                      sp:arg1 [
-                                          sp:varName "thisVersion" ;
-                                        ] ;
-                                      sp:arg2 "none" ;
-                                    ] ;
-                                ] ;
-                              ui:childIndex 3 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dt ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Contributors:" ;
-                                ] ;
-                              ui:childIndex 8 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dt ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Editor:" ;
-                                ] ;
-                              ui:childIndex 6 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dt ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Last Modified:" ;
-                                ] ;
-                              ui:childIndex 10 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dt ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Latest published version:" ;
-                                ] ;
-                              ui:childIndex 2 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dt ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Previous published version:" ;
-                                ] ;
-                              ui:childIndex 4 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Dt ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "This version:" ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 1 ;
-                        ] ;
-                      ui:child [
                           rdf:type html:H1 ;
                           html:class "title p-name" ;
                           html:id "title" ;
@@ -6004,18 +5885,47 @@ lmdoc:GraphHeader
                         ] ;
                       ui:child [
                           rdf:type html:P ;
-                          html:class "size-10" ;
+                          html:class "lm-para-compressed size-12 pl5px" ;
                           ui:child [
-                              rdf:type html:Span ;
-                              html:style "font-style:italic;" ;
+                              rdf:type html:Em ;
                               ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Generated by lmdoc version " ;
+                                  rdf:type html:A ;
+                                  html:href "http://www.topquadrant.com/technology/sparql-web-pages-swp/" ;
+                                  html:target "_blank" ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text "SWP" ;
+                                    ] ;
+                                  ui:childIndex 1 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type html:Em ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text "lmdoc" ;
+                                    ] ;
+                                  ui:childIndex 3 ;
                                 ] ;
                               ui:child [
                                   rdf:type ui:TextNode ;
-                                  ui:childIndex 1 ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Generated by " ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 2 ;
+                                  ui:text " using " ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 4 ;
+                                  ui:text "version " ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 5 ;
                                   ui:text [
                                       rdf:type spl:object ;
                                       sp:arg1 lmdoc:GMD_LMDOC ;
@@ -6024,14 +5934,240 @@ lmdoc:GraphHeader
                                 ] ;
                               ui:childIndex 0 ;
                             ] ;
+                          ui:childIndex 8 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:P ;
+                          html:class "lm-para-compressed size-14" ;
+                          ui:child [
+                              rdf:type html:A ;
+                              html:class "p-org org h-org h-card" ;
+                              html:href "http://www.topquadrant.com/" ;
+                              html:rel "foaf:workplaceHomepage" ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "TopQuadrant, Inc" ;
+                                ] ;
+                              ui:childIndex 3 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:B ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Editor: " ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Span ;
+                              html:class "p-name fn" ;
+                              html:property "foaf:name" ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Ralph Hodgson" ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 2 ;
+                              ui:text ", " ;
+                            ] ;
+                          ui:childIndex 4 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:P ;
+                          html:class "lm-para-compressed size-14" ;
+                          ui:child [
+                              rdf:type html:B ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Contributors: " ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:Span ;
+                              html:class "p-name fn" ;
+                              html:property "foaf:name" ;
+                              ui:child [
+                                  rdf:type ui:forEach ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text [
+                                          sp:varName "name" ;
+                                        ] ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                  ui:resultSet [
+                                      rdf:type sp:Select ;
+                                      sp:orderBy (
+                                          [
+                                            sp:varName "name" ;
+                                          ]
+                                        ) ;
+                                      sp:resultVariables (
+                                          [
+                                            sp:varName "name" ;
+                                          ]
+                                        ) ;
+                                      sp:where (
+                                          [
+                                            sp:object [
+                                                sp:varName "name" ;
+                                              ] ;
+                                            sp:predicate dct:contributor ;
+                                            sp:subject [
+                                                sp:varName "myGraphMetadata" ;
+                                              ] ;
+                                          ]
+                                        ) ;
+                                    ] ;
+                                  ui:separator ", " ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:childIndex 5 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:P ;
+                          html:class "lm-para-compressed size-14" ;
+                          ui:child [
+                              rdf:type html:B ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Last Modified: " ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 1 ;
+                              ui:text [
+                                  rdf:type spl:object ;
+                                  sp:arg1 [
+                                      sp:varName "myGraphMetadata" ;
+                                    ] ;
+                                  sp:arg2 dct:modified ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 6 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:P ;
+                          html:class "lm-para-compressed size-14" ;
+                          ui:child [
+                              rdf:type html:B ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Latest published version: " ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:if ;
+                              ui:child [
+                                  rdf:type html:A ;
+                                  html:href [
+                                      sp:varName "thisVersion" ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text [
+                                          sp:varName "thisVersion" ;
+                                        ] ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 1 ;
+                              ui:condition [
+                                  rdf:type sp:ne ;
+                                  sp:arg1 [
+                                      sp:varName "thisVersion" ;
+                                    ] ;
+                                  sp:arg2 "none" ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:P ;
+                          html:class "lm-para-compressed size-14" ;
+                          ui:child [
+                              rdf:type html:B ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Previous published version: " ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:if ;
+                              ui:child [
+                                  rdf:type html:A ;
+                                  html:href [
+                                      sp:varName "previousVersion" ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text [
+                                          sp:varName "previousVersion" ;
+                                        ] ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:childIndex 1 ;
+                              ui:condition [
+                                  rdf:type sp:ne ;
+                                  sp:arg1 [
+                                      sp:varName "previousVersion" ;
+                                    ] ;
+                                  sp:arg2 "none" ;
+                                ] ;
+                            ] ;
                           ui:childIndex 3 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:P ;
+                          html:class "lm-para-compressed size-14" ;
+                          ui:child [
+                              rdf:type html:B ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "This version: " ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 1 ;
+                              ui:text [
+                                  rdf:type spl:object ;
+                                  sp:arg1 [
+                                      sp:varName "myGraphMetadata" ;
+                                    ] ;
+                                  sp:arg2 vaem:revision ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 1 ;
                         ] ;
                       ui:child [
                           rdf:type lmdoc:CopyrightSection ;
                           arg:resource [
                               sp:varName "myGraphMetadata" ;
                             ] ;
-                          ui:childIndex 2 ;
+                          ui:childIndex 7 ;
                         ] ;
                       ui:childIndex 1 ;
                     ] ;
@@ -7740,11 +7876,8 @@ lmdoc:IndexSection
                       ui:childIndex 0 ;
                     ] ;
                   ui:childIndex 7 ;
-                  ui:template lmdoc:getInstancesOfTypeWithNamespacePrefix ;
+                  ui:template lmdoc:getInstancesOfType ;
                   ui:varName "instances" ;
-                  vaem:namespacePrefix [
-                      sp:varName "namespacePrefix" ;
-                    ] ;
                 ] ;
               ui:child [
                   rdf:type ui:call ;
@@ -8467,6 +8600,19 @@ lmdoc:InstanceSummary
               html:id "summary_page" ;
               ui:child [
                   rdf:type html:Div ;
+                  html:class "pt40px pl40px" ;
+                  ui:child [
+                      rdf:type swa:Object ;
+                      arg:predicate rdf:type ;
+                      arg:subject [
+                          sp:varName "myResource" ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 5 ;
+                ] ;
+              ui:child [
+                  rdf:type html:Div ;
                   html:class "swa-sub-title" ;
                   ui:child [
                       rdf:type ui:TextNode ;
@@ -8491,11 +8637,45 @@ lmdoc:InstanceSummary
                   ui:childIndex 0 ;
                 ] ;
               ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "pt40px pl40px" ;
+                      ui:child [
+                          rdf:type swa:Object ;
+                          arg:predicate prov:wasInfluencedBy ;
+                          arg:subject [
+                              sp:varName "myResource" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:VSpace ;
+                      arg:margin "20px;" ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 6 ;
+                  ui:condition [
+                      rdf:type lmdoc:hasValueForProperty ;
+                      sp:arg1 [
+                          sp:varName "myResource" ;
+                        ] ;
+                      sp:arg2 prov:wasInfluencedBy ;
+                    ] ;
+                ] ;
+              ui:child [
                   rdf:type lmdoc:MaybeDescription ;
                   arg:resource [
                       sp:varName "myResource" ;
                     ] ;
                   ui:childIndex 3 ;
+                ] ;
+              ui:child [
+                  rdf:type lmdoc:VSpace ;
+                  arg:margin "10px;" ;
+                  ui:childIndex 4 ;
                 ] ;
               ui:child [
                   rdf:type lmdoc:VSpace ;
@@ -8505,7 +8685,7 @@ lmdoc:InstanceSummary
               ui:child [
                   rdf:type lmdoc:VSpace ;
                   arg:margin "30px;" ;
-                  ui:childIndex 4 ;
+                  ui:childIndex 7 ;
                 ] ;
               ui:childIndex 1 ;
             ] ;
@@ -8858,7 +9038,7 @@ lmdoc:InstancesGeneratorSection
                 ] ;
             ] ;
           ui:childIndex 0 ;
-          ui:template lmdoc:getInstancesOfTypeWithNamespacePrefix ;
+          ui:template lmdoc:getInstancesOfType ;
           ui:varName "instances" ;
           vaem:namespacePrefix [
               rdf:type ui:contextValue ;
@@ -9096,7 +9276,7 @@ lmdoc:InstancesMaintainer
               sp:varName "overlay" ;
             ] ;
           arg:summaryView lmdoc:InstanceSummary ;
-          arg:template lmdoc:getInstancesOfTypeWithNamespacePrefix ;
+          arg:template lmdoc:getInstancesOfType ;
           arg:view lmdoc:Instance ;
           ui:childIndex 0 ;
         ] ;
@@ -9316,7 +9496,7 @@ lmdoc:InstancesSection
                 ] ;
             ] ;
           ui:childIndex 0 ;
-          ui:template lmdoc:getInstancesOfTypeWithNamespacePrefix ;
+          ui:template lmdoc:getInstancesOfType ;
           ui:varName "instances" ;
           vaem:namespacePrefix [
               rdf:type ui:contextValue ;
@@ -9358,6 +9538,19 @@ lmdoc:InstancesSummarySection
                     ] ;
                   ui:child [
                       rdf:type html:Div ;
+                      html:class "pt40px pl40px" ;
+                      ui:child [
+                          rdf:type swa:Object ;
+                          arg:predicate rdf:type ;
+                          arg:subject [
+                              sp:varName "resource" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 5 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Div ;
                       html:class "swa-sub-title" ;
                       ui:child [
                           rdf:type ui:TextNode ;
@@ -9382,11 +9575,45 @@ lmdoc:InstancesSummarySection
                       ui:childIndex 0 ;
                     ] ;
                   ui:child [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:class "pt40px pl40px" ;
+                          ui:child [
+                              rdf:type swa:Object ;
+                              arg:predicate prov:wasInfluencedBy ;
+                              arg:subject [
+                                  sp:varName "resource" ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:VSpace ;
+                          arg:margin "20px;" ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 6 ;
+                      ui:condition [
+                          rdf:type lmdoc:hasValueForProperty ;
+                          sp:arg1 [
+                              sp:varName "resource" ;
+                            ] ;
+                          sp:arg2 prov:wasInfluencedBy ;
+                        ] ;
+                    ] ;
+                  ui:child [
                       rdf:type lmdoc:MaybeDescription ;
                       arg:resource [
                           sp:varName "resource" ;
                         ] ;
                       ui:childIndex 3 ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:VSpace ;
+                      arg:margin "10px;" ;
+                      ui:childIndex 4 ;
                     ] ;
                   ui:child [
                       rdf:type lmdoc:VSpace ;
@@ -9396,7 +9623,7 @@ lmdoc:InstancesSummarySection
                   ui:child [
                       rdf:type lmdoc:VSpace ;
                       arg:margin "30px;" ;
-                      ui:childIndex 4 ;
+                      ui:childIndex 7 ;
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
@@ -9406,12 +9633,8 @@ lmdoc:InstancesSummarySection
                 ] ;
             ] ;
           ui:childIndex 0 ;
-          ui:template lmdoc:getInstancesOfTypeWithNamespacePrefix ;
+          ui:template lmdoc:getInstancesOfType ;
           ui:varName "instances" ;
-          vaem:namespacePrefix [
-              rdf:type ui:contextValue ;
-              sp:arg1 "namespacePrefix" ;
-            ] ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
@@ -9600,7 +9823,7 @@ lmdoc:InstancesTable
                 ] ;
             ] ;
           ui:childIndex 0 ;
-          ui:template lmdoc:getInstancesOfTypeWithNamespacePrefix ;
+          ui:template lmdoc:getInstancesOfType ;
           ui:varName "instances" ;
           vaem:namespacePrefix [
               rdf:type ui:contextValue ;
@@ -12323,6 +12546,19 @@ lmdoc:PropertiesSummarySection
                     ] ;
                   ui:child [
                       rdf:type html:Div ;
+                      html:class "pt40px pl40px" ;
+                      ui:child [
+                          rdf:type swa:Object ;
+                          arg:predicate rdf:type ;
+                          arg:subject [
+                              sp:varName "resource" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 5 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Div ;
                       html:class "swa-sub-title" ;
                       ui:child [
                           rdf:type ui:TextNode ;
@@ -12347,11 +12583,45 @@ lmdoc:PropertiesSummarySection
                       ui:childIndex 0 ;
                     ] ;
                   ui:child [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:class "pt40px pl40px" ;
+                          ui:child [
+                              rdf:type swa:Object ;
+                              arg:predicate prov:wasInfluencedBy ;
+                              arg:subject [
+                                  sp:varName "resource" ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:VSpace ;
+                          arg:margin "20px;" ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 6 ;
+                      ui:condition [
+                          rdf:type lmdoc:hasValueForProperty ;
+                          sp:arg1 [
+                              sp:varName "resource" ;
+                            ] ;
+                          sp:arg2 prov:wasInfluencedBy ;
+                        ] ;
+                    ] ;
+                  ui:child [
                       rdf:type lmdoc:MaybeDescription ;
                       arg:resource [
                           sp:varName "resource" ;
                         ] ;
                       ui:childIndex 3 ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:VSpace ;
+                      arg:margin "20px;" ;
+                      ui:childIndex 4 ;
                     ] ;
                   ui:child [
                       rdf:type lmdoc:VSpace ;
@@ -12361,7 +12631,7 @@ lmdoc:PropertiesSummarySection
                   ui:child [
                       rdf:type lmdoc:VSpace ;
                       arg:margin "30px;" ;
-                      ui:childIndex 4 ;
+                      ui:childIndex 7 ;
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
@@ -13753,99 +14023,123 @@ lmdoc:ResourceLink
               sp:arg1 "graph" ;
             ] ;
           ui:child [
-              rdf:type ui:else ;
+              rdf:type ui:group ;
+              let:resourceType [
+                  rdf:type spl:objectInGraph ;
+                  sp:arg1 [
+                      sp:varName "resource" ;
+                    ] ;
+                  sp:arg2 rdf:type ;
+                  sp:arg3 [
+                      sp:varName "myGraph" ;
+                    ] ;
+                ] ;
               ui:child [
-                  rdf:type html:Span ;
+                  rdf:type ui:else ;
                   ui:child [
-                      rdf:type html:A ;
-                      html:class "lm-simulated-link" ;
-                      html:onclick [
-                          rdf:type ui:concat ;
-                          sp:arg1 "javascript: lm.popupResourceSummary('div-" ;
-                          sp:arg2 [
-                              rdf:type lmdoc:makeAnchorFromResource ;
-                              arg:resource [
-                                  sp:varName "resource" ;
-                                ] ;
-                            ] ;
-                          sp:arg3 "')" ;
-                        ] ;
+                      rdf:type ui:else ;
                       ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text [
-                              rdf:type smf:qname ;
-                              sp:arg1 [
-                                  sp:varName "resource" ;
+                          rdf:type html:Span ;
+                          ui:child [
+                              rdf:type html:A ;
+                              html:class "lm-simulated-link" ;
+                              html:onclick [
+                                  rdf:type ui:concat ;
+                                  sp:arg1 "javascript: lm.popupResourceSummary('div-" ;
+                                  sp:arg2 [
+                                      rdf:type lmdoc:makeAnchorFromResource ;
+                                      arg:resource [
+                                          sp:varName "resource" ;
+                                        ] ;
+                                    ] ;
+                                  sp:arg3 "')" ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      rdf:type smf:qname ;
+                                      sp:arg1 [
+                                          sp:varName "resource" ;
+                                        ] ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 1 ;
+                              ui:text [
+                                  sp:varName "label" ;
                                 ] ;
                             ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type html:Span ;
+                          ui:child [
+                              rdf:type html:A ;
+                              html:href [
+                                  rdf:type ui:concat ;
+                                  sp:arg1 "#" ;
+                                  sp:arg2 [
+                                      rdf:type lmdoc:makeAnchorFromResource ;
+                                      arg:resource [
+                                          sp:varName "resource" ;
+                                        ] ;
+                                    ] ;
+                                ] ;
+                              html:title [
+                                  sp:varName "title" ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      rdf:type smf:qname ;
+                                      sp:arg1 [
+                                          sp:varName "resource" ;
+                                        ] ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 1 ;
+                              ui:text [
+                                  sp:varName "label" ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 0 ;
                         ] ;
                       ui:childIndex 0 ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 1 ;
-                      ui:text [
-                          sp:varName "label" ;
+                      ui:condition [
+                          sp:varName "singlePage" ;
                         ] ;
                     ] ;
-                  ui:childIndex 0 ;
+                  ui:childIndex 1 ;
                 ] ;
-              ui:childIndex 1 ;
-            ] ;
-          ui:child [
-              rdf:type ui:if ;
               ui:child [
-                  rdf:type html:Span ;
-                  html:class "pad10px" ;
+                  rdf:type ui:if ;
                   ui:child [
                       rdf:type html:A ;
                       html:href [
-                          rdf:type xsd:string ;
+                          rdf:type sp:str ;
                           sp:arg1 [
                               sp:varName "resource" ;
                             ] ;
                         ] ;
-                      html:target "_blank" ;
-                      ui:child [
-                          rdf:type html:I ;
-                          html:aria-hidden "true" ;
-                          html:class "fa fa-external-link-square lightBlue" ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 2 ;
-              ui:condition [
-                  sp:varName "includeWebLink" ;
-                ] ;
-            ] ;
-          ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type html:Span ;
-                  ui:child [
-                      rdf:type html:A ;
-                      html:href [
-                          rdf:type ui:concat ;
-                          sp:arg1 "#" ;
-                          sp:arg2 [
-                              rdf:type lmdoc:makeAnchorFromResource ;
-                              arg:resource [
-                                  sp:varName "resource" ;
-                                ] ;
-                            ] ;
-                        ] ;
-                      html:title [
-                          sp:varName "title" ;
-                        ] ;
+                      html:target "lm-reference-link-page" ;
                       ui:child [
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
                           ui:text [
-                              rdf:type smf:qname ;
+                              rdf:type sp:str ;
                               sp:arg1 [
                                   sp:varName "resource" ;
                                 ] ;
@@ -13853,19 +14147,47 @@ lmdoc:ResourceLink
                         ] ;
                       ui:childIndex 0 ;
                     ] ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 1 ;
-                      ui:text [
-                          sp:varName "label" ;
+                  ui:childIndex 0 ;
+                  ui:condition [
+                      rdf:type sp:not ;
+                      sp:arg1 [
+                          rdf:type sp:bound ;
+                          sp:arg1 [
+                              sp:varName "resourceType" ;
+                            ] ;
                         ] ;
                     ] ;
-                  ui:childIndex 0 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:Span ;
+                      html:class "pad10px" ;
+                      ui:child [
+                          rdf:type html:A ;
+                          html:href [
+                              rdf:type xsd:string ;
+                              sp:arg1 [
+                                  sp:varName "resource" ;
+                                ] ;
+                            ] ;
+                          html:target "_blank" ;
+                          ui:child [
+                              rdf:type html:I ;
+                              html:aria-hidden "true" ;
+                              html:class "fa fa-external-link-square lightBlue" ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 2 ;
+                  ui:condition [
+                      sp:varName "includeWebLink" ;
+                    ] ;
                 ] ;
               ui:childIndex 0 ;
-              ui:condition [
-                  sp:varName "singlePage" ;
-                ] ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -14768,8 +15090,37 @@ lmdoc:SummaryClassView
             ] ;
           ui:child [
               rdf:type ui:CommentNode ;
-              ui:childIndex 5 ;
+              ui:childIndex 7 ;
               rdfs:comment "lmdoc:ClassDiagramShowingInheritanceOnly arg:focusClass=\"{= ?class }\" arg:systemLabels=\"true\"/" ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type html:Div ;
+                  html:class "pt40px pl40px" ;
+                  ui:child [
+                      rdf:type swa:Object ;
+                      arg:predicate prov:wasInfluencedBy ;
+                      arg:subject [
+                          sp:varName "class" ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type lmdoc:VSpace ;
+                  arg:margin "20px;" ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 5 ;
+              ui:condition [
+                  rdf:type lmdoc:hasValueForProperty ;
+                  sp:arg1 [
+                      sp:varName "class" ;
+                    ] ;
+                  sp:arg2 prov:wasInfluencedBy ;
+                ] ;
             ] ;
           ui:child [
               rdf:type lmdoc:MaybeDescription ;
@@ -14780,13 +15131,18 @@ lmdoc:SummaryClassView
             ] ;
           ui:child [
               rdf:type lmdoc:VSpace ;
+              arg:margin "20px;" ;
+              ui:childIndex 4 ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:VSpace ;
               arg:margin "30px;" ;
               ui:childIndex 1 ;
             ] ;
           ui:child [
               rdf:type lmdoc:VSpace ;
               arg:margin "30px;" ;
-              ui:childIndex 4 ;
+              ui:childIndex 6 ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -17919,7 +18275,7 @@ lmdoc:getInstances
                     ] ;
                 ] ;
               ui:childIndex 0 ;
-              ui:template lmdoc:getInstancesOfTypeWithNamespacePrefix ;
+              ui:template lmdoc:getInstancesOfType ;
               ui:varName "instances" ;
               vaem:namespacePrefix [
                   rdf:type ui:contextValue ;
@@ -17943,7 +18299,7 @@ lmdoc:getInstances
   rdfs:label "Instances section" ;
   rdfs:subClassOf lmdoc:Services ;
 .
-lmdoc:getInstancesOfTypeWithNamespacePrefix
+lmdoc:getInstancesOfType
   rdf:type spin:SelectTemplate ;
   spin:body [
       rdf:type sp:Select ;
@@ -17977,11 +18333,24 @@ lmdoc:getInstancesOfTypeWithNamespacePrefix
             ]
             [
               sp:object [
-                  sp:varName "type" ;
+                  sp:varName "myType" ;
                 ] ;
               sp:predicate rdf:type ;
               sp:subject [
                   sp:varName "resource" ;
+                ] ;
+            ]
+            [
+              rdf:type sp:TriplePath ;
+              sp:object owl:Thing ;
+              sp:path [
+                  rdf:type sp:ModPath ;
+                  sp:modMax -2 ;
+                  sp:modMin 1 ;
+                  sp:subPath rdfs:subClassOf ;
+                ] ;
+              sp:subject [
+                  sp:varName "myType" ;
                 ] ;
             ]
             [
@@ -17993,43 +18362,10 @@ lmdoc:getInstancesOfTypeWithNamespacePrefix
                         sp:object "true"^^xsd:boolean ;
                         sp:predicate vaem:exclude ;
                         sp:subject [
-                            sp:varName "type" ;
+                            sp:varName "myType" ;
                           ] ;
                       ]
                     ) ;
-                ] ;
-            ]
-            [
-              rdf:type sp:Filter ;
-              sp:expression [
-                  rdf:type sp:notExists ;
-                  sp:elements (
-                      [
-                        rdf:type sp:TriplePath ;
-                        sp:object owl:Class ;
-                        sp:path [
-                            rdf:type sp:ModPath ;
-                            sp:modMax -2 ;
-                            sp:modMin 0 ;
-                            sp:subPath rdfs:subClassOf ;
-                          ] ;
-                        sp:subject [
-                            sp:varName "type" ;
-                          ] ;
-                      ]
-                    ) ;
-                ] ;
-            ]
-            [
-              rdf:type sp:Bind ;
-              sp:expression [
-                  rdf:type smf:prefix ;
-                  sp:arg1 [
-                      sp:varName "type" ;
-                    ] ;
-                ] ;
-              sp:variable [
-                  sp:varName "ns" ;
                 ] ;
             ]
           )
@@ -18065,14 +18401,9 @@ lmdoc:getInstancesOfTypeWithNamespacePrefix
       spl:valueType rdfs:Resource ;
       rdfs:comment "The class that the instances must have." ;
     ] ;
-  spin:constraint [
-      rdf:type spl:Argument ;
-      spl:predicate vaem:namespacePrefix ;
-      spl:valueType xsd:string ;
-    ] ;
   rdfs:comment "FILTER (fn:upper-case(?ns) = fn:upper-case(?namespacePrefix)) ." ;
   rdfs:comment "Gets all instances defined in a given graph, filtered by matching the namespace of their type with a given type, and orders them by label. Note this may (obviously) not scale if a class has too many instances." ;
-  rdfs:label "get instances of type with namespace prefix" ;
+  rdfs:label "get instances of type" ;
   rdfs:subClassOf lmdoc:SelectTemplates ;
 .
 lmdoc:getTitle
@@ -18104,6 +18435,37 @@ lmdoc:getTitle
 lmdoc:graph
   rdf:type rdf:Property ;
   rdfs:label "graph" ;
+.
+lmdoc:hasValueForProperty
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Ask ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "value" ;
+              ] ;
+            sp:predicate spin:_arg2 ;
+            sp:subject spin:_arg1 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "the subject that is expected to have the value" ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "the expected property" ;
+    ] ;
+  spin:returnType xsd:boolean ;
+  rdfs:comment "Checks whether a given subject (?arg1) has at least one value for a given property (?arg2)." ;
+  rdfs:label "hasValueOfType" ;
+  rdfs:subClassOf spl:BooleanFunctions ;
 .
 lmdoc:htmlString
   rdf:type owl:DatatypeProperty ;
@@ -19856,6 +20218,11 @@ owl:Ontology
       ui:id "wp" ;
       ui:priority 2 ;
     ] ;
+.
+prov:wasInfluencedBy
+  rdf:type owl:ObjectProperty ;
+  rdfs:isDefinedBy prov: ;
+  rdfs:label "was influenced by" ;
 .
 _:b4674
   sp:varName "resource" ;
