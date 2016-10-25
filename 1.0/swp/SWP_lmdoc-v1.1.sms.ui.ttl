@@ -245,13 +245,6 @@ smf:convertRDFToText
 <http://topbraid.org/xhtml#Area>
   rdf:type rdfs:Resource ;
 .
-lmlib:ImportRDFFromWorkspace_1
-  rdf:type sml:ImportRDFFromWorkspace ;
-  sm:next lmdoc:CreateHTMLforResource ;
-  sml:baseURI "http://uispin.org/html" ;
-  sml:ignoreImports "false"^^xsd:boolean ;
-  rdfs:label "Import HTML ontology" ;
-.
 voag:Graph
   rdf:type owl:Class ;
   ui:instanceView [
@@ -3440,7 +3433,7 @@ lmdoc:ClassSummaryView
                 ] ;
               ui:child [
                   rdf:type lmdoc:VSpace ;
-                  arg:margin "20px;" ;
+                  arg:margin "10px;" ;
                   ui:childIndex 0 ;
                 ] ;
               ui:childIndex 4 ;
@@ -3993,34 +3986,20 @@ lmdoc:ClassesSummarySection
               sp:varName "graph" ;
             ] ;
           ui:child [
-              rdf:type ui:if ;
+              rdf:type ui:forEach ;
               ui:child [
-                  rdf:type ui:forEach ;
-                  ui:child [
-                      rdf:type lmdoc:ClassSummaryView ;
-                      arg:class [
-                          sp:varName "resource" ;
-                        ] ;
-                      arg:showDiagram "true"^^xsd:boolean ;
-                      arg:showInstances "true"^^xsd:boolean ;
-                      arg:showTitle "false"^^xsd:boolean ;
-                      ui:childIndex 0 ;
+                  rdf:type lmdoc:ClassSummaryView ;
+                  arg:class [
+                      sp:varName "resource" ;
                     ] ;
+                  arg:showDiagram "true"^^xsd:boolean ;
+                  arg:showInstances "true"^^xsd:boolean ;
+                  arg:showTitle "false"^^xsd:boolean ;
                   ui:childIndex 0 ;
-                  ui:resultSet [
-                      sp:varName "classes" ;
-                    ] ;
                 ] ;
               ui:childIndex 0 ;
-              ui:condition [
-                  rdf:type sp:gt ;
-                  sp:arg1 [
-                      rdf:type spr:rowCount ;
-                      sp:arg1 [
-                          sp:varName "classes" ;
-                        ] ;
-                    ] ;
-                  sp:arg2 0 ;
+              ui:resultSet [
+                  sp:varName "classes" ;
                 ] ;
             ] ;
           ui:childIndex 0 ;
@@ -7399,283 +7378,235 @@ lmdoc:ImportedNamespaces
     ] ;
   ui:prototype [
       rdf:type ui:group ;
-      let:ns [
-          rdf:type spl:object ;
-          sp:arg1 [
-              rdf:type spl:object ;
-              sp:arg1 [
-                  sp:varName "graph" ;
-                ] ;
-              sp:arg2 vaem:hasGraphMetadata ;
-            ] ;
-          sp:arg2 vaem:namespace ;
+      letrs:imports [
+          rdf:type sp:Select ;
+          sp:orderBy (
+              [
+                sp:varName "importedGraph" ;
+              ]
+            ) ;
+          sp:resultVariables (
+              [
+                sp:varName "importedGraph" ;
+              ]
+              [
+                sp:varName "intent" ;
+              ]
+            ) ;
+          sp:where (
+              [
+                rdf:type sp:NamedGraph ;
+                sp:elements (
+                    [
+                      sp:object [
+                          sp:varName "importedGraph" ;
+                        ] ;
+                      sp:predicate owl:imports ;
+                      sp:subject [
+                          sp:varName "graph" ;
+                        ] ;
+                    ]
+                    [
+                      rdf:type sp:NamedGraph ;
+                      sp:elements (
+                          [
+                            rdf:type sp:Optional ;
+                            sp:elements (
+                                [
+                                  sp:object [
+                                      sp:varName "gmd" ;
+                                    ] ;
+                                  sp:predicate vaem:hasGraphMetadata ;
+                                  sp:subject [
+                                      sp:varName "importedGraph" ;
+                                    ] ;
+                                ]
+                                [
+                                  sp:object [
+                                      sp:varName "intent" ;
+                                    ] ;
+                                  sp:predicate vaem:intent ;
+                                  sp:subject [
+                                      sp:varName "gmd" ;
+                                    ] ;
+                                ]
+                              ) ;
+                          ]
+                        ) ;
+                      sp:graphNameNode [
+                          sp:varName "importedGraph" ;
+                        ] ;
+                    ]
+                  ) ;
+                sp:graphNameNode [
+                    sp:varName "graph" ;
+                  ] ;
+              ]
+            ) ;
         ] ;
       ui:child [
-          rdf:type ui:group ;
-          letrs:imports [
-              rdf:type sp:Select ;
-              sp:orderBy (
-                  [
-                    sp:varName "importedGraph" ;
-                  ]
-                ) ;
-              sp:resultVariables (
-                  [
-                    sp:varName "importedGraph" ;
-                  ]
-                  [
-                    sp:varName "nameSpacePrefix" ;
-                  ]
-                  [
-                    sp:varName "slashOrHash" ;
-                  ]
-                ) ;
-              sp:where (
-                  [
-                    rdf:type sp:NamedGraph ;
-                    sp:elements (
-                        [
-                          sp:object [
-                              sp:varName "importedGraph" ;
-                            ] ;
-                          sp:predicate owl:imports ;
-                          sp:subject [
-                              sp:varName "graph" ;
-                            ] ;
-                        ]
-                        [
-                          rdf:type sp:NamedGraph ;
-                          sp:elements (
-                              [
-                                rdf:type sp:Union ;
-                                sp:elements (
-                                    (
-                                      [
-                                        rdf:type sp:Bind ;
-                                        sp:expression [
-                                            rdf:type sp:concat ;
-                                            sp:arg1 [
-                                                rdf:type xsd:string ;
-                                                sp:arg1 [
-                                                    sp:varName "importedGraph" ;
-                                                  ] ;
-                                              ] ;
-                                            sp:arg2 "/" ;
-                                          ] ;
-                                        sp:variable [
-                                            sp:varName "uri" ;
-                                          ] ;
-                                      ]
-                                      [
-                                        sp:object [
-                                            sp:varName "nameSpacePrefix" ;
-                                          ] ;
-                                        sp:predicate spif:prefix ;
-                                        sp:subject [
-                                            sp:varName "uri" ;
-                                          ] ;
-                                      ]
-                                      [
-                                        rdf:type sp:Bind ;
-                                        sp:expression "/" ;
-                                        sp:variable [
-                                            sp:varName "slashOrHash" ;
-                                          ] ;
-                                      ]
-                                    )
-                                    (
-                                      [
-                                        rdf:type sp:Bind ;
-                                        sp:expression [
-                                            rdf:type sp:concat ;
-                                            sp:arg1 [
-                                                rdf:type xsd:string ;
-                                                sp:arg1 [
-                                                    sp:varName "importedGraph" ;
-                                                  ] ;
-                                              ] ;
-                                            sp:arg2 "#" ;
-                                          ] ;
-                                        sp:variable [
-                                            sp:varName "uri" ;
-                                          ] ;
-                                      ]
-                                      [
-                                        sp:object [
-                                            sp:varName "nameSpacePrefix" ;
-                                          ] ;
-                                        sp:predicate spif:prefix ;
-                                        sp:subject [
-                                            sp:varName "uri" ;
-                                          ] ;
-                                      ]
-                                      [
-                                        rdf:type sp:Bind ;
-                                        sp:expression "#" ;
-                                        sp:variable [
-                                            sp:varName "slashOrHash" ;
-                                          ] ;
-                                      ]
-                                    )
-                                  ) ;
-                              ]
-                            ) ;
-                          sp:graphNameNode [
-                              sp:varName "importedGraph" ;
-                            ] ;
-                        ]
-                      ) ;
-                    sp:graphNameNode [
-                        sp:varName "graph" ;
-                      ] ;
-                  ]
-                ) ;
-            ] ;
+          rdf:type ui:else ;
           ui:child [
-              rdf:type ui:else ;
+              rdf:type html:P ;
+              html:class "lm-para" ;
               ui:child [
-                  rdf:type html:P ;
-                  html:class "lm-para" ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text "None" ;
-                    ] ;
+                  rdf:type ui:TextNode ;
                   ui:childIndex 0 ;
+                  ui:text "None" ;
                 ] ;
-              ui:childIndex 1 ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:H2 ;
+              html:id [
+                  rdf:type lmdoc:makeAnchorFromString ;
+                  arg:label [
+                      sp:varName "sectionHeading" ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text [
+                      sp:varName "sectionHeading" ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
             ] ;
           ui:child [
-              rdf:type ui:if ;
+              rdf:type html:P ;
+              html:class "lm-para" ;
               ui:child [
-                  rdf:type html:H2 ;
-                  html:id [
-                      rdf:type lmdoc:makeAnchorFromString ;
-                      arg:label [
-                          sp:varName "sectionHeading" ;
-                        ] ;
-                    ] ;
+                  rdf:type html:Span ;
+                  html:class "boxed" ;
                   ui:child [
                       rdf:type ui:TextNode ;
                       ui:childIndex 0 ;
                       ui:text [
-                          sp:varName "sectionHeading" ;
+                          rdf:type sp:str ;
+                          sp:arg1 [
+                              sp:varName "graph" ;
+                            ] ;
                         ] ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:child [
-                  rdf:type html:P ;
-                  html:class "lm-para" ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text "An alphabetically ordered list of imported graphs is shown in the table below." ;
                     ] ;
                   ui:childIndex 1 ;
                 ] ;
               ui:child [
-                  rdf:type html:Table ;
-                  html:class "lm-table" ;
-                  html:style "width: 50%" ;
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "A list of graphs imported by " ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 2 ;
+                  ui:text " is shown below." ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type html:Table ;
+              html:class "lm-table" ;
+              html:style "width: 50%" ;
+              ui:child [
+                  rdf:type html:Tbody ;
                   ui:child [
-                      rdf:type html:Tbody ;
+                      rdf:type ui:forEach ;
                       ui:child [
-                          rdf:type ui:forEach ;
+                          rdf:type html:Tr ;
+                          html:class "lm-row" ;
                           ui:child [
-                              rdf:type html:Tr ;
-                              html:class "lm-row" ;
+                              rdf:type html:Td ;
+                              html:class "lm-column" ;
                               ui:child [
-                                  rdf:type html:Td ;
-                                  html:class "lm-column" ;
+                                  rdf:type html:A ;
+                                  html:href [
+                                      rdf:type sp:str ;
+                                      sp:arg1 [
+                                          sp:varName "importedGraph" ;
+                                        ] ;
+                                    ] ;
                                   ui:child [
-                                      rdf:type html:A ;
-                                      html:href [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text [
                                           rdf:type sp:str ;
                                           sp:arg1 [
                                               sp:varName "importedGraph" ;
                                             ] ;
                                         ] ;
-                                      ui:child [
-                                          rdf:type ui:TextNode ;
-                                          ui:childIndex 0 ;
-                                          ui:text [
-                                              rdf:type sp:str ;
-                                              sp:arg1 [
-                                                  sp:varName "importedGraph" ;
-                                                ] ;
-                                            ] ;
-                                        ] ;
-                                      ui:childIndex 0 ;
                                     ] ;
                                   ui:childIndex 0 ;
-                                ] ;
-                              ui:child [
-                                  rdf:type html:Td ;
-                                  html:class "lm-column" ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text [
-                                          sp:varName "nameSpacePrefix" ;
-                                        ] ;
-                                    ] ;
-                                  ui:childIndex 1 ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 0 ;
-                          ui:resultSet [
-                              sp:varName "imports" ;
-                            ] ;
-                        ] ;
-                      ui:childIndex 1 ;
-                    ] ;
-                  ui:child [
-                      rdf:type html:Thead ;
-                      html:class "lm-table-header" ;
-                      ui:child [
-                          rdf:type html:Tr ;
-                          html:class "lm-row" ;
-                          ui:child [
-                              rdf:type html:Th ;
-                              html:class "lm-column-label" ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Graph URI" ;
                                 ] ;
                               ui:childIndex 0 ;
                             ] ;
                           ui:child [
-                              rdf:type html:Th ;
-                              html:class "lm-column-label" ;
+                              rdf:type html:Td ;
+                              html:class "lm-column" ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
-                                  ui:text "Namespace Prefix" ;
+                                  ui:text [
+                                      sp:varName "intent" ;
+                                    ] ;
                                 ] ;
                               ui:childIndex 1 ;
                             ] ;
                           ui:childIndex 0 ;
                         ] ;
                       ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 2 ;
-                ] ;
-              ui:childIndex 0 ;
-              ui:condition [
-                  rdf:type sp:gt ;
-                  sp:arg1 [
-                      rdf:type spr:rowCount ;
-                      sp:arg1 [
+                      ui:resultSet [
                           sp:varName "imports" ;
                         ] ;
                     ] ;
-                  sp:arg2 0 ;
+                  ui:childIndex 1 ;
                 ] ;
+              ui:child [
+                  rdf:type html:Thead ;
+                  html:class "lm-table-header" ;
+                  ui:child [
+                      rdf:type html:Tr ;
+                      html:class "lm-row" ;
+                      ui:child [
+                          rdf:type html:Th ;
+                          html:class "lm-column-label" ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Graph URI" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Th ;
+                          html:class "lm-column-label" ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Intent" ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 2 ;
             ] ;
           ui:childIndex 0 ;
+          ui:condition [
+              rdf:type sp:gt ;
+              sp:arg1 [
+                  rdf:type spr:rowCount ;
+                  sp:arg1 [
+                      sp:varName "imports" ;
+                    ] ;
+                ] ;
+              sp:arg2 0 ;
+            ] ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
@@ -7830,50 +7761,31 @@ lmdoc:IndexSection
                             ] ;
                         ] ;
                       ui:child [
-                          rdf:type ui:else ;
+                          rdf:type html:H3 ;
+                          html:id "Classes" ;
                           ui:child [
-                              rdf:type ui:debug ;
-                              ui:child [
-                                  rdf:type html:P ;
-                                  html:class "lm-para" ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text "No Classes Defined" ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:child [
-                                  rdf:type html:P ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text "Current query graph is " ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 1 ;
-                                      ui:text [
-                                          rdf:type ui:currentQueryGraph ;
-                                        ] ;
-                                    ] ;
-                                  ui:childIndex 1 ;
-                                ] ;
+                              rdf:type ui:TextNode ;
                               ui:childIndex 0 ;
+                              ui:text "Classes" ;
                             ] ;
-                          ui:childIndex 1 ;
+                          ui:childIndex 0 ;
                         ] ;
                       ui:child [
-                          rdf:type ui:if ;
+                          rdf:type ui:else ;
                           ui:child [
-                              rdf:type html:H3 ;
+                              rdf:type html:P ;
+                              html:class "lm-para" ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
-                                  ui:text "Classes" ;
+                                  ui:text "No Classes defined in this graph" ;
                                 ] ;
                               ui:childIndex 0 ;
                             ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:if ;
                           ui:child [
                               rdf:type html:P ;
                               html:class "lm-para" ;
@@ -7894,7 +7806,7 @@ lmdoc:IndexSection
                                   ui:childIndex 2 ;
                                   ui:text " classes, as indexed below:" ;
                                 ] ;
-                              ui:childIndex 1 ;
+                              ui:childIndex 0 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:MultiColumnList ;
@@ -7903,9 +7815,9 @@ lmdoc:IndexSection
                               arg:resultSet [
                                   sp:varName "classes" ;
                                 ] ;
-                              ui:childIndex 2 ;
+                              ui:childIndex 1 ;
                             ] ;
-                          ui:childIndex 0 ;
+                          ui:childIndex 1 ;
                           ui:condition [
                               rdf:type sp:gt ;
                               sp:arg1 [
@@ -7934,50 +7846,31 @@ lmdoc:IndexSection
                             ] ;
                         ] ;
                       ui:child [
-                          rdf:type ui:else ;
+                          rdf:type html:H3 ;
+                          html:id "Instances" ;
                           ui:child [
-                              rdf:type ui:debug ;
-                              ui:child [
-                                  rdf:type html:P ;
-                                  html:class "lm-para" ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text "No Instances Defined" ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:child [
-                                  rdf:type html:P ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text "Current query graph is " ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 1 ;
-                                      ui:text [
-                                          rdf:type ui:currentQueryGraph ;
-                                        ] ;
-                                    ] ;
-                                  ui:childIndex 1 ;
-                                ] ;
+                              rdf:type ui:TextNode ;
                               ui:childIndex 0 ;
+                              ui:text "Instances" ;
                             ] ;
-                          ui:childIndex 1 ;
+                          ui:childIndex 0 ;
                         ] ;
                       ui:child [
-                          rdf:type ui:if ;
+                          rdf:type ui:else ;
                           ui:child [
-                              rdf:type html:H3 ;
+                              rdf:type html:P ;
+                              html:class "lm-para" ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
-                                  ui:text "Instances" ;
+                                  ui:text "No Instances defined in this graph" ;
                                 ] ;
                               ui:childIndex 0 ;
                             ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:if ;
                           ui:child [
                               rdf:type html:P ;
                               html:class "lm-para" ;
@@ -7998,7 +7891,7 @@ lmdoc:IndexSection
                                   ui:childIndex 2 ;
                                   ui:text " instances, as indexed below:" ;
                                 ] ;
-                              ui:childIndex 1 ;
+                              ui:childIndex 0 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:MultiColumnList ;
@@ -8007,9 +7900,9 @@ lmdoc:IndexSection
                               arg:resultSet [
                                   sp:varName "instances" ;
                                 ] ;
-                              ui:childIndex 2 ;
+                              ui:childIndex 1 ;
                             ] ;
-                          ui:childIndex 0 ;
+                          ui:childIndex 1 ;
                           ui:condition [
                               rdf:type sp:gt ;
                               sp:arg1 [
@@ -8038,50 +7931,31 @@ lmdoc:IndexSection
                             ] ;
                         ] ;
                       ui:child [
-                          rdf:type ui:else ;
+                          rdf:type html:H3 ;
+                          html:id "Properties" ;
                           ui:child [
-                              rdf:type ui:debug ;
-                              ui:child [
-                                  rdf:type html:P ;
-                                  html:class "lm-para" ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text "No Properties Defined" ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:child [
-                                  rdf:type html:P ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text "Current query graph is " ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 1 ;
-                                      ui:text [
-                                          rdf:type ui:currentQueryGraph ;
-                                        ] ;
-                                    ] ;
-                                  ui:childIndex 1 ;
-                                ] ;
+                              rdf:type ui:TextNode ;
                               ui:childIndex 0 ;
+                              ui:text "Properties" ;
                             ] ;
-                          ui:childIndex 1 ;
+                          ui:childIndex 0 ;
                         ] ;
                       ui:child [
-                          rdf:type ui:if ;
+                          rdf:type ui:else ;
                           ui:child [
-                              rdf:type html:H3 ;
+                              rdf:type html:P ;
+                              html:class "lm-para" ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
-                                  ui:text "Properties" ;
+                                  ui:text "No Properties defined in this graph" ;
                                 ] ;
                               ui:childIndex 0 ;
                             ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:if ;
                           ui:child [
                               rdf:type html:P ;
                               html:class "lm-para" ;
@@ -8102,7 +7976,7 @@ lmdoc:IndexSection
                                   ui:childIndex 2 ;
                                   ui:text " properties, as indexed below:" ;
                                 ] ;
-                              ui:childIndex 1 ;
+                              ui:childIndex 0 ;
                             ] ;
                           ui:child [
                               rdf:type lmdoc:MultiColumnList ;
@@ -8111,9 +7985,9 @@ lmdoc:IndexSection
                               arg:resultSet [
                                   sp:varName "properties" ;
                                 ] ;
-                              ui:childIndex 2 ;
+                              ui:childIndex 1 ;
                             ] ;
-                          ui:childIndex 0 ;
+                          ui:childIndex 1 ;
                           ui:condition [
                               rdf:type sp:gt ;
                               sp:arg1 [
@@ -8747,7 +8621,7 @@ lmdoc:InstanceSummaryView
                   rdf:type html:Div ;
                   html:class "pt10px pl20px" ;
                   ui:child [
-                      rdf:type swa:Object ;
+                      rdf:type lmdoc:Object ;
                       arg:predicate rdf:type ;
                       arg:subject [
                           sp:varName "myResource" ;
@@ -8787,7 +8661,7 @@ lmdoc:InstanceSummaryView
                       rdf:type html:Div ;
                       html:class "pt10px pl20px" ;
                       ui:child [
-                          rdf:type swa:Object ;
+                          rdf:type lmdoc:Object ;
                           arg:predicate prov:wasInfluencedBy ;
                           arg:subject [
                               sp:varName "myResource" ;
@@ -8808,7 +8682,7 @@ lmdoc:InstanceSummaryView
                     ] ;
                   ui:child [
                       rdf:type lmdoc:VSpace ;
-                      arg:margin "20px;" ;
+                      arg:margin "10px;" ;
                       ui:childIndex 0 ;
                     ] ;
                   ui:childIndex 6 ;
@@ -14223,35 +14097,27 @@ lmdoc:ResourceLink
           ui:child [
               rdf:type ui:group ;
               let:resourceType [
-                  rdf:type spl:objectInGraph ;
+                  rdf:type spl:object ;
                   sp:arg1 [
                       sp:varName "resource" ;
                     ] ;
                   sp:arg2 rdf:type ;
-                  sp:arg3 [
-                      sp:varName "myGraph" ;
-                    ] ;
                 ] ;
               ui:child [
-                  rdf:type ui:else ;
+                  rdf:type html:Div ;
                   ui:child [
                       rdf:type ui:else ;
                       ui:child [
-                          rdf:type html:Span ;
+                          rdf:type ui:else ;
                           ui:child [
                               rdf:type html:A ;
-                              html:class "lm-simulated-link" ;
-                              html:onclick [
-                                  rdf:type ui:concat ;
-                                  sp:arg1 "javascript: lm.popupResourceSummary('div-" ;
-                                  sp:arg2 [
-                                      rdf:type lmdoc:makeAnchorFromResource ;
-                                      arg:resource [
-                                          sp:varName "resource" ;
-                                        ] ;
+                              html:href [
+                                  rdf:type sp:str ;
+                                  sp:arg1 [
+                                      sp:varName "resource" ;
                                     ] ;
-                                  sp:arg3 "')" ;
                                 ] ;
+                              html:target "lm-reference-link-page" ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -14264,126 +14130,165 @@ lmdoc:ResourceLink
                                 ] ;
                               ui:childIndex 0 ;
                             ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:if ;
                           ui:child [
-                              rdf:type ui:TextNode ;
+                              rdf:type ui:else ;
+                              ui:child [
+                                  rdf:type html:A ;
+                                  html:class "lm-simulated-link" ;
+                                  html:onclick [
+                                      rdf:type ui:concat ;
+                                      sp:arg1 "javascript: lm.popupResourceSummary('div-" ;
+                                      sp:arg2 [
+                                          rdf:type lmdoc:makeAnchorFromResource ;
+                                          arg:resource [
+                                              sp:varName "resource" ;
+                                            ] ;
+                                        ] ;
+                                      sp:arg3 "')" ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text [
+                                          rdf:type smf:qname ;
+                                          sp:arg1 [
+                                              sp:varName "resource" ;
+                                            ] ;
+                                        ] ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text [
+                                      sp:varName "label" ;
+                                    ] ;
+                                ] ;
                               ui:childIndex 1 ;
-                              ui:text [
-                                  sp:varName "label" ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:if ;
+                              ui:child [
+                                  rdf:type html:A ;
+                                  html:href [
+                                      rdf:type ui:concat ;
+                                      sp:arg1 "#" ;
+                                      sp:arg2 [
+                                          rdf:type lmdoc:makeAnchorFromResource ;
+                                          arg:resource [
+                                              sp:varName "resource" ;
+                                            ] ;
+                                        ] ;
+                                    ] ;
+                                  html:title [
+                                      sp:varName "title" ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:TextNode ;
+                                      ui:childIndex 0 ;
+                                      ui:text [
+                                          rdf:type smf:qname ;
+                                          sp:arg1 [
+                                              sp:varName "resource" ;
+                                            ] ;
+                                        ] ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text [
+                                      sp:varName "label" ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                              ui:condition [
+                                  sp:varName "singlePage" ;
                                 ] ;
                             ] ;
                           ui:childIndex 0 ;
+                          ui:condition [
+                              rdf:type lmdoc:IsDefinedInGraph ;
+                              arg:graph [
+                                  sp:varName "myGraph" ;
+                                ] ;
+                              arg:resource [
+                                  sp:varName "resource" ;
+                                ] ;
+                            ] ;
                         ] ;
                       ui:childIndex 1 ;
                     ] ;
                   ui:child [
                       rdf:type ui:if ;
                       ui:child [
-                          rdf:type html:Span ;
-                          ui:child [
-                              rdf:type html:A ;
-                              html:href [
-                                  rdf:type ui:concat ;
-                                  sp:arg1 "#" ;
-                                  sp:arg2 [
-                                      rdf:type lmdoc:makeAnchorFromResource ;
-                                      arg:resource [
-                                          sp:varName "resource" ;
-                                        ] ;
-                                    ] ;
+                          rdf:type html:A ;
+                          html:href [
+                              rdf:type sp:str ;
+                              sp:arg1 [
+                                  sp:varName "resource" ;
                                 ] ;
-                              html:title [
-                                  sp:varName "title" ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text [
-                                      rdf:type smf:qname ;
-                                      sp:arg1 [
-                                          sp:varName "resource" ;
-                                        ] ;
-                                    ] ;
-                                ] ;
-                              ui:childIndex 0 ;
                             ] ;
+                          html:target "lm-reference-link-page" ;
                           ui:child [
                               rdf:type ui:TextNode ;
-                              ui:childIndex 1 ;
+                              ui:childIndex 0 ;
                               ui:text [
-                                  sp:varName "label" ;
+                                  rdf:type sp:str ;
+                                  sp:arg1 [
+                                      sp:varName "resource" ;
+                                    ] ;
                                 ] ;
                             ] ;
                           ui:childIndex 0 ;
                         ] ;
                       ui:childIndex 0 ;
                       ui:condition [
-                          sp:varName "singlePage" ;
-                        ] ;
-                    ] ;
-                  ui:childIndex 1 ;
-                ] ;
-              ui:child [
-                  rdf:type ui:if ;
-                  ui:child [
-                      rdf:type html:A ;
-                      html:href [
-                          rdf:type sp:str ;
+                          rdf:type sp:not ;
                           sp:arg1 [
-                              sp:varName "resource" ;
-                            ] ;
-                        ] ;
-                      html:target "lm-reference-link-page" ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text [
-                              rdf:type sp:str ;
+                              rdf:type sp:bound ;
                               sp:arg1 [
-                                  sp:varName "resource" ;
+                                  sp:varName "resourceType" ;
                                 ] ;
                             ] ;
                         ] ;
-                      ui:childIndex 0 ;
                     ] ;
-                  ui:childIndex 0 ;
-                  ui:condition [
-                      rdf:type sp:not ;
-                      sp:arg1 [
-                          rdf:type sp:bound ;
-                          sp:arg1 [
-                              sp:varName "resourceType" ;
-                            ] ;
-                        ] ;
-                    ] ;
-                ] ;
-              ui:child [
-                  rdf:type ui:if ;
                   ui:child [
-                      rdf:type html:Span ;
-                      html:class "pad10px" ;
+                      rdf:type ui:if ;
                       ui:child [
-                          rdf:type html:A ;
-                          html:href [
-                              rdf:type xsd:string ;
-                              sp:arg1 [
-                                  sp:varName "resource" ;
-                                ] ;
-                            ] ;
-                          html:target "_blank" ;
+                          rdf:type html:Span ;
+                          html:class "pad10px" ;
                           ui:child [
-                              rdf:type html:I ;
-                              html:aria-hidden "true" ;
-                              html:class "fa fa-external-link-square lightBlue" ;
+                              rdf:type html:A ;
+                              html:href [
+                                  rdf:type xsd:string ;
+                                  sp:arg1 [
+                                      sp:varName "resource" ;
+                                    ] ;
+                                ] ;
+                              html:target "_blank" ;
+                              ui:child [
+                                  rdf:type html:I ;
+                                  html:aria-hidden "true" ;
+                                  html:class "fa fa-external-link-square lightBlue" ;
+                                  ui:childIndex 0 ;
+                                ] ;
                               ui:childIndex 0 ;
                             ] ;
                           ui:childIndex 0 ;
                         ] ;
-                      ui:childIndex 0 ;
+                      ui:childIndex 2 ;
+                      ui:condition [
+                          sp:varName "includeWebLink" ;
+                        ] ;
                     ] ;
-                  ui:childIndex 2 ;
-                  ui:condition [
-                      sp:varName "includeWebLink" ;
-                    ] ;
+                  ui:childIndex 0 ;
                 ] ;
               ui:childIndex 0 ;
             ] ;
