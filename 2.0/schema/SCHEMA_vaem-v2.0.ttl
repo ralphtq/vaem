@@ -466,6 +466,14 @@ vaem:ShapesGraph
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "SHAPES Graph" ;
 .
+vaem:SurrogateGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph that specifies minimal representation of resources from another graph so as to avoid the need to import it."^^rdf:HTML ;
+  vaem:filePrefix "CONNECTSET" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Surrogate graph" ;
+.
 vaem:TopQuadrant
   rdf:type vaem:Party ;
   vaem:name "TopQuadrant, Inc." ;
