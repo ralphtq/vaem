@@ -94,6 +94,14 @@ vaem:Aspect
 vaem:CatalogEntry
   dct:description "VAEM Governed Object class is a placeholder for concepts that are fully defined by the voag:GovernedObject concept hierarchy for building a catalog of ontologies and graphs"^^rdf:HTML ;
 .
+vaem:CodelistGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph that holds enumerations that are codelists."^^rdf:HTML ;
+  vaem:filePrefix "CODELIST" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Codelist graph" ;
+.
 vaem:CollectionGraph
   rdf:type vaem:GraphRole ;
   vaem:description "A \"vaem:CollectionGraph\" is a graph that aggregates other graphs using \"owl:imports\" statements."^^rdf:HTML ;
@@ -150,6 +158,14 @@ vaem:DataGraph
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Data graph" ;
 .
+vaem:DatatypesGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph that holds datatype specifications."^^rdf:HTML ;
+  vaem:filePrefix "DATATYPES" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Datatypes graph" ;
+.
 vaem:Dimension
   rdf:type owl:Class ;
   dct:description "A dimension identifies a separation of concens that serves as a way to categorize an ontology graph. In VAEM,  the notion of \"Dimension\" is partitioned into \"Aspect\", \"Discipline\", \"Domain\" and \"Viewpoint\". "^^rdf:HTML ;
@@ -181,6 +197,30 @@ vaem:Domain
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Domain Dimension" ;
   rdfs:subClassOf vaem:Dimension ;
+.
+vaem:DynamicGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph which holds session-dependent data."^^rdf:HTML ;
+  vaem:filePrefix "DYNAMIC" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Dynamic Graph" ;
+.
+vaem:EditorGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph which defines an SWA/SWP editor"^^rdf:HTML ;
+  vaem:filePrefix "EDITOR" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Editor Graph" ;
+.
+vaem:ExporterGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph which has scripts and or rules for exporting data."^^rdf:HTML ;
+  vaem:filePrefix "EXPORTER" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Exporter Graph" ;
 .
 vaem:FunctionsGraph
   rdf:type vaem:GraphRole ;
@@ -371,6 +411,14 @@ vaem:GraphRole
       owl:onProperty vaem:filePrefix ;
     ] ;
 .
+vaem:ImporterGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph which has scripts and or rules for importing data."^^rdf:HTML ;
+  vaem:filePrefix "IMPORTER" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Importer Graph" ;
+.
 vaem:LinkSetGraph
   rdf:type vaem:GraphRole ;
   vaem:description "A graph that holds statements that specify links between resources."^^rdf:HTML ;
@@ -386,6 +434,14 @@ vaem:MappingGraph
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Mapping graph" ;
+.
+vaem:ModelGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph which specifies one or more models."^^rdf:HTML ;
+  vaem:filePrefix "MODEL" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Model Graph" ;
 .
 vaem:Party
   rdf:type owl:Class ;
@@ -409,6 +465,14 @@ vaem:Party
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:url ;
     ] ;
+.
+vaem:ProjectGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph which defines a project type."^^rdf:HTML ;
+  vaem:filePrefix "PROJECT" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Project Type Graph" ;
 .
 vaem:ProxyGraph
   rdf:type vaem:GraphRole ;
@@ -490,13 +554,37 @@ vaem:TransformsGraph
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Transforms graph" ;
 .
+vaem:UnknownGraphRole
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph whose role is unknown."^^rdf:HTML ;
+  vaem:filePrefix "UNKNOWN" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Unknown graph role" ;
+.
+vaem:UtilityGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph whose role is unknown."^^rdf:HTML ;
+  vaem:filePrefix "UTILITY" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "An SWP graph that is a utiltity." ;
+.
 vaem:ViewGraph
   rdf:type vaem:GraphRole ;
   vaem:description "A graph that provides the access to services in an MVC-like framework."^^rdf:HTML ;
-  vaem:filePrefix "VIEWS" ;
+  vaem:filePrefix "VIEW" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "View graph" ;
+.
+vaem:ViewerGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph which defines an SWA/SWP viewer"^^rdf:HTML ;
+  vaem:filePrefix "VIEWER" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Viewer Graph" ;
 .
 vaem:Viewpoint
   rdf:type owl:Class ;
