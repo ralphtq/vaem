@@ -116,7 +116,7 @@ vaem:ConfigurationGraph
   vaem:filePrefix "CONFIG" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "Collection graph" ;
+  rdfs:label "Configuration Graph" ;
 .
 vaem:ConnectSetGraph
   rdf:type vaem:GraphRole ;
@@ -234,7 +234,7 @@ vaem:GMD_VAEM
   rdf:type vaem:GraphMetaData ;
   dct:abstract "VAEM stands for \"Vocabulary for Attaching Essential Metadata\". What VAEM regards as essential metadata is data about dates and times, confidentiality, and other characterisitic qualifiers of the ontology, but also references to where a ontology is documented and where to find ontology registration for governance, attribution and provenance. VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix \"dct\". VAEM is OWL-DL compliant." ;
   dct:created "2011-04-20"^^xsd:date ;
-  dct:modified "2016-09-27"^^xsd:date ;
+  dct:modified "2016-12-19"^^xsd:date ;
   dct:title "VAEM Version 2.0 Metadata" ;
   vaem:description "VAEM stands for \"Vocabulary for Attaching Essential Metadata\". What VAEM regards as essential metadata is data about dates and times, confidentiality, and other characterisitic qualifiers of the ontology, but also references to where a ontology is documented and where to find ontology registration for governance, attribution and provenance. VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix \"dct\"."^^rdf:HTML ;
   vaem:hasGraphRole vaem:SchemaGraph ;
@@ -498,6 +498,14 @@ vaem:RulesGraph
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Rules Graph" ;
 .
+vaem:SPINlibraryGraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph that holds SPIN library code."^^rdf:HTML ;
+  vaem:filePrefix "SPIN" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "SPIN Library Graph" ;
+.
 vaem:SchemaGraph
   rdf:type vaem:GraphRole ;
   vaem:description "A graph that defines classes and properties for one or more namespaces."^^rdf:HTML ;
@@ -562,13 +570,21 @@ vaem:UnknownGraphRole
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Unknown graph role" ;
 .
+vaem:UnspecifiedGraphRole
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph that is for defining constraints using SPIN."^^rdf:HTML ;
+  vaem:filePrefix "CONSTRAINTS" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "Unspecified Graph Role" ;
+.
 vaem:UtilityGraph
   rdf:type vaem:GraphRole ;
-  vaem:description "A graph whose role is unknown."^^rdf:HTML ;
+  vaem:description "An SWP graph that is a utiltity."^^rdf:HTML ;
   vaem:filePrefix "UTILITY" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "An SWP graph that is a utiltity." ;
+  rdfs:label "Utility Graph" ;
 .
 vaem:ViewGraph
   rdf:type vaem:GraphRole ;
@@ -928,29 +944,9 @@ vaem:usesNonImportedResource
 vaem:withAttributionTo
   rdf:type owl:AnnotationProperty ;
   dct:description "The property \"vaem:withAttributionTo\" is an annotation property that is either used to hold either a string or a reference to an instance of \"voag:Attribution\", from the VOAG ontology"^^rdf:HTML ;
+  rdfs:domain vaem:GraphMetaData ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "with attribution to" ;
+  rdfs:range rdf:HTML ;
 .
-owl:Ontology
-  vaem:hasGraphMetadata vaem:GMD_VAEM ;
-.
-[
-  rdf:type owl:Class ;
-  owl:oneOf (
-      rdf:HTML
-    ) ;
-].
-[
-  rdf:type owl:Class ;
-  owl:oneOf (
-      rdf:HTML
-    ) ;
-].
-[
-  rdf:type owl:Class ;
-  owl:oneOf (
-      rdf:HTML
-      xsd:string
-    ) ;
-].
