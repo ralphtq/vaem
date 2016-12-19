@@ -3078,33 +3078,14 @@ lmdoc:ClassPopupSummary
   ui:prototype [
       rdf:type ui:group ;
       ui:child [
-          rdf:type ui:if ;
-          ui:child [
-              rdf:type html:Div ;
-              html:class "pt10px pl20px" ;
-              ui:child [
-                  rdf:type lmdoc:Object ;
-                  arg:predicate prov:wasInfluencedBy ;
-                  arg:subject [
-                      sp:varName "resource" ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 1 ;
-            ] ;
-          ui:child [
-              rdf:type lmdoc:VSpace ;
-              arg:margin "20px;" ;
-              ui:childIndex 0 ;
-            ] ;
+          rdf:type ui:CommentNode ;
           ui:childIndex 2 ;
-          ui:condition [
-              rdf:type lmdoc:hasValueForProperty ;
-              sp:arg1 [
-                  sp:varName "resource" ;
-                ] ;
-              sp:arg2 prov:wasInfluencedBy ;
-            ] ;
+          rdfs:comment """ui:if ui:condition=\"{= lmdoc:hasValueForProperty(?resource, prov:wasInfluencedBy) }\">
+<lmdoc:VSpace arg:margin=\"20px;\"/>
+<div class=\"pt10px pl20px\">
+<lmdoc:Object arg:predicate=\"prov:wasInfluencedBy\" arg:subject=\"{= ?resource }\"/>
+</div>
+</ui:if""" ;
         ] ;
       ui:child [
           rdf:type lmdoc:DetailedClassView ;
@@ -14822,187 +14803,243 @@ lmdoc:ResourcesMaintainer
             ] ;
         ] ;
       ui:child [
-          rdf:type ui:group ;
-          let:myGraphMetadata [
-              rdf:type spl:objectInGraph ;
-              sp:arg1 [
-                  sp:varName "myGraph" ;
+          rdf:type ui:catch ;
+          ui:child [
+              rdf:type html:P ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "Exception: " ;
                 ] ;
-              sp:arg2 vaem:hasGraphMetadata ;
-              sp:arg3 [
-                  sp:varName "myGraph" ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 1 ;
+                  ui:text [
+                      sp:varName "exception" ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type ui:try ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type ui:throw ;
+                  ui:childIndex 0 ;
+                  ui:message [
+                      rdf:type ui:concat ;
+                      sp:arg1 "Bad Graph: " ;
+                      sp:arg2 [
+                          sp:varName "graph" ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:condition [
+                  rdf:type sp:not ;
+                  sp:arg1 [
+                      rdf:type sp:bound ;
+                      sp:arg1 [
+                          sp:varName "myGraph" ;
+                        ] ;
+                    ] ;
                 ] ;
             ] ;
           ui:child [
               rdf:type ui:setContext ;
               ui:child [
                   rdf:type ui:group ;
-                  let:myOverlay [
-                      rdf:type sp:iri ;
+                  let:myGraphMetadata [
+                      rdf:type spl:objectInGraph ;
                       sp:arg1 [
-                          rdf:type sp:coalesce ;
-                          sp:arg1 [
-                              sp:varName "overlay" ;
-                            ] ;
-                          sp:arg2 ui:tempGraph ;
+                          sp:varName "myGraph" ;
+                        ] ;
+                      sp:arg2 vaem:hasGraphMetadata ;
+                      sp:arg3 [
+                          sp:varName "myGraph" ;
                         ] ;
                     ] ;
                   ui:child [
                       rdf:type ui:setContext ;
                       ui:child [
-                          rdf:type ui:setContext ;
-                          ui:child [
-                              rdf:type html:H1 ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text [
-                                      sp:varName "heading" ;
+                          rdf:type ui:group ;
+                          let:myOverlay [
+                              rdf:type sp:iri ;
+                              sp:arg1 [
+                                  rdf:type sp:coalesce ;
+                                  sp:arg1 [
+                                      sp:varName "overlay" ;
                                     ] ;
+                                  sp:arg2 ui:tempGraph ;
                                 ] ;
-                              ui:childIndex 3 ;
                             ] ;
                           ui:child [
-                              rdf:type html:Section ;
-                              html:class "details" ;
-                              html:id "details" ;
+                              rdf:type ui:setContext ;
                               ui:child [
-                                  rdf:type html:Section ;
-                                  html:class "informative" ;
-                                  html:id [
-                                      sp:varName "heading" ;
+                                  rdf:type ui:setContext ;
+                                  ui:child [
+                                      rdf:type html:H1 ;
+                                      ui:child [
+                                          rdf:type ui:TextNode ;
+                                          ui:childIndex 0 ;
+                                          ui:text [
+                                              sp:varName "heading" ;
+                                            ] ;
+                                        ] ;
+                                      ui:childIndex 3 ;
                                     ] ;
                                   ui:child [
-                                      rdf:type lmdoc:ResourcesGenerator ;
-                                      arg:graph [
+                                      rdf:type html:Section ;
+                                      html:class "details" ;
+                                      html:id "details" ;
+                                      ui:child [
+                                          rdf:type html:Section ;
+                                          html:class "informative" ;
+                                          html:id [
+                                              sp:varName "heading" ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type lmdoc:ResourcesGenerator ;
+                                              arg:graph [
+                                                  sp:varName "myGraph" ;
+                                                ] ;
+                                              arg:overlay [
+                                                  sp:varName "overlay" ;
+                                                ] ;
+                                              arg:sectionHeading [
+                                                  sp:varName "heading" ;
+                                                ] ;
+                                              arg:summaryView [
+                                                  sp:varName "summaryView" ;
+                                                ] ;
+                                              arg:template [
+                                                  sp:varName "template" ;
+                                                ] ;
+                                              arg:view [
+                                                  sp:varName "view" ;
+                                                ] ;
+                                              ui:childIndex 0 ;
+                                            ] ;
+                                          ui:childIndex 0 ;
+                                        ] ;
+                                      ui:child [
+                                          rdf:type lmdoc:Footer ;
+                                          ui:childIndex 1 ;
+                                        ] ;
+                                      ui:childIndex 5 ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type html:Section ;
+                                      html:class "introductory" ;
+                                      html:id "abstract" ;
+                                      ui:child [
+                                          rdf:type lmdoc:AbstractSection ;
+                                          arg:metadata [
+                                              sp:varName "myGraphMetadata" ;
+                                            ] ;
+                                          arg:sectionHeading "Abstract" ;
+                                          ui:childIndex 0 ;
+                                        ] ;
+                                      ui:childIndex 4 ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:if ;
+                                      ui:child [
+                                          rdf:type html:P ;
+                                          ui:child [
+                                              rdf:type ui:TextNode ;
+                                              ui:childIndex 0 ;
+                                              ui:text "Current query graph is " ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type ui:TextNode ;
+                                              ui:childIndex 1 ;
+                                              ui:text [
+                                                  rdf:type ui:currentQueryGraph ;
+                                                ] ;
+                                            ] ;
+                                          ui:childIndex 0 ;
+                                        ] ;
+                                      ui:childIndex 1 ;
+                                      ui:condition [
+                                          rdf:type fn:contains ;
+                                          sp:arg1 [
+                                              sp:varName "flags" ;
+                                            ] ;
+                                          sp:arg2 "Sqg" ;
+                                        ] ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:if ;
+                                      ui:child [
+                                          rdf:type ui:CommentNode ;
+                                          ui:childIndex 0 ;
+                                          rdfs:comment "debug-swa:DumpTriplesForResourceAsSubject arg:resource=\"{= ?myGraphMetadata } \"/" ;
+                                        ] ;
+                                      ui:childIndex 2 ;
+                                      ui:condition [
+                                          rdf:type fn:contains ;
+                                          sp:arg1 [
+                                              sp:varName "flags" ;
+                                            ] ;
+                                          sp:arg2 "Sgmd" ;
+                                        ] ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type lmdoc:GraphHeader ;
+                                      arg:metadata [
+                                          sp:varName "myGraphMetadata" ;
+                                        ] ;
+                                      ui:childIndex 0 ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                  ui:queryGraph [
+                                      rdf:type ui:unionOfGraphs ;
+                                      sp:arg1 [
                                           sp:varName "myGraph" ;
                                         ] ;
-                                      arg:overlay [
-                                          sp:varName "overlay" ;
+                                      sp:arg2 [
+                                          rdf:type ui:graphWithImports ;
+                                          sp:arg1 <http://www.linkedmodel.org/1.1/swp/lmdoc> ;
                                         ] ;
-                                      arg:sectionHeading [
-                                          sp:varName "heading" ;
-                                        ] ;
-                                      arg:summaryView [
-                                          sp:varName "summaryView" ;
-                                        ] ;
-                                      arg:template [
-                                          sp:varName "template" ;
-                                        ] ;
-                                      arg:view [
-                                          sp:varName "view" ;
-                                        ] ;
-                                      ui:childIndex 0 ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:child [
-                                  rdf:type lmdoc:Footer ;
-                                  ui:childIndex 1 ;
-                                ] ;
-                              ui:childIndex 5 ;
-                            ] ;
-                          ui:child [
-                              rdf:type html:Section ;
-                              html:class "introductory" ;
-                              html:id "abstract" ;
-                              ui:child [
-                                  rdf:type lmdoc:AbstractSection ;
-                                  arg:metadata [
-                                      sp:varName "myGraphMetadata" ;
-                                    ] ;
-                                  arg:sectionHeading "Abstract" ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:childIndex 4 ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:if ;
-                              ui:child [
-                                  rdf:type html:P ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text "Current query graph is " ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:TextNode ;
-                                      ui:childIndex 1 ;
-                                      ui:text [
-                                          rdf:type ui:currentQueryGraph ;
+                                      sp:arg3 [
+                                          rdf:type ui:graphWithImports ;
+                                          sp:arg1 [
+                                              sp:varName "myOverlay" ;
+                                            ] ;
                                         ] ;
                                     ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:childIndex 1 ;
-                              ui:condition [
-                                  rdf:type fn:contains ;
-                                  sp:arg1 [
-                                      sp:varName "flags" ;
-                                    ] ;
-                                  sp:arg2 "Sqg" ;
-                                ] ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:if ;
-                              ui:child [
-                                  rdf:type ui:CommentNode ;
-                                  ui:childIndex 0 ;
-                                  rdfs:comment "debug-swa:DumpTriplesForResourceAsSubject arg:resource=\"{= ?myGraphMetadata } \"/" ;
-                                ] ;
-                              ui:childIndex 2 ;
-                              ui:condition [
-                                  rdf:type fn:contains ;
-                                  sp:arg1 [
-                                      sp:varName "flags" ;
-                                    ] ;
-                                  sp:arg2 "Sgmd" ;
-                                ] ;
-                            ] ;
-                          ui:child [
-                              rdf:type lmdoc:GraphHeader ;
-                              arg:metadata [
-                                  sp:varName "myGraphMetadata" ;
                                 ] ;
                               ui:childIndex 0 ;
+                              ui:varName "flags" ;
+                              ui:varValue [
+                                  sp:varName "flags" ;
+                                ] ;
                             ] ;
                           ui:childIndex 0 ;
-                          ui:queryGraph [
-                              rdf:type ui:unionOfGraphs ;
-                              sp:arg1 [
-                                  sp:varName "myGraph" ;
-                                ] ;
-                              sp:arg2 [
-                                  rdf:type ui:graphWithImports ;
-                                  sp:arg1 <http://www.linkedmodel.org/1.1/swp/lmdoc> ;
-                                ] ;
-                              sp:arg3 [
-                                  rdf:type ui:graphWithImports ;
-                                  sp:arg1 [
-                                      sp:varName "myOverlay" ;
-                                    ] ;
-                                ] ;
-                            ] ;
                         ] ;
                       ui:childIndex 0 ;
-                      ui:varName "flags" ;
+                      ui:varName "namespacePrefix" ;
                       ui:varValue [
-                          sp:varName "flags" ;
+                          rdf:type spl:objectInGraph ;
+                          sp:arg1 [
+                              sp:varName "myGraphMetadata" ;
+                            ] ;
+                          sp:arg2 vaem:name ;
+                          sp:arg3 [
+                              sp:varName "myGraph" ;
+                            ] ;
                         ] ;
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
-              ui:childIndex 0 ;
-              ui:varName "namespacePrefix" ;
+              ui:childIndex 1 ;
+              ui:varName "graph" ;
               ui:varValue [
-                  rdf:type spl:objectInGraph ;
-                  sp:arg1 [
-                      sp:varName "myGraphMetadata" ;
-                    ] ;
-                  sp:arg2 vaem:name ;
-                  sp:arg3 [
-                      sp:varName "myGraph" ;
-                    ] ;
+                  sp:varName "graph" ;
                 ] ;
             ] ;
           ui:childIndex 0 ;
