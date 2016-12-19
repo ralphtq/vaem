@@ -6464,160 +6464,168 @@ lmdoc:GraphMetadata
       ui:child [
           rdf:type ui:if ;
           ui:child [
-              rdf:type ui:group ;
-              let:myGraphMetadata [
-                  rdf:type spl:subjectInGraph ;
-                  sp:arg1 rdf:type ;
-                  sp:arg2 vaem:GraphMetaData ;
-                  sp:arg3 [
-                      sp:varName "inputGraph" ;
-                    ] ;
-                ] ;
+              rdf:type ui:setContext ;
               ui:child [
                   rdf:type ui:group ;
-                  let:myGraph [
-                      rdf:type spl:objectInGraph ;
-                      sp:arg1 [
-                          sp:varName "myGraphMetadata" ;
-                        ] ;
-                      sp:arg2 vaem:isMetadataFor ;
+                  let:myGraphMetadata [
+                      rdf:type spl:subjectInGraph ;
+                      sp:arg1 rdf:type ;
+                      sp:arg2 vaem:GraphMetaData ;
                       sp:arg3 [
                           sp:varName "inputGraph" ;
                         ] ;
                     ] ;
                   ui:child [
-                      rdf:type html:P ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text "Graph is " ;
+                      rdf:type ui:group ;
+                      let:myGraph [
+                          rdf:type spl:objectInGraph ;
+                          sp:arg1 [
+                              sp:varName "myGraphMetadata" ;
+                            ] ;
+                          sp:arg2 vaem:isMetadataFor ;
+                          sp:arg3 [
+                              sp:varName "inputGraph" ;
+                            ] ;
                         ] ;
                       ui:child [
-                          rdf:type ui:TextNode ;
+                          rdf:type html:P ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Graph is " ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 1 ;
+                              ui:text [
+                                  sp:varName "myGraph" ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:P ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Graph metadata is " ;
+                            ] ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 1 ;
+                              ui:text [
+                                  sp:varName "myGraphMetadata" ;
+                                ] ;
+                            ] ;
                           ui:childIndex 1 ;
-                          ui:text [
-                              sp:varName "myGraph" ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:setContext ;
+                          ui:child [
+                              rdf:type lmdoc:Header ;
+                              arg:title "Graph Metadata Maintainer" ;
+                              ui:child [
+                                  rdf:type ui:setContext ;
+                                  ui:child [
+                                      rdf:type swa:Header ;
+                                      arg:label [
+                                          rdf:type ui:concat ;
+                                          sp:arg1 "Metadata for Graph " ;
+                                          sp:arg2 [
+                                              sp:varName "myGraph" ;
+                                            ] ;
+                                        ] ;
+                                      ui:childIndex 1 ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type ui:if ;
+                                      ui:child [
+                                          rdf:type html:P ;
+                                          html:class "lm-para" ;
+                                          ui:child [
+                                              rdf:type html:Span ;
+                                              html:style "font-weight:italic" ;
+                                              ui:child [
+                                                  rdf:type ui:TextNode ;
+                                                  ui:childIndex 0 ;
+                                                  ui:text [
+                                                      sp:varName "inputGraph" ;
+                                                    ] ;
+                                                ] ;
+                                              ui:childIndex 1 ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type ui:TextNode ;
+                                              ui:childIndex 0 ;
+                                              ui:text "Metadata for graph " ;
+                                            ] ;
+                                          ui:child [
+                                              rdf:type ui:TextNode ;
+                                              ui:childIndex 2 ;
+                                              ui:text " not found - building initial metadata" ;
+                                            ] ;
+                                          ui:childIndex 0 ;
+                                        ] ;
+                                      ui:child [
+                                          rdf:type lmdoc:BuildMetadataRecord ;
+                                          arg:graph [
+                                              sp:varName "myGraph" ;
+                                            ] ;
+                                          ui:childIndex 1 ;
+                                        ] ;
+                                      ui:childIndex 0 ;
+                                      ui:condition [
+                                          rdf:type sp:not ;
+                                          sp:arg1 [
+                                              rdf:type sp:bound ;
+                                              sp:arg1 [
+                                                  sp:varName "myGraphMetadata" ;
+                                                ] ;
+                                            ] ;
+                                        ] ;
+                                    ] ;
+                                  ui:child [
+                                      rdf:type lmdoc:SwitchableForm ;
+                                      arg:editable "true"^^xsd:boolean ;
+                                      arg:resource [
+                                          sp:varName "myGraphMetadata" ;
+                                        ] ;
+                                      arg:showURI "false"^^xsd:boolean ;
+                                      arg:suppressHeader "true"^^xsd:boolean ;
+                                      ui:childIndex 2 ;
+                                    ] ;
+                                  ui:childIndex 0 ;
+                                  ui:queryGraph [
+                                      rdf:type ui:unionOfGraphs ;
+                                      sp:arg1 [
+                                          rdf:type ui:graphWithImports ;
+                                          sp:arg1 [
+                                              sp:varName "inputGraph" ;
+                                            ] ;
+                                        ] ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 2 ;
+                          ui:varName "inputGraph" ;
+                          ui:varValue [
+                              sp:varName "inputGraph" ;
                             ] ;
                         ] ;
                       ui:childIndex 0 ;
                     ] ;
-                  ui:child [
-                      rdf:type html:P ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 0 ;
-                          ui:text "Graph metadata is " ;
-                        ] ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 1 ;
-                          ui:text [
-                              sp:varName "myGraphMetadata" ;
-                            ] ;
-                        ] ;
-                      ui:childIndex 1 ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:setContext ;
-                      ui:child [
-                          rdf:type lmdoc:Header ;
-                          arg:title "Graph Metadata Maintainer" ;
-                          ui:child [
-                              rdf:type ui:setContext ;
-                              ui:child [
-                                  rdf:type swa:Header ;
-                                  arg:label [
-                                      rdf:type ui:concat ;
-                                      sp:arg1 "Metadata for Graph " ;
-                                      sp:arg2 [
-                                          sp:varName "myGraph" ;
-                                        ] ;
-                                    ] ;
-                                  ui:childIndex 1 ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:if ;
-                                  ui:child [
-                                      rdf:type html:P ;
-                                      html:class "lm-para" ;
-                                      ui:child [
-                                          rdf:type html:Span ;
-                                          html:style "font-weight:italic" ;
-                                          ui:child [
-                                              rdf:type ui:TextNode ;
-                                              ui:childIndex 0 ;
-                                              ui:text [
-                                                  sp:varName "inputGraph" ;
-                                                ] ;
-                                            ] ;
-                                          ui:childIndex 1 ;
-                                        ] ;
-                                      ui:child [
-                                          rdf:type ui:TextNode ;
-                                          ui:childIndex 0 ;
-                                          ui:text "Metadata for graph " ;
-                                        ] ;
-                                      ui:child [
-                                          rdf:type ui:TextNode ;
-                                          ui:childIndex 2 ;
-                                          ui:text " not found - building initial metadata" ;
-                                        ] ;
-                                      ui:childIndex 0 ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type lmdoc:BuildMetadataRecord ;
-                                      arg:graph [
-                                          sp:varName "myGraph" ;
-                                        ] ;
-                                      ui:childIndex 1 ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                  ui:condition [
-                                      rdf:type sp:not ;
-                                      sp:arg1 [
-                                          rdf:type sp:bound ;
-                                          sp:arg1 [
-                                              sp:varName "myGraphMetadata" ;
-                                            ] ;
-                                        ] ;
-                                    ] ;
-                                ] ;
-                              ui:child [
-                                  rdf:type lmdoc:SwitchableForm ;
-                                  arg:editable "true"^^xsd:boolean ;
-                                  arg:resource [
-                                      sp:varName "myGraphMetadata" ;
-                                    ] ;
-                                  arg:showURI "false"^^xsd:boolean ;
-                                  arg:suppressHeader "true"^^xsd:boolean ;
-                                  ui:childIndex 2 ;
-                                ] ;
-                              ui:childIndex 0 ;
-                              ui:queryGraph [
-                                  rdf:type ui:unionOfGraphs ;
-                                  sp:arg1 [
-                                      rdf:type ui:graphWithImports ;
-                                      sp:arg1 [
-                                          sp:varName "inputGraph" ;
-                                        ] ;
-                                    ] ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:childIndex 2 ;
-                      ui:varName "inputGraph" ;
-                      ui:varValue [
-                          sp:varName "inputGraph" ;
-                        ] ;
-                    ] ;
                   ui:childIndex 0 ;
                 ] ;
               ui:childIndex 0 ;
+              ui:varName "graph" ;
+              ui:varValue [
+                  sp:varName "graph" ;
+                ] ;
             ] ;
           ui:childIndex 1 ;
           ui:condition [
-              rdf:type sp:isIRI ;
+              rdf:type sp:bound ;
               sp:arg1 [
                   sp:varName "inputGraph" ;
                 ] ;
@@ -14422,6 +14430,13 @@ lmdoc:ResourcesGenerator
                               let:id [
                                   rdf:type ui:uniqueId ;
                                 ] ;
+                              let:t1 [
+                                  rdf:type smf:trace ;
+                                  sp:arg1 "Show Resource: {?1}" ;
+                                  sp:arg2 [
+                                      sp:varName "qName" ;
+                                    ] ;
+                                ] ;
                               ui:child [
                                   rdf:type html:Tr ;
                                   html:class "lm-row" ;
@@ -18064,6 +18079,9 @@ lmdoc:getCatalogRecords
           [
             sp:varName "overlayGraph" ;
           ]
+          [
+            sp:varName "turtleFile" ;
+          ]
         ) ;
       sp:where (
           (
@@ -18139,6 +18157,19 @@ lmdoc:getCatalogRecords
               ] ;
             sp:variable [
                 sp:varName "catalogedGraph" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spl:object ;
+                sp:arg1 [
+                    sp:varName "rec" ;
+                  ] ;
+                sp:arg2 vaem:turtleFileURL ;
+              ] ;
+            sp:variable [
+                sp:varName "turtleFile" ;
               ] ;
           ]
         ) ;

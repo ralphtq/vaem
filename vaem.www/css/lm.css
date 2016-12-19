@@ -70,6 +70,10 @@
 
 .lm-bold {font-weight: bold }
 
+.announcement {
+	color: purple ;
+	font-family: serif ;
+}
 
 body {
   padding: 2em 1em 2em 70px;
