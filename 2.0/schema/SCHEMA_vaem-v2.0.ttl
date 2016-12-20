@@ -533,10 +533,18 @@ vaem:ServicesGraph
 vaem:ShapesGraph
   rdf:type vaem:GraphRole ;
   vaem:description "A graph of SHAPE SHACL constraints."^^rdf:HTML ;
-  vaem:filePrefix "SHAPEES" ;
+  vaem:filePrefix "SHAPES" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "SHAPES Graph" ;
+.
+vaem:ShapesUIgraph
+  rdf:type vaem:GraphRole ;
+  vaem:description "A graph of SHAPE SHACL constraints for UI purposes."^^rdf:HTML ;
+  vaem:filePrefix "SHAPES-UI" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:label "SHAPES UI Graph" ;
 .
 vaem:SurrogateGraph
   rdf:type vaem:GraphRole ;
