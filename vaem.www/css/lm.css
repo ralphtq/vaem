@@ -64,15 +64,57 @@
 .lm-white {color: white;}
 .lm-light-blue {color: #acc0e5;}
 .lm-indigo {color: indigo;}
+.lm-qudt-blue {color: #07448a; }
+.lm-gray {color:gray}
 
-.lightBlue {color:lightBlue}
-.gray {color:gray}
+.lm-border-cadetblue { border-color: cadetblue;}
+.lm-border-qudt-blue { border-color: #07448a;}
+.lm-border-lightgray {border-color:  #e6e6e6;}
+
+.lm-bg-aliceblue {background-color: aliceblue;}
+.lm-bg-lightblue { background-color: #dfe8f6; }
+.lm-bg-darkblue { background-color: #000066; }
+.lm-bg-lightpurple { background-color: rgba(230, 230, 255, 0.5); }
+
 
 .lm-bold {font-weight: bold }
 
 .announcement {
 	color: purple ;
 	font-family: serif ;
+}
+
+.lm-textblock-callout {
+    border-width: 2px ;
+    border-style: solid;
+    border-radius: 12px;
+    padding: 10px;
+    margin: 12px;
+}
+
+.lm-menu-bar {
+	padding: 20px ;
+}
+
+.lm-box {
+  margin: 5px 0 0 5px;
+  border-color: #e0e0e0 #c0c0c0 #c0c0c0 #e0e0e0;
+  border-style: solid;
+  border-width: 1px;
+  -moz-border-radius: 10px;
+  -o-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  border-radius: 10px;
+  -moz-box-shadow: 1px 2px 2px #ccc;
+  -o-box-shadow: 1px 2px 2px #ccc;
+  -webkit-box-shadow: 1px 2px 2px #ccc;
+  -khtml-box-shadow: 1px 2px 2px #ccc;
+  -ms-box-shadow: 1px 2px 2px #ccc;
+  box-shadow: 1px 2px 2px #ccc;
+  background-color: white;
+  padding: 5px;
+  text-align: center ;
 }
 
 body {
