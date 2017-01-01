@@ -413,4 +413,16 @@ lm.viewOntology = function(baseURI, targetName) {
 	window.open(swa.servlet + '?_viewClass=iess:OntologyBrowserPage&ontology=' + escape(baseURI), targetName);
 };
 
+/**
+ * Opens a window for sending mail
+ */
+
+lm.mailto=
+	  function ( name, domain, subject, body ) {
+	    var url='mailto:'+encodeURIComponent(name+'@'+domain);
+	    if (subject!='') url+='?subject='+encodeURIComponent(subject);
+	    if (body!='') url+=(subject=='' ? '?' : '&')+'body='+encodeURIComponent(body);
+	    window.location.href=url;
+	  };
+
 // ends
