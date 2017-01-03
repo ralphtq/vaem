@@ -5077,7 +5077,8 @@ lmdoc:DetailedInstanceView
               ui:child [
                   rdf:type ui:CommentNode ;
                   ui:childIndex 6 ;
-                  rdfs:comment """ui:call arg:object=\"{= ?resource }\" ui:template=\"{= swa:modeProperty(swa:formSubjectPredicateSelectionTemplate) }\">
+                  rdfs:comment """ui:call arg:object=\"{= ?resource }\"
+                    ui:template=\"{= swa:modeProperty(swa:formSubjectPredicateSelectionTemplate) }\">
 <swa:SubjectsGroup arg:label=\"Incoming References\" arg:object=\"{= ?resource }\" arg:predicates=\"{= ?rs }\"/>
 </ui:call""" ;
                 ] ;
@@ -5162,7 +5163,6 @@ lmdoc:Elements
       spl:valueType rdfs:Resource ;
     ] ;
   ui:abstract "true"^^xsd:boolean ;
-  ui:overrides swa:Elements ;
   ui:responseType ui:HTML ;
   rdfs:label "Elements" ;
   rdfs:subClassOf ui:ViewElements ;
@@ -10864,104 +10864,18 @@ lmdoc:ObjectViewer
   rdf:type swa:ObjectViewerClass ;
   ui:private "true"^^xsd:boolean ;
   ui:prototype [
-      rdf:type html:Div ;
-      html:class "lmdoc-object-widget" ;
-      let:class [
-          rdf:type sp:coalesce ;
-          sp:arg1 [
-              rdf:type ui:contextValue ;
-              sp:arg1 "viewWidget" ;
-            ] ;
-          sp:arg2 [
-              rdf:type swa:bestObjectViewerClass ;
-              arg:object [
-                  sp:varName "object" ;
-                ] ;
-              arg:predicate [
-                  sp:varName "predicate" ;
-                ] ;
-              arg:subject [
-                  sp:varName "subject" ;
-                ] ;
-            ] ;
-        ] ;
+      rdf:type ui:group ;
       ui:child [
           rdf:type html:Div ;
-          html:class "lmdoc-indented-level1" ;
-          html:title [
-              rdf:type sp:str ;
+          html:class "lmdoc-object-widget" ;
+          let:class [
+              rdf:type sp:coalesce ;
               sp:arg1 [
-                  sp:varName "object" ;
+                  rdf:type ui:contextValue ;
+                  sp:arg1 "viewWidget" ;
                 ] ;
-            ] ;
-          ui:child [
-              rdf:type ui:else ;
-              ui:child [
-                  rdf:type ui:if ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text "[Error: no ObjectViewer found for " ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 1 ;
-                      ui:text [
-                          rdf:type ui:label ;
-                          sp:arg1 [
-                              sp:varName "subject" ;
-                            ] ;
-                        ] ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 2 ;
-                      ui:text ", " ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 3 ;
-                      ui:text [
-                          rdf:type ui:label ;
-                          sp:arg1 [
-                              sp:varName "predicate" ;
-                            ] ;
-                        ] ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 4 ;
-                      ui:text ", " ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 5 ;
-                      ui:text [
-                          rdf:type ui:label ;
-                          sp:arg1 [
-                              sp:varName "object" ;
-                            ] ;
-                        ] ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 6 ;
-                      ui:text "]" ;
-                    ] ;
-                  ui:childIndex 0 ;
-                  ui:condition [
-                      rdf:type sp:bound ;
-                      sp:arg1 [
-                          sp:varName "object" ;
-                        ] ;
-                    ] ;
-                ] ;
-              ui:childIndex 1 ;
-            ] ;
-          ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type ui:dynamicView ;
+              sp:arg2 [
+                  rdf:type swa:bestObjectViewerClass ;
                   arg:object [
                       sp:varName "object" ;
                     ] ;
@@ -10971,18 +10885,108 @@ lmdoc:ObjectViewer
                   arg:subject [
                       sp:varName "subject" ;
                     ] ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type html:Div ;
+              html:class "lmdoc-indented-level1" ;
+              html:title [
+                  rdf:type sp:str ;
+                  sp:arg1 [
+                      sp:varName "object" ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:else ;
+                  ui:child [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "[Error: no ObjectViewer found for " ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 1 ;
+                          ui:text [
+                              rdf:type ui:label ;
+                              sp:arg1 [
+                                  sp:varName "subject" ;
+                                ] ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 2 ;
+                          ui:text ", " ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 3 ;
+                          ui:text [
+                              rdf:type ui:label ;
+                              sp:arg1 [
+                                  sp:varName "predicate" ;
+                                ] ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 4 ;
+                          ui:text ", " ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 5 ;
+                          ui:text [
+                              rdf:type ui:label ;
+                              sp:arg1 [
+                                  sp:varName "object" ;
+                                ] ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 6 ;
+                          ui:text "]" ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:condition [
+                          rdf:type sp:bound ;
+                          sp:arg1 [
+                              sp:varName "object" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type ui:dynamicView ;
+                      arg:object [
+                          sp:varName "object" ;
+                        ] ;
+                      arg:predicate [
+                          sp:varName "predicate" ;
+                        ] ;
+                      arg:subject [
+                          sp:varName "subject" ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:class [
+                          sp:varName "class" ;
+                        ] ;
+                    ] ;
                   ui:childIndex 0 ;
-                  ui:class [
-                      sp:varName "class" ;
+                  ui:condition [
+                      rdf:type sp:bound ;
+                      sp:arg1 [
+                          sp:varName "class" ;
+                        ] ;
                     ] ;
                 ] ;
               ui:childIndex 0 ;
-              ui:condition [
-                  rdf:type sp:bound ;
-                  sp:arg1 [
-                      sp:varName "class" ;
-                    ] ;
-                ] ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -11775,7 +11779,7 @@ lmdoc:Pages
           rdf:type html:Meta ;
           html:content "lmdoc:Pages" ;
           html:name "manifest-end" ;
-          ui:childIndex 31 ;
+          ui:childIndex 35 ;
         ] ;
       ui:child [
           rdf:type html:Meta ;
@@ -11797,69 +11801,81 @@ lmdoc:Pages
         ] ;
       ui:child [
           rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery-ui.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 17 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.contextmenu.js" ;
-          html:type "text/javascript" ;
+          html:src "http://linkedmodel.org/assets/lib/bootstrap/js/bootstrap.min.js" ;
           ui:childIndex 18 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.cookie.js" ;
-          html:type "text/javascript" ;
+          html:src "http://linkedmodel.org/assets/lib/chosen/chosen.jquery.min.js" ;
+          ui:childIndex 17 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/assets/lib/contextmenu/jquery.contextMenu.js" ;
           ui:childIndex 19 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.hotkeys.js" ;
-          html:type "text/javascript" ;
+          html:src "http://linkedmodel.org/assets/lib/deparam/jquery-deparam.js" ;
           ui:childIndex 20 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.jqplot.min.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 23 ;
+          html:src "http://linkedmodel.org/assets/lib/hotkeys/jquery.hotkeys.js" ;
+          ui:childIndex 21 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 16 ;
-        ] ;
-      ui:child [
-          rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.jstree.js" ;
-          html:type "text/javascript" ;
+          html:src "http://linkedmodel.org/assets/lib/jqgrid/js/i18n/grid.locale-en.js" ;
           ui:childIndex 22 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
-          html:src "http://linkedmodel.org/jquery/js/jquery.layout.js" ;
-          html:type "text/javascript" ;
-          ui:childIndex 21 ;
+          html:src "http://linkedmodel.org/assets/lib/jqgrid/js/jquery.jqGrid.min.js" ;
+          ui:childIndex 23 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/assets/lib/jqplot/js/jquery.jqplot.min.js" ;
+          ui:childIndex 24 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/assets/lib/jquery-cookie/jquery.cookie.js" ;
+          ui:childIndex 25 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/assets/lib/jquery-layout/jquery.layout.js" ;
+          ui:childIndex 26 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/assets/lib/jquery-ui/jquery-ui.js" ;
+          ui:childIndex 27 ;
+        ] ;
+      ui:child [
+          rdf:type html:Script ;
+          html:src "http://linkedmodel.org/assets/lib/jquery/jquery.js" ;
+          ui:childIndex 16 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/openajax/js/OpenAjax.js" ;
           html:type "text/javascript" ;
-          ui:childIndex 28 ;
+          ui:childIndex 32 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/swa/js/dagre.js" ;
           html:type "text/javascript" ;
-          ui:childIndex 30 ;
+          ui:childIndex 34 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
           html:src "http://linkedmodel.org/swa/js/swa.js" ;
           html:type "text/javascript" ;
-          ui:childIndex 29 ;
+          ui:childIndex 33 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
@@ -11869,9 +11885,15 @@ lmdoc:Pages
         ] ;
       ui:child [
           rdf:type html:Script ;
-          html:src "http://linkedmodel.org/vaem/js/lm.js" ;
+          html:src [
+              rdf:type ui:concat ;
+              sp:arg1 [
+                  rdf:type ui:lib ;
+                ] ;
+              sp:arg2 "/vaem/js/lm.js" ;
+            ] ;
           html:type "text/javascript" ;
-          ui:childIndex 24 ;
+          ui:childIndex 28 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
@@ -11880,7 +11902,7 @@ lmdoc:Pages
               ui:childIndex 0 ;
               ui:text "$.jqplot.config.enablePlugins = true;" ;
             ] ;
-          ui:childIndex 27 ;
+          ui:childIndex 31 ;
         ] ;
       ui:child [
           rdf:type ui:CommentNode ;
@@ -11889,12 +11911,12 @@ lmdoc:Pages
         ] ;
       ui:child [
           rdf:type ui:CommentNode ;
-          ui:childIndex 25 ;
-          rdfs:comment "script src=\"{= ui:lib() }/vaem/js/lm.js\" type=\"text/javascript\"/" ;
+          ui:childIndex 29 ;
+          rdfs:comment "script src=\"http://linkedmodel.org/vaem/js/lm.js\" type=\"text/javascript\"/" ;
         ] ;
       ui:child [
           rdf:type ui:CommentNode ;
-          ui:childIndex 26 ;
+          ui:childIndex 30 ;
           rdfs:comment "script src=\"http://linkedmodel.org/swa/assets/lib/bootstrap/js/bootstrap.min.js\" type=\"text/javascript\"/" ;
         ] ;
       ui:child [
@@ -14430,13 +14452,6 @@ lmdoc:ResourcesGenerator
                               let:id [
                                   rdf:type ui:uniqueId ;
                                 ] ;
-                              let:t1 [
-                                  rdf:type smf:trace ;
-                                  sp:arg1 "Show Resource: {?1}" ;
-                                  sp:arg2 [
-                                      sp:varName "qName" ;
-                                    ] ;
-                                ] ;
                               ui:child [
                                   rdf:type html:Tr ;
                                   html:class "lm-row" ;
@@ -14480,9 +14495,15 @@ lmdoc:ResourcesGenerator
                                               html:class "lm-button lm-simulated-link" ;
                                               html:onclick [
                                                   rdf:type ui:concat ;
-                                                  sp:arg1 "javascript: lm.popup('" ;
+                                                  sp:arg1 "javascript: lm.showResourceInPopup('" ;
                                                   sp:arg2 [
-                                                      sp:varName "resourceDiv" ;
+                                                      rdf:type ui:encodeURL ;
+                                                      sp:arg1 [
+                                                          rdf:type sp:str ;
+                                                          sp:arg1 [
+                                                              sp:varName "resource" ;
+                                                            ] ;
+                                                        ] ;
                                                     ] ;
                                                   sp:arg3 "','" ;
                                                   sp:arg4 [
@@ -14491,7 +14512,17 @@ lmdoc:ResourcesGenerator
                                                           sp:varName "resource" ;
                                                         ] ;
                                                     ] ;
-                                                  sp:arg5 "',600,600)" ;
+                                                  sp:arg5 "','" ;
+                                                  sp:arg6 [
+                                                      rdf:type ui:encodeURL ;
+                                                      sp:arg1 [
+                                                          rdf:type sp:str ;
+                                                          sp:arg1 [
+                                                              rdf:type ui:currentQueryGraph ;
+                                                            ] ;
+                                                        ] ;
+                                                    ] ;
+                                                  sp:arg7 "',600,600)" ;
                                                 ] ;
                                               ui:child [
                                                   rdf:type ui:TextNode ;
@@ -14548,37 +14579,12 @@ lmdoc:ResourcesGenerator
                                                   rdf:type html:Div ;
                                                   html:id "content_container" ;
                                                   ui:child [
-                                                      rdf:type ui:setContext ;
-                                                      ui:child [
-                                                          rdf:type ui:resourceView ;
-                                                          ui:childIndex 0 ;
-                                                          ui:matchIds "lmdoc-popup" ;
-                                                          ui:resource [
-                                                              rdf:type sp:iri ;
-                                                              sp:arg1 [
-                                                                  sp:varName "resource" ;
-                                                                ] ;
-                                                            ] ;
-                                                        ] ;
+                                                      rdf:type ui:CommentNode ;
                                                       ui:childIndex 0 ;
-                                                      ui:queryGraph [
-                                                          rdf:type ui:unionOfGraphs ;
-                                                          sp:arg1 [
-                                                              rdf:type ui:graphWithImports ;
-                                                              sp:arg1 [
-                                                                  sp:varName "graph" ;
-                                                                ] ;
-                                                            ] ;
-                                                          sp:arg2 [
-                                                              rdf:type ui:graphWithImports ;
-                                                              sp:arg1 [
-                                                                  rdf:type sp:iri ;
-                                                                  sp:arg1 [
-                                                                      sp:varName "overlay" ;
-                                                                    ] ;
-                                                                ] ;
-                                                            ] ;
-                                                        ] ;
+                                                      rdfs:comment """ui:setContext ui:queryGraph=\"{= ui:unionOfGraphs(ui:graphWithImports(?graph), ui:graphWithImports(IRI(?overlay))) }\">
+                                                <ui:resourceView ui:matchIds=\"lmdoc-popup\"
+                                                                 ui:resource=\"{= IRI(?resource) }\"/>
+                                            </ui:setContext""" ;
                                                     ] ;
                                                   ui:childIndex 0 ;
                                                 ] ;
@@ -14765,6 +14771,10 @@ lmdoc:ResourcesGenerator
         ] ;
     ] ;
   ui:responseType ui:HTML ;
+  rdfs:comment """<button class=\"lm-button lm-simulated-link\" onclick=\"javascript: lm.popup('{= ?resourceDiv }','{= ui:label(?resource) }',600,600)\">Popup View</button>
+
+     <button class=\"lm-button lm-simulated-link\" onclick=\"javascript: lm.showResourceInPopup('{= ui:encodeURL(str(?resource)) }','{= ui:label(?resource) }','{= ui:encodeURL(str(ui:currentQueryGraph())) }',600,600)\">Popup View</button>
+                                 """ ;
   rdfs:label "Resources generator" ;
   rdfs:subClassOf lmdoc:Sections ;
 .
@@ -15014,7 +15024,10 @@ lmdoc:ResourcesMaintainer
                                   ui:queryGraph [
                                       rdf:type ui:unionOfGraphs ;
                                       sp:arg1 [
-                                          sp:varName "myGraph" ;
+                                          rdf:type ui:graphWithImports ;
+                                          sp:arg1 [
+                                              sp:varName "myGraph" ;
+                                            ] ;
                                         ] ;
                                       sp:arg2 [
                                           rdf:type ui:graphWithImports ;
@@ -20195,6 +20208,74 @@ rdfs:Resource
       ui:priority -9 ;
     ] ;
   ui:instanceView [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type ui:setContext ;
+          ui:child [
+              rdf:type html:P ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "ui:graph is " ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 1 ;
+                  ui:text ui:graph ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:DetailedInstanceView ;
+              arg:resource [
+                  rdf:type sp:iri ;
+                  sp:arg1 [
+                      rdf:type spif:decodeURL ;
+                      sp:arg1 [
+                          rdf:type sp:str ;
+                          sp:arg1 spin:_this ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:queryGraph [
+              rdf:type sp:iri ;
+              sp:arg1 [
+                  rdf:type spif:decodeURL ;
+                  sp:arg1 [
+                      rdf:type sp:str ;
+                      sp:arg1 [
+                          sp:varName "graph" ;
+                        ] ;
+                    ] ;
+                ] ;
+            ] ;
+        ] ;
+      ui:id "lmdoc-popup" ;
+      ui:priority 1100 ;
+    ] ;
+  ui:instanceView [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type lmdoc:DetailedInstanceView ;
+          arg:resource [
+              rdf:type sp:iri ;
+              sp:arg1 [
+                  rdf:type spif:decodeURL ;
+                  sp:arg1 [
+                      rdf:type sp:str ;
+                      sp:arg1 spin:_this ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:id "lmdoc-popup" ;
+      ui:priority 110 ;
+    ] ;
+  ui:instanceView [
       rdf:type lmdoc:DefaultDecription ;
       arg:resource spin:_this ;
       ui:id "description" ;
@@ -20210,8 +20291,9 @@ rdfs:Resource
       rdf:type lmdoc:DetailedInstanceView ;
       arg:resource spin:_this ;
       ui:id "lmdoc-popup" ;
-      ui:priority 9 ;
+      ui:priority -100 ;
     ] ;
+  vaem:todo "Pass only the graph that is being documented - build a multi-union of graphs with it - like we do befor the callback for the popup." ;
 .
 owl:Ontology
   ui:instanceView [

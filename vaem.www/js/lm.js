@@ -2,7 +2,7 @@
  * The JavaScript library for the LM components.
  * 
  * filename: lm.js
- * last modified: Sep 24, 2016
+ * last modified: Jan 2, 2076
  * editor; Ralph Hodgson
  *
  * Note that this is under active development and some parts of this API
@@ -146,7 +146,91 @@ lm.popup = function(loadId, title, width, height) {
         }
        ];
 	 lm.openModalDialog(loadId,title,width,height,buttons)		  
+ };
+
+/**
+ * Generate content to show resource in a popup
+ * @param 
+ */
+lm.showResourceInPopup = function(resourceU, resourceL, queryGraph, width, height) {
+    var  $dialog = $('#resourceModalDialog'),
+    	 $request ,
+    	 params = {
+	    	  _resource : resourceU ,
+	    	  _snippet : true,
+	    	  _base : queryGraph ,
+	    	  graph : queryGraph ,
+	    	  _withImports : true ,
+	    	  _matchIds : 'lmdoc-popup'
+        } ;
+    
+    $request = $.ajax({
+    	  url: 'swp',
+    	  method : 'get',
+    	  data : params
+      });
+
+      $.when($request)
+  		.fail(function(jqXHR, textStatus, errorThrown) {
+  			console.log(errorThrown);
+  		})
+  		.done(function(data, textStatus, jqXHR) {
+  			$dialog = lm.addEmptyModalToPage(resourceL);
+      		$dialog.find('.modal-body').html(data);
+      		$dialog.modal('show');
+  		}) ;
+ };
+    
+//	$.ajax({
+//	 url: 'swp', 
+//	 type: 'get' ,
+//	 data: params,
+//	 async: true,
+//	 success: function(data) {
+//	     var $div= $(''),
+//	     	 buttons = [{
+//	         text: "Access more on TopBraid Server",
+//	         click: function() {
+//	          alert('Call to TopBraid Server to be implemented later ...')
+//	         }
+//	       },
+//	       {
+//	        text: "Close",
+//	        click: function() {
+//	           $( this ).dialog( "close" );
+//	            }
+//	        }
+//	       ];
+//		 lm.openModalDialog(loadId,title,width,height,buttons)	
+	   
+
+lm.addEmptyModalToPage = function (title) {
+		if ($('#resourceModalDialog').length) {
+			$('#resourceModalDialog').remove();
+		}
+   
+   return $('<div class="modal fade" tabindex="-1" role="dialog" id="resourceModalDialog">' +
+        '<div class="modal-dialog modal-lg" role="document">' +
+            '<div class="modal-content">' +
+            
+                '<div class="modal-header">' +
+                    '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+                        '<span aria-hidden="true">&times;</span>' +
+                    '</button>' +
+                    '<h4 class="modal-title">' + title + '</h4>' +
+                '</div>' +
+
+                '<div class="modal-body">' +
+                '</div>' +
+
+                '<div class="modal-footer">' +
+                    '<button type="button" class="btn btn-default" data-dismiss="modal">Done</button>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+    '</div>');
 };
+
 
 /**
  * Clears all checkboxes within an element structure
