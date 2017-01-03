@@ -2,7 +2,7 @@
  * The JavaScript library for the LM components.
  * 
  * filename: lm.js
- * last modified: Jan 2, 2076
+ * last modified: Jan 2, 2017
  * editor; Ralph Hodgson
  *
  * Note that this is under active development and some parts of this API
