@@ -242,6 +242,45 @@ spl:subjectInGraph
 smf:convertRDFToText
   rdfs:subClassOf sml:Elements ;
 .
+swa:DatatypeAxiomProperty
+  rdf:type rdfs:Class ;
+  rdfs:comment "A marker type to distinguish datatype axiom properties from others." ;
+  rdfs:label "Datatype axiom property" ;
+  rdfs:subClassOf rdf:Property ;
+.
+swa:isDatatypeAxiomProperty
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Ask ;
+      sp:where (
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:exists ;
+                sp:elements (
+                    [
+                      rdf:type sp:NamedGraph ;
+                      sp:elements (
+                          [
+                            sp:object swa:DatatypeAxiomProperty ;
+                            sp:predicate rdf:type ;
+                            sp:subject [
+                                sp:varName "predicate" ;
+                              ] ;
+                          ]
+                        ) ;
+                      sp:graphNameNode ui:graph ;
+                    ]
+                  ) ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:private "true"^^xsd:boolean ;
+  rdfs:comment "Checks whether a given property has been marked as swa:DatatypeAxiomProperty." ;
+  rdfs:label "is datatype axiom property" ;
+  rdfs:subClassOf swa:PropertyWidgetGroupFilterFunctions ;
+.
 <http://topbraid.org/xhtml#Area>
   rdf:type rdfs:Resource ;
 .
@@ -5078,7 +5117,7 @@ lmdoc:DetailedInstanceView
                   rdf:type ui:CommentNode ;
                   ui:childIndex 6 ;
                   rdfs:comment """ui:call arg:object=\"{= ?resource }\"
-                    ui:template=\"{= swa:modeProperty(swa:formSubjectPredicateSelectionTemplate) }\">
+ui:template=\"{= swa:modeProperty(swa:formSubjectPredicateSelectionTemplate) }\">
 <swa:SubjectsGroup arg:label=\"Incoming References\" arg:object=\"{= ?resource }\" arg:predicates=\"{= ?rs }\"/>
 </ui:call""" ;
                 ] ;
@@ -5086,6 +5125,18 @@ lmdoc:DetailedInstanceView
                   rdf:type ui:call ;
                   arg:subject [
                       sp:varName "resource" ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:debug ;
+                      ui:child [
+                          rdf:type ui:dumpResultSet ;
+                          ui:childIndex 0 ;
+                          ui:message "lmdoc:DetailedInstanceView" ;
+                          ui:resultSet [
+                              sp:varName "rs" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
                     ] ;
                   ui:child [
                       rdf:type lmdoc:ObjectsGroup ;
@@ -5097,7 +5148,19 @@ lmdoc:DetailedInstanceView
                       arg:subject [
                           sp:varName "resource" ;
                         ] ;
-                      ui:childIndex 0 ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:ObjectsGroup ;
+                      arg:filterFunction swa:isDatatypeAxiomProperty ;
+                      arg:label "Restricted Datatypes" ;
+                      arg:predicates [
+                          sp:varName "rs" ;
+                        ] ;
+                      arg:subject [
+                          sp:varName "resource" ;
+                        ] ;
+                      ui:childIndex 3 ;
                     ] ;
                   ui:child [
                       rdf:type lmdoc:ObjectsGroup ;
@@ -5109,7 +5172,7 @@ lmdoc:DetailedInstanceView
                       arg:subject [
                           sp:varName "resource" ;
                         ] ;
-                      ui:childIndex 1 ;
+                      ui:childIndex 2 ;
                     ] ;
                   ui:childIndex 3 ;
                   ui:template [
@@ -5153,6 +5216,7 @@ lmdoc:DetailedInstanceView
     ] ;
   ui:responseType ui:HTML ;
   rdfs:label "Detailed Instance View" ;
+  rdfs:subClassOf lmdoc:Parts ;
   rdfs:subClassOf lmdoc:Viewers ;
 .
 lmdoc:Elements
@@ -5741,6 +5805,14 @@ lmdoc:Graph
                                                               arg:sectionHeading "Properties" ;
                                                               ui:childIndex 1 ;
                                                             ] ;
+                                                          ui:child [
+                                                              rdf:type lmdoc:RestrictedDatatypesSection ;
+                                                              arg:graph [
+                                                                  sp:varName "myGraph" ;
+                                                                ] ;
+                                                              arg:sectionHeading "Restricted Datatypes" ;
+                                                              ui:childIndex 3 ;
+                                                            ] ;
                                                           ui:childIndex 0 ;
                                                         ] ;
                                                       ui:childIndex 8 ;
@@ -5801,6 +5873,18 @@ lmdoc:Graph
                                                                   ui:childIndex 0 ;
                                                                 ] ;
                                                               ui:childIndex 2 ;
+                                                            ] ;
+                                                          ui:child [
+                                                              rdf:type html:Section ;
+                                                              ui:child [
+                                                                  rdf:type lmdoc:RestrictedDatatypesSection ;
+                                                                  arg:graph [
+                                                                      sp:varName "myGraph" ;
+                                                                    ] ;
+                                                                  arg:sectionHeading "Restricted Datatypes" ;
+                                                                  ui:childIndex 0 ;
+                                                                ] ;
+                                                              ui:childIndex 5 ;
                                                             ] ;
                                                           ui:childIndex 0 ;
                                                         ] ;
@@ -7916,6 +8000,91 @@ lmdoc:IndexSection
                       let:count [
                           rdf:type spr:rowCount ;
                           sp:arg1 [
+                              sp:varName "instances" ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:H3 ;
+                          html:id "RestrictedDatatypes" ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Restricted Datatypes" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:else ;
+                          ui:child [
+                              rdf:type html:P ;
+                              html:class "lm-para" ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "No restricted datatypes defined in this graph" ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:if ;
+                          ui:child [
+                              rdf:type html:P ;
+                              html:class "lm-para" ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "The graph defines " ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text [
+                                      sp:varName "count" ;
+                                    ] ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 2 ;
+                                  ui:text " restricted datatypes, as indexed below:" ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type lmdoc:MultiColumnList ;
+                              arg:columns 4 ;
+                              arg:includeWebLink "true"^^xsd:boolean ;
+                              arg:resultSet [
+                                  sp:varName "instances" ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:childIndex 1 ;
+                          ui:condition [
+                              rdf:type sp:gt ;
+                              sp:arg1 [
+                                  sp:varName "count" ;
+                                ] ;
+                              sp:arg2 0 ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 8 ;
+                  ui:template lmdoc:getRestrictedDatatypes ;
+                  ui:varName "instances" ;
+                ] ;
+              ui:child [
+                  rdf:type ui:call ;
+                  arg:graph [
+                      sp:varName "graph" ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:group ;
+                      let:count [
+                          rdf:type spr:rowCount ;
+                          sp:arg1 [
                               sp:varName "properties" ;
                             ] ;
                         ] ;
@@ -9609,6 +9778,19 @@ lmdoc:InstancesSummarySection
                           html:class "pt40px pl40px" ;
                           ui:child [
                               rdf:type lmdoc:Object ;
+                              arg:predicate <http://qudt.org/schema/qudt/citation> ;
+                              arg:subject [
+                                  sp:varName "resource" ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 3 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:class "pt40px pl40px" ;
+                          ui:child [
+                              rdf:type lmdoc:Object ;
                               arg:predicate prov:wasInfluencedBy ;
                               arg:subject [
                                   sp:varName "resource" ;
@@ -9634,11 +9816,21 @@ lmdoc:InstancesSummarySection
                         ] ;
                       ui:childIndex 7 ;
                       ui:condition [
-                          rdf:type lmdoc:hasValueForProperty ;
+                          rdf:type sp:or ;
                           sp:arg1 [
-                              sp:varName "resource" ;
+                              rdf:type lmdoc:hasValueForProperty ;
+                              sp:arg1 [
+                                  sp:varName "resource" ;
+                                ] ;
+                              sp:arg2 prov:wasInfluencedBy ;
                             ] ;
-                          sp:arg2 prov:wasInfluencedBy ;
+                          sp:arg2 [
+                              rdf:type lmdoc:hasValueForProperty ;
+                              sp:arg1 [
+                                  sp:varName "resource" ;
+                                ] ;
+                              sp:arg2 <http://qudt.org/schema/qudt/citation> ;
+                            ] ;
                         ] ;
                     ] ;
                   ui:child [
@@ -9649,6 +9841,22 @@ lmdoc:InstancesSummarySection
                       ui:childIndex 3 ;
                     ] ;
                   ui:child [
+                      rdf:type lmdoc:ResourceFooter ;
+                      arg:options "JSON, JSON-LD,TURTLE" ;
+                      arg:resource [
+                          sp:varName "resource" ;
+                        ] ;
+                      arg:topElement [
+                          sp:varName "top" ;
+                        ] ;
+                      ui:childIndex 9 ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:VSpace ;
+                      arg:margin "100px;" ;
+                      ui:childIndex 8 ;
+                    ] ;
+                  ui:child [
                       rdf:type lmdoc:VSpace ;
                       arg:margin "10px;" ;
                       ui:childIndex 4 ;
@@ -9657,11 +9865,6 @@ lmdoc:InstancesSummarySection
                       rdf:type lmdoc:VSpace ;
                       arg:margin "30px;" ;
                       ui:childIndex 1 ;
-                    ] ;
-                  ui:child [
-                      rdf:type lmdoc:VSpace ;
-                      arg:margin "30px;" ;
-                      ui:childIndex 8 ;
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
@@ -13869,7 +14072,7 @@ lmdoc:ResourceFooter
                       sp:arg1 [
                           sp:varName "options" ;
                         ] ;
-                      sp:arg2 "JSONLD" ;
+                      sp:arg2 "JSON-LD" ;
                     ] ;
                 ] ;
               ui:child [
@@ -13887,7 +14090,7 @@ lmdoc:ResourceFooter
                       sp:arg1 [
                           sp:varName "options" ;
                         ] ;
-                      sp:arg2 "RDF/XML" ;
+                      sp:arg2 "RDF" ;
                     ] ;
                 ] ;
               ui:child [
@@ -13932,9 +14135,9 @@ lmdoc:ResourceFooter
               rdf:type ui:CommentNode ;
               ui:childIndex 0 ;
               rdfs:comment """div style=\"float:left;\">
-    <a href=\"#{= ?topElement }\">
-        <img src=\"http://linkedmodel.org/lib/lm/images/icons/doc-back-arrow.png\" width=\"24px;\"/>
-    </a>
+<a href=\"#{= ?topElement }\">
+<img src=\"http://linkedmodel.org/lib/lm/images/icons/doc-back-arrow.png\" width=\"24px;\"/>
+</a>
 </div""" ;
             ] ;
           ui:childIndex 0 ;
@@ -14298,6 +14501,15 @@ lmdoc:ResourceLink
                       ui:condition [
                           sp:varName "includeWebLink" ;
                         ] ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:debug ;
+                  ui:child [
+                      rdf:type ui:dumpScope ;
+                      ui:childIndex 0 ;
+                      ui:message "lmdoc:ResourceLink" ;
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
@@ -15076,6 +15288,205 @@ lmdoc:ResourcesMaintainer
   ui:responseType ui:HTML ;
   rdfs:label "Resources Maintainer" ;
   rdfs:subClassOf lmdoc:Parts ;
+.
+lmdoc:RestrictedDatatypesSection
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type ui:call ;
+          arg:graph [
+              sp:varName "graph" ;
+            ] ;
+          ui:child [
+              rdf:type ui:forEach ;
+              ui:child [
+                  rdf:type html:Div ;
+                  html:id [
+                      rdf:type ui:concat ;
+                      sp:arg1 "div-" ;
+                      sp:arg2 [
+                          rdf:type lmdoc:makeAnchorFromResource ;
+                          arg:resource [
+                              sp:varName "resource" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "pt41px pl20px" ;
+                      ui:child [
+                          rdf:type lmdoc:Object ;
+                          arg:predicate rdf:type ;
+                          arg:subject [
+                              sp:varName "resource" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 6 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "pt41px pl20px" ;
+                      ui:child [
+                          rdf:type lmdoc:Object ;
+                          arg:predicate owl:onDatatype ;
+                          arg:subject [
+                              sp:varName "resource" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 8 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "pt41px pl20px" ;
+                      ui:child [
+                          rdf:type lmdoc:Object ;
+                          arg:predicate owl:withRestrictions ;
+                          arg:subject [
+                              sp:varName "resource" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 10 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa-sub-title" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Description" ;
+                        ] ;
+                      ui:childIndex 2 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa-sub-title" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Restricted Datatype" ;
+                        ] ;
+                      ui:childIndex 7 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa-sub-title" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Restrictions" ;
+                        ] ;
+                      ui:childIndex 9 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:Div ;
+                      html:class "swa-sub-title" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Type" ;
+                        ] ;
+                      ui:childIndex 5 ;
+                    ] ;
+                  ui:child [
+                      rdf:type html:P ;
+                      html:class "size-24" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              rdf:type smf:qname ;
+                              sp:arg1 [
+                                  sp:varName "resource" ;
+                                ] ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:class "pt40px pl40px" ;
+                          ui:child [
+                              rdf:type lmdoc:Object ;
+                              arg:predicate prov:wasInfluencedBy ;
+                              arg:subject [
+                                  sp:varName "resource" ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Div ;
+                          html:class "swa-sub-title" ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "References" ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:VSpace ;
+                          arg:margin "20px;" ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 11 ;
+                      ui:condition [
+                          rdf:type lmdoc:hasValueForProperty ;
+                          sp:arg1 [
+                              sp:varName "resource" ;
+                            ] ;
+                          sp:arg2 prov:wasInfluencedBy ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:MaybeDescription ;
+                      arg:resource [
+                          sp:varName "resource" ;
+                        ] ;
+                      ui:childIndex 3 ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:VSpace ;
+                      arg:margin "10px;" ;
+                      ui:childIndex 4 ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:VSpace ;
+                      arg:margin "30px;" ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:VSpace ;
+                      arg:margin "30px;" ;
+                      ui:childIndex 12 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:resultSet [
+                  sp:varName "instances" ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:template lmdoc:getRestrictedDatatypes ;
+          ui:varName "instances" ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:label "restricted datatypes section" ;
+  rdfs:subClassOf lmdoc:Sections ;
 .
 lmdoc:SaveSWPdoc
   rdf:type sml:ExportToTextFile ;
@@ -18195,6 +18606,85 @@ lmdoc:getCatalogRecords
   rdfs:label "get catalog records" ;
   rdfs:subClassOf lmdoc:SelectTemplates ;
 .
+lmdoc:getDefiningGraph
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "graph" ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "resource" ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?0" ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?1" ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?0" ;
+              ] ;
+          ]
+          [
+            sp:object rdfs:isDefinedBy ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?1" ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?2" ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?1" ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "graph" ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?2" ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?2" ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "graph" ;
+              ] ;
+            sp:predicate tops:statementDefinedIn ;
+            sp:subject [
+                sp:varName "?0" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:resource ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  rdfs:label "get defining graph" ;
+  rdfs:subClassOf lmdoc:Functions ;
+.
 lmdoc:getDefinition
   rdf:type spin:Function ;
   spin:body [
@@ -18424,6 +18914,173 @@ lmdoc:getInstancesOfType
   rdfs:comment "Gets all instances defined in a given graph, filtered by matching the namespace of their type with a given type, and orders them by label. Note this may (obviously) not scale if a class has too many instances." ;
   rdfs:label "get instances of type" ;
   rdfs:subClassOf lmdoc:SelectTemplates ;
+.
+lmdoc:getRestrictedDatatypes
+  rdf:type spin:SelectTemplate ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:orderBy (
+          [
+            sp:varName "qName" ;
+          ]
+        ) ;
+      sp:resultVariables (
+          [
+            sp:varName "resource" ;
+          ]
+          [
+            sp:varName "qName" ;
+          ]
+          [
+            sp:varName "uri" ;
+          ]
+        ) ;
+      sp:where (
+          (
+            [
+              sp:object [
+                  sp:varName "graph" ;
+                ] ;
+              sp:predicate rdfs:isDefinedBy ;
+              sp:subject [
+                  sp:varName "resource" ;
+                ] ;
+            ]
+            [
+              sp:object [
+                  sp:varName "myType" ;
+                ] ;
+              sp:predicate rdf:type ;
+              sp:subject [
+                  sp:varName "resource" ;
+                ] ;
+            ]
+            [
+              rdf:type sp:TriplePath ;
+              sp:object rdfs:Datatype ;
+              sp:path [
+                  rdf:type sp:ModPath ;
+                  sp:modMax -2 ;
+                  sp:modMin 0 ;
+                  sp:subPath rdfs:subClassOf ;
+                ] ;
+              sp:subject [
+                  sp:varName "myType" ;
+                ] ;
+            ]
+            [
+              rdf:type sp:Filter ;
+              sp:expression [
+                  rdf:type sp:notExists ;
+                  sp:elements (
+                      [
+                        sp:object "true"^^xsd:boolean ;
+                        sp:predicate vaem:exclude ;
+                        sp:subject [
+                            sp:varName "myType" ;
+                          ] ;
+                      ]
+                    ) ;
+                ] ;
+            ]
+          )
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type xsd:string ;
+                sp:arg1 [
+                    sp:varName "resource" ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "uri" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:qname ;
+                sp:arg1 [
+                    sp:varName "resource" ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "qName" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The class that the instances must have." ;
+    ] ;
+  rdfs:comment "FILTER (fn:upper-case(?ns) = fn:upper-case(?namespacePrefix)) ." ;
+  rdfs:comment "Gets instances of rdfs:Datatype" ;
+  rdfs:label "get restricted datatypes" ;
+  rdfs:subClassOf lmdoc:SelectTemplates ;
+.
+lmdoc:getRestrictions
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "p" ;
+          ]
+          [
+            sp:varName "v" ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "r" ;
+              ] ;
+            sp:predicate owl:withRestrictions ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "n" ;
+              ] ;
+            sp:path [
+                rdf:type sp:SeqPath ;
+                sp:path1 [
+                    rdf:type sp:ModPath ;
+                    sp:modMax -2 ;
+                    sp:modMin 0 ;
+                    sp:subPath rdf:rest ;
+                  ] ;
+                sp:path2 rdf:first ;
+              ] ;
+            sp:subject [
+                sp:varName "r" ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "v" ;
+              ] ;
+            sp:predicate [
+                sp:varName "p" ;
+              ] ;
+            sp:subject [
+                sp:varName "n" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  rdfs:label "get restrictions" ;
+  rdfs:subClassOf lmdoc:MagicProperties ;
 .
 lmdoc:getTitle
   rdf:type spin:Function ;
@@ -20031,8 +20688,95 @@ rdfs:Class
   ui:instanceView [
       rdf:type ui:group ;
       ui:child [
-          rdf:type lmdoc:ClassPopupSummary ;
-          arg:resource spin:_this ;
+          rdf:type ui:group ;
+          let:resource [
+              rdf:type sp:iri ;
+              sp:arg1 [
+                  rdf:type spif:decodeURL ;
+                  sp:arg1 [
+                      rdf:type sp:str ;
+                      sp:arg1 spin:_this ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:setContext ;
+              ui:child [
+                  rdf:type ui:group ;
+                  let:myGraph [
+                      rdf:type sp:iri ;
+                      sp:arg1 [
+                          rdf:type lmdoc:getDefiningGraph ;
+                          arg:resource [
+                              sp:varName "resource" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:setContext ;
+                      ui:child [
+                          rdf:type ui:debug ;
+                          ui:child [
+                              rdf:type html:P ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Current query graph is " ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text [
+                                      rdf:type ui:currentQueryGraph ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:P ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Graph is " ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text [
+                                      sp:varName "myGraph" ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:ClassPopupSummary ;
+                          arg:resource spin:_this ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:varName "graph" ;
+                      ui:varValue [
+                          sp:varName "myGraph" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:queryGraph [
+                  rdf:type sp:iri ;
+                  sp:arg1 [
+                      rdf:type spif:decodeURL ;
+                      sp:arg1 [
+                          rdf:type sp:str ;
+                          sp:arg1 [
+                              sp:varName "graph" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                ] ;
+            ] ;
           ui:childIndex 0 ;
         ] ;
       ui:id "lmdoc-popup" ;
@@ -20104,6 +20848,105 @@ rdfs:Resource
         ] ;
       ui:id "overview" ;
       ui:priority -2 ;
+    ] ;
+  ui:instanceView [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type ui:group ;
+          let:resource [
+              rdf:type sp:iri ;
+              sp:arg1 [
+                  rdf:type spif:decodeURL ;
+                  sp:arg1 [
+                      rdf:type sp:str ;
+                      sp:arg1 spin:_this ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:setContext ;
+              ui:child [
+                  rdf:type ui:group ;
+                  let:myGraph [
+                      rdf:type sp:iri ;
+                      sp:arg1 [
+                          rdf:type lmdoc:getDefiningGraph ;
+                          arg:resource [
+                              sp:varName "resource" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:setContext ;
+                      ui:child [
+                          rdf:type ui:debug ;
+                          ui:child [
+                              rdf:type html:P ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Current query graph is " ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text [
+                                      rdf:type ui:currentQueryGraph ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:child [
+                              rdf:type html:P ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Graph is " ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text [
+                                      sp:varName "myGraph" ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type lmdoc:DetailedInstanceView ;
+                          arg:resource [
+                              sp:varName "resource" ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:varName "graph" ;
+                      ui:varValue [
+                          sp:varName "myGraph" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:queryGraph [
+                  rdf:type sp:iri ;
+                  sp:arg1 [
+                      rdf:type spif:decodeURL ;
+                      sp:arg1 [
+                          rdf:type sp:str ;
+                          sp:arg1 [
+                              sp:varName "graph" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:id "lmdoc-popup" ;
+      ui:priority 1100 ;
     ] ;
   ui:instanceView [
       rdf:type ui:group ;
@@ -20208,74 +21051,6 @@ rdfs:Resource
       ui:priority -9 ;
     ] ;
   ui:instanceView [
-      rdf:type ui:group ;
-      ui:child [
-          rdf:type ui:setContext ;
-          ui:child [
-              rdf:type html:P ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text "ui:graph is " ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 1 ;
-                  ui:text ui:graph ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:child [
-              rdf:type lmdoc:DetailedInstanceView ;
-              arg:resource [
-                  rdf:type sp:iri ;
-                  sp:arg1 [
-                      rdf:type spif:decodeURL ;
-                      sp:arg1 [
-                          rdf:type sp:str ;
-                          sp:arg1 spin:_this ;
-                        ] ;
-                    ] ;
-                ] ;
-              ui:childIndex 1 ;
-            ] ;
-          ui:childIndex 0 ;
-          ui:queryGraph [
-              rdf:type sp:iri ;
-              sp:arg1 [
-                  rdf:type spif:decodeURL ;
-                  sp:arg1 [
-                      rdf:type sp:str ;
-                      sp:arg1 [
-                          sp:varName "graph" ;
-                        ] ;
-                    ] ;
-                ] ;
-            ] ;
-        ] ;
-      ui:id "lmdoc-popup" ;
-      ui:priority 1100 ;
-    ] ;
-  ui:instanceView [
-      rdf:type ui:group ;
-      ui:child [
-          rdf:type lmdoc:DetailedInstanceView ;
-          arg:resource [
-              rdf:type sp:iri ;
-              sp:arg1 [
-                  rdf:type spif:decodeURL ;
-                  sp:arg1 [
-                      rdf:type sp:str ;
-                      sp:arg1 spin:_this ;
-                    ] ;
-                ] ;
-            ] ;
-          ui:childIndex 0 ;
-        ] ;
-      ui:id "lmdoc-popup" ;
-      ui:priority 110 ;
-    ] ;
-  ui:instanceView [
       rdf:type lmdoc:DefaultDecription ;
       arg:resource spin:_this ;
       ui:id "description" ;
@@ -20306,6 +21081,12 @@ owl:Ontology
       ui:id "wp" ;
       ui:priority 2 ;
     ] ;
+.
+owl:onDatatype
+  rdf:type swa:DatatypeAxiomProperty ;
+.
+owl:withRestrictions
+  rdf:type swa:DatatypeAxiomProperty ;
 .
 prov:wasInfluencedBy
   rdf:type owl:ObjectProperty ;
