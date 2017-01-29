@@ -4990,7 +4990,7 @@ lmdoc:DetailedClassView
             ] ;
           ui:child [
               rdf:type lmdoc:ResourceFooter ;
-              arg:options "JSONLD,RDF,TURTLE" ;
+              arg:options "JSON-LD,RDF,TURTLE" ;
               arg:resource [
                   sp:varName "class" ;
                 ] ;
@@ -5189,7 +5189,7 @@ ui:template=\"{= swa:modeProperty(swa:formSubjectPredicateSelectionTemplate) }\"
                 ] ;
               ui:child [
                   rdf:type lmdoc:ResourceFooter ;
-                  arg:options "JSON, JSONLD,RDF/XML,TURTLE" ;
+                  arg:options "JSON, JSON-LD,RDF/XML,TURTLE" ;
                   arg:resource [
                       sp:varName "resource" ;
                     ] ;
@@ -8580,7 +8580,7 @@ lmdoc:Instance
                                                 ] ;
                                               ui:child [
                                                   rdf:type lmdoc:ResourceFooter ;
-                                                  arg:options "CSV,JSONLD,RDF,TURTLE" ;
+                                                  arg:options "CSV,JSON-LD,RDF,TURTLE" ;
                                                   arg:resource [
                                                       sp:varName "resource" ;
                                                     ] ;
@@ -9606,9 +9606,9 @@ lmdoc:InstancesSection
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ResourceFooter ;
-                              arg:options "CSV,JSONLD,RDF,TURTLE" ;
+                              arg:options "CSV,JSON-LD,RDF,TURTLE" ;
                               arg:resource [
-                                  sp:varName "instance" ;
+                                  sp:varName "resource" ;
                                 ] ;
                               ui:childIndex 10 ;
                             ] ;
@@ -12707,7 +12707,7 @@ lmdoc:PropertiesSection
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ResourceFooter ;
-                              arg:options "JSONLD,RDF,TURTLE" ;
+                              arg:options "JSON-LD,RDF,TURTLE" ;
                               arg:resource [
                                   sp:varName "property" ;
                                 ] ;
@@ -16828,6 +16828,16 @@ lmdoc:ViewAsJSON
     ] ;
   ui:prototype [
       rdf:type ui:group ;
+      let:id [
+          rdf:type ui:concat ;
+          sp:arg1 "div-lm-export-json-" ;
+          sp:arg2 [
+              rdf:type lmdoc:makeAnchorFromResource ;
+              arg:resource [
+                  sp:varName "resource" ;
+                ] ;
+            ] ;
+        ] ;
       let:nl "" ;
       let:space " " ;
       let:title [
@@ -16845,11 +16855,15 @@ lmdoc:ViewAsJSON
           html:class "lm-simulated-link" ;
           html:onclick [
               rdf:type ui:concat ;
-              sp:arg1 "javascript: lm.popup('lm-export-json','" ;
+              sp:arg1 "javascript: lm.popup('" ;
               sp:arg2 [
+                  sp:varName "id" ;
+                ] ;
+              sp:arg3 "','" ;
+              sp:arg4 [
                   sp:varName "title" ;
                 ] ;
-              sp:arg3 "',600,800)" ;
+              sp:arg5 "',600,800)" ;
             ] ;
           ui:child [
               rdf:type ui:TextNode ;
@@ -16860,7 +16874,9 @@ lmdoc:ViewAsJSON
         ] ;
       ui:child [
           rdf:type html:Div ;
-          html:id "lm-export-json" ;
+          html:id [
+              sp:varName "id" ;
+            ] ;
           ui:child [
               rdf:type ui:bind ;
               ui:child [
@@ -17090,11 +17106,56 @@ lmdoc:ViewAsJSON
                   ui:full "false"^^xsd:boolean ;
                   ui:varName "output" ;
                 ] ;
-              ui:childIndex 1 ;
+              ui:childIndex 2 ;
             ] ;
           ui:child [
               rdf:type ui:update ;
               ui:childIndex 0 ;
+              ui:updateQuery [
+                  rdf:type sp:Modify ;
+                  sp:deletePattern (
+                      [
+                        rdf:type sp:NamedGraph ;
+                        sp:elements (
+                            [
+                              sp:object [
+                                  sp:varName "o" ;
+                                ] ;
+                              sp:predicate [
+                                  sp:varName "p" ;
+                                ] ;
+                              sp:subject [
+                                  sp:varName "resource" ;
+                                ] ;
+                            ]
+                          ) ;
+                        sp:graphNameNode ui:tempGraph ;
+                      ]
+                    ) ;
+                  sp:where (
+                      [
+                        rdf:type sp:NamedGraph ;
+                        sp:elements (
+                            [
+                              sp:object [
+                                  sp:varName "o" ;
+                                ] ;
+                              sp:predicate [
+                                  sp:varName "p" ;
+                                ] ;
+                              sp:subject [
+                                  sp:varName "resource" ;
+                                ] ;
+                            ]
+                          ) ;
+                        sp:graphNameNode ui:tempGraph ;
+                      ]
+                    ) ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:update ;
+              ui:childIndex 1 ;
               ui:updateQuery [
                   rdf:type sp:Modify ;
                   sp:insertPattern (
@@ -17151,6 +17212,16 @@ lmdoc:ViewAsJSON-LD
     ] ;
   ui:prototype [
       rdf:type ui:group ;
+      let:id [
+          rdf:type ui:concat ;
+          sp:arg1 "div-lm-export-json-ld-" ;
+          sp:arg2 [
+              rdf:type lmdoc:makeAnchorFromResource ;
+              arg:resource [
+                  sp:varName "resource" ;
+                ] ;
+            ] ;
+        ] ;
       let:title [
           rdf:type sp:concat ;
           sp:arg1 "JSON-LD for " ;
@@ -17166,11 +17237,15 @@ lmdoc:ViewAsJSON-LD
           html:class "lm-simulated-link" ;
           html:onclick [
               rdf:type ui:concat ;
-              sp:arg1 "javascript: lm.popup('lm-export-json-ld','" ;
+              sp:arg1 "javascript: lm.popup('" ;
               sp:arg2 [
+                  sp:varName "id" ;
+                ] ;
+              sp:arg3 "','" ;
+              sp:arg4 [
                   sp:varName "title" ;
                 ] ;
-              sp:arg3 "',600,800)" ;
+              sp:arg5 "',600,800)" ;
             ] ;
           ui:child [
               rdf:type ui:TextNode ;
@@ -17181,7 +17256,9 @@ lmdoc:ViewAsJSON-LD
         ] ;
       ui:child [
           rdf:type html:Div ;
-          html:id "lm-export-json-ld" ;
+          html:id [
+              sp:varName "id" ;
+            ] ;
           ui:child [
               rdf:type ui:setContext ;
               ui:child [
@@ -17203,12 +17280,57 @@ lmdoc:ViewAsJSON-LD
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
-              ui:childIndex 1 ;
-              ui:queryGraph ui:tempGraphPopup ;
+              ui:childIndex 2 ;
+              ui:queryGraph ui:tempGraph ;
             ] ;
           ui:child [
               rdf:type ui:update ;
               ui:childIndex 0 ;
+              ui:updateQuery [
+                  rdf:type sp:Modify ;
+                  sp:deletePattern (
+                      [
+                        rdf:type sp:NamedGraph ;
+                        sp:elements (
+                            [
+                              sp:object [
+                                  sp:varName "o" ;
+                                ] ;
+                              sp:predicate [
+                                  sp:varName "p" ;
+                                ] ;
+                              sp:subject [
+                                  sp:varName "resource" ;
+                                ] ;
+                            ]
+                          ) ;
+                        sp:graphNameNode ui:tempGraph ;
+                      ]
+                    ) ;
+                  sp:where (
+                      [
+                        rdf:type sp:NamedGraph ;
+                        sp:elements (
+                            [
+                              sp:object [
+                                  sp:varName "o" ;
+                                ] ;
+                              sp:predicate [
+                                  sp:varName "p" ;
+                                ] ;
+                              sp:subject [
+                                  sp:varName "resource" ;
+                                ] ;
+                            ]
+                          ) ;
+                        sp:graphNameNode ui:tempGraph ;
+                      ]
+                    ) ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:update ;
+              ui:childIndex 1 ;
               ui:updateQuery [
                   rdf:type sp:Modify ;
                   sp:insertPattern (
@@ -17227,7 +17349,7 @@ lmdoc:ViewAsJSON-LD
                                 ] ;
                             ]
                           ) ;
-                        sp:graphNameNode ui:tempGraphPopup ;
+                        sp:graphNameNode ui:tempGraph ;
                       ]
                     ) ;
                   sp:where (
@@ -17263,6 +17385,16 @@ lmdoc:ViewAsRDFXML
     ] ;
   ui:prototype [
       rdf:type ui:group ;
+      let:id [
+          rdf:type ui:concat ;
+          sp:arg1 "div-lm-export-rdf-xml-" ;
+          sp:arg2 [
+              rdf:type lmdoc:makeAnchorFromResource ;
+              arg:resource [
+                  sp:varName "resource" ;
+                ] ;
+            ] ;
+        ] ;
       let:title [
           rdf:type sp:concat ;
           sp:arg1 "RDF/XML for " ;
@@ -17278,11 +17410,15 @@ lmdoc:ViewAsRDFXML
           html:class "lm-simulated-link" ;
           html:onclick [
               rdf:type ui:concat ;
-              sp:arg1 "javascript: lm.popup('lm-export-rdf-xml','" ;
+              sp:arg1 "javascript: lm.popup('" ;
               sp:arg2 [
+                  sp:varName "id" ;
+                ] ;
+              sp:arg3 "','" ;
+              sp:arg4 [
                   sp:varName "title" ;
                 ] ;
-              sp:arg3 "',600,800)" ;
+              sp:arg5 "',600,800)" ;
             ] ;
           ui:child [
               rdf:type ui:TextNode ;
@@ -17293,7 +17429,9 @@ lmdoc:ViewAsRDFXML
         ] ;
       ui:child [
           rdf:type html:Div ;
-          html:id "lm-export-rdf-xml" ;
+          html:id [
+              sp:varName "id" ;
+            ] ;
           ui:child [
               rdf:type ui:setContext ;
               ui:child [
@@ -17315,12 +17453,57 @@ lmdoc:ViewAsRDFXML
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
-              ui:childIndex 1 ;
+              ui:childIndex 2 ;
               ui:queryGraph ui:tempGraphPopup ;
             ] ;
           ui:child [
               rdf:type ui:update ;
               ui:childIndex 0 ;
+              ui:updateQuery [
+                  rdf:type sp:Modify ;
+                  sp:deletePattern (
+                      [
+                        rdf:type sp:NamedGraph ;
+                        sp:elements (
+                            [
+                              sp:object [
+                                  sp:varName "o" ;
+                                ] ;
+                              sp:predicate [
+                                  sp:varName "p" ;
+                                ] ;
+                              sp:subject [
+                                  sp:varName "resource" ;
+                                ] ;
+                            ]
+                          ) ;
+                        sp:graphNameNode ui:tempGraphPopup ;
+                      ]
+                    ) ;
+                  sp:where (
+                      [
+                        rdf:type sp:NamedGraph ;
+                        sp:elements (
+                            [
+                              sp:object [
+                                  sp:varName "o" ;
+                                ] ;
+                              sp:predicate [
+                                  sp:varName "p" ;
+                                ] ;
+                              sp:subject [
+                                  sp:varName "resource" ;
+                                ] ;
+                            ]
+                          ) ;
+                        sp:graphNameNode ui:tempGraphPopup ;
+                      ]
+                    ) ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:update ;
+              ui:childIndex 1 ;
               ui:updateQuery [
                   rdf:type sp:Modify ;
                   sp:insertPattern (
@@ -17375,6 +17558,16 @@ lmdoc:ViewAsTurtle
     ] ;
   ui:prototype [
       rdf:type ui:group ;
+      let:id [
+          rdf:type ui:concat ;
+          sp:arg1 "div-lm-export-turtle-" ;
+          sp:arg2 [
+              rdf:type lmdoc:makeAnchorFromResource ;
+              arg:resource [
+                  sp:varName "resource" ;
+                ] ;
+            ] ;
+        ] ;
       let:title [
           rdf:type sp:concat ;
           sp:arg1 "TURTLE for " ;
@@ -17390,11 +17583,15 @@ lmdoc:ViewAsTurtle
           html:class "lm-simulated-link" ;
           html:onclick [
               rdf:type ui:concat ;
-              sp:arg1 "javascript: lm.popup('lm-export-turtle','" ;
+              sp:arg1 "javascript: lm.popup('" ;
               sp:arg2 [
+                  sp:varName "id" ;
+                ] ;
+              sp:arg3 "','" ;
+              sp:arg4 [
                   sp:varName "title" ;
                 ] ;
-              sp:arg3 "',600,800)" ;
+              sp:arg5 "',600,800)" ;
             ] ;
           ui:child [
               rdf:type ui:TextNode ;
@@ -17405,7 +17602,9 @@ lmdoc:ViewAsTurtle
         ] ;
       ui:child [
           rdf:type html:Div ;
-          html:id "lm-export-turtle" ;
+          html:id [
+              sp:varName "id" ;
+            ] ;
           ui:child [
               rdf:type ui:debug ;
               ui:child [
