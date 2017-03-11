@@ -12088,15 +12088,9 @@ lmdoc:Pages
         ] ;
       ui:child [
           rdf:type html:Script ;
-          html:src [
-              rdf:type ui:concat ;
-              sp:arg1 [
-                  rdf:type ui:lib ;
-                ] ;
-              sp:arg2 "/vaem/js/lm.js" ;
-            ] ;
+          html:src "http://linkedmodel.org/vaem/js/lm.js" ;
           html:type "text/javascript" ;
-          ui:childIndex 28 ;
+          ui:childIndex 29 ;
         ] ;
       ui:child [
           rdf:type html:Script ;
@@ -12114,8 +12108,8 @@ lmdoc:Pages
         ] ;
       ui:child [
           rdf:type ui:CommentNode ;
-          ui:childIndex 29 ;
-          rdfs:comment "script src=\"http://linkedmodel.org/vaem/js/lm.js\" type=\"text/javascript\"/" ;
+          ui:childIndex 28 ;
+          rdfs:comment "script src=\"{= ui:lib() }/vaem/js/lm.js\" type=\"text/javascript\"/" ;
         ] ;
       ui:child [
           rdf:type ui:CommentNode ;
