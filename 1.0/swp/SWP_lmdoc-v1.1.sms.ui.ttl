@@ -12361,7 +12361,7 @@ lmdoc:Preview
                                       sp:arg1 [
                                           sp:varName "myGraphMetadata" ;
                                         ] ;
-                                      sp:arg2 vaem:name ;
+                                      sp:arg2 vaem:namespacePrefix ;
                                       sp:arg3 [
                                           sp:varName "myGraph" ;
                                         ] ;
