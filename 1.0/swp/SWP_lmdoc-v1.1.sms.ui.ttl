@@ -1569,182 +1569,660 @@ lmdoc:BuildMetadataRecord
     ] ;
   ui:prototype [
       rdf:type ui:group ;
-      let:graphName [
-          rdf:type spif:regex ;
-          sp:arg1 [
-              rdf:type xsd:string ;
-              sp:arg1 [
-                  sp:varName "graph" ;
-                ] ;
-            ] ;
-          sp:arg2 ".*/([A-Za-z0-9-]+)$" ;
-          sp:arg3 "$1" ;
-        ] ;
       ui:child [
-          rdf:type ui:group ;
-          let:metadataName [
-              rdf:type fn:concat ;
-              sp:arg1 "GMD_" ;
-              sp:arg2 [
-                  rdf:type fn:upper-case ;
+          rdf:type ui:call ;
+          arg:graph [
+              sp:varName "graph" ;
+            ] ;
+          ui:child [
+              rdf:type ui:group ;
+              let:gmdDomainName [
+                  rdf:type spr:cell ;
                   sp:arg1 [
-                      sp:varName "graphName" ;
+                      sp:varName "gmdIdentifiers" ;
                     ] ;
+                  sp:arg2 0 ;
+                  sp:arg3 6 ;
                 ] ;
-            ] ;
-          ui:child [
-              rdf:type html:P ;
-              html:class "lm-para" ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text "Make graph metadata " ;
-                ] ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 1 ;
-                  ui:text [
-                      sp:varName "metadataName" ;
+              let:gmdGraphRole [
+                  rdf:type spr:cell ;
+                  sp:arg1 [
+                      sp:varName "gmdIdentifiers" ;
                     ] ;
+                  sp:arg2 0 ;
+                  sp:arg3 3 ;
                 ] ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:child [
-              rdf:type ui:transaction ;
+              let:gmdLabel [
+                  rdf:type spr:cell ;
+                  sp:arg1 [
+                      sp:varName "gmdIdentifiers" ;
+                    ] ;
+                  sp:arg2 0 ;
+                  sp:arg3 1 ;
+                ] ;
+              let:gmdName [
+                  rdf:type spr:cell ;
+                  sp:arg1 [
+                      sp:varName "gmdIdentifiers" ;
+                    ] ;
+                  sp:arg2 0 ;
+                  sp:arg3 2 ;
+                ] ;
+              let:gmdOwnerName [
+                  rdf:type spr:cell ;
+                  sp:arg1 [
+                      sp:varName "gmdIdentifiers" ;
+                    ] ;
+                  sp:arg2 0 ;
+                  sp:arg3 5 ;
+                ] ;
+              let:gmdSubject [
+                  rdf:type spr:cell ;
+                  sp:arg1 [
+                      sp:varName "gmdIdentifiers" ;
+                    ] ;
+                  sp:arg2 0 ;
+                  sp:arg3 4 ;
+                ] ;
               let:gmdU [
-                  rdf:type sp:iri ;
+                  rdf:type spr:cell ;
                   sp:arg1 [
-                      rdf:type fn:concat ;
-                      sp:arg1 [
-                          rdf:type xsd:string ;
-                          sp:arg1 [
-                              sp:varName "graph" ;
-                            ] ;
-                        ] ;
-                      sp:arg2 "/" ;
-                      sp:arg3 [
-                          sp:varName "metadataName" ;
-                        ] ;
+                      sp:varName "gmdIdentifiers" ;
                     ] ;
+                  sp:arg2 0 ;
+                  sp:arg3 0 ;
                 ] ;
               ui:child [
                   rdf:type html:P ;
+                  html:class "lm-para" ;
+                  ui:child [
+                      rdf:type html:Span ;
+                      html:class "boxed" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "gmdDomainName" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "Domain Name is " ;
+                    ] ;
+                  ui:childIndex 2 ;
+                ] ;
+              ui:child [
+                  rdf:type html:P ;
+                  html:class "lm-para" ;
+                  ui:child [
+                      rdf:type html:Span ;
+                      html:class "boxed" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "gmdGraphRole" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "Graph role is " ;
+                    ] ;
+                  ui:childIndex 5 ;
+                ] ;
+              ui:child [
+                  rdf:type html:P ;
+                  html:class "lm-para" ;
+                  ui:child [
+                      rdf:type html:Span ;
+                      html:class "boxed" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "gmdLabel" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "Label is " ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:child [
+                  rdf:type html:P ;
+                  html:class "lm-para" ;
+                  ui:child [
+                      rdf:type html:Span ;
+                      html:class "boxed" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "gmdName" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "Graph Name is " ;
+                    ] ;
+                  ui:childIndex 6 ;
+                ] ;
+              ui:child [
+                  rdf:type html:P ;
+                  html:class "lm-para" ;
+                  ui:child [
+                      rdf:type html:Span ;
+                      html:class "boxed" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "gmdOwnerName" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "Owner Name is " ;
+                    ] ;
+                  ui:childIndex 3 ;
+                ] ;
+              ui:child [
+                  rdf:type html:P ;
+                  html:class "lm-para" ;
+                  ui:child [
+                      rdf:type html:Span ;
+                      html:class "boxed" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "gmdSubject" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "Subject " ;
+                    ] ;
+                  ui:childIndex 4 ;
+                ] ;
+              ui:child [
+                  rdf:type html:P ;
+                  html:class "lm-para" ;
+                  ui:child [
+                      rdf:type html:Span ;
+                      html:class "boxed" ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text [
+                              sp:varName "gmdU" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
                   ui:child [
                       rdf:type ui:TextNode ;
                       ui:childIndex 0 ;
                       ui:text "URI is " ;
                     ] ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 1 ;
-                      ui:text [
-                          sp:varName "gmdU" ;
-                        ] ;
-                    ] ;
-                  ui:childIndex 0 ;
+                  ui:childIndex 1 ;
                 ] ;
               ui:child [
-                  rdf:type ui:update ;
-                  ui:childIndex 1 ;
-                  ui:updateQuery [
-                      rdf:type sp:Modify ;
-                      sp:insertPattern (
-                          [
-                            rdf:type sp:NamedGraph ;
-                            sp:elements (
-                                [
-                                  sp:object vaem:GraphMetaData ;
-                                  sp:predicate rdf:type ;
-                                  sp:subject [
-                                      sp:varName "gmdU" ;
-                                    ] ;
-                                ]
-                                [
-                                  sp:object [
-                                      sp:varName "graphName" ;
-                                    ] ;
-                                  sp:predicate vaem:name ;
-                                  sp:subject [
-                                      sp:varName "gmdU" ;
-                                    ] ;
-                                ]
-                                [
-                                  sp:object [
-                                      sp:varName "date" ;
-                                    ] ;
-                                  sp:predicate dct:created ;
-                                  sp:subject [
-                                      sp:varName "gmdU" ;
-                                    ] ;
-                                ]
-                                [
-                                  sp:object [
-                                      sp:varName "date" ;
-                                    ] ;
-                                  sp:predicate dct:modified ;
-                                  sp:subject [
-                                      sp:varName "gmdU" ;
-                                    ] ;
-                                ]
-                                [
-                                  sp:object "" ;
-                                  sp:predicate dct:description ;
-                                  sp:subject [
-                                      sp:varName "gmdU" ;
-                                    ] ;
-                                ]
-                                [
-                                  sp:object "" ;
-                                  sp:predicate dct:title ;
-                                  sp:subject [
-                                      sp:varName "gmdU" ;
-                                    ] ;
-                                ]
-                                [
-                                  sp:object "" ;
-                                  sp:predicate dct:subject ;
-                                  sp:subject [
-                                      sp:varName "gmdU" ;
-                                    ] ;
-                                ]
-                                [
-                                  sp:object "" ;
-                                  sp:predicate vaem:intent ;
-                                  sp:subject [
-                                      sp:varName "gmdU" ;
-                                    ] ;
-                                ]
-                                [
-                                  sp:object [
-                                      sp:varName "gmdU" ;
-                                    ] ;
-                                  sp:predicate vaem:hasGraphMetadata ;
-                                  sp:subject [
-                                      sp:varName "graph" ;
-                                    ] ;
-                                ]
-                              ) ;
-                            sp:graphNameNode [
-                                sp:varName "graph" ;
-                              ] ;
-                          ]
-                        ) ;
-                      sp:where (
-                          [
-                            rdf:type sp:Bind ;
-                            sp:expression [
-                                rdf:type afn:now ;
-                              ] ;
-                            sp:variable [
-                                sp:varName "date" ;
-                              ] ;
-                          ]
-                        ) ;
+                  rdf:type ui:transaction ;
+                  ui:child [
+                      rdf:type ui:update ;
+                      ui:childIndex 0 ;
+                      ui:updateQuery [
+                          rdf:type sp:Modify ;
+                          sp:insertPattern (
+                              [
+                                rdf:type sp:NamedGraph ;
+                                sp:elements (
+                                    [
+                                      sp:object vaem:GraphMetaData ;
+                                      sp:predicate rdf:type ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "gmdLabel" ;
+                                        ] ;
+                                      sp:predicate rdfs:label ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "graphName" ;
+                                        ] ;
+                                      sp:predicate vaem:name ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "nameSpacePrefix" ;
+                                        ] ;
+                                      sp:predicate vaem:namespacePrefix ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object "qudt" ;
+                                      sp:predicate vaem:namespace ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "gmdSubject" ;
+                                        ] ;
+                                      sp:predicate vaem:hasDomain ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "gmdDomainName" ;
+                                        ] ;
+                                      sp:predicate vaem:owner ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "logo" ;
+                                        ] ;
+                                      sp:predicate vaem:logo ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "date" ;
+                                        ] ;
+                                      sp:predicate dct:created ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "date" ;
+                                        ] ;
+                                      sp:predicate dct:modified ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "rights" ;
+                                        ] ;
+                                      sp:predicate dct:rights ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object "TBD" ;
+                                      sp:predicate dct:description ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object "" ;
+                                      sp:predicate dct:title ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object "" ;
+                                      sp:predicate dct:subject ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object "TBD" ;
+                                      sp:predicate vaem:intent ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "turtleFile" ;
+                                        ] ;
+                                      sp:predicate vaem:turtleFileURL ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "docFile" ;
+                                        ] ;
+                                      sp:predicate vaem:latestPublishedVersion ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object dct:created ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object dct:modified ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object dct:rights ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object dct:subject ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object dct:title ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object dct:description ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object dct:contributor ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object dct:creator ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object dct:author ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object voag:CC-SHAREALIKE_3PT0-US ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object voag:QUDT-Attribution ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object skos:closeMatch ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object skos:exactMatch ;
+                                      sp:predicate vaem:usesNonImportedResource ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object voag:QUDT-Attribution ;
+                                      sp:predicate vaem:withAttributionTo ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object voag:CC-SHAREALIKE_3PT0-US ;
+                                      sp:predicate vaem:hasLicenseType ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object "2.0" ;
+                                      sp:predicate vaem:revision ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object 1 ;
+                                      sp:predicate vaem:specificity ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "graph" ;
+                                        ] ;
+                                      sp:predicate vaem:isMetadataFor ;
+                                      sp:subject [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                    ]
+                                    [
+                                      sp:object [
+                                          sp:varName "gmdU" ;
+                                        ] ;
+                                      sp:predicate vaem:hasGraphMetadata ;
+                                      sp:subject [
+                                          sp:varName "graph" ;
+                                        ] ;
+                                    ]
+                                  ) ;
+                                sp:graphNameNode [
+                                    sp:varName "graph" ;
+                                  ] ;
+                              ]
+                            ) ;
+                          sp:where (
+                              [
+                                rdf:type sp:Bind ;
+                                sp:expression [
+                                    rdf:type afn:now ;
+                                  ] ;
+                                sp:variable [
+                                    sp:varName "date" ;
+                                  ] ;
+                              ]
+                              [
+                                rdf:type sp:Bind ;
+                                sp:expression "http://www.linkedmodel.org/lib/lm/images/logos/qudt_logo-300x110.png" ;
+                                sp:variable [
+                                    sp:varName "logo" ;
+                                  ] ;
+                              ]
+                              [
+                                rdf:type sp:Bind ;
+                                sp:expression "The QUDT Ontologies are issued under a Creative Commons Attribution Share Alike 3.0 United States License. Attribution should be made to NASA Ames Research Center, TopQuadrant, Inc. and QUDT.org." ;
+                                sp:variable [
+                                    sp:varName "rights" ;
+                                  ] ;
+                              ]
+                              [
+                                rdf:type sp:Bind ;
+                                sp:expression [
+                                    rdf:type sp:concat ;
+                                    sp:arg1 "http://" ;
+                                    sp:arg2 [
+                                        sp:varName "gmdDomainName" ;
+                                      ] ;
+                                    sp:arg3 "/" ;
+                                  ] ;
+                                sp:variable [
+                                    sp:varName "authorityPart" ;
+                                  ] ;
+                              ]
+                              [
+                                rdf:type sp:Bind ;
+                                sp:expression [
+                                    rdf:type sp:concat ;
+                                    sp:arg1 [
+                                        sp:varName "authorityPart" ;
+                                      ] ;
+                                    sp:arg2 [
+                                        sp:varName "gmdGraphRole" ;
+                                      ] ;
+                                    sp:arg3 "/" ;
+                                    sp:arg4 [
+                                        sp:varName "gmdSubject" ;
+                                      ] ;
+                                    sp:arg5 "/" ;
+                                  ] ;
+                                sp:variable [
+                                    sp:varName "nameSpacePrefix" ;
+                                  ] ;
+                              ]
+                              [
+                                rdf:type sp:Bind ;
+                                sp:expression [
+                                    rdf:type sp:concat ;
+                                    sp:arg1 [
+                                        rdf:type fn:upper-case ;
+                                        sp:arg1 [
+                                            sp:varName "gmdOwnerName" ;
+                                          ] ;
+                                      ] ;
+                                    sp:arg2 "-" ;
+                                    sp:arg3 [
+                                        rdf:type fn:upper-case ;
+                                        sp:arg1 [
+                                            sp:varName "gmdSubject" ;
+                                          ] ;
+                                      ] ;
+                                    sp:arg4 "-" ;
+                                    sp:arg5 [
+                                        rdf:type fn:upper-case ;
+                                        sp:arg1 [
+                                            sp:varName "gmdName" ;
+                                          ] ;
+                                      ] ;
+                                  ] ;
+                                sp:variable [
+                                    sp:varName "descriptor" ;
+                                  ] ;
+                              ]
+                              [
+                                rdf:type sp:Bind ;
+                                sp:expression [
+                                    rdf:type sp:concat ;
+                                    sp:arg1 [
+                                        sp:varName "authorityPart" ;
+                                      ] ;
+                                    sp:arg2 "doc/2017/DOC_" ;
+                                    sp:arg3 [
+                                        rdf:type fn:upper-case ;
+                                        sp:arg1 [
+                                            sp:varName "gmdGraphRole" ;
+                                          ] ;
+                                      ] ;
+                                    sp:arg4 "-" ;
+                                    sp:arg5 [
+                                        sp:varName "descriptor" ;
+                                      ] ;
+                                    sp:arg6 ".html" ;
+                                  ] ;
+                                sp:variable [
+                                    sp:varName "docFile" ;
+                                  ] ;
+                              ]
+                              [
+                                rdf:type sp:Bind ;
+                                sp:expression [
+                                    rdf:type sp:concat ;
+                                    sp:arg1 [
+                                        sp:varName "authorityPart" ;
+                                      ] ;
+                                    sp:arg2 "2.0/" ;
+                                    sp:arg3 [
+                                        sp:varName "gmdGraphRole" ;
+                                      ] ;
+                                    sp:arg4 "/" ;
+                                    sp:arg5 [
+                                        sp:varName "descriptor" ;
+                                      ] ;
+                                    sp:arg6 "-v2.0.ttl" ;
+                                  ] ;
+                                sp:variable [
+                                    sp:varName "turtleFile" ;
+                                  ] ;
+                              ]
+                            ) ;
+                        ] ;
                     ] ;
+                  ui:childIndex 7 ;
                 ] ;
-              ui:childIndex 1 ;
+              ui:childIndex 0 ;
             ] ;
           ui:childIndex 0 ;
+          ui:template lmdoc:buildGraphMetadataIdentifiers ;
+          ui:varName "gmdIdentifiers" ;
         ] ;
     ] ;
   rdfs:subClassOf lmdoc:Factories ;
@@ -5414,7 +5892,7 @@ lmdoc:Functions
   rdfs:subClassOf spin:Functions ;
 .
 lmdoc:GMD_LMDOC
-  rdf:type vaem:GraphMetaData ;
+  rdf:type vaem:GraphMetadata ;
   dct:modified "2015-12-22"^^xsd:date ;
   vaem:hasOwner vaem:TopQuadrant ;
   vaem:name "LMDOC" ;
@@ -6401,106 +6879,6 @@ lmdoc:GraphMetadata
       spl:predicate arg:graph ;
       spl:valueType rdfs:Resource ;
     ] ;
-  ui:errorPrototype [
-      rdf:type ui:group ;
-      ui:child [
-          rdf:type ui:else ;
-          ui:child [
-              rdf:type ui:group ;
-              let:inputGraph [
-                  rdf:type sp:iri ;
-                  sp:arg1 [
-                      sp:varName "graph" ;
-                    ] ;
-                ] ;
-              ui:child [
-                  rdf:type ui:group ;
-                  let:myGraph [
-                      rdf:type sp:Select ;
-                      sp:resultVariables (
-                          [
-                            sp:varName "g" ;
-                          ]
-                        ) ;
-                      sp:where (
-                          [
-                            rdf:type sp:Bind ;
-                            sp:expression [
-                                rdf:type spl:objectInGraph ;
-                                sp:arg1 [
-                                    sp:varName "gmd" ;
-                                  ] ;
-                                sp:arg2 vaem:isMetadataFor ;
-                                sp:arg3 [
-                                    sp:varName "inputGraph" ;
-                                  ] ;
-                              ] ;
-                            sp:variable [
-                                sp:varName "g" ;
-                              ] ;
-                          ]
-                        ) ;
-                    ] ;
-                  ui:child [
-                      rdf:type ui:if ;
-                      ui:child [
-                          rdf:type html:P ;
-                          html:class "lm-para" ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text "No Graph Metadata record provided in " ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 1 ;
-                              ui:text [
-                                  sp:varName "inputGraph" ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:childIndex 0 ;
-                      ui:condition [
-                          rdf:type sp:not ;
-                          sp:arg1 [
-                              rdf:type sp:bound ;
-                              sp:arg1 [
-                                  sp:varName "myGraph" ;
-                                ] ;
-                            ] ;
-                        ] ;
-                    ] ;
-                  ui:childIndex 0 ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:childIndex 1 ;
-        ] ;
-      ui:child [
-          rdf:type ui:if ;
-          ui:child [
-              rdf:type html:P ;
-              html:class "lm-para" ;
-              ui:child [
-                  rdf:type ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text "No Graph URI provided" ;
-                ] ;
-              ui:childIndex 0 ;
-            ] ;
-          ui:childIndex 0 ;
-          ui:condition [
-              rdf:type sp:not ;
-              sp:arg1 [
-                  rdf:type sp:bound ;
-                  sp:arg1 [
-                      sp:varName "graph" ;
-                    ] ;
-                ] ;
-            ] ;
-        ] ;
-    ] ;
   ui:headIncludes [
       rdf:type ui:group ;
       ui:child [
@@ -6530,65 +6908,92 @@ lmdoc:GraphMetadata
             ] ;
         ] ;
       ui:child [
-          rdf:type html:P ;
+          rdf:type ui:catch ;
           ui:child [
-              rdf:type ui:TextNode ;
-              ui:childIndex 0 ;
-              ui:text "Input graph is " ;
-            ] ;
-          ui:child [
-              rdf:type ui:TextNode ;
-              ui:childIndex 1 ;
-              ui:text [
-                  sp:varName "inputGraph" ;
+              rdf:type html:P ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "Exception in lmdoc:GraphMetadata:" ;
                 ] ;
+              ui:childIndex 0 ;
             ] ;
-          ui:childIndex 0 ;
+          ui:child [
+              rdf:type html:P ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text [
+                      sp:varName "exception" ;
+                    ] ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:childIndex 1 ;
         ] ;
       ui:child [
-          rdf:type ui:if ;
+          rdf:type ui:try ;
           ui:child [
-              rdf:type ui:setContext ;
+              rdf:type html:P ;
+              ui:child [
+                  rdf:type html:Span ;
+                  html:class "boxed" ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text [
+                          sp:varName "inputGraph" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "Input graph is " ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:child [
+              rdf:type ui:group ;
+              let:gmd [
+                  rdf:type spl:objectInGraph ;
+                  sp:arg1 [
+                      sp:varName "inputGraph" ;
+                    ] ;
+                  sp:arg2 vaem:hasGraphMetadata ;
+                  sp:arg3 [
+                      sp:varName "inputGraph" ;
+                    ] ;
+                ] ;
               ui:child [
                   rdf:type ui:group ;
                   let:myGraphMetadata [
-                      rdf:type spl:subjectInGraph ;
-                      sp:arg1 rdf:type ;
-                      sp:arg2 vaem:GraphMetaData ;
+                      rdf:type spl:objectInGraph ;
+                      sp:arg1 [
+                          sp:varName "inputGraph" ;
+                        ] ;
+                      sp:arg2 vaem:hasGraphMetadata ;
                       sp:arg3 [
                           sp:varName "inputGraph" ;
                         ] ;
                     ] ;
                   ui:child [
-                      rdf:type ui:group ;
-                      let:myGraph [
-                          rdf:type spl:objectInGraph ;
-                          sp:arg1 [
-                              sp:varName "myGraphMetadata" ;
-                            ] ;
-                          sp:arg2 vaem:isMetadataFor ;
-                          sp:arg3 [
-                              sp:varName "inputGraph" ;
-                            ] ;
-                        ] ;
+                      rdf:type ui:setContext ;
                       ui:child [
                           rdf:type html:P ;
                           ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text "Graph is " ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 1 ;
-                              ui:text [
-                                  sp:varName "myGraph" ;
+                              rdf:type html:Span ;
+                              html:class "boxed" ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      sp:varName "myGraphMetadata" ;
+                                    ] ;
                                 ] ;
+                              ui:childIndex 1 ;
                             ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:P ;
                           ui:child [
                               rdf:type ui:TextNode ;
                               ui:childIndex 0 ;
@@ -6596,12 +7001,10 @@ lmdoc:GraphMetadata
                             ] ;
                           ui:child [
                               rdf:type ui:TextNode ;
-                              ui:childIndex 1 ;
-                              ui:text [
-                                  sp:varName "myGraphMetadata" ;
-                                ] ;
+                              ui:childIndex 2 ;
+                              ui:text "/" ;
                             ] ;
-                          ui:childIndex 1 ;
+                          ui:childIndex 0 ;
                         ] ;
                       ui:child [
                           rdf:type ui:setContext ;
@@ -6616,118 +7019,117 @@ lmdoc:GraphMetadata
                                           rdf:type ui:concat ;
                                           sp:arg1 "Metadata for Graph " ;
                                           sp:arg2 [
-                                              sp:varName "myGraph" ;
+                                              sp:varName "inputGraph" ;
                                             ] ;
-                                        ] ;
-                                      ui:childIndex 1 ;
-                                    ] ;
-                                  ui:child [
-                                      rdf:type ui:if ;
-                                      ui:child [
-                                          rdf:type html:P ;
-                                          html:class "lm-para" ;
-                                          ui:child [
-                                              rdf:type html:Span ;
-                                              html:style "font-weight:italic" ;
-                                              ui:child [
-                                                  rdf:type ui:TextNode ;
-                                                  ui:childIndex 0 ;
-                                                  ui:text [
-                                                      sp:varName "inputGraph" ;
-                                                    ] ;
-                                                ] ;
-                                              ui:childIndex 1 ;
-                                            ] ;
-                                          ui:child [
-                                              rdf:type ui:TextNode ;
-                                              ui:childIndex 0 ;
-                                              ui:text "Metadata for graph " ;
-                                            ] ;
-                                          ui:child [
-                                              rdf:type ui:TextNode ;
-                                              ui:childIndex 2 ;
-                                              ui:text " not found - building initial metadata" ;
-                                            ] ;
-                                          ui:childIndex 0 ;
-                                        ] ;
-                                      ui:child [
-                                          rdf:type lmdoc:BuildMetadataRecord ;
-                                          arg:graph [
-                                              sp:varName "myGraph" ;
-                                            ] ;
-                                          ui:childIndex 1 ;
                                         ] ;
                                       ui:childIndex 0 ;
-                                      ui:condition [
-                                          rdf:type sp:not ;
-                                          sp:arg1 [
-                                              rdf:type sp:bound ;
-                                              sp:arg1 [
-                                                  sp:varName "myGraphMetadata" ;
-                                                ] ;
-                                            ] ;
-                                        ] ;
                                     ] ;
                                   ui:child [
-                                      rdf:type lmdoc:SwitchableForm ;
+                                      rdf:type swa:SwitchableForm ;
                                       arg:editable "true"^^xsd:boolean ;
                                       arg:resource [
                                           sp:varName "myGraphMetadata" ;
                                         ] ;
                                       arg:showURI "false"^^xsd:boolean ;
                                       arg:suppressHeader "true"^^xsd:boolean ;
-                                      ui:childIndex 2 ;
+                                      ui:childIndex 1 ;
                                     ] ;
                                   ui:childIndex 0 ;
                                   ui:queryGraph [
-                                      rdf:type ui:unionOfGraphs ;
+                                      rdf:type ui:graphWithImports ;
                                       sp:arg1 [
-                                          rdf:type ui:graphWithImports ;
-                                          sp:arg1 [
-                                              sp:varName "inputGraph" ;
-                                            ] ;
+                                          sp:varName "inputGraph" ;
                                         ] ;
                                     ] ;
                                 ] ;
                               ui:childIndex 0 ;
                             ] ;
-                          ui:childIndex 2 ;
+                          ui:childIndex 1 ;
                           ui:varName "inputGraph" ;
                           ui:varValue [
                               sp:varName "inputGraph" ;
                             ] ;
                         ] ;
                       ui:childIndex 0 ;
+                      ui:varName "graph" ;
+                      ui:varValue [
+                          sp:varName "inputGraph" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:P ;
+                      html:class "lm-para" ;
+                      ui:child [
+                          rdf:type html:Span ;
+                          html:class "boxed" ;
+                          html:style "font-weight: italic" ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text [
+                                  sp:varName "inputGraph" ;
+                                ] ;
+                            ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 0 ;
+                          ui:text "Metadata for graph " ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 2 ;
+                          ui:text " not found. Will build initial metadata" ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      rdf:type lmdoc:BuildMetadataRecord ;
+                      arg:graph [
+                          sp:varName "inputGraph" ;
+                        ] ;
+                      ui:childIndex 1 ;
                     ] ;
                   ui:childIndex 0 ;
+                  ui:condition [
+                      rdf:type sp:not ;
+                      sp:arg1 [
+                          rdf:type sp:bound ;
+                          sp:arg1 [
+                              sp:varName "gmd" ;
+                            ] ;
+                        ] ;
+                    ] ;
                 ] ;
-              ui:childIndex 0 ;
-              ui:varName "graph" ;
-              ui:varValue [
-                  sp:varName "graph" ;
+              ui:childIndex 2 ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type ui:throw ;
+                  ui:childIndex 0 ;
+                  ui:message "No Graph URI provided" ;
+                ] ;
+              ui:childIndex 1 ;
+              ui:condition [
+                  rdf:type sp:not ;
+                  sp:arg1 [
+                      rdf:type sp:bound ;
+                      sp:arg1 [
+                          sp:varName "inputGraph" ;
+                        ] ;
+                    ] ;
                 ] ;
             ] ;
-          ui:childIndex 1 ;
-          ui:condition [
-              rdf:type sp:bound ;
-              sp:arg1 [
-                  sp:varName "inputGraph" ;
-                ] ;
-            ] ;
+          ui:childIndex 0 ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
-  rdfs:comment """<ui:else>
-        <ui:group let:myGraph=\"{= IRI(?graph) }\">
-            <ui:setContext ui:varName=\"graph\" ui:varValue=\"{= ?myGraph }\">
-                <ui:group let:maybeGraphMetadata=\"{= spl:objectInGraph(?myGraph, vaem:hasGraphMetadata, ?myGraph) }\">
-                    <ui:if ui:condition=\"{= !bound(?maybeGraphMetadata) }\">
-                        <lmdoc:BuildMetadataRecord arg:graph=\"{= ?myGraph }\"/>
-                    </ui:if>
-                </ui:group>
-            </ui:setContext>
-        </ui:group>
-    </ui:else>""" ;
   rdfs:comment """Test with:
 
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://www.linkedmodel.org/2.0/schema/vaem
@@ -11702,7 +12104,6 @@ lmdoc:ObjectsGroup
       spl:valueType rdfs:Resource ;
       rdfs:comment "The resource to display." ;
     ] ;
-  ui:overrides swa:ObjectsGroup ;
   ui:prototype [
       rdf:type ui:group ;
       letrs:rs [
@@ -15672,12 +16073,19 @@ lmdoc:SwitchableForm
   spin:constraint [
       rdf:type spl:Argument ;
       spl:optional "true"^^xsd:boolean ;
+      spl:predicate arg:suppressInlineEditing ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "If set to true then this deactivates inline editing by setting the context variable \"swa-no-edit-button\"." ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
       spl:predicate arg:viewModeName ;
       spl:valueType xsd:string ;
       rdfs:comment "An optional name of the mode that shall be activated if the form is in view mode. This can be used to replace the default view with a specialized mode, e.g. history mode in EVN." ;
     ] ;
   ui:prototype [
-      rdf:type ui:group ;
+      rdf:type ui:setContext ;
       let:extraMatchIds [
           rdf:type sp:if ;
           sp:arg1 [
@@ -15721,7 +16129,23 @@ lmdoc:SwitchableForm
               ui:childIndex 0 ;
               ui:pointId "extraFooter" ;
             ] ;
-          ui:childIndex 2 ;
+          ui:childIndex 3 ;
+        ] ;
+      ui:child [
+          rdf:type html:P ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text "Current query graph is " ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 1 ;
+              ui:text [
+                  rdf:type ui:currentQueryGraph ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
         ] ;
       ui:child [
           rdf:type ui:if ;
@@ -15735,6 +16159,7 @@ lmdoc:SwitchableForm
           ui:child [
               rdf:type html:Div ;
               html:class "swa-form-footer" ;
+              html:style "white-space: nowrap" ;
               ui:child [
                   rdf:type swa:Button ;
                   arg:disabled [
@@ -15773,6 +16198,53 @@ lmdoc:SwitchableForm
                   ui:childIndex 1 ;
                 ] ;
               ui:child [
+                  rdf:type swa:Button ;
+                  arg:iconClass "ui-icon ui-icon-print" ;
+                  arg:id [
+                      rdf:type ui:concat ;
+                      sp:arg1 [
+                          sp:varName "fid" ;
+                        ] ;
+                      sp:arg2 "-printButton" ;
+                    ] ;
+                  arg:label "Print View" ;
+                  arg:onClick [
+                      rdf:type ui:concat ;
+                      sp:arg1 "swa.printView('" ;
+                      sp:arg2 [
+                          sp:varName "fid" ;
+                        ] ;
+                      sp:arg3 "')" ;
+                    ] ;
+                  arg:style [
+                      rdf:type sp:if ;
+                      sp:arg1 [
+                          sp:varName "ei" ;
+                        ] ;
+                      sp:arg2 "display: none" ;
+                      sp:arg3 [
+                          sp:varName "none" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 5 ;
+                ] ;
+              ui:child [
+                  rdf:type swa:Space ;
+                  ui:childIndex 2 ;
+                ] ;
+              ui:child [
+                  rdf:type swa:Space ;
+                  ui:childIndex 3 ;
+                ] ;
+              ui:child [
+                  rdf:type swa:Space ;
+                  ui:childIndex 4 ;
+                ] ;
+              ui:child [
+                  rdf:type swa:Space ;
+                  ui:childIndex 6 ;
+                ] ;
+              ui:child [
                   rdf:type html:Div ;
                   html:style "float: right" ;
                   ui:child [
@@ -15780,7 +16252,7 @@ lmdoc:SwitchableForm
                       ui:childIndex 0 ;
                       ui:pointId "bottomBar" ;
                     ] ;
-                  ui:childIndex 3 ;
+                  ui:childIndex 8 ;
                 ] ;
               ui:child [
                   rdf:type html:Span ;
@@ -15819,7 +16291,7 @@ lmdoc:SwitchableForm
                           sp:arg2 [
                               sp:varName "fid" ;
                             ] ;
-                          sp:arg3 "', null, swa.checkRestartWarning())" ;
+                          sp:arg3 "', null, swa.checkPostConfigChangeWarning())" ;
                         ] ;
                       ui:childIndex 1 ;
                     ] ;
@@ -15871,6 +16343,17 @@ lmdoc:SwitchableForm
                           ui:childIndex 0 ;
                         ] ;
                       ui:child [
+                          rdf:type html:Label ;
+                          html:class "swa-base-font" ;
+                          html:for "logMessageBox" ;
+                          ui:child [
+                              rdf:type ui:TextNode ;
+                              ui:childIndex 0 ;
+                              ui:text "Enter log message" ;
+                            ] ;
+                          ui:childIndex 3 ;
+                        ] ;
+                      ui:child [
                           rdf:type html:Script ;
                           ui:child [
                               rdf:type ui:TextNode ;
@@ -15879,27 +16362,20 @@ lmdoc:SwitchableForm
                             ] ;
                           ui:childIndex 1 ;
                         ] ;
-                      ui:child [
-                          rdf:type html:Span ;
-                          html:class "swa-base-font" ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text "Enter log message" ;
-                            ] ;
-                          ui:childIndex 3 ;
-                        ] ;
                       ui:childIndex 0 ;
                       ui:condition [
                           sp:varName "allowLogMessage" ;
                         ] ;
                     ] ;
-                  ui:childIndex 2 ;
+                  ui:childIndex 7 ;
                 ] ;
               ui:child [
                   rdf:type ui:if ;
                   ui:child [
                       rdf:type swa:ResourceActionsButton ;
+                      arg:editable [
+                          sp:varName "editable" ;
+                        ] ;
                       arg:id [
                           rdf:type ui:concat ;
                           sp:arg1 [
@@ -15939,61 +16415,6 @@ lmdoc:SwitchableForm
                   ui:childIndex 0 ;
                   ui:condition [
                       sp:varName "showResourceActions" ;
-                    ] ;
-                ] ;
-              ui:child [
-                  rdf:type ui:if ;
-                  ui:child [
-                      rdf:type html:Div ;
-                      html:class "swa-history-checkbox" ;
-                      html:id [
-                          rdf:type ui:concat ;
-                          sp:arg1 [
-                              sp:varName "fid" ;
-                            ] ;
-                          sp:arg2 "-historyModeBoxDiv" ;
-                        ] ;
-                      html:style [
-                          rdf:type sp:if ;
-                          sp:arg1 [
-                              sp:varName "ei" ;
-                            ] ;
-                          sp:arg2 "visibility: hidden" ;
-                          sp:arg3 [
-                              sp:varName "none" ;
-                            ] ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:Input ;
-                          html:id [
-                              rdf:type ui:concat ;
-                              sp:arg1 [
-                                  sp:varName "fid" ;
-                                ] ;
-                              sp:arg2 "-historyModeBox" ;
-                            ] ;
-                          html:onclick [
-                              rdf:type ui:concat ;
-                              sp:arg1 "swa.switchToViewForm('" ;
-                              sp:arg2 [
-                                  sp:varName "fid" ;
-                                ] ;
-                              sp:arg3 "')" ;
-                            ] ;
-                          html:style "width: 13px; height: 13px; padding: 0; margin:0; vertical-align: bottom; position: relative; top: -2px; *overflow: hidden;" ;
-                          html:type "checkbox" ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:child [
-                          rdf:type ui:TextNode ;
-                          ui:childIndex 1 ;
-                          ui:text " Show History" ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 4 ;
-                  ui:condition [
-                      sp:varName "allowHistoryMode" ;
                     ] ;
                 ] ;
               ui:child [
@@ -16046,14 +16467,76 @@ lmdoc:SwitchableForm
                         ] ;
                       ui:childIndex 0 ;
                     ] ;
-                  ui:childIndex 5 ;
+                  ui:childIndex 10 ;
                   ui:condition [
                       sp:varName "allowProvenanceMode" ;
                     ] ;
                 ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type html:Label ;
+                      html:class "swa-history-checkbox" ;
+                      html:for [
+                          rdf:type ui:concat ;
+                          sp:arg1 [
+                              sp:varName "fid" ;
+                            ] ;
+                          sp:arg2 "-historyModeBox" ;
+                        ] ;
+                      html:id [
+                          rdf:type ui:concat ;
+                          sp:arg1 [
+                              sp:varName "fid" ;
+                            ] ;
+                          sp:arg2 "-historyModeBoxDiv" ;
+                        ] ;
+                      html:style [
+                          rdf:type sp:if ;
+                          sp:arg1 [
+                              sp:varName "ei" ;
+                            ] ;
+                          sp:arg2 "visibility: hidden" ;
+                          sp:arg3 [
+                              sp:varName "none" ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type html:Input ;
+                          html:id [
+                              rdf:type ui:concat ;
+                              sp:arg1 [
+                                  sp:varName "fid" ;
+                                ] ;
+                              sp:arg2 "-historyModeBox" ;
+                            ] ;
+                          html:onclick [
+                              rdf:type ui:concat ;
+                              sp:arg1 "swa.switchToViewForm('" ;
+                              sp:arg2 [
+                                  sp:varName "fid" ;
+                                ] ;
+                              sp:arg3 "')" ;
+                            ] ;
+                          html:style "width: 13px; height: 13px; padding: 0; margin:0; vertical-align: bottom; position: relative; top: -2px; *overflow: hidden;" ;
+                          html:type "checkbox" ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:TextNode ;
+                          ui:childIndex 1 ;
+                          ui:text " Show History" ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 9 ;
+                  ui:condition [
+                      sp:varName "allowHistoryMode" ;
+                    ] ;
+                ] ;
               ui:childIndex 0 ;
             ] ;
-          ui:childIndex 3 ;
+          ui:childIndex 4 ;
           ui:condition [
               rdf:type sp:or ;
               sp:arg1 [
@@ -16107,7 +16590,7 @@ lmdoc:SwitchableForm
                 ] ;
               ui:childIndex 0 ;
             ] ;
-          ui:childIndex 0 ;
+          ui:childIndex 1 ;
           ui:condition [
               rdf:type sp:or ;
               sp:arg1 [
@@ -16136,7 +16619,7 @@ lmdoc:SwitchableForm
                   rdf:type ui:setContext ;
                   ui:child [
                       rdf:type html:Form ;
-                      html:class "swa-form" ;
+                      html:class "swa-form view-mode swa-form-view" ;
                       html:id [
                           sp:varName "fid" ;
                         ] ;
@@ -16147,25 +16630,40 @@ lmdoc:SwitchableForm
                           rdf:type html:Div ;
                           html:class "swa-form-body" ;
                           ui:child [
-                              rdf:type swa:DataViewsSection ;
-                              arg:resource [
-                                  sp:varName "resource" ;
-                                ] ;
-                              ui:childIndex 1 ;
-                            ] ;
-                          ui:child [
-                              rdf:type ui:resourceView ;
-                              ui:childIndex 0 ;
-                              ui:matchIds [
-                                  rdf:type ui:concat ;
-                                  sp:arg1 [
-                                      sp:varName "extraMatchIds" ;
+                              rdf:type ui:setContext ;
+                              ui:child [
+                                  rdf:type swa:DataViewsSection ;
+                                  arg:resource [
+                                      sp:varName "resource" ;
                                     ] ;
-                                  sp:arg2 "view,form" ;
+                                  ui:childIndex 1 ;
                                 ] ;
-                              ui:resource [
-                                  sp:varName "resource" ;
+                              ui:child [
+                                  rdf:type ui:resourceView ;
+                                  ui:childIndex 0 ;
+                                  ui:matchIds [
+                                      rdf:type ui:concat ;
+                                      sp:arg1 [
+                                          sp:varName "extraMatchIds" ;
+                                        ] ;
+                                      sp:arg2 "view,form" ;
+                                    ] ;
+                                  ui:resource [
+                                      sp:varName "resource" ;
+                                    ] ;
                                 ] ;
+                              ui:childIndex 0 ;
+                              ui:varName [
+                                  rdf:type sp:if ;
+                                  sp:arg1 [
+                                      sp:varName "editable" ;
+                                    ] ;
+                                  sp:arg2 [
+                                      sp:varName "none" ;
+                                    ] ;
+                                  sp:arg3 "swa-no-edit-button" ;
+                                ] ;
+                              ui:varValue "true"^^xsd:boolean ;
                             ] ;
                           ui:childIndex 0 ;
                         ] ;
@@ -16199,7 +16697,16 @@ lmdoc:SwitchableForm
                 ] ;
               ui:childIndex 0 ;
               ui:condition [
-                  sp:varName "showURI" ;
+                  rdf:type sp:and ;
+                  sp:arg1 [
+                      sp:varName "showURI" ;
+                    ] ;
+                  sp:arg2 [
+                      rdf:type sp:isIRI ;
+                      sp:arg1 [
+                          sp:varName "resource" ;
+                        ] ;
+                    ] ;
                 ] ;
             ] ;
           ui:child [
@@ -16209,7 +16716,7 @@ lmdoc:SwitchableForm
                   ui:child [
                       rdf:type html:Form ;
                       html:autocomplete "off" ;
-                      html:class "swa-form" ;
+                      html:class "swa-form switchable-mode swa-form-edit" ;
                       html:id [
                           sp:varName "fid" ;
                         ] ;
@@ -16315,7 +16822,7 @@ lmdoc:SwitchableForm
                   sp:varName "editing" ;
                 ] ;
             ] ;
-          ui:childIndex 1 ;
+          ui:childIndex 2 ;
           ui:loadId [
               rdf:type ui:concat ;
               sp:arg1 [
@@ -16324,10 +16831,21 @@ lmdoc:SwitchableForm
               sp:arg2 "-loadable" ;
             ] ;
         ] ;
+      ui:varName [
+          rdf:type sp:if ;
+          sp:arg1 [
+              sp:varName "suppressInlineEditing" ;
+            ] ;
+          sp:arg2 "swa-no-edit-button" ;
+          sp:arg3 [
+              sp:varName "none" ;
+            ] ;
+        ] ;
+      ui:varValue "true"^^xsd:boolean ;
     ] ;
   rdfs:comment "A form displaying details of a given resource. The form displays a header on top, with label and type of the resource. If arg:editable is set to true, the form will have a button at the bottom to switch it to edit mode." ;
   rdfs:label "View form" ;
-  rdfs:subClassOf swa:SwitchableForm ;
+  rdfs:subClassOf swa:Form ;
 .
 lmdoc:TOCEntry
   rdf:type ui:NodeClass ;
@@ -18369,6 +18887,193 @@ lmdoc:buildDocFilePath
         ) ;
     ] ;
   rdfs:label "build doc file path" ;
+.
+lmdoc:buildGraphMetadataIdentifiers
+  rdf:type spin:Template ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "gmdU" ;
+          ]
+          [
+            sp:varName "gmdL" ;
+          ]
+          [
+            sp:varName "name" ;
+          ]
+          [
+            sp:varName "graphRole" ;
+          ]
+          [
+            sp:varName "subject" ;
+          ]
+          [
+            sp:varName "ownerName" ;
+          ]
+          [
+            sp:varName "domainName" ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:regex ;
+                sp:arg1 [
+                    rdf:type sp:str ;
+                    sp:arg1 [
+                        sp:varName "graph" ;
+                      ] ;
+                  ] ;
+                sp:arg2 "^http(s)?://(www\\.)?([A-Z-a-z0-9]+\\.[A-Z0-9-a-z]+)/.*$" ;
+                sp:arg3 "$3" ;
+                sp:arg4 "none" ;
+              ] ;
+            sp:variable [
+                sp:varName "domainName" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:regex ;
+                sp:arg1 [
+                    rdf:type sp:str ;
+                    sp:arg1 [
+                        sp:varName "graph" ;
+                      ] ;
+                  ] ;
+                sp:arg2 "^http(s)?://(www\\.)?([A-Z-a-z0-9]+)\\.([A-Z0-9-a-z]+)/.*$" ;
+                sp:arg3 "$3" ;
+                sp:arg4 "none" ;
+              ] ;
+            sp:variable [
+                sp:varName "ownerName" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:regex ;
+                sp:arg1 [
+                    rdf:type sp:str ;
+                    sp:arg1 [
+                        sp:varName "graph" ;
+                      ] ;
+                  ] ;
+                sp:arg2 ".*/([A-Za-z0-9-]+)$" ;
+                sp:arg3 "$1" ;
+              ] ;
+            sp:variable [
+                sp:varName "name" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:regex ;
+                sp:arg1 [
+                    rdf:type sp:str ;
+                    sp:arg1 [
+                        sp:varName "graph" ;
+                      ] ;
+                  ] ;
+                sp:arg2 "^http://qudt.org/2.0/([A-Za-z0-9-]+)/.*$" ;
+                sp:arg3 "$1" ;
+              ] ;
+            sp:variable [
+                sp:varName "graphRole" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:regex ;
+                sp:arg1 [
+                    rdf:type sp:str ;
+                    sp:arg1 [
+                        sp:varName "graph" ;
+                      ] ;
+                  ] ;
+                sp:arg2 "^http://qudt.org/2.0/[A-Za-z0-9-]+/([A-Za-z0-9-]+)/.*$" ;
+                sp:arg3 "$1" ;
+              ] ;
+            sp:variable [
+                sp:varName "subject" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 [
+                    sp:varName "graphRole" ;
+                  ] ;
+                sp:arg2 "-" ;
+                sp:arg3 [
+                    sp:varName "subject" ;
+                  ] ;
+                sp:arg4 "-" ;
+                sp:arg5 [
+                    sp:varName "name" ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "compoundName" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 "Graph MetaData for '" ;
+                sp:arg2 [
+                    sp:varName "domain" ;
+                  ] ;
+                sp:arg3 " " ;
+                sp:arg4 [
+                    sp:varName "name" ;
+                  ] ;
+                sp:arg5 " " ;
+                sp:arg6 [
+                    sp:varName "graphRole" ;
+                  ] ;
+                sp:arg7 "'" ;
+              ] ;
+            sp:variable [
+                sp:varName "gmdL" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:iri ;
+                sp:arg1 [
+                    rdf:type sp:concat ;
+                    sp:arg1 "http://www.linkedmodel.org/schema/vaem#GMD_QUDT-" ;
+                    sp:arg2 [
+                        rdf:type fn:upper-case ;
+                        sp:arg1 [
+                            sp:varName "compoundName" ;
+                          ] ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "gmdU" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The base uri of the graph that is being looked for in the catalog" ;
+    ] ;
+  rdfs:label "build graph metadata identifiers" ;
+  rdfs:subClassOf lmdoc:SelectTemplates ;
 .
 lmdoc:buildResourceDocLink
   rdf:type spin:Function ;
@@ -20857,7 +21562,7 @@ lmdoc:valueRestrictionsForPropertyAtClass
 catalog:hasTypeLogo
   rdf:type owl:ObjectProperty ;
 .
-vaem:GraphMetaData
+vaem:GraphMetadata
   ui:instanceView [
       rdf:type ui:group ;
       ui:child [
@@ -20866,7 +21571,7 @@ vaem:GraphMetaData
           ui:childIndex 0 ;
         ] ;
       ui:id "wp" ;
-      ui:priority 2 ;
+      ui:priority -2 ;
     ] ;
 .
 vaem:description
@@ -21253,7 +21958,7 @@ rdfs:Resource
       rdf:type lmdoc:DetailedInstanceView ;
       arg:resource spin:_this ;
       ui:id "form" ;
-      ui:priority 9 ;
+      ui:priority -99 ;
     ] ;
   ui:instanceView [
       rdf:type lmdoc:DetailedInstanceView ;
