@@ -18926,30 +18926,12 @@ lmdoc:buildGraphMetadataIdentifiers
                         sp:varName "graph" ;
                       ] ;
                   ] ;
-                sp:arg2 "^http(s)?://(www\\.)?([A-Z-a-z0-9]+\\.[A-Z0-9-a-z]+)/.*$" ;
-                sp:arg3 "$3" ;
+                sp:arg2 "^http(s)?://(www\\.)?[A-Z-a-z0-9]+\\.([A-Z-a-z0-9]+)(/([0-9]+\\.[0-9]+))?/([A-Z0-9-a-z]+).*$" ;
+                sp:arg3 "$6" ;
                 sp:arg4 "none" ;
               ] ;
             sp:variable [
-                sp:varName "domainName" ;
-              ] ;
-          ]
-          [
-            rdf:type sp:Bind ;
-            sp:expression [
-                rdf:type spif:regex ;
-                sp:arg1 [
-                    rdf:type sp:str ;
-                    sp:arg1 [
-                        sp:varName "graph" ;
-                      ] ;
-                  ] ;
-                sp:arg2 "^http(s)?://(www\\.)?([A-Z-a-z0-9]+)\\.([A-Z0-9-a-z]+)/.*$" ;
-                sp:arg3 "$3" ;
-                sp:arg4 "none" ;
-              ] ;
-            sp:variable [
-                sp:varName "ownerName" ;
+                sp:varName "graphRole" ;
               ] ;
           ]
           [
@@ -18979,11 +18961,11 @@ lmdoc:buildGraphMetadataIdentifiers
                         sp:varName "graph" ;
                       ] ;
                   ] ;
-                sp:arg2 "^http://qudt.org/2.0/([A-Za-z0-9-]+)/.*$" ;
+                sp:arg2 ".*/([A-Za-z0-9-]+)/([A-Za-z0-9-]+)$" ;
                 sp:arg3 "$1" ;
               ] ;
             sp:variable [
-                sp:varName "graphRole" ;
+                sp:varName "subject" ;
               ] ;
           ]
           [
@@ -18996,11 +18978,30 @@ lmdoc:buildGraphMetadataIdentifiers
                         sp:varName "graph" ;
                       ] ;
                   ] ;
-                sp:arg2 "^http://qudt.org/2.0/[A-Za-z0-9-]+/([A-Za-z0-9-]+)/.*$" ;
-                sp:arg3 "$1" ;
+                sp:arg2 "^http(s)?://(www\\.)?([A-Z-a-z0-9]+\\.[A-Z0-9-a-z]+)/.*$" ;
+                sp:arg3 "$3" ;
+                sp:arg4 "none" ;
               ] ;
             sp:variable [
-                sp:varName "subject" ;
+                sp:varName "domainName" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:regex ;
+                sp:arg1 [
+                    rdf:type sp:str ;
+                    sp:arg1 [
+                        sp:varName "graph" ;
+                      ] ;
+                  ] ;
+                sp:arg2 "^http(s)?://(www\\.)?([A-Z-a-z0-9]+)\\.([A-Z0-9-a-z]+)/.*$" ;
+                sp:arg3 "$3" ;
+                sp:arg4 "none" ;
+              ] ;
+            sp:variable [
+                sp:varName "ownerName" ;
               ] ;
           ]
           [
@@ -19026,10 +19027,10 @@ lmdoc:buildGraphMetadataIdentifiers
           [
             rdf:type sp:Bind ;
             sp:expression [
-                rdf:type fn:concat ;
+                rdf:type sp:concat ;
                 sp:arg1 "Graph MetaData for '" ;
                 sp:arg2 [
-                    sp:varName "domain" ;
+                    sp:varName "domainName" ;
                   ] ;
                 sp:arg3 " " ;
                 sp:arg4 [
@@ -19039,7 +19040,10 @@ lmdoc:buildGraphMetadataIdentifiers
                 sp:arg6 [
                     sp:varName "graphRole" ;
                   ] ;
-                sp:arg7 "'" ;
+                sp:arg7 " " ;
+                sp:arg8 [
+                    sp:varName "subject" ;
+                  ] ;
               ] ;
             sp:variable [
                 sp:varName "gmdL" ;
@@ -19051,8 +19055,15 @@ lmdoc:buildGraphMetadataIdentifiers
                 rdf:type sp:iri ;
                 sp:arg1 [
                     rdf:type sp:concat ;
-                    sp:arg1 "http://www.linkedmodel.org/schema/vaem#GMD_QUDT-" ;
+                    sp:arg1 "http://www.linkedmodel.org/schema/vaem#GMD_" ;
                     sp:arg2 [
+                        rdf:type fn:upper-case ;
+                        sp:arg1 [
+                            sp:varName "ownerName" ;
+                          ] ;
+                      ] ;
+                    sp:arg3 "-" ;
+                    sp:arg4 [
                         rdf:type fn:upper-case ;
                         sp:arg1 [
                             sp:varName "compoundName" ;
