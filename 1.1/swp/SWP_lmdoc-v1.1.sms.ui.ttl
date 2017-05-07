@@ -14757,7 +14757,7 @@ lmdoc:ResourceLink
                                               sp:varName "resource" ;
                                             ] ;
                                         ] ;
-                                      sp:arg3 "')" ;
+                                      sp:arg3 "',800,500)" ;
                                     ] ;
                                   ui:child [
                                       rdf:type ui:TextNode ;

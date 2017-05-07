@@ -110,7 +110,7 @@ lm.navigateToInTab = function(resourceURI, queryGraphURI, targetName) {
  * Generate content for popups showing a resource summary
  * @param formId  the id of the search form
  */
-lm.popupResourceSummary = function(loadId) { 
+lm.popupResourceSummary = function(loadId, width, height) { 
      var buttons = [{
          text: "Access Details on TopBraid Server",
          click: function() {
@@ -124,7 +124,7 @@ lm.popupResourceSummary = function(loadId) {
             }
         }
        ];
-	 lm.openModalDialog(loadId,"", 800,800,buttons)		  
+	 lm.openModalDialog(loadId,"", width, height,buttons)		  
 };
 
 /**
@@ -353,6 +353,8 @@ lm.openHelperDialog = function(title, data) {
  * Opens a floating window dialog
  */
 lm.openModalDialog = function(loadId, title, width, height, buttons) {
+	var myWidth  = (width === null)?  800 : width ,
+	    myHeight = (height === null)? 800 : height ;
 	var theContent = $('#'+loadId) ;
 	var options = {
 			modal: false,
@@ -364,10 +366,10 @@ lm.openModalDialog = function(loadId, title, width, height, buttons) {
 		options.buttons = buttons;
 	}
 	if(width) {
-		options.width = width;
+		options.width = myWidth;
 	}
 	if(height) {
-		options.height = height;
+		options.height = myHeight;
 	}
 	theContent.dialog(options);
 };

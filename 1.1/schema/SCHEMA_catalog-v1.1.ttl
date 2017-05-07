@@ -1,0 +1,157 @@
+# baseURI: http://epub.linkedmodel.org/1.0/schema/catalog
+# imports: http://www.linkedmodel.org/2.0/schema/vaem
+# imports: http://www.w3.org/ns/dcat
+
+@prefix lmcat: <http://epub.linkedmodel.org/schema/catalog#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://epub.linkedmodel.org/1.0/schema/catalog>
+  rdf:type owl:Ontology ;
+  owl:imports <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  owl:imports <http://www.w3.org/ns/dcat> ;
+  owl:versionInfo "Created with TopBraid Composer" ;
+.
+lmcat:Catalog
+  rdf:type owl:Class ;
+  rdfs:label "Catalog" ;
+  rdfs:subClassOf <http://www.w3.org/ns/dcat#Catalog> ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom lmcat:CatalogRecord ;
+      owl:onProperty <http://www.w3.org/ns/dcat#record> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom rdfs:Resource ;
+      owl:onProperty lmcat:resourceForOverview ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty lmcat:documentationOverlayGraph ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty lmcat:resourceForOverview ;
+    ] ;
+.
+lmcat:CatalogRecord
+  rdf:type owl:Class ;
+  rdfs:label "Catalog record" ;
+  rdfs:subClassOf <http://www.w3.org/ns/dcat#CatalogRecord> ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom lmcat:GraphStatus ;
+      owl:onProperty lmcat:graphStatus ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty lmcat:catalogedGraph ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#latestPublishedVersion> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#namespace> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#namespacePrefix> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty lmcat:graphStatus ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty lmcat:publicationDate ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#hasGraphRole> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#turtleFileURL> ;
+    ] ;
+.
+lmcat:GS_deprecated
+  rdf:type lmcat:GraphStatus ;
+  rdfs:label "deprecated" ;
+.
+lmcat:GS_final
+  rdf:type lmcat:GraphStatus ;
+  rdfs:label "final" ;
+.
+lmcat:GS_in-progress
+  rdf:type lmcat:GraphStatus ;
+  rdfs:label "in progress" ;
+.
+lmcat:GS_in-qa
+  rdf:type lmcat:GraphStatus ;
+  rdfs:label "in QA" ;
+.
+lmcat:GS_inital
+  rdf:type lmcat:GraphStatus ;
+  rdfs:label "inital" ;
+.
+lmcat:GS_interim
+  rdf:type lmcat:GraphStatus ;
+  rdfs:label "interim" ;
+.
+lmcat:GS_published
+  rdf:type lmcat:GraphStatus ;
+  rdfs:label "published" ;
+.
+lmcat:GS_review
+  rdf:type lmcat:GraphStatus ;
+  rdfs:label "review" ;
+.
+lmcat:GraphStatus
+  rdf:type owl:Class ;
+  rdfs:label "Graph status" ;
+  rdfs:subClassOf owl:Thing ;
+.
+lmcat:SchemaCatalogRecord
+  rdf:type owl:Class ;
+  rdfs:label "Schema catalog record" ;
+  rdfs:subClassOf lmcat:CatalogRecord ;
+.
+lmcat:VocabCatalogRecord
+  rdf:type owl:Class ;
+  rdfs:label "Vocabulary" ;
+  rdfs:subClassOf lmcat:CatalogRecord ;
+.
+lmcat:catalogedGraph
+  rdf:type rdf:Property ;
+  rdfs:label "cataloged graph" ;
+.
+lmcat:documentationOverlayGraph
+  rdf:type rdf:Property ;
+  rdfs:label "documentation overlay graph" ;
+.
+lmcat:graphStatus
+  rdf:type rdf:Property ;
+  rdfs:label "graph status" ;
+.
+lmcat:publicationDate
+  rdf:type owl:DatatypeProperty ;
+  rdfs:range xsd:date ;
+.
+lmcat:resourceForOverview
+  rdf:type owl:ObjectProperty ;
+.
