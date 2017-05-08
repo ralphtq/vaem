@@ -940,7 +940,7 @@ lmdoc:AllClasses
           ]
           [
             rdf:type sp:TriplePath ;
-            sp:object rdfs:Class ;
+            sp:object owl:Class ;
             sp:path [
                 rdf:type sp:ModPath ;
                 sp:modMax -2 ;
