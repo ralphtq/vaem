@@ -546,7 +546,7 @@ lmdoc:AboutPublishedGraphs
               ui:child [
                   rdf:type ui:TextNode ;
                   ui:childIndex 0 ;
-                  ui:text "The graphs are not yet available." ;
+                  ui:text "The graphs have not yet been published as Turtle files." ;
                 ] ;
               ui:childIndex 0 ;
             ] ;
@@ -657,7 +657,7 @@ The """ ;
                           rdf:type ui:TextNode ;
                           ui:childIndex 0 ;
                           ui:text """,  
-                   """ ;
+       """ ;
                         ] ;
                       ui:childIndex 1 ;
                       ui:condition [
@@ -5468,7 +5468,7 @@ lmdoc:DetailedClassView
             ] ;
           ui:child [
               rdf:type lmdoc:ResourceFooter ;
-              arg:options "JSON-LD,RDF,TURTLE" ;
+              arg:options "JSON-LD,TURTLE" ;
               arg:resource [
                   sp:varName "class" ;
                 ] ;
@@ -6325,44 +6325,28 @@ lmdoc:Graph
                                                               ui:childIndex 0 ;
                                                             ] ;
                                                           ui:child [
-                                                              rdf:type html:Section ;
-                                                              html:class "informative" ;
-                                                              html:id "instances" ;
-                                                              ui:child [
-                                                                  rdf:type lmdoc:InstancesSection ;
-                                                                  arg:graph [
-                                                                      sp:varName "myGraph" ;
-                                                                    ] ;
-                                                                  arg:sectionHeading "Instances" ;
-                                                                  ui:childIndex 0 ;
-                                                                ] ;
-                                                              ui:childIndex 4 ;
-                                                            ] ;
-                                                          ui:child [
-                                                              rdf:type html:Section ;
-                                                              html:class "informative" ;
-                                                              html:id "properties" ;
-                                                              ui:child [
-                                                                  rdf:type lmdoc:PropertiesSection ;
-                                                                  arg:graph [
-                                                                      sp:varName "myGraph" ;
-                                                                    ] ;
-                                                                  arg:sectionHeading "Properties" ;
-                                                                  ui:childIndex 0 ;
-                                                                ] ;
+                                                              rdf:type ui:CommentNode ;
                                                               ui:childIndex 2 ;
+                                                              rdfs:comment """section class=\"informative\" id=\"properties\">
+                                                            <lmdoc:PropertiesSection arg:graph=\"{= ?myGraph }\"
+                                                                                     arg:sectionHeading=\"Properties\"/>
+                                                        </section""" ;
                                                             ] ;
                                                           ui:child [
-                                                              rdf:type html:Section ;
-                                                              ui:child [
-                                                                  rdf:type lmdoc:RestrictedDatatypesSection ;
-                                                                  arg:graph [
-                                                                      sp:varName "myGraph" ;
-                                                                    ] ;
-                                                                  arg:sectionHeading "Restricted Datatypes" ;
-                                                                  ui:childIndex 0 ;
-                                                                ] ;
+                                                              rdf:type ui:CommentNode ;
+                                                              ui:childIndex 4 ;
+                                                              rdfs:comment """section class=\"informative\" id=\"instances\">
+                                                            <lmdoc:InstancesSection arg:graph=\"{= ?myGraph }\"
+                                                                                    arg:sectionHeading=\"Instances\"/>
+                                                        </section""" ;
+                                                            ] ;
+                                                          ui:child [
+                                                              rdf:type ui:CommentNode ;
                                                               ui:childIndex 5 ;
+                                                              rdfs:comment """section>
+                                                            <lmdoc:RestrictedDatatypesSection arg:graph=\"{= ?myGraph }\"
+                                                                                              arg:sectionHeading=\"Restricted Datatypes\"/>
+                                                        </section""" ;
                                                             ] ;
                                                           ui:childIndex 0 ;
                                                         ] ;
@@ -8267,7 +8251,7 @@ lmdoc:IndexSection
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
-                                  ui:text "The graph defines " ;
+                                  ui:text "The graph defines, or extends, " ;
                                 ] ;
                               ui:child [
                                   rdf:type ui:TextNode ;
@@ -8352,19 +8336,7 @@ lmdoc:IndexSection
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
-                                  ui:text "The graph defines " ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 1 ;
-                                  ui:text [
-                                      sp:varName "count" ;
-                                    ] ;
-                                ] ;
-                              ui:child [
-                                  rdf:type ui:TextNode ;
-                                  ui:childIndex 2 ;
-                                  ui:text " instances, as indexed below:" ;
+                                  ui:text "The graph defines, or extends, instances, as indexed below:" ;
                                 ] ;
                               ui:childIndex 0 ;
                             ] ;
@@ -8437,7 +8409,7 @@ lmdoc:IndexSection
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
-                                  ui:text "The graph defines " ;
+                                  ui:text "The graph defines, or extends, " ;
                                 ] ;
                               ui:child [
                                   rdf:type ui:TextNode ;
@@ -8522,7 +8494,7 @@ lmdoc:IndexSection
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
-                                  ui:text "The graph defines " ;
+                                  ui:text "The graph defines, or extends, " ;
                                 ] ;
                               ui:child [
                                   rdf:type ui:TextNode ;
@@ -10008,7 +9980,7 @@ lmdoc:InstancesSection
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ResourceFooter ;
-                              arg:options "CSV,JSON-LD,RDF,TURTLE" ;
+                              arg:options "CSV,JSON-LD,TURTLE" ;
                               arg:resource [
                                   sp:varName "resource" ;
                                 ] ;
@@ -13102,7 +13074,7 @@ lmdoc:PropertiesSection
                             ] ;
                           ui:child [
                               rdf:type lmdoc:ResourceFooter ;
-                              arg:options "JSON-LD,RDF,TURTLE" ;
+                              arg:options "JSON-LD,TURTLE" ;
                               arg:resource [
                                   sp:varName "property" ;
                                 ] ;
