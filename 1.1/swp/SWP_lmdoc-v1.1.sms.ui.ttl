@@ -2509,10 +2509,9 @@ lmdoc:CatalogTable
               rdf:type ui:if ;
               ui:child [
                   rdf:type html:Table ;
-                  html:class "lm-table" ;
+                  html:class "table table-responsive" ;
                   ui:child [
                       rdf:type html:Tbody ;
-                      html:class "lm-table-body" ;
                       ui:child [
                           rdf:type ui:forEach ;
                           ui:child [
@@ -2520,7 +2519,6 @@ lmdoc:CatalogTable
                               html:class "lm-row" ;
                               ui:child [
                                   rdf:type html:Td ;
-                                  html:class "lm-column" ;
                                   ui:child [
                                       rdf:type swa:Space ;
                                       ui:childIndex 1 ;
@@ -2551,7 +2549,6 @@ lmdoc:CatalogTable
                                 ] ;
                               ui:child [
                                   rdf:type html:Td ;
-                                  html:class "lm-column" ;
                                   ui:child [
                                       rdf:type ui:TextNode ;
                                       ui:childIndex 0 ;
@@ -2567,7 +2564,6 @@ lmdoc:CatalogTable
                                 ] ;
                               ui:child [
                                   rdf:type html:Td ;
-                                  html:class "lm-column" ;
                                   ui:child [
                                       rdf:type ui:TextNode ;
                                       ui:childIndex 0 ;
@@ -2586,7 +2582,6 @@ lmdoc:CatalogTable
                                 ] ;
                               ui:child [
                                   rdf:type html:Td ;
-                                  html:class "lm-column" ;
                                   ui:child [
                                       rdf:type ui:TextNode ;
                                       ui:childIndex 0 ;
@@ -2601,7 +2596,6 @@ lmdoc:CatalogTable
                                 ] ;
                               ui:child [
                                   rdf:type html:Td ;
-                                  html:class "lm-column" ;
                                   ui:child [
                                       rdf:type ui:TextNode ;
                                       ui:childIndex 0 ;
@@ -2616,7 +2610,6 @@ lmdoc:CatalogTable
                                 ] ;
                               ui:child [
                                   rdf:type html:Td ;
-                                  html:class "lm-column" ;
                                   ui:child [
                                       rdf:type ui:TextNode ;
                                       ui:childIndex 0 ;
@@ -2904,13 +2897,10 @@ lmdoc:CatalogTable
                     ] ;
                   ui:child [
                       rdf:type html:Thead ;
-                      html:class "lm-table-header" ;
                       ui:child [
                           rdf:type html:Tr ;
-                          html:class "lm-row" ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-label" ;
                               html:title "Run QA checks on this graph" ;
                               ui:child [
                                   rdf:type ui:TextNode ;
@@ -2921,7 +2911,6 @@ lmdoc:CatalogTable
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-label" ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -2931,7 +2920,6 @@ lmdoc:CatalogTable
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-label" ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -2941,7 +2929,6 @@ lmdoc:CatalogTable
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-label" ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -2951,7 +2938,6 @@ lmdoc:CatalogTable
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-label" ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -2961,7 +2947,6 @@ lmdoc:CatalogTable
                             ] ;
                           ui:child [
                               rdf:type html:Th ;
-                              html:class "lm-column-label" ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -4814,28 +4799,21 @@ lmdoc:DefaultDecription
   rdf:type ui:ResourceViewClass ;
   ui:prototype [
       rdf:type ui:group ;
-      let:text [
-          rdf:type sp:coalesce ;
-          sp:arg1 [
-              rdf:type spl:object ;
-              sp:arg1 spin:_this ;
-              sp:arg2 dct:description ;
+      ui:child [
+          rdf:type html:P ;
+          html:class "lm-para" ;
+          ui:child [
+              rdf:type ui:parse ;
+              ui:childIndex 0 ;
+              ui:str [
+                  rdf:type spl:object ;
+                  sp:arg1 [
+                      sp:varName "resource" ;
+                    ] ;
+                  sp:arg2 dct:description ;
+                ] ;
             ] ;
-          sp:arg2 [
-              rdf:type spl:object ;
-              sp:arg1 spin:_this ;
-              sp:arg2 dct:description ;
-            ] ;
-          sp:arg3 [
-              rdf:type spl:object ;
-              sp:arg1 spin:_this ;
-              sp:arg2 vaem:description ;
-            ] ;
-          sp:arg4 [
-              rdf:type spl:object ;
-              sp:arg1 spin:_this ;
-              sp:arg2 rdfs:comment ;
-            ] ;
+          ui:childIndex 0 ;
         ] ;
       ui:child [
           rdf:type html:P ;
@@ -4844,10 +4822,46 @@ lmdoc:DefaultDecription
               rdf:type ui:parse ;
               ui:childIndex 0 ;
               ui:str [
-                  sp:varName "text" ;
+                  rdf:type spl:object ;
+                  sp:arg1 [
+                      sp:varName "resource" ;
+                    ] ;
+                  sp:arg2 vaem:description ;
                 ] ;
             ] ;
-          ui:childIndex 0 ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type html:P ;
+          html:class "lm-para" ;
+          ui:child [
+              rdf:type ui:parse ;
+              ui:childIndex 0 ;
+              ui:str [
+                  rdf:type spl:object ;
+                  sp:arg1 [
+                      sp:varName "resource" ;
+                    ] ;
+                  sp:arg2 rdfs:comment ;
+                ] ;
+            ] ;
+          ui:childIndex 3 ;
+        ] ;
+      ui:child [
+          rdf:type html:P ;
+          html:class "lm-para" ;
+          ui:child [
+              rdf:type ui:parse ;
+              ui:childIndex 0 ;
+              ui:str [
+                  rdf:type spl:object ;
+                  sp:arg1 [
+                      sp:varName "resource" ;
+                    ] ;
+                  sp:arg2 skos:definition ;
+                ] ;
+            ] ;
+          ui:childIndex 2 ;
         ] ;
     ] ;
   rdfs:label "Default decription" ;
@@ -8336,7 +8350,19 @@ lmdoc:IndexSection
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
-                                  ui:text "The graph defines, or extends, instances, as indexed below:" ;
+                                  ui:text "The graph defines, or extends, " ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 1 ;
+                                  ui:text [
+                                      sp:varName "count" ;
+                                    ] ;
+                                ] ;
+                              ui:child [
+                                  rdf:type ui:TextNode ;
+                                  ui:childIndex 2 ;
+                                  ui:text " instances, as indexed below:" ;
                                 ] ;
                               ui:childIndex 0 ;
                             ] ;
@@ -9257,7 +9283,7 @@ lmdoc:InstanceSummaryView
                   ui:childIndex 0 ;
                   ui:message [
                       rdf:type ui:concat ;
-                      sp:arg1 "lmdoc:InstanceSummary - " ;
+                      sp:arg1 "lmdoc:InstanceSummaryView - " ;
                       sp:arg2 [
                           sp:varName "myResource" ;
                         ] ;
@@ -10102,6 +10128,7 @@ lmdoc:InstancesSummarySection
                       html:class "pt41px pl20px" ;
                       ui:child [
                           rdf:type lmdoc:Object ;
+                          arg:hideProperty "true"^^xsd:boolean ;
                           arg:predicate rdf:type ;
                           arg:subject [
                               sp:varName "resource" ;
@@ -10703,6 +10730,54 @@ lmdoc:LabeledObjects
           rdf:type html:Div ;
           html:class "lm-row" ;
           ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type lmdoc:URIResourceViewer ;
+                  arg:label [
+                      rdf:type sp:if ;
+                      sp:arg1 [
+                          rdf:type sp:bound ;
+                          sp:arg1 [
+                              sp:varName "label" ;
+                            ] ;
+                        ] ;
+                      sp:arg2 [
+                          sp:varName "label" ;
+                        ] ;
+                      sp:arg3 [
+                          rdf:type ui:label ;
+                          sp:arg1 [
+                              sp:varName "predicate" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  arg:object [
+                      sp:varName "predicate" ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:condition [
+                  rdf:type sp:or ;
+                  sp:arg1 [
+                      rdf:type sp:not ;
+                      sp:arg1 [
+                          rdf:type sp:bound ;
+                          sp:arg1 [
+                              sp:varName "hideProperty" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  sp:arg2 [
+                      rdf:type sp:eq ;
+                      sp:arg1 [
+                          sp:varName "hideProperty" ;
+                        ] ;
+                      sp:arg2 "false"^^xsd:boolean ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:child [
               rdf:type ui:setContext ;
               ui:child [
                   rdf:type lmdoc:ObjectsBody ;
@@ -10714,31 +10789,6 @@ lmdoc:LabeledObjects
               ui:varValue [
                   sp:varName "viewWidget" ;
                 ] ;
-            ] ;
-          ui:child [
-              rdf:type lmdoc:URIResourceViewer ;
-              arg:label [
-                  rdf:type sp:if ;
-                  sp:arg1 [
-                      rdf:type sp:bound ;
-                      sp:arg1 [
-                          sp:varName "label" ;
-                        ] ;
-                    ] ;
-                  sp:arg2 [
-                      sp:varName "label" ;
-                    ] ;
-                  sp:arg3 [
-                      rdf:type ui:label ;
-                      sp:arg1 [
-                          sp:varName "predicate" ;
-                        ] ;
-                    ] ;
-                ] ;
-              arg:object [
-                  sp:varName "predicate" ;
-                ] ;
-              ui:childIndex 0 ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -10915,7 +10965,7 @@ lmdoc:MaybeDescription
           arg:resource [
               sp:varName "resource" ;
             ] ;
-          ui:childIndex 2 ;
+          ui:childIndex 1 ;
         ] ;
       ui:child [
           rdf:type lmdoc:MaybeDescriptionUsingProperty ;
@@ -10923,7 +10973,15 @@ lmdoc:MaybeDescription
           arg:resource [
               sp:varName "resource" ;
             ] ;
-          ui:childIndex 1 ;
+          ui:childIndex 3 ;
+        ] ;
+      ui:child [
+          rdf:type lmdoc:MaybeDescriptionUsingProperty ;
+          arg:property skos:definition ;
+          arg:resource [
+              sp:varName "resource" ;
+            ] ;
+          ui:childIndex 2 ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
@@ -20211,6 +20269,41 @@ lmdoc:labelText
       spl:valueType rdfs:Resource ;
     ] ;
   rdfs:label "label text" ;
+  rdfs:subClassOf lmdoc:Functions ;
+.
+lmdoc:lookForDescriptions
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "desc" ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "desc" ;
+              ] ;
+            sp:predicate [
+                sp:varName "predicate" ;
+              ] ;
+            sp:subject [
+                sp:varName "resource" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:predicate ;
+      spl:valueType rdf:Property ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:resource ;
+      spl:valueType rdfs:Resource ;
+    ] ;
   rdfs:subClassOf lmdoc:Functions ;
 .
 lmdoc:makeAnchorFromResource
