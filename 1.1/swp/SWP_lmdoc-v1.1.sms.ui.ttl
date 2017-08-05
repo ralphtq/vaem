@@ -86,6 +86,10 @@ arg:heading
   rdf:type rdf:Property ;
   rdfs:subPropertyOf sp:arg ;
 .
+arg:hideProperty
+  rdf:type rdf:Property ;
+  rdfs:subPropertyOf sp:arg ;
+.
 arg:includeWebLink
   rdf:type rdf:Property ;
   rdfs:label "Instance Web Link" ;
@@ -10179,6 +10183,7 @@ lmdoc:InstancesSummarySection
                           html:class "pt40px pl40px" ;
                           ui:child [
                               rdf:type lmdoc:Object ;
+                              arg:hideProperty "true"^^xsd:boolean ;
                               arg:predicate <http://qudt.org/schema/qudt/citation> ;
                               arg:subject [
                                   sp:varName "resource" ;
@@ -10192,6 +10197,7 @@ lmdoc:InstancesSummarySection
                           html:class "pt40px pl40px" ;
                           ui:child [
                               rdf:type lmdoc:Object ;
+                              arg:hideProperty "true"^^xsd:boolean ;
                               arg:predicate prov:wasInfluencedBy ;
                               arg:subject [
                                   sp:varName "resource" ;
@@ -10723,6 +10729,11 @@ lmdoc:LabelList
 .
 lmdoc:LabeledObjects
   rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:hideProperty ;
+      spl:valueType xsd:boolean ;
+    ] ;
   ui:private "false"^^xsd:boolean ;
   ui:prototype [
       rdf:type ui:group ;
@@ -10871,6 +10882,19 @@ lmdoc:LiteralViewer
       ui:child [
           rdf:type ui:else ;
           ui:child [
+              rdf:type html:P ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "{= ?object" ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 2 ;
+        ] ;
+      ui:child [
+          rdf:type ui:elseif ;
+          ui:child [
               rdf:type ui:TextNode ;
               ui:childIndex 0 ;
               ui:text [
@@ -10908,7 +10932,7 @@ lmdoc:LiteralViewer
           ui:child [
               rdf:type html:A ;
               html:href [
-                  rdf:type xsd:string ;
+                  rdf:type sp:str ;
                   sp:arg1 [
                       sp:varName "object" ;
                     ] ;
@@ -10917,7 +10941,10 @@ lmdoc:LiteralViewer
                   rdf:type ui:TextNode ;
                   ui:childIndex 0 ;
                   ui:text [
-                      sp:varName "object" ;
+                      rdf:type sp:str ;
+                      sp:arg1 [
+                          sp:varName "object" ;
+                        ] ;
                     ] ;
                 ] ;
               ui:childIndex 0 ;
@@ -10926,7 +10953,10 @@ lmdoc:LiteralViewer
           ui:condition [
               rdf:type fn:starts-with ;
               sp:arg1 [
-                  sp:varName "object" ;
+                  rdf:type sp:str ;
+                  sp:arg1 [
+                      sp:varName "object" ;
+                    ] ;
                 ] ;
               sp:arg2 "http" ;
             ] ;
@@ -11438,6 +11468,11 @@ lmdoc:NonImportedResources
 .
 lmdoc:Object
   rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:hideProperty ;
+      spl:valueType xsd:string ;
+    ] ;
   ui:prototype [
       rdf:type lmdoc:LabeledObjects ;
       arg:single "true" ;
