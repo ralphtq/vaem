@@ -6006,6 +6006,18 @@ lmdoc:Graph
     ] ;
   spin:constraint [
       rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate vaem:latestPublishedVersion ;
+      spl:valueType xsd:anyURI ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate vaem:turtleFileURL ;
+      spl:valueType xsd:anyURI ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
       spl:predicate arg:flags ;
       spl:valueType xsd:string ;
     ] ;
@@ -6710,7 +6722,6 @@ lmdoc:GraphHeader
                           ui:child [
                               rdf:type html:Span ;
                               html:class "p-name fn" ;
-                              html:property "foaf:name" ;
                               ui:child [
                                   rdf:type ui:TextNode ;
                                   ui:childIndex 0 ;
@@ -6740,7 +6751,6 @@ lmdoc:GraphHeader
                           ui:child [
                               rdf:type html:Span ;
                               html:class "p-name fn" ;
-                              html:property "foaf:name" ;
                               ui:child [
                                   rdf:type ui:forEach ;
                                   ui:child [
@@ -17470,6 +17480,329 @@ lmdoc:URIResourceViewer
   rdfs:label "URI resource viewer" ;
   rdfs:subClassOf lmdoc:ObjectViewer ;
 .
+lmdoc:UpdateGraphMetadata
+  rdf:type ui:Service ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate vaem:latestPublishedVersion ;
+      spl:valueType xsd:anyURI ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "true"^^xsd:boolean ;
+      spl:predicate vaem:turtleFileURL ;
+      spl:valueType xsd:anyURI ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:graph ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type ui:catch ;
+          ui:child [
+              rdf:type html:P ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "Exception in lmdoc:UpdateGraphMetadata:" ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:child [
+              rdf:type html:P ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text [
+                      sp:varName "exception" ;
+                    ] ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type ui:try ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 2 ;
+              ui:text [
+                  rdf:type sp:str ;
+                  sp:arg1 [
+                      sp:varName "graph" ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 3 ;
+              ui:text " updated" ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type ui:throw ;
+                  ui:childIndex 0 ;
+                  ui:message [
+                      rdf:type ui:concat ;
+                      sp:arg1 "Graph is not a URI resource: " ;
+                      sp:arg2 [
+                          sp:varName "graph" ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:condition [
+                  rdf:type sp:not ;
+                  sp:arg1 [
+                      rdf:type sp:isIRI ;
+                      sp:arg1 [
+                          sp:varName "graph" ;
+                        ] ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:child [
+              rdf:type ui:setContext ;
+              ui:child [
+                  rdf:type ui:group ;
+                  let:myGraphMetadata [
+                      rdf:type spl:objectInGraph ;
+                      sp:arg1 [
+                          sp:varName "graph" ;
+                        ] ;
+                      sp:arg2 vaem:hasGraphMetadata ;
+                      sp:arg3 [
+                          sp:varName "graph" ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:if ;
+                      ui:child [
+                          rdf:type ui:throw ;
+                          ui:childIndex 0 ;
+                          ui:message [
+                              rdf:type ui:concat ;
+                              sp:arg1 "No graph metadata instance for " ;
+                              sp:arg2 [
+                                  rdf:type sp:str ;
+                                  sp:arg1 [
+                                      sp:varName "graph" ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:condition [
+                          rdf:type sp:not ;
+                          sp:arg1 [
+                              rdf:type sp:bound ;
+                              sp:arg1 [
+                                  sp:varName "myGraphMetadata" ;
+                                ] ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:transaction ;
+                      ui:child [
+                          rdf:type ui:update ;
+                          ui:childIndex 0 ;
+                          ui:updateQuery [
+                              rdf:type sp:Modify ;
+                              sp:deletePattern (
+                                  [
+                                    sp:object [
+                                        sp:varName "previousPublishedVersion" ;
+                                      ] ;
+                                    sp:predicate vaem:latestPublishedVersion ;
+                                    sp:subject [
+                                        sp:varName "gmdU" ;
+                                      ] ;
+                                  ]
+                                  [
+                                    sp:object [
+                                        sp:varName "oldDate" ;
+                                      ] ;
+                                    sp:predicate dct:modified ;
+                                    sp:subject [
+                                        sp:varName "gmdU" ;
+                                      ] ;
+                                  ]
+                                  [
+                                    sp:object [
+                                        sp:varName "oldTurtleFileURL" ;
+                                      ] ;
+                                    sp:predicate vaem:turtleFileURL ;
+                                    sp:subject [
+                                        sp:varName "gmdU" ;
+                                      ] ;
+                                  ]
+                                ) ;
+                              sp:where (
+                                  [
+                                    sp:object [
+                                        sp:varName "gmdU" ;
+                                      ] ;
+                                    sp:predicate vaem:hasGraphMetadata ;
+                                    sp:subject [
+                                        sp:varName "graph" ;
+                                      ] ;
+                                  ]
+                                  [
+                                    rdf:type sp:Optional ;
+                                    sp:elements (
+                                        [
+                                          sp:object [
+                                              sp:varName "oldDate" ;
+                                            ] ;
+                                          sp:predicate dct:modified ;
+                                          sp:subject [
+                                              sp:varName "gmdU" ;
+                                            ] ;
+                                        ]
+                                      ) ;
+                                  ]
+                                  [
+                                    rdf:type sp:Optional ;
+                                    sp:elements (
+                                        [
+                                          sp:object [
+                                              sp:varName "oldTurtleFileURL" ;
+                                            ] ;
+                                          sp:predicate vaem:turtleFileURL ;
+                                          sp:subject [
+                                              sp:varName "gmdU" ;
+                                            ] ;
+                                        ]
+                                      ) ;
+                                  ]
+                                  [
+                                    rdf:type sp:Optional ;
+                                    sp:elements (
+                                        [
+                                          sp:object [
+                                              sp:varName "previousPublishedVersion" ;
+                                            ] ;
+                                          sp:predicate vaem:latestPublishedVersion ;
+                                          sp:subject [
+                                              sp:varName "gmdU" ;
+                                            ] ;
+                                        ]
+                                      ) ;
+                                  ]
+                                ) ;
+                            ] ;
+                        ] ;
+                      ui:child [
+                          rdf:type ui:update ;
+                          ui:childIndex 1 ;
+                          ui:updateQuery [
+                              rdf:type sp:Modify ;
+                              sp:insertPattern (
+                                  [
+                                    rdf:type sp:NamedGraph ;
+                                    sp:elements (
+                                        [
+                                          sp:object [
+                                              sp:varName "date" ;
+                                            ] ;
+                                          sp:predicate dct:modified ;
+                                          sp:subject [
+                                              sp:varName "gmdU" ;
+                                            ] ;
+                                        ]
+                                        [
+                                          sp:object [
+                                              sp:varName "turtleFileURL" ;
+                                            ] ;
+                                          sp:predicate vaem:turtleFileURL ;
+                                          sp:subject [
+                                              sp:varName "gmdU" ;
+                                            ] ;
+                                        ]
+                                        [
+                                          sp:object [
+                                              sp:varName "latestPublishedVersion" ;
+                                            ] ;
+                                          sp:predicate vaem:latestPublishedVersion ;
+                                          sp:subject [
+                                              sp:varName "gmdU" ;
+                                            ] ;
+                                        ]
+                                        [
+                                          sp:object [
+                                              sp:varName "previousPublishedVersion" ;
+                                            ] ;
+                                          sp:predicate vaem:previousPublishedVersion ;
+                                          sp:subject [
+                                              sp:varName "gmdU" ;
+                                            ] ;
+                                        ]
+                                        [
+                                          sp:object voag:QUDT-Attribution ;
+                                          sp:predicate vaem:withAttributionTo ;
+                                          sp:subject [
+                                              sp:varName "gmdU" ;
+                                            ] ;
+                                        ]
+                                        [
+                                          sp:object voag:CC-SHAREALIKE_3PT0-US ;
+                                          sp:predicate vaem:hasLicenseType ;
+                                          sp:subject [
+                                              sp:varName "gmdU" ;
+                                            ] ;
+                                        ]
+                                      ) ;
+                                    sp:graphNameNode [
+                                        sp:varName "graph" ;
+                                      ] ;
+                                  ]
+                                ) ;
+                              sp:where (
+                                  [
+                                    sp:object [
+                                        sp:varName "gmdU" ;
+                                      ] ;
+                                    sp:predicate vaem:hasGraphMetadata ;
+                                    sp:subject [
+                                        sp:varName "graph" ;
+                                      ] ;
+                                  ]
+                                  [
+                                    rdf:type sp:Bind ;
+                                    sp:expression [
+                                        rdf:type afn:now ;
+                                      ] ;
+                                    sp:variable [
+                                        sp:varName "date" ;
+                                      ] ;
+                                  ]
+                                ) ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 1 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 1 ;
+              ui:queryGraph [
+                  rdf:type ui:graphWithImports ;
+                  sp:arg1 [
+                      sp:varName "graph" ;
+                    ] ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  ui:responseType ui:TEXT ;
+  rdfs:subClassOf lmdoc:Services ;
+.
 lmdoc:VSpace
   rdf:type ui:NodeClass ;
   spin:constraint [
@@ -19685,23 +20018,38 @@ lmdoc:getCatalogRecords
                 sp:arg1 [
                     sp:varName "rec" ;
                   ] ;
-                sp:arg2 vaem:latestPublishedVersion ;
+                sp:arg2 lmcat:catalogedGraph ;
               ] ;
             sp:variable [
-                sp:varName "latestPublishedVersion" ;
+                sp:varName "catalogedGraph" ;
               ] ;
           ]
           [
             rdf:type sp:Bind ;
             sp:expression [
-                rdf:type spl:object ;
+                rdf:type sp:iri ;
                 sp:arg1 [
-                    sp:varName "rec" ;
+                    sp:varName "catalogedGraph" ;
                   ] ;
-                sp:arg2 lmcat:catalogedGraph ;
               ] ;
             sp:variable [
-                sp:varName "catalogedGraph" ;
+                sp:varName "catalogedGraphURI" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spl:objectInGraph ;
+                sp:arg1 [
+                    sp:varName "catalogedGraphURI" ;
+                  ] ;
+                sp:arg2 vaem:hasGraphMetadata ;
+                sp:arg3 [
+                    sp:varName "catalogedGraphURI" ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "GMD" ;
               ] ;
           ]
           [
@@ -19714,7 +20062,64 @@ lmdoc:getCatalogRecords
                 sp:arg2 vaem:turtleFileURL ;
               ] ;
             sp:variable [
+                sp:varName "maybeTurtleFile" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:coalesce ;
+                sp:arg1 [
+                    sp:varName "maybeTurtleFile" ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type spl:objectInGraph ;
+                    sp:arg1 [
+                        sp:varName "GMD" ;
+                      ] ;
+                    sp:arg2 vaem:turtleFileURL ;
+                    sp:arg3 [
+                        sp:varName "catalogedGraphURI" ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable [
                 sp:varName "turtleFile" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spl:object ;
+                sp:arg1 [
+                    sp:varName "rec" ;
+                  ] ;
+                sp:arg2 vaem:latestPublishedVersion ;
+              ] ;
+            sp:variable [
+                sp:varName "maybeLatestPublishedVersion" ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:coalesce ;
+                sp:arg1 [
+                    sp:varName "maybeLatestPublishedVersion" ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type spl:objectInGraph ;
+                    sp:arg1 [
+                        sp:varName "GMD" ;
+                      ] ;
+                    sp:arg2 vaem:latestPublishedVersion ;
+                    sp:arg3 [
+                        sp:varName "catalogedGraphURI" ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "latestPublishedVersion" ;
               ] ;
           ]
         ) ;
