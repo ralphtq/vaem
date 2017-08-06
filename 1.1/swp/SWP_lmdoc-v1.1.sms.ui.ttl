@@ -3894,43 +3894,11 @@ lmdoc:ClassSummaryView
               rdfs:comment "lmdoc:ClassDiagramShowingInheritanceOnly arg:focusClass=\"{= ?class }\" arg:systemLabels=\"true\"/" ;
             ] ;
           ui:child [
-              rdf:type ui:if ;
-              ui:child [
-                  rdf:type html:Div ;
-                  html:class "pt10px pl20px" ;
-                  ui:child [
-                      rdf:type lmdoc:Object ;
-                      arg:predicate prov:wasInfluencedBy ;
-                      arg:subject [
-                          sp:varName "class" ;
-                        ] ;
-                      ui:childIndex 0 ;
-                    ] ;
-                  ui:childIndex 2 ;
-                ] ;
-              ui:child [
-                  rdf:type html:Div ;
-                  html:class "swa-sub-title" ;
-                  ui:child [
-                      rdf:type ui:TextNode ;
-                      ui:childIndex 0 ;
-                      ui:text "References" ;
-                    ] ;
-                  ui:childIndex 1 ;
-                ] ;
-              ui:child [
-                  rdf:type lmdoc:VSpace ;
-                  arg:margin "10px;" ;
-                  ui:childIndex 0 ;
+              rdf:type lmdoc:DocumentReferences ;
+              arg:resource [
+                  sp:varName "class" ;
                 ] ;
               ui:childIndex 4 ;
-              ui:condition [
-                  rdf:type lmdoc:hasValueForProperty ;
-                  sp:arg1 [
-                      sp:varName "class" ;
-                    ] ;
-                  sp:arg2 prov:wasInfluencedBy ;
-                ] ;
             ] ;
           ui:child [
               rdf:type lmdoc:MaybeDescription ;
@@ -5715,6 +5683,116 @@ ui:template=\"{= swa:modeProperty(swa:formSubjectPredicateSelectionTemplate) }\"
   rdfs:subClassOf lmdoc:Parts ;
   rdfs:subClassOf lmdoc:Viewers ;
 .
+lmdoc:DocumentReferences
+  rdf:type ui:NodeClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:resource ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type ui:if ;
+          ui:child [
+              rdf:type html:Div ;
+              html:class "swa-sub-title" ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "References" ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type html:Div ;
+              ui:child [
+                  rdf:type ui:call ;
+                  arg:resource [
+                      sp:varName "resource" ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:forEach ;
+                      ui:child [
+                          rdf:type lmdoc:LiteralViewerWithLabel ;
+                          arg:label [
+                              rdf:type ui:concat ;
+                              sp:arg1 [
+                                  rdf:type sp:str ;
+                                  sp:arg1 [
+                                      rdf:type sp:add ;
+                                      sp:arg1 [
+                                          sp:varName "index" ;
+                                        ] ;
+                                      sp:arg2 1 ;
+                                    ] ;
+                                ] ;
+                              sp:arg2 ": " ;
+                            ] ;
+                          arg:object [
+                              sp:varName "citation" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:indexVar "index" ;
+                      ui:resultSet [
+                          sp:varName "citations" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                  ui:template lmdoc:getCitations ;
+                  ui:varName "citations" ;
+                ] ;
+              ui:childIndex 3 ;
+            ] ;
+          ui:child [
+              rdf:type html:Div ;
+              ui:child [
+                  rdf:type lmdoc:Object ;
+                  arg:hideProperty "true"^^xsd:boolean ;
+                  arg:predicate prov:wasInfluencedBy ;
+                  arg:subject [
+                      sp:varName "resource" ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 2 ;
+            ] ;
+          ui:child [
+              rdf:type lmdoc:VSpace ;
+              arg:margin "20px;" ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              rdf:type sp:or ;
+              sp:arg1 [
+                  rdf:type lmdoc:hasValueForProperty ;
+                  sp:arg1 [
+                      sp:varName "resource" ;
+                    ] ;
+                  sp:arg2 prov:wasInfluencedBy ;
+                ] ;
+              sp:arg2 [
+                  rdf:type lmdoc:hasValueForProperty ;
+                  sp:arg1 [
+                      sp:varName "resource" ;
+                    ] ;
+                  sp:arg2 lmdoc:citation ;
+                ] ;
+            ] ;
+        ] ;
+      ui:child [
+          rdf:type lmdoc:VSpace ;
+          arg:margin "100px;" ;
+          ui:childIndex 1 ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:label "Document References" ;
+  rdfs:subClassOf lmdoc:Parts ;
+.
 lmdoc:Elements
   rdf:type ui:NodeClass ;
   spin:constraint [
@@ -5910,7 +5988,7 @@ lmdoc:Functions
   rdfs:subClassOf spin:Functions ;
 .
 lmdoc:GMD_LMDOC
-  rdf:type vaem:GraphMetadata ;
+  rdf:type vaem:GraphMetaData ;
   dct:modified "2015-12-22"^^xsd:date ;
   vaem:hasOwner vaem:TopQuadrant ;
   vaem:name "LMDOC" ;
@@ -10129,20 +10207,6 @@ lmdoc:InstancesSummarySection
                     ] ;
                   ui:child [
                       rdf:type html:Div ;
-                      html:class "pt41px pl20px" ;
-                      ui:child [
-                          rdf:type lmdoc:Object ;
-                          arg:hideProperty "true"^^xsd:boolean ;
-                          arg:predicate rdf:type ;
-                          arg:subject [
-                              sp:varName "resource" ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:childIndex 6 ;
-                    ] ;
-                  ui:child [
-                      rdf:type html:Div ;
                       html:class "swa-sub-title" ;
                       ui:child [
                           rdf:type ui:TextNode ;
@@ -10162,6 +10226,19 @@ lmdoc:InstancesSummarySection
                       ui:childIndex 5 ;
                     ] ;
                   ui:child [
+                      rdf:type html:Div ;
+                      ui:child [
+                          rdf:type lmdoc:Object ;
+                          arg:hideProperty "true"^^xsd:boolean ;
+                          arg:predicate rdf:type ;
+                          arg:subject [
+                              sp:varName "resource" ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 6 ;
+                    ] ;
+                  ui:child [
                       rdf:type html:P ;
                       html:class "size-24" ;
                       ui:child [
@@ -10177,68 +10254,11 @@ lmdoc:InstancesSummarySection
                       ui:childIndex 0 ;
                     ] ;
                   ui:child [
-                      rdf:type ui:if ;
-                      ui:child [
-                          rdf:type html:Div ;
-                          html:class "pt40px pl40px" ;
-                          ui:child [
-                              rdf:type lmdoc:Object ;
-                              arg:hideProperty "true"^^xsd:boolean ;
-                              arg:predicate <http://qudt.org/schema/qudt/citation> ;
-                              arg:subject [
-                                  sp:varName "resource" ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 3 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:Div ;
-                          html:class "pt40px pl40px" ;
-                          ui:child [
-                              rdf:type lmdoc:Object ;
-                              arg:hideProperty "true"^^xsd:boolean ;
-                              arg:predicate prov:wasInfluencedBy ;
-                              arg:subject [
-                                  sp:varName "resource" ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 2 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:Div ;
-                          html:class "swa-sub-title" ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text "References" ;
-                            ] ;
-                          ui:childIndex 1 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:VSpace ;
-                          arg:margin "20px;" ;
-                          ui:childIndex 0 ;
+                      rdf:type lmdoc:DocumentReferences ;
+                      arg:resource [
+                          sp:varName "resource" ;
                         ] ;
                       ui:childIndex 7 ;
-                      ui:condition [
-                          rdf:type sp:or ;
-                          sp:arg1 [
-                              rdf:type lmdoc:hasValueForProperty ;
-                              sp:arg1 [
-                                  sp:varName "resource" ;
-                                ] ;
-                              sp:arg2 prov:wasInfluencedBy ;
-                            ] ;
-                          sp:arg2 [
-                              rdf:type lmdoc:hasValueForProperty ;
-                              sp:arg1 [
-                                  sp:varName "resource" ;
-                                ] ;
-                              sp:arg2 <http://qudt.org/schema/qudt/citation> ;
-                            ] ;
-                        ] ;
                     ] ;
                   ui:child [
                       rdf:type lmdoc:MaybeDescription ;
@@ -10256,11 +10276,6 @@ lmdoc:InstancesSummarySection
                       arg:topElement [
                           sp:varName "top" ;
                         ] ;
-                      ui:childIndex 9 ;
-                    ] ;
-                  ui:child [
-                      rdf:type lmdoc:VSpace ;
-                      arg:margin "100px;" ;
                       ui:childIndex 8 ;
                     ] ;
                   ui:child [
@@ -10872,21 +10887,35 @@ lmdoc:LiteralViewer
             ] ;
           sp:arg2 "literal" ;
         ] ;
-      swa:weight 50 ;
+      swa:weight 4 ;
     ] ;
   ui:overrides swa:LiteralViewer ;
   ui:private "true"^^xsd:boolean ;
   ui:prototype [
       rdf:type html:Div ;
-      html:class "swa-shifted-label" ;
       ui:child [
           rdf:type ui:else ;
           ui:child [
-              rdf:type html:P ;
+              rdf:type html:Div ;
               ui:child [
-                  rdf:type ui:TextNode ;
+                  rdf:type swa:LangDisplay ;
+                  arg:lang [
+                      rdf:type sp:lang ;
+                      sp:arg1 [
+                          sp:varName "object" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:parse ;
                   ui:childIndex 0 ;
-                  ui:text "{= ?object" ;
+                  ui:str [
+                      rdf:type swa:redirectHRefs ;
+                      sp:arg1 [
+                          sp:varName "object" ;
+                        ] ;
+                    ] ;
                 ] ;
               ui:childIndex 0 ;
             ] ;
@@ -10964,6 +10993,148 @@ lmdoc:LiteralViewer
     ] ;
   rdfs:comment "A node viewer for literal values, displaying the literal's text. If a language tag is present, then this will be displayed behind the text." ;
   rdfs:label "Literal viewer" ;
+  rdfs:subClassOf swa:LiteralViewer ;
+.
+lmdoc:LiteralViewerWithLabel
+  rdf:type swa:ObjectViewerClass ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:label ;
+      spl:valueType xsd:string ;
+    ] ;
+  swa:objectWidgetWeight [
+      rdf:type swa:WeightedExpression ;
+      swa:expression [
+          rdf:type sp:eq ;
+          sp:arg1 [
+              sp:varName "kind" ;
+            ] ;
+          sp:arg2 "literal" ;
+        ] ;
+      swa:weight 4 ;
+    ] ;
+  ui:private "true"^^xsd:boolean ;
+  ui:prototype [
+      rdf:type ui:group ;
+      ui:child [
+          rdf:type html:Div ;
+          html:class "clear-both" ;
+          ui:childIndex 2 ;
+        ] ;
+      ui:child [
+          rdf:type html:Div ;
+          html:class "float-left" ;
+          ui:child [
+              rdf:type ui:else ;
+              ui:child [
+                  rdf:type swa:LangDisplay ;
+                  arg:lang [
+                      rdf:type sp:lang ;
+                      sp:arg1 [
+                          sp:varName "object" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  rdf:type ui:parse ;
+                  ui:childIndex 0 ;
+                  ui:str [
+                      rdf:type swa:redirectHRefs ;
+                      sp:arg1 [
+                          sp:varName "object" ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:childIndex 2 ;
+            ] ;
+          ui:child [
+              rdf:type ui:elseif ;
+              ui:child [
+                  rdf:type ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text [
+                      sp:varName "object" ;
+                    ] ;
+                ] ;
+              ui:child [
+                  rdf:type ui:if ;
+                  ui:child [
+                      rdf:type swa:LangDisplay ;
+                      arg:lang [
+                          rdf:type sp:lang ;
+                          sp:arg1 [
+                              sp:varName "object" ;
+                            ] ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 1 ;
+                  ui:condition [
+                      rdf:type sp:ne ;
+                      sp:arg1 [
+                          rdf:type sp:lang ;
+                          sp:arg1 [
+                              sp:varName "object" ;
+                            ] ;
+                        ] ;
+                      sp:arg2 "" ;
+                    ] ;
+                ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              rdf:type ui:if ;
+              ui:child [
+                  rdf:type html:A ;
+                  html:href [
+                      rdf:type sp:str ;
+                      sp:arg1 [
+                          sp:varName "object" ;
+                        ] ;
+                    ] ;
+                  ui:child [
+                      rdf:type ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text [
+                          rdf:type sp:str ;
+                          sp:arg1 [
+                              sp:varName "object" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:condition [
+                  rdf:type fn:starts-with ;
+                  sp:arg1 [
+                      rdf:type sp:str ;
+                      sp:arg1 [
+                          sp:varName "object" ;
+                        ] ;
+                    ] ;
+                  sp:arg2 "http" ;
+                ] ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          rdf:type html:Div ;
+          html:class "pl40px pr10px float-left" ;
+          ui:child [
+              rdf:type ui:TextNode ;
+              ui:childIndex 0 ;
+              ui:text [
+                  sp:varName "label" ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  ui:responseType ui:HTML ;
+  rdfs:comment "A node viewer for literal values, displaying the literal's text. If a language tag is present, then this will be displayed behind the text." ;
+  rdfs:label "Literal viewer with label" ;
   rdfs:subClassOf swa:LiteralViewer ;
 .
 lmdoc:MagicProperties
@@ -13319,43 +13490,11 @@ lmdoc:PropertiesSummaryView
                       ui:childIndex 0 ;
                     ] ;
                   ui:child [
-                      rdf:type ui:if ;
-                      ui:child [
-                          rdf:type html:Div ;
-                          html:class "pt10px pl20px" ;
-                          ui:child [
-                              rdf:type lmdoc:Object ;
-                              arg:predicate prov:wasInfluencedBy ;
-                              arg:subject [
-                                  sp:varName "resource" ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 2 ;
-                        ] ;
-                      ui:child [
-                          rdf:type html:Div ;
-                          html:class "swa-sub-title" ;
-                          ui:child [
-                              rdf:type ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text "References" ;
-                            ] ;
-                          ui:childIndex 1 ;
-                        ] ;
-                      ui:child [
-                          rdf:type lmdoc:VSpace ;
-                          arg:margin "20px;" ;
-                          ui:childIndex 0 ;
+                      rdf:type lmdoc:DocumentReferences ;
+                      arg:resource [
+                          sp:varName "resource" ;
                         ] ;
                       ui:childIndex 6 ;
-                      ui:condition [
-                          rdf:type lmdoc:hasValueForProperty ;
-                          sp:arg1 [
-                              sp:varName "resource" ;
-                            ] ;
-                          sp:arg2 prov:wasInfluencedBy ;
-                        ] ;
                     ] ;
                   ui:child [
                       rdf:type lmdoc:MaybeDescription ;
@@ -17235,7 +17374,9 @@ lmdoc:URIResourceViewer
         ] ;
       ui:child [
           rdf:type ui:group ;
-          let:myLabel "" ;
+          let:myLabel [
+              sp:varName "label" ;
+            ] ;
           ui:child [
               rdf:type ui:else ;
               ui:child [
@@ -19241,6 +19382,12 @@ lmdoc:buildResourceDocLink
   rdfs:label "build resource doc link" ;
   rdfs:subClassOf lmdoc:Functions ;
 .
+lmdoc:citation
+  rdf:type owl:DatatypeProperty ;
+  rdfs:comment "A string that can include html tags." ;
+  rdfs:domain rdfs:Resource ;
+  rdfs:label "citation" ;
+.
 lmdoc:countOfInstanceOfType
   rdf:type spin:Function ;
   spin:body [
@@ -19580,6 +19727,52 @@ lmdoc:getCatalogRecords
   rdfs:label "get catalog records" ;
   rdfs:subClassOf lmdoc:SelectTemplates ;
 .
+lmdoc:getCitations
+  rdf:type spin:SelectTemplate ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "citation" ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object lmdoc:citation ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject [
+                sp:varName "property" ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "citation" ;
+              ] ;
+            sp:predicate [
+                sp:varName "property" ;
+              ] ;
+            sp:subject [
+                sp:varName "resource" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate arg:resource ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The class that the instances must have." ;
+    ] ;
+  rdfs:comment "Gets all citations on a given instance." ;
+  rdfs:label "get citations" ;
+  rdfs:subClassOf lmdoc:SelectTemplates ;
+.
 lmdoc:getDefiningGraph
   rdf:type spin:Function ;
   spin:body [
@@ -19884,7 +20077,6 @@ lmdoc:getInstancesOfType
       spl:valueType rdfs:Resource ;
       rdfs:comment "The class that the instances must have." ;
     ] ;
-  rdfs:comment "FILTER (fn:upper-case(?ns) = fn:upper-case(?namespacePrefix)) ." ;
   rdfs:comment "Gets all instances defined in a given graph, filtered by matching the namespace of their type with a given type, and orders them by label. Note this may (obviously) not scale if a class has too many instances." ;
   rdfs:label "get instances of type" ;
   rdfs:subClassOf lmdoc:SelectTemplates ;
@@ -20092,10 +20284,25 @@ lmdoc:hasValueForProperty
       rdf:type sp:Ask ;
       sp:where (
           [
+            rdf:type sp:TriplePath ;
+            sp:object spin:_arg2 ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject [
+                sp:varName "property" ;
+              ] ;
+          ]
+          [
             sp:object [
                 sp:varName "value" ;
               ] ;
-            sp:predicate spin:_arg2 ;
+            sp:predicate [
+                sp:varName "property" ;
+              ] ;
             sp:subject spin:_arg1 ;
           ]
         ) ;
@@ -20113,7 +20320,7 @@ lmdoc:hasValueForProperty
       rdfs:comment "the expected property" ;
     ] ;
   spin:returnType xsd:boolean ;
-  rdfs:comment "Checks whether a given subject (?arg1) has at least one value for a given property (?arg2)." ;
+  rdfs:comment "Checks whether a given subject (?arg1) has at least one value for a given property (?arg2), or a sub-property of the given property." ;
   rdfs:label "hasValueOfType" ;
   rdfs:subClassOf spl:BooleanFunctions ;
 .
