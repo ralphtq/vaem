@@ -719,6 +719,33 @@ The """ ;
   rdfs:label "About prublished graphs" ;
   rdfs:subClassOf lmdoc:Parts ;
 .
+lmdoc:AbstractClassDiagram
+  a ui:NodeClass ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate arg:associationsFilterFunction ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "An optional filter function that can be used to suppress showing certain relationships. The functions should be subclass of swa:AssociationsFilterFunctions." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate arg:attributesFilterFunction ;
+      spl:valueType spin:Function ;
+      rdfs:comment "An optional function(?predicate, ?sourceClass) returning true to include a given property at a given class node. Function should be subclass of swa:AttributesFilterFunctions." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate arg:systemLabels ;
+      spl:valueType xsd:boolean ;
+      rdfs:comment "True to use system labels (qnames and IRIs)." ;
+    ] ;
+  ui:abstract true ;
+  rdfs:label "Abstract class diagram (lmdoc)" ;
+  rdfs:subClassOf lmdoc:GraphElements ;
+.
 lmdoc:AbstractObject
   a ui:NodeClass ;
   spin:constraint [
@@ -1551,12 +1578,99 @@ lmdoc:AnyURILiteralViewer
     ] ;
   rdfs:comment "The LM Doc viewer for xsd:anyURI values: shows a hyperlink to the URI." ;
   rdfs:label "AnyURI literal viewer" ;
-  rdfs:subClassOf swa:AnyURILiteralViewer ;
+  rdfs:seeAlso swa:AnyURILiteralViewer ;
+  rdfs:subClassOf lmdoc:ObjectViewer ;
 .
 lmdoc:AskTemplates
   a spin:AskTemplate ;
   rdfs:label "Ask templates" ;
   rdfs:subClassOf spin:AskTemplates ;
+.
+lmdoc:BNodeViewer
+  a swa:ObjectViewerClass ;
+  swa:objectWidgetWeight [
+      a swa:WeightedExpression ;
+      swa:expression [
+          a sp:eq ;
+          sp:arg1 [
+              sp:varName "kind" ;
+            ] ;
+          sp:arg2 "blank" ;
+        ] ;
+    ] ;
+  ui:overrides swa:BNodeViewer ;
+  ui:private true ;
+  ui:prototype [
+      a ui:group ;
+      ui:child [
+          a ui:else ;
+          ui:child [
+              a html:Div ;
+              html:class "swa-shifted-label" ;
+              ui:child [
+                  a ui:resourceView ;
+                  ui:childIndex 0 ;
+                  ui:matchIds "label" ;
+                  ui:resource [
+                      sp:varName "object" ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 2 ;
+        ] ;
+      ui:child [
+          a ui:elseif ;
+          ui:child [
+              a html:Div ;
+              html:class "swa-shifted-label" ;
+              ui:child [
+                  a html:Pre ;
+                  html:class "swa-source-code-viewer" ;
+                  ui:child [
+                      a ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text [
+                          sp:varName "object" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 1 ;
+          ui:condition [
+              a sp:eq ;
+              sp:arg1 [
+                  sp:varName "predicate" ;
+                ] ;
+              sp:arg2 ui:instanceView ;
+            ] ;
+        ] ;
+      ui:child [
+          a ui:if ;
+          ui:child [
+              a swa:NestedObjectViewer ;
+              arg:object [
+                  sp:varName "object" ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              a sp:not ;
+              sp:arg1 [
+                  a smf:hasLabelsPlugin ;
+                  sp:arg1 [
+                      sp:varName "object" ;
+                    ] ;
+                ] ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:comment "The default object viewer for blank nodes." ;
+  rdfs:label "Blank node viewer (lmdoc)" ;
+  rdfs:subClassOf lmdoc:ObjectViewer ;
 .
 lmdoc:BuildMetadataRecord
   a ui:NodeClass ;
@@ -3470,7 +3584,7 @@ lmdoc:ClassDiagramShowingInheritanceOnly
         ] ;
     ] ;
   rdfs:label "Class diagram showing inheritance only" ;
-  rdfs:subClassOf swa:AbstractClassDiagram ;
+  rdfs:subClassOf lmdoc:AbstractClassDiagram ;
 .
 lmdoc:ClassInstances
   a ui:NodeClass ;
@@ -3732,6 +3846,17 @@ lmdoc:ClassSummary
                               sp:arg2 vaem:hasGraphMetadata ;
                             ] ;
                           ui:child [
+                              a ui:dumpScope ;
+                              ui:childIndex 0 ;
+                              ui:message [
+                                  a ui:concat ;
+                                  sp:arg1 "DEBUG1: lmdoc:ClassSummary - " ;
+                                  sp:arg2 [
+                                      sp:varName "resource" ;
+                                    ] ;
+                                ] ;
+                            ] ;
+                          ui:child [
                               a lmdoc:DetailedClassView ;
                               arg:class [
                                   sp:varName "resource" ;
@@ -3739,25 +3864,25 @@ lmdoc:ClassSummary
                               arg:showDiagram false ;
                               arg:showInstances false ;
                               arg:showTitle false ;
-                              ui:childIndex 2 ;
+                              ui:childIndex 3 ;
                             ] ;
                           ui:child [
                               a lmdoc:Footer ;
-                              ui:childIndex 3 ;
+                              ui:childIndex 4 ;
                             ] ;
                           ui:child [
                               a lmdoc:PartHeader ;
                               arg:metadata [
                                   sp:varName "myGraphMetadata" ;
                                 ] ;
-                              ui:childIndex 0 ;
+                              ui:childIndex 1 ;
                             ] ;
                           ui:child [
                               a lmdoc:ResourceHeader ;
                               arg:resource [
                                   sp:varName "resource" ;
                                 ] ;
-                              ui:childIndex 1 ;
+                              ui:childIndex 2 ;
                             ] ;
                           ui:childIndex 0 ;
                         ] ;
@@ -3846,70 +3971,116 @@ lmdoc:ClassSummaryView
   ui:prototype [
       a ui:group ;
       ui:child [
-          a html:Div ;
-          html:id [
-              a ui:concat ;
-              sp:arg1 "div-" ;
-              sp:arg2 [
-                  a lmdoc:makeAnchorFromResource ;
-                  arg:resource [
-                      sp:varName "class" ;
-                    ] ;
-                ] ;
-            ] ;
-          ui:child [
-              a html:Div ;
-              html:class "swa-sub-title" ;
-              ui:child [
-                  a ui:TextNode ;
-                  ui:childIndex 0 ;
-                  ui:text "Description" ;
-                ] ;
-              ui:childIndex 2 ;
-            ] ;
+          a ui:catch ;
           ui:child [
               a html:P ;
-              html:class "size-24" ;
               ui:child [
                   a ui:TextNode ;
                   ui:childIndex 0 ;
+                  ui:text "Exception in lmdoc:ClassSummaryView - class is " ;
+                ] ;
+              ui:child [
+                  a ui:TextNode ;
+                  ui:childIndex 1 ;
                   ui:text [
-                      a smf:qname ;
-                      sp:arg1 [
-                          sp:varName "class" ;
-                        ] ;
+                      sp:varName "class" ;
                     ] ;
                 ] ;
               ui:childIndex 0 ;
             ] ;
           ui:child [
-              a ui:CommentNode ;
-              ui:childIndex 6 ;
-              rdfs:comment "lmdoc:ClassDiagramShowingInheritanceOnly arg:focusClass=\"{= ?class }\" arg:systemLabels=\"true\"/" ;
-            ] ;
-          ui:child [
-              a lmdoc:DocumentReferences ;
-              arg:resource [
-                  sp:varName "class" ;
+              a html:P ;
+              ui:child [
+                  a ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text [
+                      sp:varName "exception" ;
+                    ] ;
                 ] ;
-              ui:childIndex 4 ;
+              ui:childIndex 1 ;
             ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          a ui:try ;
           ui:child [
-              a lmdoc:MaybeDescription ;
-              arg:resource [
-                  sp:varName "class" ;
+              a html:Div ;
+              html:id [
+                  a ui:concat ;
+                  sp:arg1 "div-" ;
+                  sp:arg2 [
+                      a lmdoc:makeAnchorFromResource ;
+                      arg:resource [
+                          sp:varName "class" ;
+                        ] ;
+                    ] ;
                 ] ;
-              ui:childIndex 3 ;
-            ] ;
-          ui:child [
-              a lmdoc:VSpace ;
-              arg:margin "30px;" ;
+              ui:child [
+                  a html:Div ;
+                  html:class "swa-sub-title" ;
+                  ui:child [
+                      a ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text "Description" ;
+                    ] ;
+                  ui:childIndex 2 ;
+                ] ;
+              ui:child [
+                  a html:P ;
+                  html:class "size-24" ;
+                  ui:child [
+                      a ui:TextNode ;
+                      ui:childIndex 0 ;
+                      ui:text [
+                          a smf:qname ;
+                          sp:arg1 [
+                              sp:varName "class" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:child [
+                  a ui:CommentNode ;
+                  ui:childIndex 6 ;
+                  rdfs:comment "lmdoc:ClassDiagramShowingInheritanceOnly arg:focusClass=\"{= ?class }\" arg:systemLabels=\"true\"/" ;
+                ] ;
+              ui:child [
+                  a lmdoc:DocumentReferences ;
+                  arg:resource [
+                      sp:varName "class" ;
+                    ] ;
+                  ui:childIndex 4 ;
+                ] ;
+              ui:child [
+                  a lmdoc:MaybeDescription ;
+                  arg:resource [
+                      sp:varName "class" ;
+                    ] ;
+                  ui:childIndex 3 ;
+                ] ;
+              ui:child [
+                  a lmdoc:VSpace ;
+                  arg:margin "30px;" ;
+                  ui:childIndex 1 ;
+                ] ;
+              ui:child [
+                  a lmdoc:VSpace ;
+                  arg:margin "30px;" ;
+                  ui:childIndex 5 ;
+                ] ;
               ui:childIndex 1 ;
             ] ;
           ui:child [
-              a lmdoc:VSpace ;
-              arg:margin "30px;" ;
-              ui:childIndex 5 ;
+              a ui:dumpScope ;
+              ui:childIndex 0 ;
+              ui:message [
+                  a ui:concat ;
+                  sp:arg1 "DEBUG1: lmdoc:ClassSummaryView - " ;
+                  sp:arg2 [
+                      sp:varName "class" ;
+                    ] ;
+                ] ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -5966,6 +6137,21 @@ lmdoc:Footer
   rdfs:label "Footer" ;
   rdfs:subClassOf lmdoc:Sections ;
 .
+lmdoc:Form
+  a swa:FormClass ;
+  ui:abstract true ;
+  rdfs:comment "Base class for the various types of forms, depending on the mode." ;
+  rdfs:label "Form (lmdoc)" ;
+  rdfs:subClassOf lmdoc:FormElements ;
+.
+lmdoc:FormElements
+  a ui:NodeClass ;
+  ui:abstract true ;
+  ui:private true ;
+  rdfs:comment "Abstract superclass to group together form related LMDOC elements." ;
+  rdfs:label "Form elements (lmdoc)" ;
+  rdfs:subClassOf lmdoc:Elements ;
+.
 lmdoc:Functions
   a spin:Function ;
   rdfs:label "Functions" ;
@@ -6145,7 +6331,12 @@ lmdoc:Graph
                 ] ;
               ui:childIndex 1 ;
             ] ;
-          ui:childIndex 1 ;
+          ui:childIndex 2 ;
+        ] ;
+      ui:child [
+          a ui:dumpScope ;
+          ui:childIndex 0 ;
+          ui:message "DEBUG1: lmdoc:Graph" ;
         ] ;
       ui:child [
           a ui:try ;
@@ -6167,9 +6358,15 @@ lmdoc:Graph
                             ] ;
                         ] ;
                       ui:child [
-                          a ui:CommentNode ;
+                          a ui:dumpScope ;
                           ui:childIndex 1 ;
-                          rdfs:comment "ui:dumpScope ui:message=\"DEBUG1: lmdoc:Graph - input graph {= ?myGraph }\"/" ;
+                          ui:message [
+                              a ui:concat ;
+                              sp:arg1 "DEBUG2: lmdoc:Graph - input graph " ;
+                              sp:arg2 [
+                                  sp:varName "myGraph" ;
+                                ] ;
+                            ] ;
                         ] ;
                       ui:child [
                           a ui:if ;
@@ -6230,7 +6427,7 @@ lmdoc:Graph
                                               ui:child [
                                                   a ui:dumpScope ;
                                                   ui:childIndex 1 ;
-                                                  ui:message "DEBUG2: lmdoc:Graph" ;
+                                                  ui:message "DEBUG3: lmdoc:Graph" ;
                                                 ] ;
                                               ui:child [
                                                   a ui:if ;
@@ -6415,25 +6612,25 @@ lmdoc:Graph
                                                               a ui:CommentNode ;
                                                               ui:childIndex 2 ;
                                                               rdfs:comment """section class=\"informative\" id=\"properties\">
-                                                    <lmdoc:PropertiesSection arg:graph=\"{= ?myGraph }\"
-                                                                             arg:sectionHeading=\"Properties\"/>
-                                                </section""" ;
+        <lmdoc:PropertiesSection arg:graph=\"{= ?myGraph }\"
+                                 arg:sectionHeading=\"Properties\"/>
+    </section""" ;
                                                             ] ;
                                                           ui:child [
                                                               a ui:CommentNode ;
                                                               ui:childIndex 4 ;
                                                               rdfs:comment """section class=\"informative\" id=\"instances\">
-                                                    <lmdoc:InstancesSection arg:graph=\"{= ?myGraph }\"
-                                                                            arg:sectionHeading=\"Instances\"/>
-                                                </section""" ;
+        <lmdoc:InstancesSection arg:graph=\"{= ?myGraph }\"
+                                arg:sectionHeading=\"Instances\"/>
+    </section""" ;
                                                             ] ;
                                                           ui:child [
                                                               a ui:CommentNode ;
                                                               ui:childIndex 5 ;
                                                               rdfs:comment """section>
-                                                    <lmdoc:RestrictedDatatypesSection arg:graph=\"{= ?myGraph }\"
-                                                                                      arg:sectionHeading=\"Restricted Datatypes\"/>
-                                                </section""" ;
+        <lmdoc:RestrictedDatatypesSection arg:graph=\"{= ?myGraph }\"
+                                          arg:sectionHeading=\"Restricted Datatypes\"/>
+    </section""" ;
                                                             ] ;
                                                           ui:childIndex 0 ;
                                                         ] ;
@@ -6532,7 +6729,7 @@ lmdoc:Graph
                 ] ;
               ui:childIndex 0 ;
             ] ;
-          ui:childIndex 0 ;
+          ui:childIndex 1 ;
         ] ;
     ] ;
   ui:responseType ui:HTML ;
@@ -6541,6 +6738,12 @@ lmdoc:Graph
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:Graph&graph=http://www.linkedmodel.org/2.0/schema/vaem""" ;
   rdfs:label "Graph Documentation" ;
   rdfs:subClassOf lmdoc:Pages ;
+.
+lmdoc:GraphElements
+  a ui:NodeClass ;
+  ui:abstract true ;
+  rdfs:label "Graph elements (lmdoc)" ;
+  rdfs:subClassOf lmdoc:Elements ;
 .
 lmdoc:GraphHeader
   a ui:NodeClass ;
@@ -6926,7 +7129,12 @@ lmdoc:GraphHeader
                           html:src [
                               sp:varName "myLogo" ;
                             ] ;
+                          ui:childIndex 1 ;
+                        ] ;
+                      ui:child [
+                          a ui:dumpScope ;
                           ui:childIndex 0 ;
+                          ui:message "DEBUG1: lmdoc:GraphHeader" ;
                         ] ;
                       ui:childIndex 0 ;
                     ] ;
@@ -7901,7 +8109,8 @@ lmdoc:ImageResourceViewer
     ] ;
   rdfs:comment "The LM Doc viewer for URI resources that appear to be images, judged by their file extension." ;
   rdfs:label "Image resource viewer" ;
-  rdfs:subClassOf swa:ImageResourceViewer ;
+  rdfs:seeAlso swa:ImageResourceViewer ;
+  rdfs:subClassOf lmdoc:ObjectViewer ;
 .
 lmdoc:ImportedNamespaces
   a ui:NodeClass ;
@@ -8873,14 +9082,14 @@ lmdoc:Instance
       ui:child [
           a html:Meta ;
           html:content "lmdoc:Instance" ;
-          html:name "manifest-start" ;
-          ui:childIndex 0 ;
+          html:name "manifest-end" ;
+          ui:childIndex 1 ;
         ] ;
       ui:child [
           a html:Meta ;
           html:content "lmdoc:Instance" ;
           html:name "manifest-start" ;
-          ui:childIndex 1 ;
+          ui:childIndex 0 ;
         ] ;
     ] ;
   ui:prototype [
@@ -10932,7 +11141,8 @@ lmdoc:LiteralViewer
     ] ;
   rdfs:comment "A node viewer for literal values, displaying the literal's text. If a language tag is present, then this will be displayed behind the text." ;
   rdfs:label "Literal viewer" ;
-  rdfs:subClassOf swa:LiteralViewer ;
+  rdfs:seeAlso swa:LiteralViewer ;
+  rdfs:subClassOf lmdoc:LiteralViewer ;
 .
 lmdoc:LiteralViewerWithLabel
   a swa:ObjectViewerClass ;
@@ -11074,7 +11284,7 @@ lmdoc:LiteralViewerWithLabel
   ui:responseType ui:HTML ;
   rdfs:comment "A node viewer for literal values, displaying the literal's text. If a language tag is present, then this will be displayed behind the text." ;
   rdfs:label "Literal viewer with label" ;
-  rdfs:subClassOf swa:LiteralViewer ;
+  rdfs:subClassOf lmdoc:LiteralViewer ;
 .
 lmdoc:MagicProperties
   a spin:MagicProperty ;
@@ -11399,6 +11609,7 @@ lmdoc:MyBNodeViewer
             ] ;
           sp:arg2 "blank" ;
         ] ;
+      swa:weight 50 ;
     ] ;
   ui:private true ;
   ui:prototype [
@@ -11427,7 +11638,7 @@ lmdoc:MyBNodeViewer
     ] ;
   rdfs:comment "My object viewer for blank nodes." ;
   rdfs:label "BNode viewer" ;
-  rdfs:subClassOf swa:BNodeViewer ;
+  rdfs:subClassOf lmdoc:BNodeViewer ;
 .
 lmdoc:NoAssociations
   a spin:Function ;
@@ -11604,20 +11815,6 @@ lmdoc:ObjectElements
   spin:constraint [
       a spl:Argument ;
       spl:optional true ;
-      spl:predicate arg:elementId ;
-      spl:valueType xsd:string ;
-      rdfs:comment "An optional HTML ID for the element containing this object." ;
-    ] ;
-  spin:constraint [
-      a spl:Argument ;
-      spl:optional true ;
-      spl:predicate arg:subject ;
-      spl:valueType rdfs:Resource ;
-      rdfs:comment "The subject resource of the form or widget. May be left empty in which case the subjectType will be used." ;
-    ] ;
-  spin:constraint [
-      a spl:Argument ;
-      spl:optional true ;
       spl:predicate arg:subject ;
       spl:valueType rdfs:Resource ;
       rdfs:comment "The subject resource of the form or widget. May be left empty in which case the subjectType will be used." ;
@@ -11628,20 +11825,12 @@ lmdoc:ObjectElements
       spl:valueType rdf:Property ;
       rdfs:comment "The predicate." ;
     ] ;
-  spin:constraint [
-      a spl:Argument ;
-      spl:predicate arg:predicate ;
-      spl:valueType rdf:Property ;
-      rdfs:comment "The predicate." ;
-    ] ;
-  ui:abstract true ;
-  ui:private true ;
-  rdfs:comment "Abstract superclass for all elements that take a subject/predicate combination and then display or edit the objects." ;
-  rdfs:label "Object elements" ;
-  rdfs:subClassOf lmdoc:ViewElements ;
+  rdfs:seeAlso swa:ObjectElements ;
+  rdfs:subClassOf lmdoc:FormElements ;
 .
 lmdoc:ObjectViewer
   a swa:ObjectViewerClass ;
+  ui:overrides swa:ObjectViewer ;
   ui:private true ;
   ui:prototype [
       a ui:group ;
@@ -11766,7 +11955,18 @@ lmdoc:ObjectViewer
                         ] ;
                     ] ;
                 ] ;
+              ui:childIndex 1 ;
+            ] ;
+          ui:child [
+              a ui:dumpScope ;
               ui:childIndex 0 ;
+              ui:message [
+                  a ui:concat ;
+                  sp:arg1 "DEBUG1: lmdoc:ObjectViewer " ;
+                  sp:arg2 [
+                      sp:varName "class" ;
+                    ] ;
+                ] ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -11776,7 +11976,154 @@ lmdoc:ObjectViewer
 - ?kind: \"literal\", \"blank\", \"uri\" or \"image\"
 - ?predicate: the property being displayed""" ;
   rdfs:label "Object viewer" ;
+  rdfs:seeAlso swa:ObjectViewer ;
   rdfs:subClassOf lmdoc:ObjectWidget ;
+.
+lmdoc:ObjectViewerRow
+  a swa:ObjectWidgetRowClass ;
+  ui:private true ;
+  ui:prototype [
+      a ui:group ;
+      let:datatype [
+          a sp:if ;
+          sp:arg1 [
+              a sp:isLiteral ;
+              sp:arg1 [
+                  sp:varName "object" ;
+                ] ;
+            ] ;
+          sp:arg2 [
+              a sp:datatype ;
+              sp:arg1 [
+                  sp:varName "object" ;
+                ] ;
+            ] ;
+          sp:arg3 [
+              sp:varName "no" ;
+            ] ;
+        ] ;
+      let:uid [
+          a ui:uniqueId ;
+        ] ;
+      ui:child [
+          a html:Div ;
+          html:about [
+              a sp:if ;
+              sp:arg1 [
+                  a sp:isIRI ;
+                  sp:arg1 [
+                      sp:varName "subject" ;
+                    ] ;
+                ] ;
+              sp:arg2 [
+                  sp:varName "subject" ;
+                ] ;
+              sp:arg3 [
+                  sp:varName "noBNodes" ;
+                ] ;
+            ] ;
+          html:class "swa-widget-row" ;
+          html:content [
+              a sp:if ;
+              sp:arg1 [
+                  a sp:isLiteral ;
+                  sp:arg1 [
+                      sp:varName "object" ;
+                    ] ;
+                ] ;
+              sp:arg2 [
+                  sp:varName "object" ;
+                ] ;
+              sp:arg3 [
+                  sp:varName "no" ;
+                ] ;
+            ] ;
+          html:datatype [
+              sp:varName "datatype" ;
+            ] ;
+          html:href [
+              a sp:if ;
+              sp:arg1 [
+                  a sp:isIRI ;
+                  sp:arg1 [
+                      sp:varName "object" ;
+                    ] ;
+                ] ;
+              sp:arg2 [
+                  sp:varName "object" ;
+                ] ;
+              sp:arg3 [
+                  sp:varName "no" ;
+                ] ;
+            ] ;
+          html:id [
+              sp:varName "uid" ;
+            ] ;
+          html:property [
+              a sp:if ;
+              sp:arg1 [
+                  a sp:isLiteral ;
+                  sp:arg1 [
+                      sp:varName "object" ;
+                    ] ;
+                ] ;
+              sp:arg2 [
+                  a ui:encodeNode ;
+                  sp:arg1 [
+                      sp:varName "predicate" ;
+                    ] ;
+                ] ;
+              sp:arg3 [
+                  sp:varName "no" ;
+                ] ;
+            ] ;
+          html:rel [
+              a sp:if ;
+              sp:arg1 [
+                  a sp:isIRI ;
+                  sp:arg1 [
+                      sp:varName "object" ;
+                    ] ;
+                ] ;
+              sp:arg2 [
+                  a ui:encodeNode ;
+                  sp:arg1 [
+                      sp:varName "predicate" ;
+                    ] ;
+                ] ;
+              sp:arg3 [
+                  sp:varName "no" ;
+                ] ;
+            ] ;
+          ui:addNamespace [
+              a sp:if ;
+              sp:arg1 [
+                  a swa:hasPrefix ;
+                  arg:resource [
+                      sp:varName "predicate" ;
+                    ] ;
+                ] ;
+              sp:arg2 [
+                  sp:varName "predicate" ;
+                ] ;
+              sp:arg3 [
+                  sp:varName "none" ;
+                ] ;
+            ] ;
+          ui:child [
+              a lmdoc:ObjectViewer ;
+              arg:uid [
+                  sp:varName "uid" ;
+                ] ;
+              ui:args "*" ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  rdfs:comment "A row in an ObjectViewer." ;
+  rdfs:label "Object viewer row (lmdoc)" ;
+  rdfs:subClassOf lmdoc:ObjectWidgetRow ;
 .
 lmdoc:ObjectWidget
   a swa:ObjectWidgetClass ;
@@ -11845,6 +12192,7 @@ lmdoc:ObjectWidgetRow
     ] ;
   rdfs:comment "Superclass for the widget row types." ;
   rdfs:label "Object widget row" ;
+  rdfs:seeAlso swa:ObjectWidgetRow ;
   rdfs:subClassOf lmdoc:ObjectElements ;
 .
 lmdoc:Objects
@@ -13451,7 +13799,7 @@ lmdoc:PropertiesSummaryView
     ] ;
   ui:responseType ui:HTML ;
   rdfs:label "Properties Summary View" ;
-  rdfs:subClassOf lmdoc:Parts ;
+  rdfs:subClassOf lmdoc:Sections ;
 .
 lmdoc:PropertiesTable
   a ui:NodeClass ;
@@ -14321,6 +14669,91 @@ lmdoc:PropertyDetailsTable
   rdfs:label "Property details table" ;
   rdfs:subClassOf lmdoc:Parts ;
 .
+lmdoc:RDFListViewer
+  a swa:ObjectViewerClass ;
+  swa:objectWidgetWeight [
+      a swa:WeightedExpression ;
+      swa:expression [
+          a sp:eq ;
+          sp:arg1 [
+              sp:varName "kind" ;
+            ] ;
+          sp:arg2 "list" ;
+        ] ;
+      swa:weight 50 ;
+    ] ;
+  ui:overrides swa:RDFListViewer ;
+  ui:prototype [
+      a html:Div ;
+      html:class "swa-rdf-list-viewer" ;
+      ui:child [
+          a html:Ol ;
+          html:class "swa-rdf-list-viewer-ol" ;
+          ui:child [
+              a ui:forEach ;
+              ui:child [
+                  a html:Li ;
+                  html:class "swa-rdf-list-viewer-li" ;
+                  ui:child [
+                      a lmdoc:ObjectViewer ;
+                      arg:object [
+                          sp:varName "member" ;
+                        ] ;
+                      arg:predicate rdf:first ;
+                      arg:subject [
+                          sp:varName "item" ;
+                        ] ;
+                      ui:childIndex 0 ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+              ui:resultSet [
+                  a sp:Select ;
+                  sp:resultVariables (
+                      [
+                        sp:varName "member" ;
+                      ]
+                      [
+                        sp:varName "item" ;
+                      ]
+                    ) ;
+                  sp:where (
+                      [
+                        a sp:TriplePath ;
+                        sp:object [
+                            sp:varName "item" ;
+                          ] ;
+                        sp:path [
+                            a sp:ModPath ;
+                            sp:modMax -2 ;
+                            sp:modMin 0 ;
+                            sp:subPath rdf:rest ;
+                          ] ;
+                        sp:subject [
+                            sp:varName "object" ;
+                          ] ;
+                      ]
+                      [
+                        sp:object [
+                            sp:varName "member" ;
+                          ] ;
+                        sp:predicate rdf:first ;
+                        sp:subject [
+                            sp:varName "item" ;
+                          ] ;
+                      ]
+                    ) ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+    ] ;
+  rdfs:comment "A viewer for rdf:Lists, arranging values vertically in a scrollable container." ;
+  rdfs:label "RDF list viewer" ;
+  rdfs:seeAlso swa:RDFListViewer ;
+  rdfs:subClassOf lmdoc:ObjectViewer ;
+.
 lmdoc:ReferencesToResourceInGivenGraph
   a spin:SelectTemplate ;
   spin:body [
@@ -14720,7 +15153,7 @@ lmdoc:ResourceFormBody
     ] ;
   rdfs:comment "The lmdoc view for rdfs:Resource, with widget groups for Annotation Properties and Other Properties." ;
   rdfs:label "Resource form body" ;
-  rdfs:subClassOf swa:ResourceFormBody ;
+  rdfs:subClassOf lmdoc:ResourceFormBody ;
 .
 lmdoc:ResourceHeader
   a ui:NodeClass ;
@@ -15859,19 +16292,6 @@ lmdoc:RestrictedDatatypesSection
                     ] ;
                   ui:child [
                       a html:Div ;
-                      html:class "pt41px pl20px" ;
-                      ui:child [
-                          a lmdoc:Object ;
-                          arg:predicate owl:withRestrictions ;
-                          arg:subject [
-                              sp:varName "resource" ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
-                      ui:childIndex 10 ;
-                    ] ;
-                  ui:child [
-                      a html:Div ;
                       html:class "swa-sub-title" ;
                       ui:child [
                           a ui:TextNode ;
@@ -15924,6 +16344,13 @@ lmdoc:RestrictedDatatypesSection
                             ] ;
                         ] ;
                       ui:childIndex 0 ;
+                    ] ;
+                  ui:child [
+                      a ui:CommentNode ;
+                      ui:childIndex 10 ;
+                      rdfs:comment """div class=\"pt41px pl20px\">
+                    <lmdoc:Object arg:predicate=\"owl:withRestrictions\" arg:subject=\"{= ?resource }\"/>
+                </div""" ;
                     ] ;
                   ui:child [
                       a ui:if ;
@@ -16071,6 +16498,66 @@ lmdoc:SubjectElements
   ui:abstract true ;
   ui:private true ;
   rdfs:subClassOf lmdoc:ViewElements ;
+.
+lmdoc:SubjectViewer
+  a swa:SubjectViewerClass ;
+  ui:private true ;
+  ui:prototype [
+      a html:Div ;
+      html:class "swa-object-widget" ;
+      let:class [
+          a swa:bestSubjectViewerClass ;
+          arg:object [
+              sp:varName "object" ;
+            ] ;
+          arg:predicate [
+              sp:varName "predicate" ;
+            ] ;
+          arg:subject [
+              sp:varName "subject" ;
+            ] ;
+        ] ;
+      ui:child [
+          a ui:dynamicView ;
+          arg:object [
+              sp:varName "object" ;
+            ] ;
+          arg:predicate [
+              sp:varName "predicate" ;
+            ] ;
+          arg:subject [
+              sp:varName "subject" ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:class [
+              sp:varName "class" ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:comment "A viewer of subjects. Will be substituted with the most suitable viewer class." ;
+  rdfs:label "Subject viewer (lmdoc)" ;
+  rdfs:subClassOf lmdoc:SubjectWidget ;
+.
+lmdoc:SubjectWidget
+  a swa:SubjectWidgetClass ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate arg:subject ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The subject being displayed." ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate arg:uid ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The uid used to identify the triple." ;
+    ] ;
+  ui:abstract true ;
+  ui:private true ;
+  rdfs:comment "Superclass of widgets for a given subject." ;
+  rdfs:label "Subject widget (lmdoc)" ;
+  rdfs:subClassOf lmdoc:SubjectElements ;
 .
 lmdoc:SubjectWidgetRow
   a ui:SubjectWidgetRowClass ;
@@ -16964,7 +17451,7 @@ lmdoc:SwitchableForm
     ] ;
   rdfs:comment "A form displaying details of a given resource. The form displays a header on top, with label and type of the resource. If arg:editable is set to true, the form will have a button at the bottom to switch it to edit mode." ;
   rdfs:label "View form" ;
-  rdfs:subClassOf swa:Form ;
+  rdfs:subClassOf lmdoc:Form ;
 .
 lmdoc:TOCEntry
   a ui:NodeClass ;
@@ -17258,7 +17745,7 @@ lmdoc:URIResourceSubjectViewer
     ] ;
   rdfs:comment "A viewer for URI resources, displaying a hyperlink to that resource." ;
   rdfs:label "URI resource subject viewer" ;
-  rdfs:subClassOf swa:URIResourceSubjectViewer ;
+  rdfs:subClassOf lmdoc:SubjectViewer ;
 .
 lmdoc:URIResourceViewer
   a swa:ObjectViewerClass ;
@@ -17383,6 +17870,7 @@ lmdoc:URIResourceViewer
         ] ;
     ] ;
   rdfs:label "URI resource viewer" ;
+  rdfs:seeAlso swa:URIResourceViewer ;
   rdfs:subClassOf lmdoc:ObjectViewer ;
 .
 lmdoc:UpdateGraphMetadata
@@ -18562,14 +19050,11 @@ lmdoc:ViewAsTurtle
               sp:varName "id" ;
             ] ;
           ui:child [
-              a ui:debug ;
-              ui:child [
-                  a ui:dumpGraph ;
-                  ui:childIndex 0 ;
-                  ui:filePath "/qudt.org/debug/resources-popup.ttl" ;
-                  ui:graph ui:tempGraph ;
-                ] ;
+              a ui:CommentNode ;
               ui:childIndex 1 ;
+              rdfs:comment """ui:debug>
+        <ui:dumpGraph ui:filePath=\"/vaem.linkedmodel.org/debug/resources-popup.ttl\" ui:graph=\"ui:tempGraph\"/>
+    </ui:debug""" ;
             ] ;
           ui:child [
               a ui:setContext ;
