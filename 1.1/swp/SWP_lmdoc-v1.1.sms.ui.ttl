@@ -6612,25 +6612,25 @@ lmdoc:Graph
                                                               a ui:CommentNode ;
                                                               ui:childIndex 2 ;
                                                               rdfs:comment """section class=\"informative\" id=\"properties\">
-        <lmdoc:PropertiesSection arg:graph=\"{= ?myGraph }\"
-                                 arg:sectionHeading=\"Properties\"/>
-    </section""" ;
+    <lmdoc:PropertiesSection arg:graph=\"{= ?myGraph }\"
+                             arg:sectionHeading=\"Properties\"/>
+</section""" ;
                                                             ] ;
                                                           ui:child [
                                                               a ui:CommentNode ;
                                                               ui:childIndex 4 ;
                                                               rdfs:comment """section class=\"informative\" id=\"instances\">
-        <lmdoc:InstancesSection arg:graph=\"{= ?myGraph }\"
-                                arg:sectionHeading=\"Instances\"/>
-    </section""" ;
+    <lmdoc:InstancesSection arg:graph=\"{= ?myGraph }\"
+                            arg:sectionHeading=\"Instances\"/>
+</section""" ;
                                                             ] ;
                                                           ui:child [
                                                               a ui:CommentNode ;
                                                               ui:childIndex 5 ;
                                                               rdfs:comment """section>
-        <lmdoc:RestrictedDatatypesSection arg:graph=\"{= ?myGraph }\"
-                                          arg:sectionHeading=\"Restricted Datatypes\"/>
-    </section""" ;
+    <lmdoc:RestrictedDatatypesSection arg:graph=\"{= ?myGraph }\"
+                                      arg:sectionHeading=\"Restricted Datatypes\"/>
+</section""" ;
                                                             ] ;
                                                           ui:childIndex 0 ;
                                                         ] ;
@@ -6645,6 +6645,9 @@ lmdoc:Graph
                                                     ] ;
                                                   ui:child [
                                                       a lmdoc:GraphHeader ;
+                                                      arg:graph [
+                                                          sp:varName "myGraph" ;
+                                                        ] ;
                                                       arg:metadata [
                                                           sp:varName "myGraphMetadata" ;
                                                         ] ;
@@ -6763,7 +6766,7 @@ lmdoc:GraphHeader
         ] ;
       ui:child [
           a ui:group ;
-          let:thisVersion [
+          let:maybeCurrentPublishedVersion [
               a sp:coalesce ;
               sp:arg1 [
                   a xsd:string ;
@@ -6776,6 +6779,22 @@ lmdoc:GraphHeader
                     ] ;
                 ] ;
               sp:arg2 "none" ;
+            ] ;
+          let:thisVersion [
+              a lmdoc:buildDocURL ;
+              arg:metadata [
+                  sp:varName "myGraphMetadata" ;
+                ] ;
+            ] ;
+          ui:child [
+              a ui:CommentNode ;
+              ui:childIndex 0 ;
+              rdfs:comment " update graph with new version doc location" ;
+            ] ;
+          ui:child [
+              a ui:CommentNode ;
+              ui:childIndex 1 ;
+              rdfs:comment " lmdoc:UpdateGraphMetadata " ;
             ] ;
           ui:child [
               a ui:group ;
@@ -6922,6 +6941,34 @@ lmdoc:GraphHeader
                           a html:P ;
                           html:class "lm-para-compressed size-14" ;
                           ui:child [
+                              a html:A ;
+                              html:href [
+                                  sp:varName "thisVersion" ;
+                                ] ;
+                              ui:child [
+                                  a ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text [
+                                      sp:varName "thisVersion" ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 1 ;
+                            ] ;
+                          ui:child [
+                              a html:B ;
+                              ui:child [
+                                  a ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text "Latest published version: " ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 2 ;
+                        ] ;
+                      ui:child [
+                          a html:P ;
+                          html:class "lm-para-compressed size-14" ;
+                          ui:child [
                               a html:B ;
                               ui:child [
                                   a ui:TextNode ;
@@ -6997,45 +7044,6 @@ lmdoc:GraphHeader
                                 ] ;
                             ] ;
                           ui:childIndex 6 ;
-                        ] ;
-                      ui:child [
-                          a html:P ;
-                          html:class "lm-para-compressed size-14" ;
-                          ui:child [
-                              a html:B ;
-                              ui:child [
-                                  a ui:TextNode ;
-                                  ui:childIndex 0 ;
-                                  ui:text "Latest published version: " ;
-                                ] ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:child [
-                              a ui:if ;
-                              ui:child [
-                                  a html:A ;
-                                  html:href [
-                                      sp:varName "thisVersion" ;
-                                    ] ;
-                                  ui:child [
-                                      a ui:TextNode ;
-                                      ui:childIndex 0 ;
-                                      ui:text [
-                                          sp:varName "thisVersion" ;
-                                        ] ;
-                                    ] ;
-                                  ui:childIndex 0 ;
-                                ] ;
-                              ui:childIndex 1 ;
-                              ui:condition [
-                                  a sp:ne ;
-                                  sp:arg1 [
-                                      sp:varName "thisVersion" ;
-                                    ] ;
-                                  sp:arg2 "none" ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 2 ;
                         ] ;
                       ui:child [
                           a html:P ;
@@ -7140,7 +7148,7 @@ lmdoc:GraphHeader
                     ] ;
                   ui:childIndex 0 ;
                 ] ;
-              ui:childIndex 0 ;
+              ui:childIndex 2 ;
             ] ;
           ui:childIndex 0 ;
         ] ;
@@ -19817,6 +19825,166 @@ lmdoc:buildDocFilePath
     ] ;
   rdfs:label "build doc file path" ;
 .
+lmdoc:buildDocURL
+  a spin:Function ;
+  spin:body [
+      a sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "url" ;
+          ]
+        ) ;
+      sp:where (
+          [
+            a sp:Bind ;
+            sp:expression [
+                a fn:substring ;
+                sp:arg1 [
+                    a sp:str ;
+                    sp:arg1 [
+                        a afn:now ;
+                      ] ;
+                  ] ;
+                sp:arg2 1 ;
+                sp:arg3 4 ;
+              ] ;
+            sp:variable [
+                sp:varName "year" ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "owner" ;
+              ] ;
+            sp:predicate vaem:owner ;
+            sp:subject [
+                sp:varName "metadata" ;
+              ] ;
+          ]
+          [
+            a sp:TriplePath ;
+            sp:object [
+                sp:varName "graphType" ;
+              ] ;
+            sp:path [
+                a sp:SeqPath ;
+                sp:path1 vaem:hasGraphRole ;
+                sp:path2 vaem:filePrefix ;
+              ] ;
+            sp:subject [
+                sp:varName "metadata" ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "subject" ;
+              ] ;
+            sp:predicate dct:subject ;
+            sp:subject [
+                sp:varName "metadata" ;
+              ] ;
+          ]
+          [
+            a sp:Optional ;
+            sp:elements (
+                [
+                  sp:object [
+                      sp:varName "version" ;
+                    ] ;
+                  sp:predicate vaem:revision ;
+                  sp:subject [
+                      sp:varName "metadata" ;
+                    ] ;
+                ]
+              ) ;
+          ]
+          [
+            a sp:Bind ;
+            sp:expression [
+                a spif:regex ;
+                sp:arg1 [
+                    a spif:upperCase ;
+                    sp:arg1 [
+                        sp:varName "subject" ;
+                      ] ;
+                  ] ;
+                sp:arg2 " " ;
+                sp:arg3 "-" ;
+              ] ;
+            sp:variable [
+                sp:varName "subjectPart" ;
+              ] ;
+          ]
+          [
+            a sp:Bind ;
+            sp:expression [
+                a sp:concat ;
+                sp:arg1 "http://www." ;
+                sp:arg2 [
+                    sp:varName "owner" ;
+                  ] ;
+                sp:arg3 "/doc/" ;
+                sp:arg4 [
+                    sp:varName "year" ;
+                  ] ;
+                sp:arg5 "/DOC_" ;
+                sp:arg6 [
+                    sp:varName "graphType" ;
+                  ] ;
+                sp:arg7 "-" ;
+                sp:arg8 [
+                    sp:varName "subjectPart" ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "versionlessURL" ;
+              ] ;
+          ]
+          [
+            a sp:Bind ;
+            sp:expression [
+                a sp:if ;
+                sp:arg1 [
+                    a sp:bound ;
+                    sp:arg1 [
+                        sp:varName "version" ;
+                      ] ;
+                  ] ;
+                sp:arg2 [
+                    a sp:concat ;
+                    sp:arg1 [
+                        sp:varName "versionlessURL" ;
+                      ] ;
+                    sp:arg2 "-v" ;
+                    sp:arg3 [
+                        sp:varName "version" ;
+                      ] ;
+                    sp:arg4 ".html" ;
+                  ] ;
+                sp:arg3 [
+                    a sp:concat ;
+                    sp:arg1 [
+                        sp:varName "versionlessURL" ;
+                      ] ;
+                    sp:arg2 ".html" ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "url" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate arg:metadata ;
+      spl:valueType vaem:GraphMetaData ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/1.1/swp/lmdoc> ;
+  rdfs:label "build doc URL" ;
+  rdfs:subClassOf lmdoc:Functions ;
+.
 lmdoc:buildGraphMetadataIdentifiers
   a spin:Template ;
   spin:body [
@@ -20580,6 +20748,40 @@ lmdoc:getCitations
   rdfs:comment "Gets all citations on a given instance." ;
   rdfs:label "get citations" ;
   rdfs:subClassOf lmdoc:SelectTemplates ;
+.
+lmdoc:getCurrentYear
+  a spin:Function ;
+  spin:body [
+      a sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "year" ;
+          ]
+        ) ;
+      sp:where (
+          [
+            a sp:Bind ;
+            sp:expression [
+                a fn:substring ;
+                sp:arg1 [
+                    a sp:str ;
+                    sp:arg1 [
+                        a afn:now ;
+                      ] ;
+                  ] ;
+                sp:arg2 1 ;
+                sp:arg3 4 ;
+              ] ;
+            sp:variable [
+                sp:varName "year" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/1.1/swp/lmdoc> ;
+  rdfs:label "get current year" ;
+  rdfs:subClassOf lmdoc:Functions ;
 .
 lmdoc:getDefiningGraph
   a spin:Function ;
