@@ -9,67 +9,67 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 dct:abstract
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   rdfs:isDefinedBy dct: ;
   rdfs:label "abstract" ;
   rdfs:range xsd:string ;
 .
 dct:author
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   rdfs:isDefinedBy dct: ;
   rdfs:label "author" ;
   rdfs:range xsd:string ;
 .
 dct:contributor
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   rdfs:isDefinedBy dct: ;
   rdfs:label "contributor" ;
   rdfs:range xsd:string ;
 .
 dct:created
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   rdfs:isDefinedBy dct: ;
   rdfs:label "created" ;
   rdfs:range xsd:date ;
 .
 dct:creator
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   rdfs:isDefinedBy dct: ;
   rdfs:label "creator" ;
   rdfs:range xsd:string ;
 .
 dct:description
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   rdfs:isDefinedBy dct: ;
   rdfs:label "description" ;
   rdfs:range rdf:HTML ;
 .
 dct:modified
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   rdfs:isDefinedBy dct: ;
   rdfs:label "modified" ;
   rdfs:range xsd:date ;
 .
 dct:replaces
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   rdfs:isDefinedBy dct: ;
   rdfs:label "replaces" ;
   rdfs:range rdfs:Resource ;
 .
 dct:rights
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   rdfs:isDefinedBy dct: ;
   rdfs:label "rights" ;
   rdfs:range xsd:string ;
 .
 dct:subject
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   rdfs:isDefinedBy dct: ;
   rdfs:label "subject" ;
   rdfs:range xsd:string ;
 .
 dct:title
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   rdfs:isDefinedBy dct: ;
   rdfs:label "title" ;
   rdfs:range xsd:string ;
@@ -79,12 +79,12 @@ voag:GMD_VOAG
   vaem:isMetadataFor <http://voag.linkedmodel.org/schema/voag> ;
 .
 <http://www.linkedmodel.org/2.0/schema/vaem>
-  rdf:type owl:Ontology ;
+  a owl:Ontology ;
   vaem:hasGraphMetadata vaem:GMD_VAEM ;
   owl:versionIRI <http://www.linkedmodel.org/2.0/schema/vaem> ;
 .
 vaem:Aspect
-  rdf:type owl:Class ;
+  a owl:Class ;
   dct:description "Aspect is used to distinguish among sets of features of a domain or subject area. The term is borrowed from \"aspect-oriented\" programming, where it is used to separate concerns. An ontology may be characterized by this dimension so as to parition features that are orthogonal. For example,  in a systems ontology there may be aspects for \"structure\", \"function\", \"behavior\" and \"interface\" or \"interoperability\". A viewpoint can be distinguished by \"aspects\". For example the \"information viewpoint\" of an application can be partitioned into separate graphs for the \"security\", \"operational\" and\"data retention\" aspects."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -95,7 +95,7 @@ vaem:CatalogEntry
   dct:description "VAEM Governed Object class is a placeholder for concepts that are fully defined by the voag:GovernedObject concept hierarchy for building a catalog of ontologies and graphs"^^rdf:HTML ;
 .
 vaem:CodelistGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that holds enumerations that are codelists."^^rdf:HTML ;
   vaem:filePrefix "CODELIST" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -103,7 +103,7 @@ vaem:CodelistGraph
   rdfs:label "Codelist graph" ;
 .
 vaem:CollectionGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A \"vaem:CollectionGraph\" is a graph that aggregates other graphs using \"owl:imports\" statements."^^rdf:HTML ;
   vaem:filePrefix "COLLECTION" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -111,7 +111,7 @@ vaem:CollectionGraph
   rdfs:label "Collection graph" ;
 .
 vaem:ConfigurationGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that serves as a registy or provides other parameter settings."^^rdf:HTML ;
   vaem:filePrefix "CONFIG" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -119,7 +119,7 @@ vaem:ConfigurationGraph
   rdfs:label "Configuration Graph" ;
 .
 vaem:ConnectSetGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that specifies mapings between external data sources and a neutral model."^^rdf:HTML ;
   vaem:filePrefix "CONNECTSET" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -127,7 +127,7 @@ vaem:ConnectSetGraph
   rdfs:label "Connect set graph" ;
 .
 vaem:ConstraintsGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that is for defining constraints using SPIN."^^rdf:HTML ;
   vaem:filePrefix "CONSTRAINTS" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -135,7 +135,7 @@ vaem:ConstraintsGraph
   rdfs:label "Constraints graph" ;
 .
 vaem:ControllerGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that acts as a controller in an MVC-like framework."^^rdf:HTML ;
   vaem:filePrefix "CONTROLLER" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -143,7 +143,7 @@ vaem:ControllerGraph
   rdfs:label "Controller graph" ;
 .
 vaem:CurationGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph to hold metadata that is needed to describe, govern and provision another graph. A curation graph will likely use VOAG and VAEM for this purpose. The property \"vaem:curationGraph\" is used to link to the graph (or graphs) being curated"^^rdf:HTML ;
   vaem:filePrefix "CURATION" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -151,7 +151,7 @@ vaem:CurationGraph
   rdfs:label "Curation graph" ;
 .
 vaem:DataGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that holds data instances."^^rdf:HTML ;
   vaem:filePrefix "DATA" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -159,7 +159,7 @@ vaem:DataGraph
   rdfs:label "Data graph" ;
 .
 vaem:DatatypesGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that holds datatype specifications."^^rdf:HTML ;
   vaem:filePrefix "DATATYPES" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -167,7 +167,7 @@ vaem:DatatypesGraph
   rdfs:label "Datatypes graph" ;
 .
 vaem:Dimension
-  rdf:type owl:Class ;
+  a owl:Class ;
   dct:description "A dimension identifies a separation of concens that serves as a way to categorize an ontology graph. In VAEM,  the notion of \"Dimension\" is partitioned into \"Aspect\", \"Discipline\", \"Domain\" and \"Viewpoint\". "^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -175,7 +175,7 @@ vaem:Dimension
   rdfs:subClassOf owl:Thing ;
 .
 vaem:Discipline
-  rdf:type owl:Class ;
+  a owl:Class ;
   dct:description "A discipline is a specific area of work or study. Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.  In VAEM, discipline is used as a dimension for characterizing an ontology graph"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -183,7 +183,7 @@ vaem:Discipline
   rdfs:subClassOf vaem:Dimension ;
 .
 vaem:DocumentationGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that is soley for the purpose of generating documentation."^^rdf:HTML ;
   vaem:filePrefix "DOC" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -191,7 +191,7 @@ vaem:DocumentationGraph
   rdfs:label "Documentation graph" ;
 .
 vaem:Domain
-  rdf:type owl:Class ;
+  a owl:Class ;
   dct:description "A domain is a subject area of interest. Examples of domains are \"enterprise\", \"process\", \"organization\" and \"system\". In VAEM, \"Domain\" is used as a dimension for characterizing an ontology graph"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -199,7 +199,7 @@ vaem:Domain
   rdfs:subClassOf vaem:Dimension ;
 .
 vaem:DynamicGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph which holds session-dependent data."^^rdf:HTML ;
   vaem:filePrefix "DYNAMIC" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -207,7 +207,7 @@ vaem:DynamicGraph
   rdfs:label "Dynamic Graph" ;
 .
 vaem:EditorGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph which defines an SWA/SWP editor"^^rdf:HTML ;
   vaem:filePrefix "EDITOR" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -215,7 +215,7 @@ vaem:EditorGraph
   rdfs:label "Editor Graph" ;
 .
 vaem:ExporterGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph which has scripts and or rules for exporting data."^^rdf:HTML ;
   vaem:filePrefix "EXPORTER" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -223,7 +223,7 @@ vaem:ExporterGraph
   rdfs:label "Exporter Graph" ;
 .
 vaem:FunctionsGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that defines SPIN functions."^^rdf:HTML ;
   vaem:filePrefix "FUNCTIONS" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -231,7 +231,7 @@ vaem:FunctionsGraph
   rdfs:label "Functions graph" ;
 .
 vaem:GMD_VAEM
-  rdf:type vaem:GraphMetaData ;
+  a vaem:GraphMetaData ;
   dct:abstract "VAEM stands for \"Vocabulary for Attaching Essential Metadata\". What VAEM regards as essential metadata is data about dates and times, confidentiality, and other characterisitic qualifiers of the ontology, but also references to where a ontology is documented and where to find ontology registration for governance, attribution and provenance. VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix \"dct\". VAEM is OWL-DL compliant." ;
   dct:created "2011-04-20"^^xsd:date ;
   dct:modified "2016-12-19"^^xsd:date ;
@@ -265,7 +265,7 @@ vaem:GMD_VAEM
   rdfs:label "VAEM Schema Version 2.0 Metadata" ;
 .
 vaem:GraphMetaData
-  rdf:type owl:Class ;
+  a owl:Class ;
   dct:description "\"vaem:GraphMetaData\" defines basic metadata for the registration and publishing of a graph.  For specificaiton of governance the vocabulary \"VOAG\" may be used."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -273,146 +273,146 @@ vaem:GraphMetaData
   rdfs:seeAlso <http://voag.linkedmodel.org/vocab/voag> ;
   rdfs:subClassOf owl:Thing ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:allValuesFrom vaem:Aspect ;
       owl:onProperty vaem:hasAspect ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:allValuesFrom vaem:Discipline ;
       owl:onProperty vaem:hasDiscipline ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:allValuesFrom vaem:Domain ;
       owl:onProperty vaem:hasDomain ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:allValuesFrom vaem:GraphRole ;
       owl:onProperty vaem:hasGraphRole ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:allValuesFrom vaem:Party ;
       owl:onProperty vaem:hasOwner ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:allValuesFrom vaem:Party ;
       owl:onProperty vaem:hasSteward ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:allValuesFrom vaem:Viewpoint ;
       owl:onProperty vaem:hasViewpoint ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:allValuesFrom rdf:HTML ;
       owl:onProperty vaem:description ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:cardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:name ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:hasIdentifier ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:hasLicenseType ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:hasSteward ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:intent ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:latestPublishedVersion ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:namespace ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:namespacePrefix ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:owner ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:previousPublishedVersion ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:publishedDate ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:rdfxmlFileURL ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:releaseDate ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:revision ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:specificity ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:turtleFileURL ;
     ] ;
 .
 vaem:GraphRole
-  rdf:type owl:Class ;
+  a owl:Class ;
   dct:description "GraphRole is used to characterize how a graph of resources participates in an ontology set.  For example, a graph can be a schema, vocabulary, dataset, script, or ruleset"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Graph role" ;
   rdfs:subClassOf owl:Thing ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:description ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:filePrefix ;
     ] ;
 .
 vaem:ImporterGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph which has scripts and or rules for importing data."^^rdf:HTML ;
   vaem:filePrefix "IMPORTER" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -420,7 +420,7 @@ vaem:ImporterGraph
   rdfs:label "Importer Graph" ;
 .
 vaem:LinkSetGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that holds statements that specify links between resources."^^rdf:HTML ;
   vaem:filePrefix "LINKSET" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -428,7 +428,7 @@ vaem:LinkSetGraph
   rdfs:label "Link Set graph" ;
 .
 vaem:MappingGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that specifies a transformation of a graph into another graph or graphs. Invariably this is a SPINMap graph using SPARQL Rules (SPIN) to express the transforms."^^rdf:HTML ;
   vaem:filePrefix "MAPPINGS" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -436,7 +436,7 @@ vaem:MappingGraph
   rdfs:label "Mapping graph" ;
 .
 vaem:ModelGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph which specifies one or more models."^^rdf:HTML ;
   vaem:filePrefix "MODEL" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -444,30 +444,30 @@ vaem:ModelGraph
   rdfs:label "Model Graph" ;
 .
 vaem:Party
-  rdf:type owl:Class ;
+  a owl:Class ;
   dct:description "A \"Party\" is a generalization for an actor that may be realized as a person, organizaiton or named role."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Party" ;
   rdfs:subClassOf owl:Thing ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:cardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:name ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:id ;
     ] ;
   rdfs:subClassOf [
-      rdf:type owl:Restriction ;
+      a owl:Restriction ;
       owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
       owl:onProperty vaem:url ;
     ] ;
 .
 vaem:ProjectGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph which defines a project type."^^rdf:HTML ;
   vaem:filePrefix "PROJECT" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -475,7 +475,7 @@ vaem:ProjectGraph
   rdfs:label "Project Type Graph" ;
 .
 vaem:ProxyGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that represents an external data source, or schema, as an ontology model."^^rdf:HTML ;
   vaem:filePrefix "PROXY" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -483,7 +483,7 @@ vaem:ProxyGraph
   rdfs:label "Proxy graph" ;
 .
 vaem:ReferenceDataGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that holds reference data."^^rdf:HTML ;
   vaem:filePrefix "REFDATA" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -491,7 +491,7 @@ vaem:ReferenceDataGraph
   rdfs:label "Reference data graph" ;
 .
 vaem:RulesGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that holds SPIN rules."^^rdf:HTML ;
   vaem:filePrefix "RULES" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -499,7 +499,7 @@ vaem:RulesGraph
   rdfs:label "Rules Graph" ;
 .
 vaem:SPINlibraryGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that holds SPIN library code."^^rdf:HTML ;
   vaem:filePrefix "SPIN" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -507,7 +507,7 @@ vaem:SPINlibraryGraph
   rdfs:label "SPIN Library Graph" ;
 .
 vaem:SchemaGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that defines classes and properties for one or more namespaces."^^rdf:HTML ;
   vaem:filePrefix "SCHEMA" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -515,7 +515,7 @@ vaem:SchemaGraph
   rdfs:label "Schema graph" ;
 .
 vaem:ScriptGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that defines SWP templates that are of a general scripting nature."^^rdf:HTML ;
   vaem:filePrefix "SCRIPT" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -523,7 +523,7 @@ vaem:ScriptGraph
   rdfs:label "Script graph" ;
 .
 vaem:ServicesGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that implements SWP services."^^rdf:HTML ;
   vaem:filePrefix "SERVICES" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -531,7 +531,7 @@ vaem:ServicesGraph
   rdfs:label "Services Graph" ;
 .
 vaem:ShapesGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph of SHAPE SHACL constraints."^^rdf:HTML ;
   vaem:filePrefix "SHAPES" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -539,7 +539,7 @@ vaem:ShapesGraph
   rdfs:label "SHAPES Graph" ;
 .
 vaem:ShapesUIgraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph of SHAPE SHACL constraints for UI purposes."^^rdf:HTML ;
   vaem:filePrefix "SHAPES-UI" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -547,7 +547,7 @@ vaem:ShapesUIgraph
   rdfs:label "SHAPES UI Graph" ;
 .
 vaem:SurrogateGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that specifies minimal representation of resources from another graph so as to avoid the need to import it."^^rdf:HTML ;
   vaem:filePrefix "CONNECTSET" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -555,7 +555,7 @@ vaem:SurrogateGraph
   rdfs:label "Surrogate graph" ;
 .
 vaem:TopQuadrant
-  rdf:type vaem:Party ;
+  a vaem:Party ;
   vaem:name "TopQuadrant, Inc." ;
   vaem:url "http:/www.topquadrant.com"^^xsd:anyURI ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -563,7 +563,7 @@ vaem:TopQuadrant
   rdfs:label "TopQuadrant" ;
 .
 vaem:TransformsGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that uses SPIN to define transforms."^^rdf:HTML ;
   vaem:filePrefix "TRANSFORMS" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -571,7 +571,7 @@ vaem:TransformsGraph
   rdfs:label "Transforms graph" ;
 .
 vaem:UnknownGraphRole
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph whose role is unknown."^^rdf:HTML ;
   vaem:filePrefix "UNKNOWN" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -579,7 +579,7 @@ vaem:UnknownGraphRole
   rdfs:label "Unknown graph role" ;
 .
 vaem:UnspecifiedGraphRole
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that is for defining constraints using SPIN."^^rdf:HTML ;
   vaem:filePrefix "CONSTRAINTS" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -587,7 +587,7 @@ vaem:UnspecifiedGraphRole
   rdfs:label "Unspecified Graph Role" ;
 .
 vaem:UtilityGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "An SWP graph that is a utiltity."^^rdf:HTML ;
   vaem:filePrefix "UTILITY" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -595,7 +595,7 @@ vaem:UtilityGraph
   rdfs:label "Utility Graph" ;
 .
 vaem:ViewGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that provides the access to services in an MVC-like framework."^^rdf:HTML ;
   vaem:filePrefix "VIEW" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -603,7 +603,7 @@ vaem:ViewGraph
   rdfs:label "View graph" ;
 .
 vaem:ViewerGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph which defines an SWA/SWP viewer"^^rdf:HTML ;
   vaem:filePrefix "VIEWER" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -611,7 +611,7 @@ vaem:ViewerGraph
   rdfs:label "Viewer Graph" ;
 .
 vaem:Viewpoint
-  rdf:type owl:Class ;
+  a owl:Class ;
   dct:description "Viewpoint is used to denote how a set of resources, or an individual resource, is relevant to a context of use. The term \"viewpoint\" is adopted from the ISO RM-ODP specifications and its more recent use in enterprise architecture descriptions. The RM-ODP introducesd the concept of viewpoint to describe a system from a particular set of concerns. RM-ODP defines five viewpoints. Together they provide a complete description of a system: enterprise viewpoint, information viewpoint, computational viewpoint, engineering viewpoint, and technology viewpoint.  In VAEM, \"Viewpoint\" is used as a dimension for characterizing an ontology graph.  The viewpoints of an ontology may not always correpsond directly to those of a system but the idea of describing a subject area of interest from distinct viewpoints is still relevant. A viewpoint can be further distinguished by \"aspects\". For example the \"information viewpoint\" of an application can be partitioned into separate graphs for the \"security\", \"operational\" and\"data retention\" aspects."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -619,7 +619,7 @@ vaem:Viewpoint
   rdfs:subClassOf vaem:Dimension ;
 .
 vaem:VocabularyGraph
-  rdf:type vaem:GraphRole ;
+  a vaem:GraphRole ;
   vaem:description "A graph that is a controlled set of instances that define a terminology. Typically this is based on SKOS."^^rdf:HTML ;
   vaem:filePrefix "VOCAB" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
@@ -627,21 +627,21 @@ vaem:VocabularyGraph
   rdfs:label "Vocabulary graph" ;
 .
 vaem:abbreviation
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:abbreviation\" provides a common way to define a commonly used abbreviation on a resource"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "abbreviation" ;
 .
 vaem:acronym
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:acronym\" provides a common way to define a commonly used abbreviation on a resource"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "acronym" ;
 .
 vaem:comment
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   dct:description "An annotation property that can be freely used on any kind of resource. The range of the property is \"xsd:string\""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -649,7 +649,7 @@ vaem:comment
   rdfs:range xsd:string ;
 .
 vaem:date
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:date\" is intended for general use as the name implies.  The range of the property is set as \"vaem:dateUnion\" so as to allow a value to have a number of forms from a  year only to a full timestamp. The property is also the parent of all dates so that queries can be made for any date on an ontology"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -659,13 +659,13 @@ vaem:dateCreated
   dct:description "The property \"vaem:dateCreated\" is intended for general use as the name implies.  The range of the property is set as \"vaem:dateUnion\" so as to allow a value to have a number of forms from a  year only to a full timestamp"^^rdf:HTML ;
 .
 vaem:description
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "description" ;
 .
 vaem:filePrefix
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:filePrefix\" is for specifying a preferred file prefix for a graph. For example a schema graph may be given the file prefix \"SCHEMA\" followed by an underscore \"_\"."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -673,7 +673,7 @@ vaem:filePrefix
   rdfs:range xsd:string ;
 .
 vaem:hasAspect
-  rdf:type owl:ObjectProperty ;
+  a owl:ObjectProperty ;
   dct:description "The property \"vaem:hasAspect\" is used to distinguish among sets of features of a domain or subject area. The term is borrowed from \"aspect-oriented\" programming, where it is used to separate concerns. An ontology may be characterized by this dimension so as to parition features that are orthogonal. For example,  in a systems ontology we can distinguish aspects for \"structure\", \"function\", \"behavior\" and \"interface\".  The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -681,14 +681,14 @@ vaem:hasAspect
   rdfs:subPropertyOf vaem:hasDimension ;
 .
 vaem:hasDimension
-  rdf:type owl:ObjectProperty ;
+  a owl:ObjectProperty ;
   dct:description "The property \"vaem:hasDimension\" is used categorize an ontology.  In VAEM, the property is used to characterize an ontology graph."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "has dimension" ;
 .
 vaem:hasDiscipline
-  rdf:type owl:ObjectProperty ;
+  a owl:ObjectProperty ;
   dct:description "The property \"vaem:hasDiscipline\" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study. Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -696,7 +696,7 @@ vaem:hasDiscipline
   rdfs:subPropertyOf vaem:hasDimension ;
 .
 vaem:hasDomain
-  rdf:type owl:ObjectProperty ;
+  a owl:ObjectProperty ;
   dct:description "The property \"vaem:hasDomain\" is used to specify how  a set of resources, or an individual resource is grounded in a domain, that is, a subject area of interest. Examples of domains are \"enterprise\", \"process\", \"organization\" and \"system\". In VAEM, the property is used as a dimension for characterizing an ontology graph. The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -704,14 +704,14 @@ vaem:hasDomain
   rdfs:subPropertyOf vaem:hasDimension ;
 .
 vaem:hasGraphMetadata
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "has graph metadata" ;
   rdfs:range vaem:GraphMetaData ;
 .
 vaem:hasGraphRole
-  rdf:type owl:ObjectProperty ;
+  a owl:ObjectProperty ;
   dct:description "The property \"lms:hasGraphRole\" is used to characterize how a resource participates in an ontology set.  The property is used to specify the role that a graph plays, for example, an ontology graph can be a schema, vocabulary, dataset, script, or ruleset"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -719,34 +719,34 @@ vaem:hasGraphRole
   rdfs:range vaem:GraphRole ;
 .
 vaem:hasIdentifier
-  rdf:type owl:ObjectProperty ;
+  a owl:ObjectProperty ;
   dct:description "The property \"vaemhasIdentifier\" is intended for general use as a means to specifiy a unique reference to something. This is an object property that is a sub-property of \"vame:id\""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "has identifier" ;
 .
 vaem:hasLicenseType
-  rdf:type owl:ObjectProperty ;
+  a owl:ObjectProperty ;
   dct:description "The property \"vaem:hasLicenseType\" points to an entry in the VOAG ontology for licenses"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "has license type"@en-US ;
 .
 vaem:hasOwner
-  rdf:type owl:ObjectProperty ;
+  a owl:ObjectProperty ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "has owner" ;
 .
 vaem:hasSteward
-  rdf:type owl:ObjectProperty ;
+  a owl:ObjectProperty ;
   dct:description "A property that is used to refer to a \"Steward\", that is, the party or role that is responsible for maintaining an asset, in the case of VAEM, an ontology graph."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "has steward" ;
 .
 vaem:hasViewpoint
-  rdf:type owl:ObjectProperty ;
+  a owl:ObjectProperty ;
   dct:description "The property \"vaem:hasViewpoint\" is used to denote how a set of resources, or an individual resource, is relevant to a context of use. The term \"viewpoint\" is adopted from the ISO RM-ODP specifications and its more recent use in enterprise architecture descriptions.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -754,7 +754,7 @@ vaem:hasViewpoint
   rdfs:subPropertyOf vaem:hasDimension ;
 .
 vaem:id
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:id\" is intended for general use as a means to specifiy an identifier. The type of this property is intentionally set to \"rdf:Property\" so that use of the property can allow both object and scaler values.  For this reason, the property is rangeless"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -764,7 +764,7 @@ vaem:idString
   dct:description "The property \"vaem:idString\" is intended for general use as a means to specifiy a unique reference to something. This is a data property with a string range and is a sub-property of \"vame:id\""^^rdf:HTML ;
 .
 vaem:intent
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:intent\" is used to outline  a statement of purpose. This typically expresses one or more desired outcomes"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -772,7 +772,7 @@ vaem:intent
   rdfs:range xsd:string ;
 .
 vaem:isElaboratedIn
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   dct:description "An annotation used to reference a graph that elaborates (adds properties and axioms to) a resource"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -781,7 +781,7 @@ vaem:isElaboratedIn
   rdfs:subPropertyOf rdfs:isDefinedBy ;
 .
 vaem:isMetadataFor
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   dct:description "An annotation used to reference the graph that is being described with metadata."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -791,7 +791,7 @@ vaem:lastUpdated
   dct:description "The property \"vaem:lastUpdated\" is intended for general use as the name implies.  The range of the property is set as \"vaem:dateUnion\" so as to allow a value to have a number of forms from a  year only to a full timestamp"^^rdf:HTML ;
 .
 vaem:latestPublishedVersion
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:latestPublishedVersion\"is a URL to documentation for the latest version of a graph."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -799,7 +799,7 @@ vaem:latestPublishedVersion
   rdfs:range xsd:anyURI ;
 .
 vaem:logo
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   dct:description "The property \"vaem:logo\" is a reference to an image that is used for publishing the ontology\""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -807,7 +807,7 @@ vaem:logo
   rdfs:range xsd:anyURI ;
 .
 vaem:name
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:name\" is intended for general use. In many cases \"rdfs:label\" could be used give names to resources. In the case where compliance with a specific naming rule is needed,  \"vaem:name\" allows  a resource to carry a name that is used in more specific contexts."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -815,7 +815,7 @@ vaem:name
   rdfs:range xsd:string ;
 .
 vaem:namespace
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:namespace\" is the onotlogy URI with which a graph is primarily associated. The intent is to allow multiple graphs to define statements for resources in the same Ontology namespace. For example, a foundation level graph with the base URI of \"http://www.somesite.com/1.0/schema/OurOntology\"  may define general  concepts for \"OurOntology\". Another graph with the base URI \"http://www.somesite.com/1.0/schema/level2/OurOntology\"  may add more specific details to the same \"OurOntology\". Each of these two graphs would carry the same value for \"vaem:namespace\", that is, \"http://www.somesite.com/schema/OurOntology\".    In other words, an ontology URI is the URI associated with the resources of a controlled namespace. On the other hand the graph URIs (the base URIs) identify the graphs that hold resources that make up an ontology"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -823,7 +823,7 @@ vaem:namespace
   rdfs:range xsd:anyURI ;
 .
 vaem:namespacePrefix
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:namespacePrefix\" specifes a short handle or label for the URI of an Ontology.  Multiple graphs can define statements for resources in the same Ontololgy namespace. For example, a foundation level graph with the base URI of \"http://www.somesite.com/1.0/schema/OurOntology\"  may define general  concepts for \"OurOntology\". Another graph with the base URI \"http://www.somesite.com/1.0/schema/level2/OurOntology\"  may add more specific details to the same \"OurOntology\". Each of these two graphs would carry the same value for \"vaem:namespacePrefix\", for this example, perhaps, \"ourOntology\""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -834,7 +834,7 @@ vaem:ownedBy
   dct:description "The property \"vaem:ownedBy\" is a general property that in some cases could have scalar values or may refer to some concept of \"Party\".  For this reason, the  type of this property is set as \"rdf:Property\" and the property is rangeless. There are two sub-properties of \"vaem:ownedBy\", namely \"vaem:owner\" for string values and \"vaem:owningParty\" for referencing a party.  Ownership applies to those ontologies that are proprietary"^^rdf:HTML ;
 .
 vaem:owner
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "owner" ;
@@ -844,7 +844,7 @@ vaem:owningParty
   dct:description "The property \"vaem:owningParty\" is used to refer to some concept of \"Party\" and is a sub-property of \"vaem:ownedBy\""^^rdf:HTML ;
 .
 vaem:previousPublishedVersion
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:previousPublishedVersion\"is a URL to documentation for the previous version of a graph."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -852,7 +852,7 @@ vaem:previousPublishedVersion
   rdfs:range xsd:anyURI ;
 .
 vaem:publishedDate
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:publishedDate\" specifies the date and time that the ontology was published. This is distinct from a release date in the sense that \"release\" may not imply being published."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -862,7 +862,7 @@ vaem:publishedDate
   rdfs:subPropertyOf vaem:date ;
 .
 vaem:rationale
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "A description of a justification for some other assertion or value"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -870,7 +870,7 @@ vaem:rationale
   rdfs:range xsd:string ;
 .
 vaem:rdfxmlFileURL
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:rdfxmlFileURL\" is used to provide a link to the location of the ontology's RDF/XML file"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -878,14 +878,14 @@ vaem:rdfxmlFileURL
   rdfs:range xsd:anyURI ;
 .
 vaem:reifiableBy
-  rdf:type owl:ObjectProperty ;
+  a owl:ObjectProperty ;
   dct:description "To express how statements in a model can be reifiable, this property is used to explicitly associate a property with a user-defined sub-class of \"rdf:Statement\". A recommended way of using this is to declare the properties that share the same reification constructs as sub-properties of a parent property that carries the \"vaem:reifiableBy\" property. The parent property should be of type \"rdf:Property\" so that it can have both datatype and object properties as sub-properties. By this means use and transformations of a model can be understood through a fully specified metamodel. \"vaem:reifiableBy\" is rangeless in order to comply with OWL DL semantics. Its range would have been rdfs:Class in order to refer to \"rdf:Statement\" sub-classes"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "reifiable by" ;
 .
 vaem:releaseDate
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:releaseDate\" specifies the date and time that the ontology was released. This is distinct from a publication date in the sense that \"release\" may not imply being published."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -895,7 +895,7 @@ vaem:releaseDate
   rdfs:subPropertyOf vaem:date ;
 .
 vaem:revision
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:revision\" is a property intended for general use as the name implies."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -903,7 +903,7 @@ vaem:revision
   rdfs:range xsd:string ;
 .
 vaem:specificity
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:specificity\" is intended to specify the level of detail of an ontology.  The values that can be set for this property are restriced to an integer from 1 to 5. An ontology at level 1 has concepts of more general applicability than one at level 5. By having graphs at different levels of specificity it is possible to support greater modularity for selective imports"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -911,14 +911,14 @@ vaem:specificity
   rdfs:range xsd:nonNegativeInteger ;
 .
 vaem:title
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "title" ;
   rdfs:range xsd:string ;
 .
 vaem:todo
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   dct:description "As it name implies, a way to attach an annotation about a \"todo\" task"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -926,7 +926,7 @@ vaem:todo
   rdfs:range xsd:string ;
 .
 vaem:turtleFileURL
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:turtleFileURL\" is used to provide a link to the location of the ontology's turtle file"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -934,7 +934,7 @@ vaem:turtleFileURL
   rdfs:range xsd:anyURI ;
 .
 vaem:url
-  rdf:type owl:DatatypeProperty ;
+  a owl:DatatypeProperty ;
   dct:description "The property \"vaem:url\" is intended for general use as the name implies.  The range of the property is set as an XSD URI"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -942,7 +942,7 @@ vaem:url
   rdfs:range xsd:anyURI ;
 .
 vaem:usesNonImportedResource
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   dct:description "The property \"vaem:usesNonImportedResource\" is used to express dependencies on resources from graphs that are not imported"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
@@ -950,7 +950,7 @@ vaem:usesNonImportedResource
   rdfs:range rdfs:Resource ;
 .
 vaem:withAttributionTo
-  rdf:type owl:AnnotationProperty ;
+  a owl:AnnotationProperty ;
   dct:description "The property \"vaem:withAttributionTo\" is an annotation property that is either used to hold either a string or a reference to an instance of \"voag:Attribution\", from the VOAG ontology"^^rdf:HTML ;
   rdfs:domain vaem:GraphMetaData ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;

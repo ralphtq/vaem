@@ -10978,6 +10978,90 @@ lmdoc:LabeledObjects
   rdfs:label "Labeled objects" ;
   rdfs:subClassOf lmdoc:Objects ;
 .
+lmdoc:LangDisplay
+  a ui:NodeClass ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate arg:lang ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The language tag." ;
+    ] ;
+  ui:prototype [
+      a ui:if ;
+      ui:child [
+          a ui:else ;
+          ui:child [
+              a html:Span ;
+              html:class "swa-lang" ;
+              ui:child [
+                  a ui:TextNode ;
+                  ui:childIndex 0 ;
+                  ui:text "(" ;
+                ] ;
+              ui:child [
+                  a ui:TextNode ;
+                  ui:childIndex 1 ;
+                  ui:text [
+                      sp:varName "lang" ;
+                    ] ;
+                ] ;
+              ui:child [
+                  a ui:TextNode ;
+                  ui:childIndex 2 ;
+                  ui:text ")" ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+      ui:child [
+          a ui:if ;
+          ui:child [
+              a html:Img ;
+              html:alt "Language Display" ;
+              html:class "swa-lang-img" ;
+              html:src [
+                  a swa:langImage ;
+                  arg:lang [
+                      sp:varName "lang" ;
+                    ] ;
+                ] ;
+              html:title [
+                  a ui:concat ;
+                  sp:arg1 "Language code: " ;
+                  sp:arg2 [
+                      sp:varName "lang" ;
+                    ] ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              a ui:contextValue ;
+              sp:arg1 "langFlags" ;
+            ] ;
+        ] ;
+      ui:condition [
+          a sp:and ;
+          sp:arg1 [
+              a sp:bound ;
+              sp:arg1 [
+                  sp:varName "lang" ;
+                ] ;
+            ] ;
+          sp:arg2 [
+              a sp:ne ;
+              sp:arg1 [
+                  sp:varName "lang" ;
+                ] ;
+              sp:arg2 "" ;
+            ] ;
+        ] ;
+    ] ;
+  rdfs:comment "Displays a given language. Does nothing if the language is unbound." ;
+  rdfs:label "Lang display (lmdoc)" ;
+  rdfs:subClassOf lmdoc:ViewElements ;
+.
 lmdoc:Link
   a ui:NodeClass ;
   spin:constraint [
@@ -11054,16 +11138,6 @@ lmdoc:LiteralViewer
           ui:child [
               a html:Div ;
               ui:child [
-                  a swa:LangDisplay ;
-                  arg:lang [
-                      a sp:lang ;
-                      sp:arg1 [
-                          sp:varName "object" ;
-                        ] ;
-                    ] ;
-                  ui:childIndex 1 ;
-                ] ;
-              ui:child [
                   a ui:parse ;
                   ui:childIndex 0 ;
                   ui:str [
@@ -11072,6 +11146,16 @@ lmdoc:LiteralViewer
                           sp:varName "object" ;
                         ] ;
                     ] ;
+                ] ;
+              ui:child [
+                  a lmdoc:LangDisplay ;
+                  arg:lang [
+                      a sp:lang ;
+                      sp:arg1 [
+                          sp:varName "object" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 1 ;
                 ] ;
               ui:childIndex 0 ;
             ] ;
@@ -11089,7 +11173,7 @@ lmdoc:LiteralViewer
           ui:child [
               a ui:if ;
               ui:child [
-                  a swa:LangDisplay ;
+                  a lmdoc:LangDisplay ;
                   arg:lang [
                       a sp:lang ;
                       sp:arg1 [
@@ -11184,16 +11268,6 @@ lmdoc:LiteralViewerWithLabel
           ui:child [
               a ui:else ;
               ui:child [
-                  a swa:LangDisplay ;
-                  arg:lang [
-                      a sp:lang ;
-                      sp:arg1 [
-                          sp:varName "object" ;
-                        ] ;
-                    ] ;
-                  ui:childIndex 1 ;
-                ] ;
-              ui:child [
                   a ui:parse ;
                   ui:childIndex 0 ;
                   ui:str [
@@ -11202,6 +11276,16 @@ lmdoc:LiteralViewerWithLabel
                           sp:varName "object" ;
                         ] ;
                     ] ;
+                ] ;
+              ui:child [
+                  a lmdoc:LangDisplay ;
+                  arg:lang [
+                      a sp:lang ;
+                      sp:arg1 [
+                          sp:varName "object" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 1 ;
                 ] ;
               ui:childIndex 2 ;
             ] ;
@@ -11217,7 +11301,7 @@ lmdoc:LiteralViewerWithLabel
               ui:child [
                   a ui:if ;
                   ui:child [
-                      a swa:LangDisplay ;
+                      a lmdoc:LangDisplay ;
                       arg:lang [
                           a sp:lang ;
                           sp:arg1 [
@@ -11866,7 +11950,8 @@ lmdoc:ObjectViewer
             ] ;
           ui:child [
               a html:Div ;
-              html:class "lmdoc-indented-level1" ;
+              html:class "pb20px" ;
+              html:style "padding-left:120px;" ;
               html:title [
                   a sp:str ;
                   sp:arg1 [
@@ -12626,7 +12711,7 @@ lmdoc:ObjectsGroup
   spin:constraint [
       a spl:Argument ;
       spl:predicate arg:predicates ;
-      spl:valueType sp:Select ;
+      spl:valueType spr:Table ;
       rdfs:comment "A result set (e.g., SPARQL SELECT query) that delivers the predicates in this group." ;
     ] ;
   spin:constraint [
@@ -12637,7 +12722,7 @@ lmdoc:ObjectsGroup
     ] ;
   ui:prototype [
       a ui:group ;
-      letrs:rs [
+      letrs:properties [
           a sp:Select ;
           sp:resultVariables (
               [
@@ -12731,66 +12816,53 @@ lmdoc:ObjectsGroup
             ) ;
         ] ;
       ui:child [
+          a ui:debug ;
+          ui:child [
+              a ui:dumpResultSet ;
+              ui:childIndex 0 ;
+              ui:message "DEBUG: lmdoc:ObjectsGroup" ;
+              ui:resultSet [
+                  sp:varName "properties" ;
+                ] ;
+            ] ;
+          ui:childIndex 0 ;
+        ] ;
+      ui:child [
           a ui:if ;
           ui:child [
               a html:Div ;
               ui:child [
-                  a html:Table ;
-                  html:class "lm-table" ;
-                  let:pid [
-                      a ui:uniqueId ;
-                    ] ;
+                  a ui:CommentNode ;
+                  ui:childIndex 2 ;
+                  rdfs:comment """table class=\"lm-table\" let:pid=\"{= ui:uniqueId() }\">
+                <thead class=\"lm-table-header\">
+                    <th class=\"lm-column-label\">{= ?label }</th>
+                    <th class=\"lm-column-label\">Values</th>
+                </thead>
+                <tbody class=\"lm-table-body\">
+                    <ui:forEach ui:resultSet=\"{= ?properties }\">
+                        <lmdoc:Objects arg:predicate=\"{= ?predicate }\" arg:subject=\"{= ?subject }\" arg:tabular=\"true\"/>
+                    </ui:forEach>
+                </tbody>
+            </table""" ;
+                ] ;
+              ui:child [
+                  a ui:forEach ;
                   ui:child [
-                      a html:Tbody ;
-                      html:class "lm-table-body" ;
-                      ui:child [
-                          a ui:forEach ;
-                          ui:child [
-                              a lmdoc:Objects ;
-                              arg:predicate [
-                                  sp:varName "predicate" ;
-                                ] ;
-                              arg:subject [
-                                  sp:varName "subject" ;
-                                ] ;
-                              arg:tabular true ;
-                              ui:childIndex 0 ;
-                            ] ;
-                          ui:childIndex 0 ;
-                          ui:resultSet [
-                              sp:varName "rs" ;
-                            ] ;
+                      a lmdoc:Objects ;
+                      arg:predicate [
+                          sp:varName "predicate" ;
                         ] ;
-                      ui:childIndex 1 ;
-                    ] ;
-                  ui:child [
-                      a html:Thead ;
-                      html:class "lm-table-header" ;
-                      ui:child [
-                          a html:Th ;
-                          html:class "lm-column-label" ;
-                          ui:child [
-                              a ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text "Values" ;
-                            ] ;
-                          ui:childIndex 1 ;
+                      arg:subject [
+                          sp:varName "subject" ;
                         ] ;
-                      ui:child [
-                          a html:Th ;
-                          html:class "lm-column-label" ;
-                          ui:child [
-                              a ui:TextNode ;
-                              ui:childIndex 0 ;
-                              ui:text [
-                                  sp:varName "label" ;
-                                ] ;
-                            ] ;
-                          ui:childIndex 0 ;
-                        ] ;
+                      arg:tabular true ;
                       ui:childIndex 0 ;
                     ] ;
                   ui:childIndex 1 ;
+                  ui:resultSet [
+                      sp:varName "properties" ;
+                    ] ;
                 ] ;
               ui:child [
                   a ui:if ;
@@ -12816,16 +12888,15 @@ lmdoc:ObjectsGroup
                 ] ;
               ui:childIndex 0 ;
             ] ;
-          ui:childIndex 0 ;
+          ui:childIndex 1 ;
           ui:condition [
-              a sp:gt ;
+              a sp:not ;
               sp:arg1 [
-                  a spr:rowCount ;
+                  a spr:isEmpty ;
                   sp:arg1 [
-                      sp:varName "rs" ;
+                      sp:varName "properties" ;
                     ] ;
                 ] ;
-              sp:arg2 0 ;
             ] ;
         ] ;
     ] ;
@@ -15279,6 +15350,11 @@ lmdoc:ResourceLink
               ui:child [
                   a html:Div ;
                   ui:child [
+                      a html:Div ;
+                      html:class "clear-both" ;
+                      ui:childIndex 3 ;
+                    ] ;
+                  ui:child [
                       a ui:else ;
                       ui:child [
                           a ui:else ;
@@ -15310,75 +15386,95 @@ lmdoc:ResourceLink
                           ui:child [
                               a ui:else ;
                               ui:child [
-                                  a html:A ;
-                                  html:class "lm-simulated-link" ;
-                                  html:onclick [
-                                      a ui:concat ;
-                                      sp:arg1 "javascript: lm.popupResourceSummary('div-" ;
-                                      sp:arg2 [
-                                          a lmdoc:makeAnchorFromResource ;
-                                          arg:resource [
-                                              sp:varName "resource" ;
-                                            ] ;
-                                        ] ;
-                                      sp:arg3 "',800,500)" ;
-                                    ] ;
+                                  a html:Div ;
+                                  html:class "float-left pl10px" ;
                                   ui:child [
                                       a ui:TextNode ;
                                       ui:childIndex 0 ;
                                       ui:text [
-                                          a smf:qname ;
-                                          sp:arg1 [
-                                              sp:varName "resource" ;
-                                            ] ;
+                                          sp:varName "label" ;
                                         ] ;
                                     ] ;
-                                  ui:childIndex 0 ;
+                                  ui:childIndex 1 ;
                                 ] ;
                               ui:child [
-                                  a ui:TextNode ;
-                                  ui:childIndex 1 ;
-                                  ui:text [
-                                      sp:varName "label" ;
+                                  a html:Div ;
+                                  html:class "float-left" ;
+                                  ui:child [
+                                      a html:A ;
+                                      html:class "lm-simulated-link" ;
+                                      html:onclick [
+                                          a ui:concat ;
+                                          sp:arg1 "lm.popupResourceSummary('div-" ;
+                                          sp:arg2 [
+                                              a lmdoc:makeAnchorFromResource ;
+                                              arg:resource [
+                                                  sp:varName "resource" ;
+                                                ] ;
+                                            ] ;
+                                          sp:arg3 "',800,500)" ;
+                                        ] ;
+                                      ui:child [
+                                          a ui:TextNode ;
+                                          ui:childIndex 0 ;
+                                          ui:text [
+                                              a smf:qname ;
+                                              sp:arg1 [
+                                                  sp:varName "resource" ;
+                                                ] ;
+                                            ] ;
+                                        ] ;
+                                      ui:childIndex 0 ;
                                     ] ;
+                                  ui:childIndex 0 ;
                                 ] ;
                               ui:childIndex 1 ;
                             ] ;
                           ui:child [
                               a ui:if ;
                               ui:child [
-                                  a html:A ;
-                                  html:href [
-                                      a ui:concat ;
-                                      sp:arg1 "#" ;
-                                      sp:arg2 [
-                                          a lmdoc:makeAnchorFromResource ;
-                                          arg:resource [
-                                              sp:varName "resource" ;
-                                            ] ;
-                                        ] ;
-                                    ] ;
-                                  html:title [
-                                      sp:varName "title" ;
-                                    ] ;
+                                  a html:Div ;
+                                  html:class "float-left pl10px" ;
                                   ui:child [
                                       a ui:TextNode ;
                                       ui:childIndex 0 ;
                                       ui:text [
-                                          a smf:qname ;
-                                          sp:arg1 [
-                                              sp:varName "resource" ;
-                                            ] ;
+                                          sp:varName "label" ;
                                         ] ;
                                     ] ;
-                                  ui:childIndex 0 ;
+                                  ui:childIndex 1 ;
                                 ] ;
                               ui:child [
-                                  a ui:TextNode ;
-                                  ui:childIndex 1 ;
-                                  ui:text [
-                                      sp:varName "label" ;
+                                  a html:Div ;
+                                  html:class "float-left" ;
+                                  ui:child [
+                                      a html:A ;
+                                      html:href [
+                                          a ui:concat ;
+                                          sp:arg1 "#" ;
+                                          sp:arg2 [
+                                              a lmdoc:makeAnchorFromResource ;
+                                              arg:resource [
+                                                  sp:varName "resource" ;
+                                                ] ;
+                                            ] ;
+                                        ] ;
+                                      html:title [
+                                          sp:varName "title" ;
+                                        ] ;
+                                      ui:child [
+                                          a ui:TextNode ;
+                                          ui:childIndex 0 ;
+                                          ui:text [
+                                              a smf:qname ;
+                                              sp:arg1 [
+                                                  sp:varName "resource" ;
+                                                ] ;
+                                            ] ;
+                                        ] ;
+                                      ui:childIndex 0 ;
                                     ] ;
+                                  ui:childIndex 0 ;
                                 ] ;
                               ui:childIndex 0 ;
                               ui:condition [
@@ -15436,7 +15532,7 @@ lmdoc:ResourceLink
                       a ui:if ;
                       ui:child [
                           a html:Span ;
-                          html:class "pad10px" ;
+                          html:class "float-left pad10px" ;
                           ui:child [
                               a html:A ;
                               html:href [
@@ -15464,9 +15560,19 @@ lmdoc:ResourceLink
                   ui:childIndex 1 ;
                 ] ;
               ui:child [
-                  a ui:CommentNode ;
+                  a ui:debug ;
+                  ui:child [
+                      a ui:dumpScope ;
+                      ui:childIndex 0 ;
+                      ui:message [
+                          a ui:concat ;
+                          sp:arg1 "DEBUG1: lmdoc:ResourceLink - " ;
+                          sp:arg2 [
+                              sp:varName "resource" ;
+                            ] ;
+                        ] ;
+                    ] ;
                   ui:childIndex 0 ;
-                  rdfs:comment "ui:dumpScope ui:message=\"DEBUG1: lmdoc:ResourceLink\"/" ;
                 ] ;
               ui:childIndex 0 ;
             ] ;
@@ -16436,6 +16542,68 @@ lmdoc:RestrictedDatatypesSection
   ui:responseType ui:HTML ;
   rdfs:label "restricted datatypes section" ;
   rdfs:subClassOf lmdoc:Sections ;
+.
+lmdoc:RichTextViewer
+  a swa:ObjectViewerClass ;
+  swa:objectWidgetWeight [
+      a swa:WeightedExpression ;
+      swa:expression [
+          a sp:and ;
+          sp:arg1 [
+              a sp:eq ;
+              sp:arg1 [
+                  sp:varName "kind" ;
+                ] ;
+              sp:arg2 "literal" ;
+            ] ;
+          sp:arg2 [
+              a sp:or ;
+              sp:arg1 [
+                  a spl:subPropertyOf ;
+                  sp:arg1 [
+                      sp:varName "predicate" ;
+                    ] ;
+                  sp:arg2 skos:note ;
+                ] ;
+              sp:arg2 [
+                  a sp:eq ;
+                  sp:arg1 [
+                      sp:varName "type" ;
+                    ] ;
+                  sp:arg2 rdf:HTML ;
+                ] ;
+            ] ;
+        ] ;
+      swa:weight 10 ;
+    ] ;
+  ui:overrides swa:RichTextViewer ;
+  ui:prototype [
+      a html:Div ;
+      html:class "swa-shifted-label" ;
+      ui:child [
+          a ui:parse ;
+          ui:childIndex 0 ;
+          ui:str [
+              a swa:redirectHRefs ;
+              sp:arg1 [
+                  sp:varName "object" ;
+                ] ;
+            ] ;
+        ] ;
+      ui:child [
+          a lmdoc:LangDisplay ;
+          arg:lang [
+              a sp:lang ;
+              sp:arg1 [
+                  sp:varName "object" ;
+                ] ;
+            ] ;
+          ui:childIndex 1 ;
+        ] ;
+    ] ;
+  rdfs:comment "A viewer for HTML-based values. Parses the literal into HTML and inserts that into the document. Links will be redirected using the currently registered createLinkFunction." ;
+  rdfs:label "Rich text viewer (lmdoc)" ;
+  rdfs:subClassOf lmdoc:ObjectViewer ;
 .
 lmdoc:SaveSWPdoc
   a sml:ExportToTextFile ;
@@ -17798,7 +17966,7 @@ lmdoc:URIResourceViewer
                       sp:varName "object" ;
                     ] ;
                   arg:title [
-                      a xsd:string ;
+                      a sp:str ;
                       sp:arg1 [
                           sp:varName "object" ;
                         ] ;
@@ -17832,12 +18000,17 @@ lmdoc:URIResourceViewer
               ui:child [
                   a ui:if ;
                   ui:child [
-                      a ui:resourceView ;
-                      ui:childIndex 1 ;
-                      ui:matchIds "lmdoc-summary" ;
-                      ui:resource [
-                          sp:varName "object" ;
+                      a html:Div ;
+                      html:class "pt10px" ;
+                      ui:child [
+                          a ui:resourceView ;
+                          ui:childIndex 0 ;
+                          ui:matchIds "lmdoc-summary" ;
+                          ui:resource [
+                              sp:varName "object" ;
+                            ] ;
                         ] ;
+                      ui:childIndex 1 ;
                     ] ;
                   ui:child [
                       a lmdoc:ResourceLink ;
@@ -17848,7 +18021,7 @@ lmdoc:URIResourceViewer
                           sp:varName "object" ;
                         ] ;
                       arg:title [
-                          a xsd:string ;
+                          a sp:str ;
                           sp:arg1 [
                               sp:varName "object" ;
                             ] ;
