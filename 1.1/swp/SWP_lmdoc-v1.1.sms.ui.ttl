@@ -15545,12 +15545,52 @@ lmdoc:ResourceLink
                               ui:child [
                                   a html:I ;
                                   html:aria-hidden "true" ;
-                                  html:class "fa fa-external-link-square lightBlue" ;
+                                  html:class "fas fa-external-link-square lightBlue" ;
+                                  ui:childIndex 1 ;
+                                ] ;
+                              ui:child [
+                                  a ui:TextNode ;
                                   ui:childIndex 0 ;
+                                  ui:text """
+ttl
+                """ ;
                                 ] ;
                               ui:childIndex 0 ;
                             ] ;
                           ui:childIndex 0 ;
+                        ] ;
+                      ui:child [
+                          a html:Span ;
+                          html:class "float-left pad5px" ;
+                          ui:child [
+                              a html:A ;
+                              html:href [
+                                  a fn:concat ;
+                                  sp:arg1 [
+                                      a xsd:string ;
+                                      sp:arg1 [
+                                          sp:varName "resource" ;
+                                        ] ;
+                                    ] ;
+                                  sp:arg2 ".html" ;
+                                ] ;
+                              html:target "_blank" ;
+                              ui:child [
+                                  a html:I ;
+                                  html:aria-hidden "true" ;
+                                  html:class "fas fa-external-link-square lightBlue" ;
+                                  ui:childIndex 1 ;
+                                ] ;
+                              ui:child [
+                                  a ui:TextNode ;
+                                  ui:childIndex 0 ;
+                                  ui:text """
+html
+                """ ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 1 ;
                         ] ;
                       ui:childIndex 2 ;
                       ui:condition [
