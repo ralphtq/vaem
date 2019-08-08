@@ -20051,15 +20051,20 @@ lmdoc:buildDocURL
           [
             a sp:Bind ;
             sp:expression [
-                a fn:substring ;
+                a spif:replaceAll ;
                 sp:arg1 [
-                    a sp:str ;
+                    a fn:substring ;
                     sp:arg1 [
-                        a afn:now ;
+                        a sp:str ;
+                        sp:arg1 [
+                            a afn:now ;
+                          ] ;
                       ] ;
+                    sp:arg2 1 ;
+                    sp:arg3 7 ;
                   ] ;
-                sp:arg2 1 ;
-                sp:arg3 7 ;
+                sp:arg2 "-" ;
+                sp:arg3 "/" ;
               ] ;
             sp:variable [
                 sp:varName "year" ;
