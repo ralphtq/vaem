@@ -8650,8 +8650,8 @@ lmdoc:IndexSection
                               ui:childIndex 0 ;
                             ] ;
                           ui:child [
-                              a lmdoc:MultiColumnList ;
-                              arg:columns 4 ;
+                              a lmdoc:MultiColumnLabelList ;
+                              arg:columns 3 ;
                               arg:includeWebLink true ;
                               arg:resultSet [
                                   sp:varName "instances" ;
@@ -11573,6 +11573,158 @@ lmdoc:MaybeHTMLstring
     ] ;
   ui:responseType ui:HTML ;
   rdfs:label "Maybe an HTML string" ;
+  rdfs:subClassOf lmdoc:Parts ;
+.
+lmdoc:MultiColumnLabelList
+  a ui:NodeClass ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:optional true ;
+      spl:predicate arg:titleFunction ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate arg:columns ;
+      spl:valueType xsd:integer ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate arg:includeWebLink ;
+      spl:valueType xsd:boolean ;
+    ] ;
+  spin:constraint [
+      a spl:Argument ;
+      spl:predicate arg:resultSet ;
+      spl:valueType sp:Select ;
+    ] ;
+  ui:prototype [
+      a ui:group ;
+      let:count [
+          a spr:rowCount ;
+          sp:arg1 [
+              sp:varName "resultSet" ;
+            ] ;
+        ] ;
+      let:myTitleFunction [
+          a sp:coalesce ;
+          sp:arg1 [
+              sp:varName "titleFunction" ;
+            ] ;
+          sp:arg2 [
+              a ui:contextValue ;
+              sp:arg1 "title-function" ;
+            ] ;
+          sp:arg3 lmdoc:defaultTitleFunction ;
+        ] ;
+      ui:child [
+          a ui:if ;
+          ui:child [
+              a html:Div ;
+              html:class "lm-index-table" ;
+              let:max [
+                  a sp:floor ;
+                  sp:arg1 [
+                      a sp:divide ;
+                      sp:arg1 [
+                          a xsd:integer ;
+                          sp:arg1 [
+                              sp:varName "count" ;
+                            ] ;
+                        ] ;
+                      sp:arg2 [
+                          a xsd:integer ;
+                          sp:arg1 [
+                              sp:varName "columns" ;
+                            ] ;
+                        ] ;
+                    ] ;
+                ] ;
+              ui:child [
+                  a html:Div ;
+                  html:class "container-fluid" ;
+                  ui:child [
+                      a ui:forEach ;
+                      ui:child [
+                          a html:Div ;
+                          html:class "col-xs-12 col-sm-6 col-md-4 col-lg-3" ;
+                          ui:child [
+                              a lmdoc:ResourceLink ;
+                              arg:includeWebLink [
+                                  sp:varName "includeWebLink" ;
+                                ] ;
+                              arg:label [
+                                  a sp:Select ;
+                                  sp:resultVariables (
+                                      [
+                                        sp:varName "label" ;
+                                      ]
+                                    ) ;
+                                  sp:where (
+                                      [
+                                        a sp:Optional ;
+                                        sp:elements (
+                                            [
+                                              sp:object [
+                                                  sp:varName "lab" ;
+                                                ] ;
+                                              sp:predicate rdfs:label ;
+                                              sp:subject [
+                                                  sp:varName "resource" ;
+                                                ] ;
+                                            ]
+                                          ) ;
+                                      ]
+                                      [
+                                        a sp:Bind ;
+                                        sp:expression [
+                                            a sp:coalesce ;
+                                            sp:arg1 [
+                                                sp:varName "lab" ;
+                                              ] ;
+                                            sp:arg2 "" ;
+                                          ] ;
+                                        sp:variable [
+                                            sp:varName "label" ;
+                                          ] ;
+                                      ]
+                                    ) ;
+                                ] ;
+                              arg:resource [
+                                  sp:varName "resource" ;
+                                ] ;
+                              arg:title [
+                                  a smf:invoke ;
+                                  sp:arg1 [
+                                      sp:varName "myTitleFunction" ;
+                                    ] ;
+                                  sp:arg2 [
+                                      sp:varName "resource" ;
+                                    ] ;
+                                ] ;
+                              ui:childIndex 0 ;
+                            ] ;
+                          ui:childIndex 0 ;
+                        ] ;
+                      ui:childIndex 0 ;
+                      ui:resultSet [
+                          sp:varName "resultSet" ;
+                        ] ;
+                    ] ;
+                  ui:childIndex 0 ;
+                ] ;
+              ui:childIndex 0 ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              a sp:gt ;
+              sp:arg1 [
+                  sp:varName "count" ;
+                ] ;
+              sp:arg2 0 ;
+            ] ;
+        ] ;
+    ] ;
   rdfs:subClassOf lmdoc:Parts ;
 .
 lmdoc:MultiColumnList
