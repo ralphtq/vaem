@@ -13290,6 +13290,27 @@ lmdoc:PartHeader
       spl:predicate arg:metadata ;
       spl:valueType rdfs:Resource ;
     ] ;
+  ui:errorPrototype [
+      a ui:group ;
+      ui:child [
+          a ui:if ;
+          ui:child [
+              a ui:throw ;
+              ui:childIndex 0 ;
+              ui:message "Missing graph metadata instance" ;
+            ] ;
+          ui:childIndex 0 ;
+          ui:condition [
+              a sp:not ;
+              sp:arg1 [
+                  a sp:bound ;
+                  sp:arg1 [
+                      sp:varName "myGraphMetadata" ;
+                    ] ;
+                ] ;
+            ] ;
+        ] ;
+    ] ;
   ui:prototype [
       a ui:group ;
       let:myGraphMetadata [
