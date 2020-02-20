@@ -13305,7 +13305,7 @@ lmdoc:PartHeader
               sp:arg1 [
                   a sp:bound ;
                   sp:arg1 [
-                      sp:varName "myGraphMetadata" ;
+                      sp:varName "metadata" ;
                     ] ;
                 ] ;
             ] ;
