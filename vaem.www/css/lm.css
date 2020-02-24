@@ -614,6 +614,32 @@ td.lm-index-table-cell {
 	padding:2px 5px 2px 10px;
 }
 
+table.lm-baseuris-table, th, td { 
+	border: 1px solid black; 
+	border-collapse: collapse; 
+	font-family: Arial; 
+	font-size: 12pt; 
+	padding: 4px 4px; 
+	vertical-align: top;
+	}
+
+table.lm-baseuris-table-even-row tr:nth-child(even) {
+	background-color: #fff;
+	}
+table.lm-baseuris-table-odd-row tr:nth-child(odd) {
+	background-color: #f0f8ff;
+	}
+table.lm-baseuris-table-row-header th {
+	color: white;
+	background-color: #AFD1F0;
+	}
+table.lm-baseuris-table-cell th, td {
+	padding: 15px;
+	text-align: left;
+	}
+
+
+
 /* --- PRE --- */
 
 pre {
