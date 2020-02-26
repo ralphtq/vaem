@@ -623,17 +623,17 @@ table.lm-baseuris-table, th, td {
 	vertical-align: top;
 	}
 
-.lm-baseuris-table tr:nth-child(even) {
+table.lm-baseuris-table tr:nth-child(even) {
 	background-color: #fff;
 	}
-.lm-baseuris-table tr:nth-child(odd) {
+table.lm-baseuris-table tr:nth-child(odd) {
 	background-color: #f0f8ff;
 	}
-.lm-baseuris-table th {
+table.lm-baseuris-table th {
 	color: white;
 	background-color: #AFD1F0;
 	}
-.lm-baseuris-table th, td {
+table.lm-baseuris-table th, td {
 	padding: 15px;
 	text-align: left;
 	}
