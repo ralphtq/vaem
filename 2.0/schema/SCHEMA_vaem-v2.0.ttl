@@ -499,14 +499,14 @@ vaem:VocabularyGraph
   rdfs:label "Vocabulary graph" ;
 .
 vaem:applicableDiscipline
-  a owl:ObjectProperty ;
+  a rdf:Property ;
   dct:description "The property \"vaem:applicableDiscipline\" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study. Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:label "applicable discipline" ;
   rdfs:subPropertyOf vaem:hasDimension ;
 .
 vaem:applicableDomain
-  a owl:ObjectProperty ;
+  a rdf:Property ;
   dct:description "The property \"vaem:applicableDomain\" is used to specify how  a set of resources, or an individual resource is grounded in a domain, that is, a subject area of interest. Examples of domains are \"enterprise\", \"process\", \"organization\" and \"system\". In VAEM, the property is used as a dimension for characterizing an ontology graph. The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:label "apllicable domain" ;
