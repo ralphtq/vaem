@@ -1,5 +1,4 @@
 # baseURI: http://www.linkedmodel.org/schema/vaem
-# prefix: vaem
 
 @prefix dct: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -147,7 +146,7 @@ vaem:GMD_VAEM
   a vaem:GraphMetaData ;
   dct:abstract "VAEM stands for \"Vocabulary for Attaching Essential Metadata\". What VAEM regards as essential metadata is data about dates and times, confidentiality, and other characterisitic qualifiers of the ontology, but also references to where a ontology is documented and where to find ontology registration for governance, attribution and provenance. VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix \"dct\". VAEM is OWL-DL compliant." ;
   dct:created "2011-04-20"^^xsd:date ;
-  dct:modified "2020-02-20"^^xsd:date ;
+  dct:modified "2016-12-19"^^xsd:date ;
   dct:title "VAEM Version 2.0 Metadata" ;
   vaem:description "VAEM stands for \"Vocabulary for Attaching Essential Metadata\". What VAEM regards as essential metadata is data about dates and times, confidentiality, and other characterisitic qualifiers of the ontology, but also references to where a ontology is documented and where to find ontology registration for governance, attribution and provenance. VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix \"dct\"."^^rdf:HTML ;
   vaem:graphName "VAEM" ;
@@ -191,12 +190,12 @@ vaem:GraphMetaData
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom vaem:Discipline ;
-      owl:onProperty vaem:hasDiscipline ;
+      owl:onProperty vaem:applicableDiscipline ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom vaem:Domain ;
-      owl:onProperty vaem:hasDomain ;
+      owl:onProperty vaem:applicableDomain ;
     ] ;
   rdfs:subClassOf [
       a owl:Restriction ;
@@ -500,16 +499,16 @@ vaem:VocabularyGraph
   rdfs:label "Vocabulary graph" ;
 .
 vaem:applicableDiscipline
-  a owl:ObjectProperty ;
+  a rdf:Property ;
   dct:description "The property \"vaem:applicableDiscipline\" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study. Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:label "applicable discipline" ;
   rdfs:subPropertyOf vaem:hasDimension ;
 .
 vaem:applicableDomain
-  a owl:ObjectProperty ;
+  a rdf:Property ;
   dct:description "The property \"vaem:applicableDomain\" is used to specify how  a set of resources, or an individual resource is grounded in a domain, that is, a subject area of interest. Examples of domains are \"enterprise\", \"process\", \"organization\" and \"system\". In VAEM, the property is used as a dimension for characterizing an ontology graph. The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:label "apllicable domain" ;
   rdfs:subPropertyOf vaem:hasDimension ;
 .
@@ -543,13 +542,13 @@ vaem:filePrefix
 .
 vaem:graphName
   a owl:DatatypeProperty ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:label "graph name" ;
   rdfs:range xsd:string ;
 .
 vaem:graphTitle
   a owl:DatatypeProperty ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:label "graph title" ;
   rdfs:range xsd:string ;
 .
@@ -565,20 +564,6 @@ vaem:hasDimension
   dct:description "The property \"vaem:hasDimension\" is used categorize an ontology.  In VAEM, the property is used to characterize an ontology graph."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:label "has dimension" ;
-.
-vaem:hasDiscipline
-  a owl:ObjectProperty ;
-  dct:description "The property \"vaem:hasDiscipline\" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study. Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
-  rdfs:label "has discipline" ;
-  rdfs:subPropertyOf vaem:hasDimension ;
-.
-vaem:hasDomain
-  a owl:ObjectProperty ;
-  dct:description "The property \"vaem:hasDomain\" is used to specify how  a set of resources, or an individual resource is grounded in a domain, that is, a subject area of interest. Examples of domains are \"enterprise\", \"process\", \"organization\" and \"system\". In VAEM, the property is used as a dimension for characterizing an ontology graph. The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
-  rdfs:label "has domain" ;
-  rdfs:subPropertyOf vaem:hasDimension ;
 .
 vaem:hasGraphMetadata
   a owl:AnnotationProperty ;
@@ -663,12 +648,6 @@ vaem:logo
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:label "logo" ;
   rdfs:range xsd:anyURI ;
-.
-vaem:name
-  a owl:DatatypeProperty ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
-  rdfs:label "name" ;
-  rdfs:range xsd:string ;
 .
 vaem:namespace
   a owl:DatatypeProperty ;
@@ -755,12 +734,6 @@ vaem:specificity
   rdfs:label "specificity" ;
   rdfs:range xsd:nonNegativeInteger ;
 .
-vaem:title
-  a owl:DatatypeProperty ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
-  rdfs:label "title" ;
-  rdfs:range xsd:string ;
-.
 vaem:todo
   a owl:AnnotationProperty ;
   dct:description "As it name implies, a way to attach an annotation about a \"todo\" task"^^rdf:HTML ;
@@ -796,4 +769,3 @@ vaem:withAttributionTo
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:label "with attribution to" ;
   rdfs:range rdf:HTML ;
-.
