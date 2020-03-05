@@ -1,5 +1,5 @@
 # baseURI: http://epub.linkedmodel.org/1.0/schema/catalog
-# imports: http://www.linkedmodel.org/2.0/schema/vaem
+# imports: http://www.linkedmodel.org/schema/vaem
 # imports: http://www.w3.org/ns/dcat
 
 @prefix lmcat: <http://epub.linkedmodel.org/schema/catalog#> .
@@ -10,7 +10,7 @@
 
 <http://epub.linkedmodel.org/1.0/schema/catalog>
   rdf:type owl:Ontology ;
-  owl:imports <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  owl:imports <http://www.linkedmodel.org/schema/vaem> ;
   owl:imports <http://www.w3.org/ns/dcat> ;
   owl:versionInfo "Created with TopBraid Composer" ;
 .

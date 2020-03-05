@@ -3277,7 +3277,7 @@ lmdoc:Class
   vaem:todo "remove dependency on swa.css" ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:Class&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23GraphRole""" ;
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:Class&graph=http://www.linkedmodel.org/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23GraphRole""" ;
   rdfs:label "Class Documentation" ;
   rdfs:subClassOf lmdoc:Pages ;
 .
@@ -3925,7 +3925,7 @@ lmdoc:ClassSummary
   ui:responseType ui:HTML ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:ClassSummary&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23GraphRole""" ;
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:ClassSummary&graph=http://www.linkedmodel.org/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23GraphRole""" ;
   rdfs:label "Class Summary" ;
   rdfs:subClassOf lmdoc:Parts ;
 .
@@ -4914,7 +4914,7 @@ lmdoc:CreateHTMLforResource
                                 ui:class=\"{= ?swpElement }\"/>""" ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/sparqlmotion?id=createHTMLdocumentForResource&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23ScriptGraph""" ;
+http://localhost:8083/tbl/sparqlmotion?id=createHTMLdocumentForResource&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance&graph=http://www.linkedmodel.org/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23ScriptGraph""" ;
   rdfs:label "Create HTML for resource" ;
   rdfs:subClassOf lmdoc:Pages ;
 .
@@ -6738,7 +6738,7 @@ lmdoc:Graph
   ui:responseType ui:HTML ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:Graph&graph=http://www.linkedmodel.org/2.0/schema/vaem""" ;
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:Graph&graph=http://www.linkedmodel.org/schema/vaem""" ;
   rdfs:label "Graph Documentation" ;
   rdfs:subClassOf lmdoc:Pages ;
 .
@@ -7417,7 +7417,7 @@ lmdoc:GraphMetadata
   ui:responseType ui:HTML ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://www.linkedmodel.org/2.0/schema/vaem
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://www.linkedmodel.org/schema/vaem
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://www.linkedmodel.org/1.2/schema/dtype
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://qudt.org/2.0/schema/qudt
 http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphMetadata&graph=http://qudt.org/2.0/schema/qudt/science""" ;
@@ -8041,7 +8041,7 @@ lmdoc:GraphTest
   vaem:todo "remove dependency on swa.css" ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphTest&graph=http://www.linkedmodel.org/2.0/schema/vaem""" ;
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:GraphTest&graph=http://www.linkedmodel.org/schema/vaem""" ;
   rdfs:label "Graph Documentation" ;
   rdfs:subClassOf lmdoc:Pages ;
 .
@@ -9386,7 +9386,7 @@ lmdoc:Instance
   vaem:todo "remove dependency on swa.css" ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23ScriptGraph""" ;
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:Instance&graph=http://www.linkedmodel.org/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23ScriptGraph""" ;
   rdfs:label "Instance Documentation" ;
   rdfs:subClassOf lmdoc:Pages ;
 .
@@ -13712,7 +13712,7 @@ lmdoc:Preview
   ui:responseType ui:HTML ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/swp?_viewClass=lmdoc:Preview&graph=http://www.linkedmodel.org/2.0/schema/vaem""" ;
+http://localhost:8083/tbl/swp?_viewClass=lmdoc:Preview&graph=http://www.linkedmodel.org/schema/vaem""" ;
   rdfs:label "Preview Graph Documentation" ;
   rdfs:subClassOf lmdoc:Pages ;
 .
@@ -20702,7 +20702,7 @@ lmdoc:createHTMLdocumentForResource
   sm:returnModule lmdoc:returnFromCreateHTMLforResource ;
   rdfs:comment """Test with:
 
-http://localhost:8083/tbl/sparqlmotion?id=createHTMLdocumentForResource&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance&graph=http://www.linkedmodel.org/2.0/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23ScriptGraph""" ;
+http://localhost:8083/tbl/sparqlmotion?id=createHTMLdocumentForResource&swpElement=http%3A%2F%2Fwww.linkedmodel.org%2Foui%2Flmdoc%23Instance&graph=http://www.linkedmodel.org/schema/vaem&resource=http%3A%2F%2Fwww.linkedmodel.org%2Fschema%2Fvaem%23ScriptGraph""" ;
   rdfs:label "create HTML document for resource" ;
   rdfs:subClassOf sm:Functions ;
 .
