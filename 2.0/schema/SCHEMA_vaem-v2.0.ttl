@@ -762,6 +762,13 @@ vaem:usesNonImportedResource
   rdfs:label "uses non-imported resource" ;
   rdfs:range rdfs:Resource ;
 .
+vaem:website
+  a owl:AnnotationProperty ;
+  dct:description "Provides a link to a party's website, where a party is typically an organization." ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
+  rdfs:label "website" ;
+  rdfs:range xsd:anyURI ;
+.
 vaem:withAttributionTo
   a owl:AnnotationProperty ;
   dct:description "The property \"vaem:withAttributionTo\" is an annotation property that is either used to hold either a string or a reference to an instance of \"voag:Attribution\", from the VOAG ontology"^^rdf:HTML ;
