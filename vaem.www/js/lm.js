@@ -110,11 +110,13 @@ lm.navigateToInTab = function(resourceURI, queryGraphURI, targetName) {
  * Generate content for popups showing a resource summary
  * @param formId  the id of the search form
  */
-lm.popupResourceSummary = function(loadId, width, height) { 
+lm.popupResourceSummary = function(loadId, width, height, resourceURI) { 
+	// console.log("resourceURI= ");
+	// debugger;
      var buttons = [{
          text: "Access Details on TopBraid Server",
          click: function() {
-          alert('Call to TopBraid Server to be implemented later ...')
+          window.open('http://www.qudt.org/edg/tbl/qudt_units.editor#' + resourceURI);
          }
        },
        {
