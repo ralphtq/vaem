@@ -133,11 +133,11 @@ lm.popupResourceSummary = function(loadId, width, height, resourceURI) {
  * Generate content for popups 
  * @param formId  the id of the search form
  */
-lm.popup = function(loadId, title, width, height) {
+lm.popup = function(loadId, title, width, height, resourceURI) {
      var buttons = [{
          text: "Access more on TopBraid Server",
          click: function() {
-          alert('Call to TopBraid Server to be implemented later ...')
+			window.open('http://www.qudt.org/edg/tbl/qudt_units.editor#' + resourceURI);
          }
        },
        {
