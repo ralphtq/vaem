@@ -44,7 +44,7 @@ in a type hierarchy.</p>
 vaem:AspectClass
   a rdfs:Class ;
   a sh:NodeShape ;
-  rdfs:comment """
+  dcterms:description """
 <p>An <strong>Aspect Class</strong> is the type for all "Aspect" classes. 
 These serve as <strong>features</strong> or <strong>traits</strong> for reuse with a defining set of properties. 
 They are equivalent to interface classes in Java, traits in Scala and type classes in other languages.</p>
@@ -92,11 +92,44 @@ vaem:ConfigurationGraph
 vaem:Discipline
   a owl:Class ;
   dcterms:description """
-A discipline is a specific area of work or study.
-Examples of disciplines are "civil engineering" and "nursing".
-In VAEM, discipline is used as a dimension for characterizing an ontology graph and
-specializing where a domain is being used.
-For example a graph might be about material science for civil engineering or chemistry for nursing.
+  <p>A <em>Discipline</em> is a structured field of study and practice that follows established principles, methodologies, and bodies of knowledge. 
+  Disciplines serve as frameworks for learning, research, and application, guiding individuals in acquiring expertise in specialized areas such as 
+   science, mathematics, engineering, and mechanics.
+  </p>
+  <p>In VAEM, <em>Discipline</em> is used as a dimension for characterizing an ontology graph.
+  For example a graph might be about chemistry for nursing, where 'nursing' is a field of expertise.
+  </p>
+  <p>Key Characteristics of a <em>Discipline</em> are:
+  </p>
+	<ol>
+  <li>Systematic Knowledge & Theories - Each discipline is built upon fundamental principles that define how knowledge is organized and applied. 
+  For example:
+  <ul>
+	<li>Physics explores the fundamental forces and laws governing matter and energy.</li>
+  <li>Chemistry studies the composition, structure, and interactions of substances.</li>
+  <li>Mathematics provides abstract frameworks for quantification, problem-solving, and logical reasoning.</li>
+  <li>Mechanics applies principles of physics and mathematics to analyze forces, motion, and structures.</li>
+  </ul>
+  </li>
+  <li>Formal & Informal Learning - Many disciplines have formal education pathways (e.g., degrees in engineering, physics, or mathematics),
+   but expertise can also be developed through experimentation, problem-solving, and practical applications.</li>
+  <li>Specialization & Interdisciplinary Connections - Disciplines often have subfields and cross-disciplinary applications. 
+   For example:
+  <ul>
+  <li>Applied Physics leads to engineering and technology advancements.</li>
+  <li>Mathematical Mechanics is crucial in structural engineering and robotics.</li>
+  <li>Chemical Engineering merges chemistry and physics for industrial applications.</li>
+  <li>Methodologies & Problem-Solving Approaches - Disciplines rely on systematic methods, such as:</li>
+  <li>The Scientific Method (used in physics, chemistry, and mechanics) for hypothesis-driven research.</li>
+  <li>Mathematical Proofs for validating theories and solving abstract problems.</li>
+  <li>Engineering Principles to design and optimize mechanical systems.</li>
+  <li>Real-World Applications - Disciplines shape industries, from healthcare and technology to energy and space exploration. For instance:</li>
+  <li>Physics contributes to advancements in electronics, optics, and space travel.</li>
+  <li>Chemistry is essential for pharmaceuticals, materials science, and environmental protection.</li>
+  <li>Mathematics underpins cryptography, data science, and artificial intelligence.</li>
+  <li>Mechanics drives automotive engineering, aerospace, and robotics.
+  </ul>
+  </li>
 """^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "Discipline" ;
@@ -105,9 +138,8 @@ For example a graph might be about material science for civil engineering or che
 vaem:Domain
   a owl:Class ;
   dcterms:description """
-A domain is a subject area of interest. 
-Examples of domains are "chemistry", "physics", "material science", "mechanics" and "medicine".
-"""^^rdf:HTML ;
+<p>A <em>Domain</em> is a subject area of interest.
+</p>"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/2.0/schema/vaem> ;
   rdfs:label "Domain" ;
   rdfs:subClassOf vaem:ElementalConstruct ;
@@ -125,7 +157,7 @@ vaem:ElementalConstruct
 .
 vaem:HarmonizationGraph
   a vaem:GraphRole ;
-  dcterms:description "A graph that specifies mapings between external data sources and a neutral model."^^rdf:HTML ;
+  dcterms:description "A graph that specifies mappings between external data sources and a neutral model."^^rdf:HTML ;
   vaem:filePrefix "HRMGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "Harmonization Graph" ;
@@ -171,6 +203,28 @@ vaem:DynamicGraph
   vaem:filePrefix "DYNGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "Dynamic Graph" ;
+.
+vaem:FieldOfExpertise
+  a rdfs:Class ;
+  a sh:NodeShape ;
+  dcterms:description """
+  <p>A <em>Field of Expertise</em> refers to a specific area of knowledge, skill, or practice where an individual has developed proficiency.
+  It encompasses both professional occupations and informal pursuits, making it an inclusive term for experts, practitioners, and hobbyists alike.
+  </p>
+  <p>In VAEM, <em>Field of Expertise</em> is used as a dimension for characterizing an ontology graph.
+  For example a graph might be about chemistry for nursing, where 'nursing' is a field of expertise, and 'chemistry' is a discipline.
+  </p>
+  <p>Key Aspects of a <em>Field of Expertise</em> are:</p>
+  <ol>
+	<li>Specialized Knowledge or Skill - Involves a deep understanding of a subject or trade, whether learned through formal education, practical experience, or personal interest;</li>
+	<li>Application in Various Contexts - Can be applied in professional careers (e.g., a radiographer in healthcare), personal projects (e.g., a mechanic restoring classic cars), or hobbyist activities (e.g., woodworking, photography);</li>
+	<li>Diverse Levels of Involvement - Includes experts working at an advanced level, skilled workers in technical roles, and enthusiasts who refine their craft outside of a profession;</li>
+	<li>Cross-Disciplinary Nature - A field of expertise can span multiple industries or disciplines, such as healthcare (nursing, dentistry), mechanical work (car repairs), or creative fields (art, design).</li>
+  </ol>
+  </p>
+  """^^rdf:HTML;
+ rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+ rdf:label "Field of Expertise"
 .
 vaem:FunctionsGraph
   a vaem:GraphRole ;
@@ -269,6 +323,7 @@ For specification of graph governance the vocabulary "VOAG" may be used.
   rdfs:label "Graph Metadata" ;
   rdfs:seeAlso <http://voag.linkedmodel.org/vocab/voag> ;
   rdfs:subClassOf vaem:ElementalConstruct ;
+  sh:property vaem:GraphMetaData-applicableFieldOfExpertise ;
   sh:property vaem:GraphMetaData-description ;
   sh:property vaem:GraphMetaData-graphName ;
   sh:property vaem:GraphMetaData-graphTitle ;
@@ -293,6 +348,13 @@ For specification of graph governance the vocabulary "VOAG" may be used.
   sh:property vaem:GraphMetaData-specificity ;
   sh:property vaem:GraphMetaData-turtleFileURL ;
   sh:property vaem:GraphMetaData-withAttributionTo ;
+.
+vaem:GraphMetaData-applicableFieldOfExpertise
+  a sh:PropertyShape ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  sh:name "applicable to" ;
+  sh:path vaem:applicableFieldOfExpertise ;
+  sh:class vaem:Discipline ;
 .
 vaem:GraphMetaData-description
   a sh:PropertyShape ;
@@ -589,7 +651,7 @@ vaem:StringOrLangStringOrHTMLorAttribution
         sh:class voag:Attribution ;
       ]
     ) ;
-  rdfs:comment """
+  dcterms:description """
 An <em>rdf:List</em> that can be used in property constraints as value for <em>sh:or</em> to indicate 
 that all values of a property must be either <em>xsd:string</em>, <em>rdf:langString</em>  or <em>rdf:HTML</em> 
 (in that order of preference).
@@ -606,7 +668,7 @@ vaem:StringOrLangString
         sh:datatype rdf:langString ;
       ]
     ) ;
-  rdfs:comment """
+  dcterms:description """
 An <em>rdf:List</em> that can be used in property constraints as value for <em>sh:or</em> to indicate 
 that all values of a property must be either <em>xsd:string</em>, or <em>rdf:langString</em> 
 (in that order of preference).
@@ -626,7 +688,7 @@ vaem:StringOrLangStringOrHTML
         sh:datatype rdf:HTML ;
       ]
     ) ;
-  rdfs:comment """
+  dcterms:description """
 An <em>rdf:List</em> that can be used in property constraints as value for <em>sh:or</em> to indicate 
 that all values of a property must be either <em>xsd:string</em>, <em>rdf:langString</em>  or <em>rdf:HTML</em> 
 (in that order of preference).
@@ -649,7 +711,7 @@ vaem:StringOrLangStringOrHTMLorParty
         sh:class voag:Party ;
       ]
     ) ;
-  rdfs:comment """
+  dcterms:description """
 An <em>rdf:List</em> that can be used in property constraints as value for <em>sh:or</em> to indicate 
 that all values of a property must be either <em>xsd:string</em>, <em>rdf:langString</em>  or <em>rdf:HTML</em> 
 (in that order of preference).
@@ -760,7 +822,9 @@ vaem:date
 .
 vaem:dateCreated
   dcterms:description "The property \"vaem:dateCreated\" is intended for general use as the name implies.  The range of the property is set as \"vaem:dateUnion\" so as to allow a value to have a number of forms from a  year only to a full timestamp"^^rdf:HTML ;
-.
+ rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+ rdfs:label "date created" ;
+ .
 dcterms:description
   a rdf:Property ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
@@ -797,7 +861,7 @@ vaem:hasDiscipline
   a rdf:Property ;
   dcterms:description """
 The property "vaem:hasDiscipline" specified the kind of a graph that might have choices such
-as "nursing" and "civil engineering".
+as "chemistry" and "physics".
 """^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "has discipline" ;
@@ -817,6 +881,25 @@ The property "vaem:hasDimension" is used categorize an ontology.
 """^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "has dimension" ;
+.
+vaem:applicableFieldOfExpertise
+  a rdf:Property ;
+  dcterms:description """
+  <p>The property "vaem:applicableFieldOfExpertise" specified an applicable skill area such as
+   "Nursing" or "Heating, Ventilation, and Air Conditioning (HVAC) Engineering".
+  </p>
+  """^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "applicable field of expertise" ;
+.
+vaem:hasFieldOfExpertise
+  a rdf:Property ;
+  dcterms:description """
+  <p>The property "vaem:hasFieldOfExpertise" specifies a skill areas (or profession) such as "Nursing" or "Heating, Ventilation, and Air Conditioning (HVAC) Engineering".
+  </p>
+  """^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "has field of expertise" ;
 .
 vaem:hasGraphMetadata
   a rdf:Property ;
