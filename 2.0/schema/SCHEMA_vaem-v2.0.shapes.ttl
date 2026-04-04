@@ -200,6 +200,12 @@ vaem:GraphRegistry
   a owl:Class ;
   a sh:NodeShape ;
   rdfs:subClassOf owl:Thing ;
+  sh:property vaem:GraphRegistry-vaem_hasGraphRegistryEntry ;
+.
+vaem:GraphRegistry-vaem_hasGraphRegistryEntry
+  a sh:PropertyShape ;
+  sh:path vaem:hasGraphRegistryEntry ;
+  sh:class vaem:GraphRegistryEntry ;
 .
 vaem:GraphRegistryEntry
   a owl:Class ;
