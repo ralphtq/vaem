@@ -1,0 +1,231 @@
+# baseURI: http://www.linkedmodel.org/2.0/schema/vaem.shapes
+# imports: http://datashapes.org/dash
+
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix voag: <http://voag.linkedmodel.org/voag/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.linkedmodel.org/2.0/schema/vaem.shapes>
+  a owl:Ontology ;
+  <http://datashapes.org/owl2shacl#createPropertyShapeURIsWithPrefixes> true ;
+  owl:imports <http://datashapes.org/dash> ;
+.
+vaem:Aspect
+  a sh:NodeShape ;
+.
+vaem:Dimension
+  a sh:NodeShape ;
+.
+vaem:Discipline
+  a sh:NodeShape ;
+.
+vaem:Domain
+  a sh:NodeShape ;
+.
+vaem:GraphMetaData
+  a sh:NodeShape ;
+  sh:property vaem:GraphMetaData-vaem_applicableDiscipline ;
+  sh:property vaem:GraphMetaData-vaem_applicableDomain ;
+  sh:property vaem:GraphMetaData-vaem_description ;
+  sh:property vaem:GraphMetaData-vaem_graphName ;
+  sh:property vaem:GraphMetaData-vaem_graphTitle ;
+  sh:property vaem:GraphMetaData-vaem_hasAspect ;
+  sh:property vaem:GraphMetaData-vaem_hasGraphRole ;
+  sh:property vaem:GraphMetaData-vaem_hasIdentifier ;
+  sh:property vaem:GraphMetaData-vaem_hasLicenseType ;
+  sh:property vaem:GraphMetaData-vaem_hasOwner ;
+  sh:property vaem:GraphMetaData-vaem_hasSteward ;
+  sh:property vaem:GraphMetaData-vaem_hasViewpoint ;
+  sh:property vaem:GraphMetaData-vaem_intent ;
+  sh:property vaem:GraphMetaData-vaem_latestPublishedVersion ;
+  sh:property vaem:GraphMetaData-vaem_namespace ;
+  sh:property vaem:GraphMetaData-vaem_namespacePrefix ;
+  sh:property vaem:GraphMetaData-vaem_owner ;
+  sh:property vaem:GraphMetaData-vaem_previousPublishedVersion ;
+  sh:property vaem:GraphMetaData-vaem_publishedDate ;
+  sh:property vaem:GraphMetaData-vaem_rdfxmlFileURL ;
+  sh:property vaem:GraphMetaData-vaem_releaseDate ;
+  sh:property vaem:GraphMetaData-vaem_revision ;
+  sh:property vaem:GraphMetaData-vaem_specificity ;
+  sh:property vaem:GraphMetaData-vaem_turtleFileURL ;
+  sh:property vaem:GraphMetaData-vaem_withAttributionTo ;
+.
+vaem:GraphMetaData-vaem_applicableDiscipline
+  a sh:PropertyShape ;
+  sh:path vaem:applicableDiscipline ;
+  sh:class vaem:Discipline ;
+.
+vaem:GraphMetaData-vaem_applicableDomain
+  a sh:PropertyShape ;
+  sh:path vaem:applicableDomain ;
+  sh:class vaem:Domain ;
+.
+vaem:GraphMetaData-vaem_description
+  a sh:PropertyShape ;
+  sh:path vaem:description ;
+  sh:datatype rdf:HTML ;
+.
+vaem:GraphMetaData-vaem_graphName
+  a sh:PropertyShape ;
+  sh:path vaem:graphName ;
+  sh:datatype xsd:string ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_graphTitle
+  a sh:PropertyShape ;
+  sh:path vaem:graphTitle ;
+  sh:datatype xsd:string ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_hasAspect
+  a sh:PropertyShape ;
+  sh:path vaem:hasAspect ;
+  sh:class vaem:Aspect ;
+.
+vaem:GraphMetaData-vaem_hasGraphRole
+  a sh:PropertyShape ;
+  sh:path vaem:hasGraphRole ;
+  sh:class vaem:GraphRole ;
+.
+vaem:GraphMetaData-vaem_hasIdentifier
+  a sh:PropertyShape ;
+  sh:path vaem:hasIdentifier ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_hasLicenseType
+  a sh:PropertyShape ;
+  sh:path vaem:hasLicenseType ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_hasOwner
+  a sh:PropertyShape ;
+  sh:path vaem:hasOwner ;
+  sh:class vaem:Party ;
+.
+vaem:GraphMetaData-vaem_hasSteward
+  a sh:PropertyShape ;
+  sh:path vaem:hasSteward ;
+  sh:class vaem:Party ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_hasViewpoint
+  a sh:PropertyShape ;
+  sh:path vaem:hasViewpoint ;
+  sh:class vaem:Viewpoint ;
+.
+vaem:GraphMetaData-vaem_intent
+  a sh:PropertyShape ;
+  sh:path vaem:intent ;
+  sh:datatype xsd:string ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_latestPublishedVersion
+  a sh:PropertyShape ;
+  sh:path vaem:latestPublishedVersion ;
+  sh:datatype xsd:anyURI ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_namespace
+  a sh:PropertyShape ;
+  sh:path vaem:namespace ;
+  sh:datatype xsd:anyURI ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_namespacePrefix
+  a sh:PropertyShape ;
+  sh:path vaem:namespacePrefix ;
+  sh:datatype xsd:string ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_owner
+  a sh:PropertyShape ;
+  sh:path vaem:owner ;
+  sh:datatype xsd:string ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_previousPublishedVersion
+  a sh:PropertyShape ;
+  sh:path vaem:previousPublishedVersion ;
+  sh:datatype xsd:anyURI ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_publishedDate
+  a sh:PropertyShape ;
+  sh:path vaem:publishedDate ;
+  sh:datatype xsd:date ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_rdfxmlFileURL
+  a sh:PropertyShape ;
+  sh:path vaem:rdfxmlFileURL ;
+  sh:datatype xsd:anyURI ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_releaseDate
+  a sh:PropertyShape ;
+  sh:path vaem:releaseDate ;
+  sh:datatype xsd:date ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_revision
+  a sh:PropertyShape ;
+  sh:path vaem:revision ;
+  sh:datatype xsd:string ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_specificity
+  a sh:PropertyShape ;
+  sh:path vaem:specificity ;
+  sh:datatype xsd:nonNegativeInteger ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_turtleFileURL
+  a sh:PropertyShape ;
+  sh:path vaem:turtleFileURL ;
+  sh:datatype xsd:anyURI ;
+  sh:maxCount 1 ;
+.
+vaem:GraphMetaData-vaem_withAttributionTo
+  a sh:PropertyShape ;
+  sh:path vaem:withAttributionTo ;
+  sh:datatype rdf:HTML ;
+.
+vaem:GraphRegistry
+  a owl:Class ;
+  a sh:NodeShape ;
+  rdfs:subClassOf owl:Thing ;
+.
+vaem:GraphRegistryEntry
+  a owl:Class ;
+  a sh:NodeShape ;
+  rdfs:label "Graph registry entry" ;
+  rdfs:subClassOf owl:Thing ;
+.
+vaem:GraphRole
+  a sh:NodeShape ;
+  sh:property vaem:GraphRole-vaem_description ;
+  sh:property vaem:GraphRole-vaem_filePrefix ;
+.
+vaem:GraphRole-vaem_description
+  a sh:PropertyShape ;
+  sh:path vaem:description ;
+  sh:maxCount 1 ;
+.
+vaem:GraphRole-vaem_filePrefix
+  a sh:PropertyShape ;
+  sh:path vaem:filePrefix ;
+  sh:datatype xsd:string ;
+  sh:maxCount 1 ;
+.
+vaem:Party
+  a sh:NodeShape ;
+.
+vaem:Viewpoint
+  a sh:NodeShape ;
+.
