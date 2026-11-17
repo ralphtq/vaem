@@ -56,4 +56,4 @@ moved here.
 
 The ontology metadata declares VAEM to be issued under the Creative Commons
 Attribution-ShareAlike 3.0 United States license, with attribution to
-TopQuadrant, Inc. The license for this repository is under review.
+Linkedmodels. The license for this repository is under review.

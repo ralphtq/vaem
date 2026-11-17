@@ -1,9 +1,0 @@
-[Untyped annotation properties]
-- http://www.w3.org/2002/07/owl#versionIRI
-
-
-No OWL 2 DL violations found for ontology OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))
-
-No OWL lints found for ontology OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>)).
-
-OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>)) does not import other ontologies.

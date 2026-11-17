@@ -154,15 +154,15 @@ vaem:GMD_VAEM
   vaem:graphName "VAEM" ;
   vaem:graphTitle "VAEM: Vocabulary for Attaching Essential Metadata (v2.0)" ;
   vaem:hasGraphRole vaem:SchemaGraph ;
-  vaem:hasOwner vaem:TopQuadrant ;
-  vaem:hasSteward vaem:TopQuadrant ;
+  vaem:hasOwner vaem:LinkedModels ;
+  vaem:hasSteward vaem:LinkedModels ;
   vaem:intent "The purpose of VAEM is to provide, by import, a foundation for commonly needed resources for metadata on an ontology." ;
   vaem:isMetadataFor <http://www.linkedmodel.org/2.0/schema/vaem> ;
   vaem:latestPublishedVersion "http://www.linkedmodel.org/doc/2015/SCHEMA_vaem-v2.0"^^xsd:anyURI ;
   vaem:logo "http://www.linkedmodel.org/lib/lm/images/logos/vaem_logo_300x110.png"^^xsd:anyURI ;
   vaem:namespace "http://www.linkedmodel.org/schema/vaem#"^^xsd:anyURI ;
   vaem:namespacePrefix "vaem" ;
-  vaem:owner "TopQuadrant, Inc." ;
+  vaem:owner "Linkedmodels" ;
   vaem:previousPublishedVersion "http://linkedmodel.org/doc/vaem/1.2/"^^xsd:anyURI ;
   vaem:releaseDate "2016-09-27"^^xsd:date ;
   vaem:revision "2.0" ;
@@ -173,7 +173,7 @@ vaem:GMD_VAEM
   vaem:usesNonImportedResource dct:modified ;
   vaem:usesNonImportedResource dct:title ;
   vaem:usesNonImportedResource voag:CC-SHAREALIKE_3PT0-US ;
-  vaem:withAttributionTo "VAEM is issued under a Creative Commons Attribution Share Alike 3.0 United States License. Attribution should be made to TopQuadrant, Inc." ;
+  vaem:withAttributionTo "VAEM is issued under a Creative Commons Attribution Share Alike 3.0 United States License. Attribution should be made to Linkedmodels." ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "VAEM Schema Version 2.0 Metadata" ;
 .
@@ -439,10 +439,10 @@ vaem:SurrogateGraph
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Surrogate graph" ;
 .
-vaem:TopQuadrant
+vaem:LinkedModels
   a vaem:Party ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "TopQuadrant" ;
+  rdfs:label "Linkedmodels" ;
 .
 vaem:TransformsGraph
   a vaem:GraphRole ;

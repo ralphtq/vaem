@@ -228,7 +228,7 @@ VAEM makes use of some properties from the DC terms vocabulary and "voag:Attribu
   vaem:usesNonImportedResource dcterms:title ;
   vaem:usesNonImportedResource voag:Attribution ;
   vaem:usesNonImportedResource voag:CC-SHAREALIKE_3PT0-US ;
-  vaem:withAttributionTo "VAEM is issued under a Creative Commons Attribution Share Alike 3.0 United States License. Attribution should be made to TopQuadrant, Inc." ;
+  vaem:withAttributionTo "VAEM is issued under a Creative Commons Attribution Share Alike 3.0 United States License. Attribution should be made to Linkedmodels." ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "VAEM Schema Version 3.0 Metadata" ;
 .
