@@ -14,8 +14,8 @@
   a owl:Ontology ;
   dcterms:description """
 <p>
-VAEM stands for "<em>Vocabulary About Elemental Metadata</em>". 
-Elemental Metadata is specified as foundational constructs for metaclasses, 
+VAEM stands for "<em>Vocabulary About Essential Metadata</em>". 
+Essential Metadata is specified as foundational constructs for metaclasses, 
 properties for dates and times, characterisitic qualifiers of the ontology such as dimensions, 
 governance, attribution, along with references to where an ontology is documented and where it is 
 registrated.
@@ -183,7 +183,7 @@ vaem:GMD_VAEM
   a vaem:GraphMetaData ;
   dcterms:abstract """
 <p>
-VAEM stands for "<em>Vocabulary About Elemental Metadata</em>". 
+VAEM stands for "<em>Vocabulary About Essential Metadata</em>". 
 What VAEM regards as empirical metadata is foundational constructs for metaclasses, 
 properties for dates and times, characterisitic qualifiers of the ontology such as dimensions, 
 governance, attribution, alon with references to where an ontology is documented and where it is 
@@ -197,8 +197,8 @@ VAEM makes use of some properties from the DC terms vocabulary using the namespa
   dcterms:title "VAEM Version 3.0 Metadata" ;
   dcterms:description """
 <p>
-VAEM stands for "<em>Vocabulary About Elemental Metadata</em>". 
-Elemental Metadata is specified as foundational constructs for metaclasses, 
+VAEM stands for "<em>Vocabulary About Essential Metadata</em>". 
+Essential Metadata is specified as foundational constructs for metaclasses, 
 properties for dates and times, characterisitic qualifiers of the ontology such as dimensions, 
 governance, attribution, along with references to where an ontology is documented and where it is 
 registrated.
@@ -208,7 +208,7 @@ VAEM makes use of some properties from the DC terms vocabulary and "voag:Attribu
 </p>
 """^^rdf:HTML ;
   vaem:graphName "VAEM" ;
-  vaem:graphTitle "VAEM: Vocabulary About Elemental Metadata (v3.0)" ;
+  vaem:graphTitle "VAEM: Vocabulary About Essential Metadata (v3.0)" ;
   vaem:hasGraphRole vaem:SchemaGraph ;
   vaem:intent "The purpose of VAEM is to provide, by import, a foundation for commonly needed resources for metadata on an ontology." ;
   vaem:isMetadataFor <http://www.linkedmodel.org/3.0/schema/vaem> ;
