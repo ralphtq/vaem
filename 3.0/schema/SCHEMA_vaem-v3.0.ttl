@@ -210,12 +210,15 @@ VAEM makes use of some properties from the DC terms vocabulary and "voag:Attribu
   vaem:graphName "VAEM" ;
   vaem:graphTitle "VAEM: Vocabulary About Essential Metadata (v3.0)" ;
   vaem:hasGraphRole vaem:SchemaGraph ;
+  vaem:hasOwner vaem:LinkedModels ;
+  vaem:hasSteward vaem:LinkedModels ;
   vaem:intent "The purpose of VAEM is to provide, by import, a foundation for commonly needed resources for metadata on an ontology." ;
   vaem:isMetadataFor <http://www.linkedmodel.org/3.0/schema/vaem> ;
   vaem:latestPublishedVersion "http://www.linkedmodel.org/doc/2015/SCHEMA_vaem-v2.0"^^xsd:anyURI ;
   vaem:logo "http://www.linkedmodel.org/lib/lm/images/logos/vaem_logo_300x110.png"^^xsd:anyURI ;
   vaem:namespace "http://www.linkedmodel.org/schema/vaem#"^^xsd:anyURI ;
   vaem:namespacePrefix "vaem" ;
+  vaem:owner "Linkedmodels" ;
   vaem:previousPublishedVersion "http://linkedmodel.org/doc/vaem/1.2/"^^xsd:anyURI ;
   vaem:releaseDate "2023-09-25"^^xsd:date ;
   vaem:revision "3.0" ;
@@ -461,7 +464,6 @@ vaem:GraphMetaData-turtleFileURL
 vaem:GraphMetaData-withAttributionTo
   a sh:PropertyShape ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  sh:class voag:Attribution ;
   sh:or vaem:StringOrLangStringOrHTMLorAttribution ;
   sh:path vaem:withAttributionTo ;
 .
@@ -504,6 +506,11 @@ vaem:LinkSetGraph
   vaem:filePrefix "LSTGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "Link Set Graph" ;
+.
+vaem:LinkedModels
+  a vaem:Party ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "Linkedmodels" ;
 .
 vaem:MappingsGraph
   a vaem:GraphRole ;
