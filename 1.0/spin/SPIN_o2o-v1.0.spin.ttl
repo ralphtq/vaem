@@ -1,0 +1,6733 @@
+# baseURI: http://lib.topquadrant.com/owl/1.0.0/srg/o2o
+# imports: http://spinrdf.org/spin
+# imports: http://topbraid.org/sparqlmotionfunctions
+# imports: http://www.linkedmodel.org/schema/dtype
+
+@prefix afn: <http://jena.hpl.hp.com/ARQ/function#> .
+@prefix arg: <http://spinrdf.org/arg#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions#> .
+@prefix html: <http://uispin.org/html#> .
+@prefix o2o: <http://lib.topquadrant.com/owl/srg/o2o#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix smf: <http://topbraid.org/sparqlmotionfunctions#> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix spin: <http://spinrdf.org/spin#> .
+@prefix spl: <http://spinrdf.org/spl#> .
+@prefix spr: <http://spinrdf.org/spr#> .
+@prefix subClassDistance: <http://example.org/subClassDistance#> .
+@prefix sxml: <http://topbraid.org/sxml#> .
+@prefix tui: <http://uispin.org/tui#> .
+@prefix ui: <http://uispin.org/ui#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://lib.topquadrant.com/owl/1.0.0/srg/o2o>
+  rdf:type owl:Ontology ;
+  owl:imports <http://spinrdf.org/spin> ;
+  owl:imports <http://topbraid.org/sparqlmotionfunctions> ;
+  owl:imports <http://www.linkedmodel.org/schema/dtype> ;
+  owl:versionInfo "http://lib.topquadrant.com/owl/1.0.0/srg/o2o#"^^xsd:string ;
+.
+o2o:ClassMagicProperties
+  rdf:type spin:MagicProperty ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:ConstructTemplates
+  rdf:type spin:ConstructTemplate ;
+  rdfs:label "Construct templates"^^xsd:string ;
+  rdfs:subClassOf spin:ConstructTemplates ;
+.
+o2o:DeleteAnons
+  rdf:type o2o:Query ;
+  spin:update [
+      rdf:type sp:Modify ;
+      sp:deletePattern (
+          [
+            sp:object _:b530587 ;
+            sp:predicate _:b841569 ;
+            sp:subject _:b834846 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "anon"^^xsd:string ;
+              ] ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject _:b834846 ;
+          ]
+          [
+            rdf:type sp:NotExists ;
+            sp:elements (
+                [
+                  sp:object _:b834846 ;
+                  sp:predicate [
+                      sp:varName "p1"^^xsd:string ;
+                    ] ;
+                  sp:subject [
+                      sp:varName "s"^^xsd:string ;
+                    ] ;
+                ]
+              ) ;
+          ]
+          [
+            sp:object _:b530587 ;
+            sp:predicate _:b841569 ;
+            sp:subject _:b834846 ;
+          ]
+        ) ;
+    ] ;
+  spin:update [
+      rdf:type sp:Modify ;
+      sp:deletePattern (
+          [
+            sp:object _:b676997 ;
+            sp:predicate _:b675477 ;
+            sp:subject _:b196853 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "anon"^^xsd:string ;
+              ] ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject _:b977574 ;
+          ]
+          [
+            rdf:type sp:NotExists ;
+            sp:elements (
+                [
+                  sp:object _:b977574 ;
+                  sp:predicate [
+                      sp:varName "p1"^^xsd:string ;
+                    ] ;
+                  sp:subject [
+                      sp:varName "s"^^xsd:string ;
+                    ] ;
+                ]
+              ) ;
+          ]
+          [
+            sp:object _:b196853 ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject _:b977574 ;
+          ]
+          [
+            sp:object owl:Restriction ;
+            sp:predicate rdf:type ;
+            sp:subject _:b196853 ;
+          ]
+          [
+            sp:object _:b676997 ;
+            sp:predicate _:b675477 ;
+            sp:subject _:b196853 ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "Delete Anons"^^xsd:string ;
+.
+o2o:Functions
+  rdf:type spin:Function ;
+  spin:abstract "true"^^xsd:boolean ;
+  rdfs:label "Functions"^^xsd:string ;
+  rdfs:subClassOf spin:Functions ;
+.
+o2o:MagicProperties
+  rdf:type spin:MagicProperty ;
+  rdfs:subClassOf spin:MagicProperties ;
+.
+o2o:Query
+  rdf:type owl:Class ;
+  rdfs:label "Query"^^xsd:string ;
+  rdfs:subClassOf owl:Thing ;
+.
+o2o:TestClass
+  rdf:type owl:Class ;
+  rdfs:label "KSC LCS Test class"^^xsd:string ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom <http://www.linkedmodel.org/schema/vaem#CatalogEntry> ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#hasCatalogEntry> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom <http://www.linkedmodel.org/schema/vaem#GraphRole> ;
+      owl:onProperty <http://www.linkedmodel.org/schema/dtype#derivedFrom> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#name> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:hasValue <http://www.linkedmodel.org/schema/vaem#SchemaGraph> ;
+      owl:onProperty <http://www.linkedmodel.org/schema/dtype#derivedFrom> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#date> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#hasCatalogEntry> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "5"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#owner> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#description> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#owner> ;
+    ] ;
+.
+o2o:TestClass_A
+  rdf:type owl:Class ;
+  rdfs:label "KSC LCS Test class A"^^xsd:string ;
+  rdfs:subClassOf o2o:TestClass ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:hasValue "TEST A"^^xsd:string ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#name> ;
+    ] ;
+.
+o2o:TestClass_AB
+  rdf:type owl:Class ;
+  dc:description "A test class for the relevant class documentation generation,"^^xsd:string ;
+  spin:query [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "class"^^xsd:string ;
+          ]
+          [
+            sp:varName "property"^^xsd:string ;
+          ]
+          [
+            sp:varName "parent"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression o2o:TestClass_AB ;
+            sp:variable [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+            sp:predicate o2o:relevantPropertiesAtClass ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "parent"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:query [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "class"^^xsd:string ;
+          ]
+          [
+            sp:varName "property"^^xsd:string ;
+          ]
+          [
+            sp:varName "range"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression o2o:TestClass_AB ;
+            sp:variable [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression <http://www.linkedmodel.org/schema/dtype#derivedFrom> ;
+            sp:variable [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+            sp:predicate o2o:rangeOfPropertyAtClass ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "range"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:query [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "class"^^xsd:string ;
+          ]
+          [
+            sp:varName "property"^^xsd:string ;
+          ]
+          [
+            sp:varName "range"^^xsd:string ;
+          ]
+          [
+            sp:varName "super"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression o2o:TestClass_AB ;
+            sp:variable [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+            sp:predicate o2o:relevantPropertiesAtClass ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "parent"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?3"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?4"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?3"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?4"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?4"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?5"^^xsd:string ;
+              ] ;
+            sp:predicate o2o:valueRestrictionsForPropertyAtClass ;
+            sp:subject [
+                sp:varName "?3"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "range"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?5"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?6"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?5"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "super"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?6"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?6"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:query [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "parent"^^xsd:string ;
+          ]
+          [
+            sp:varName "class"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression o2o:TestClass_AB ;
+            sp:variable [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression <http://www.linkedmodel.org/schema/dtype#derivedFrom> ;
+            sp:variable [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+            sp:predicate o2o:parentsOfPropertiesAtClass ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "parent"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  rdfs:label "KSC LCS Test class AB"^^xsd:string ;
+  rdfs:subClassOf o2o:TestClass_A ;
+  rdfs:subClassOf o2o:TestClass_B ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:hasValue <http://www.linkedmodel.org/schema/vaem#DataGraph> ;
+      owl:onProperty <http://www.linkedmodel.org/schema/dtype#derivedFrom> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:hasValue <http://www.linkedmodel.org/schema/vaem#RulesGraph> ;
+      owl:onProperty <http://www.linkedmodel.org/schema/dtype#derivedFrom> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#title> ;
+    ] ;
+.
+o2o:TestClass_B
+  rdf:type owl:Class ;
+  rdfs:label "KSC LCS Test class B"^^xsd:string ;
+  rdfs:subClassOf o2o:TestClass ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#title> ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty <http://www.linkedmodel.org/schema/vaem#revision> ;
+    ] ;
+.
+o2o:TripleReplacement
+  rdf:type owl:Class ;
+  rdfs:label "Triple replacement"^^xsd:string ;
+  rdfs:subClassOf owl:Thing ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom rdf:Statement ;
+      owl:onProperty o2o:tripleToAdd ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom rdf:Statement ;
+      owl:onProperty o2o:tripleToDelete ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty o2o:graphURI ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty o2o:tripleToAdd ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty o2o:tripleToDelete ;
+    ] ;
+.
+o2o:abbreviateCamelCaseName
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "initials"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:replaceAll ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "[a-z]" ;
+                sp:arg3 "" ;
+              ] ;
+            sp:variable [
+                sp:varName "in1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:replaceAll ;
+                sp:arg1 [
+                    sp:varName "in1"^^xsd:string ;
+                  ] ;
+                sp:arg2 " " ;
+                sp:arg3 "-" ;
+              ] ;
+            sp:variable [
+                sp:varName "in2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:replaceAll ;
+                sp:arg1 [
+                    sp:varName "in2"^^xsd:string ;
+                  ] ;
+                sp:arg2 "--" ;
+                sp:arg3 "-" ;
+              ] ;
+            sp:variable [
+                sp:varName "in3"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:replaceAll ;
+                sp:arg1 [
+                    sp:varName "in3"^^xsd:string ;
+                  ] ;
+                sp:arg2 "_" ;
+                sp:arg3 "-" ;
+              ] ;
+            sp:variable [
+                sp:varName "initials"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Input string"^^xsd:string ;
+    ] ;
+  rdfs:label "avvreviate camelcase name"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:allValuesOfPropertyOccurrence
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b931822
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object _:b250361 ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject spin:_arg2 ;
+          ]
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate owl:onProperty ;
+            sp:subject _:b992177 ;
+          ]
+          [
+            sp:object owl:Restriction ;
+            sp:predicate rdf:type ;
+            sp:subject _:b992177 ;
+          ]
+          [
+            sp:object _:b992177 ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject _:b250361 ;
+          ]
+          [
+            sp:object _:b931822 ;
+            sp:predicate owl:allValuesFrom ;
+            sp:subject _:b992177 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "the relevant property of a class"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "the class of the relevanr property"^^xsd:string ;
+    ] ;
+  rdfs:comment "Given a relevant property and a class determine the range set for the occurrence on the class"^^xsd:string ;
+  rdfs:label "all values of property occurrence"^^xsd:string ;
+  rdfs:subClassOf o2o:ClassMagicProperties ;
+.
+o2o:canBecomeURI
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Ask ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type xsd:string ;
+                sp:arg1 spin:_arg1 ;
+              ] ;
+            sp:variable [
+                sp:varName "literal"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:and ;
+                sp:arg1 [
+                    rdf:type sp:or ;
+                    sp:arg1 [
+                        rdf:type sp:or ;
+                        sp:arg1 [
+                            rdf:type fn:starts-with ;
+                            sp:arg1 [
+                                sp:varName "literal"^^xsd:string ;
+                              ] ;
+                            sp:arg2 "http" ;
+                          ] ;
+                        sp:arg2 [
+                            rdf:type fn:starts-with ;
+                            sp:arg1 [
+                                sp:varName "literal"^^xsd:string ;
+                              ] ;
+                            sp:arg2 "urn" ;
+                          ] ;
+                      ] ;
+                    sp:arg2 [
+                        rdf:type fn:starts-with ;
+                        sp:arg1 [
+                            sp:varName "literal"^^xsd:string ;
+                          ] ;
+                        sp:arg2 "file" ;
+                      ] ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type fn:contains ;
+                    sp:arg1 [
+                        sp:varName "literal"^^xsd:string ;
+                      ] ;
+                    sp:arg2 ":" ;
+                  ] ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Literal"^^xsd:string ;
+    ] ;
+  rdfs:label "can become URI"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:className
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b186037
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression "false"^^xsd:boolean ;
+            sp:variable _:b722009 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 _:b722009 ;
+                sp:arg2 [
+                    rdf:type smf:titleCase ;
+                    sp:arg1 spin:_arg1 ;
+                  ] ;
+                sp:arg3 spin:_arg1 ;
+              ] ;
+            sp:variable _:b186037 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+    ] ;
+  rdfs:label "Class Local Name"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:constructClassHierarchyFromList
+  rdf:type spin:ConstructTemplate ;
+  spin:body [
+      rdf:type sp:Construct ;
+      sp:templates (
+          [
+            sp:object owl:Class ;
+            sp:predicate rdf:type ;
+            sp:subject _:b292719 ;
+          ]
+          [
+            sp:object owl:Class ;
+            sp:predicate rdf:type ;
+            sp:subject _:b48426 ;
+          ]
+          [
+            sp:object _:b48426 ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject _:b292719 ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object _:b182659 ;
+            sp:predicate o2o:pairHyphen ;
+            sp:subject [
+                sp:varName "sourceString"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object _:b150799 ;
+            sp:predicate rdf:first ;
+            sp:subject _:b182659 ;
+          ]
+          [
+            sp:object _:b925431 ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b182659 ;
+          ]
+          [
+            sp:object _:b667263 ;
+            sp:predicate rdf:first ;
+            sp:subject _:b925431 ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b925431 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:resource ;
+                sp:arg1 [
+                    rdf:type fn:concat ;
+                    sp:arg1 _:b771609 ;
+                    sp:arg2 _:b150799 ;
+                  ] ;
+              ] ;
+            sp:variable _:b48426 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:resource ;
+                sp:arg1 [
+                    rdf:type fn:concat ;
+                    sp:arg1 _:b771609 ;
+                    sp:arg2 _:b667263 ;
+                  ] ;
+              ] ;
+            sp:variable _:b292719 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate o2o:namespace ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Target namespace"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate o2o:sourceString ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Source string literal"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Constructs a class hierarchy from a {?sourceString} in the namespace {?namespace}"^^xsd:string ;
+  rdfs:label "construct class hierarchy from list"^^xsd:string ;
+  rdfs:subClassOf o2o:ConstructTemplates ;
+.
+o2o:constructIncrementallyPairedList
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "pairedList"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:indexOf ;
+                sp:arg1 spin:_arg2 ;
+                sp:arg2 spin:_arg3 ;
+              ] ;
+            sp:variable [
+                sp:varName "i1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:substring ;
+                sp:arg1 spin:_arg2 ;
+                sp:arg2 0 ;
+                sp:arg3 [
+                    sp:varName "i1"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "p1_1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type sp:eq ;
+                    sp:arg1 spin:_arg1 ;
+                    sp:arg2 "" ;
+                  ] ;
+                sp:arg2 [
+                    sp:varName "p1_1"^^xsd:string ;
+                  ] ;
+                sp:arg3 [
+                    rdf:type fn:concat ;
+                    sp:arg1 spin:_arg1 ;
+                    sp:arg2 spin:_arg3 ;
+                    sp:arg3 [
+                        sp:varName "p1_1"^^xsd:string ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "p1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:substring ;
+                sp:arg1 spin:_arg2 ;
+                sp:arg2 [
+                    rdf:type sp:add ;
+                    sp:arg1 [
+                        sp:varName "i1"^^xsd:string ;
+                      ] ;
+                    sp:arg2 2 ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "rest"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:indexOf ;
+                sp:arg1 [
+                    sp:varName "rest"^^xsd:string ;
+                  ] ;
+                sp:arg2 spin:_arg3 ;
+              ] ;
+            sp:variable [
+                sp:varName "restFirstSplitIndex"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:string-length ;
+                sp:arg1 [
+                    sp:varName "rest"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "restLength"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:indexOf ;
+                sp:arg1 [
+                    sp:varName "rest"^^xsd:string ;
+                  ] ;
+                sp:arg2 spin:_arg2 ;
+              ] ;
+            sp:variable [
+                sp:varName "restFirstSplitIndex2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:coalesce ;
+                sp:arg1 [
+                    sp:varName "restFirstSplitIndex2"^^xsd:string ;
+                  ] ;
+                sp:arg2 [
+                    sp:varName "restLength"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "i2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:substring ;
+                sp:arg1 spin:_arg2 ;
+                sp:arg2 0 ;
+                sp:arg3 [
+                    rdf:type sp:add ;
+                    sp:arg1 [
+                        rdf:type sp:add ;
+                        sp:arg1 [
+                            sp:varName "i1"^^xsd:string ;
+                          ] ;
+                        sp:arg2 [
+                            sp:varName "i2"^^xsd:string ;
+                          ] ;
+                      ] ;
+                    sp:arg2 1 ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "p2_1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type sp:eq ;
+                    sp:arg1 spin:_arg1 ;
+                    sp:arg2 "" ;
+                  ] ;
+                sp:arg2 [
+                    sp:varName "p2_1"^^xsd:string ;
+                  ] ;
+                sp:arg3 [
+                    rdf:type fn:concat ;
+                    sp:arg1 spin:_arg1 ;
+                    sp:arg2 spin:_arg3 ;
+                    sp:arg3 [
+                        sp:varName "p2_1"^^xsd:string ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "p2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 [
+                    sp:varName "p1"^^xsd:string ;
+                  ] ;
+                sp:arg2 spin:_arg4 ;
+                sp:arg3 [
+                    sp:varName "p2"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "pair"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type fn:contains ;
+                    sp:arg1 [
+                        sp:varName "rest"^^xsd:string ;
+                      ] ;
+                    sp:arg2 spin:_arg3 ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type fn:concat ;
+                    sp:arg1 [
+                        sp:varName "pair"^^xsd:string ;
+                      ] ;
+                    sp:arg2 spin:_arg5 ;
+                    sp:arg3 [
+                        rdf:type o2o:constructIncrementallyPairedList ;
+                        sp:arg1 [
+                            sp:varName "p1"^^xsd:string ;
+                          ] ;
+                        sp:arg2 [
+                            sp:varName "rest"^^xsd:string ;
+                          ] ;
+                        sp:arg3 spin:_arg3 ;
+                        sp:arg4 spin:_arg4 ;
+                        sp:arg5 spin:_arg5 ;
+                      ] ;
+                  ] ;
+                sp:arg3 [
+                    sp:varName "pair"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "pairedList"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "First str - internal variable - use empty string for it"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Source list - The remaining source list"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg3 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Split delimiter"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg4 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Pair member delimiter"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg5 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Pair delimiter"^^xsd:string ;
+    ] ;
+  rdfs:label "construct incrementally paired list"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:constructPairedList
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b398377
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression spin:_arg1 ;
+            sp:variable _:b221594 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:indexOf ;
+                sp:arg1 _:b221594 ;
+                sp:arg2 spin:_arg2 ;
+              ] ;
+            sp:variable _:b194711 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:substring ;
+                sp:arg1 _:b221594 ;
+                sp:arg2 0 ;
+                sp:arg3 _:b194711 ;
+              ] ;
+            sp:variable [
+                sp:varName "p1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:substring ;
+                sp:arg1 _:b221594 ;
+                sp:arg2 [
+                    rdf:type sp:add ;
+                    sp:arg1 _:b194711 ;
+                    sp:arg2 2 ;
+                  ] ;
+              ] ;
+            sp:variable _:b432848 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:string-length ;
+                sp:arg1 _:b432848 ;
+              ] ;
+            sp:variable _:b626792 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:indexOf ;
+                sp:arg1 _:b432848 ;
+                sp:arg2 spin:_arg2 ;
+              ] ;
+            sp:variable _:b607741 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:coalesce ;
+                sp:arg1 _:b607741 ;
+                sp:arg2 _:b626792 ;
+              ] ;
+            sp:variable _:b678336 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:substring ;
+                sp:arg1 _:b432848 ;
+                sp:arg2 0 ;
+                sp:arg3 _:b678336 ;
+              ] ;
+            sp:variable [
+                sp:varName "p2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:buildString ;
+                sp:arg1 "{?p1}{?arg3}{?p2}" ;
+              ] ;
+            sp:variable _:b8318 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 _:b8318 ;
+                sp:arg2 spin:_arg2 ;
+                sp:arg3 [
+                    rdf:type smf:if ;
+                    sp:arg1 [
+                        rdf:type fn:contains ;
+                        sp:arg1 _:b432848 ;
+                        sp:arg2 spin:_arg2 ;
+                      ] ;
+                    sp:arg2 [
+                        rdf:type o2o:constructPairedList ;
+                        sp:arg1 _:b432848 ;
+                        sp:arg2 spin:_arg2 ;
+                        sp:arg3 spin:_arg3 ;
+                      ] ;
+                    sp:arg3 "" ;
+                  ] ;
+              ] ;
+            sp:variable _:b398377 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Source string"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "split delimiter"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg3 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "pair delimiter"^^xsd:string ;
+    ] ;
+  rdfs:label "construct paired list"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:constructRestriction
+  rdf:type spin:ConstructTemplate ;
+  spin:body [
+      rdf:type sp:Construct ;
+      sp:templates (
+          [
+            sp:object _:b983648 ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject spin:_this ;
+          ]
+          [
+            sp:object owl:Restriction ;
+            sp:predicate rdf:type ;
+            sp:subject _:b983648 ;
+          ]
+          [
+            sp:object spin:_arg2 ;
+            sp:predicate owl:allValuesFrom ;
+            sp:subject _:b983648 ;
+          ]
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate owl:onProperty ;
+            sp:subject _:b983648 ;
+          ]
+          [
+            sp:object _:b970692 ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject spin:_this ;
+          ]
+          [
+            sp:object owl:Restriction ;
+            sp:predicate rdf:type ;
+            sp:subject _:b970692 ;
+          ]
+          [
+            sp:object 1 ;
+            sp:predicate owl:maxCardinality ;
+            sp:subject _:b970692 ;
+          ]
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate owl:onProperty ;
+            sp:subject _:b970692 ;
+          ]
+        ) ;
+      sp:where () ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "property"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "range"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "construct restriction given a property and a range class"^^xsd:string ;
+  rdfs:subClassOf o2o:ConstructTemplates ;
+.
+o2o:copyNode
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b157604
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:if ;
+                sp:arg1 [
+                    rdf:type sp:isLiteral ;
+                    sp:arg1 spin:_arg1 ;
+                  ] ;
+                sp:arg2 spin:_arg1 ;
+                sp:arg3 [
+                    rdf:type sp:if ;
+                    sp:arg1 [
+                        rdf:type sp:isIRI ;
+                        sp:arg1 spin:_arg1 ;
+                      ] ;
+                    sp:arg2 [
+                        rdf:type sp:if ;
+                        sp:arg1 [
+                            rdf:type sp:eq ;
+                            sp:arg1 [
+                                rdf:type afn:namespace ;
+                                sp:arg1 spin:_arg1 ;
+                              ] ;
+                            sp:arg2 spin:_arg2 ;
+                          ] ;
+                        sp:arg2 [
+                            rdf:type smf:resource ;
+                            sp:arg1 [
+                                rdf:type fn:concat ;
+                                sp:arg1 spin:_arg3 ;
+                                sp:arg2 [
+                                    rdf:type afn:localname ;
+                                    sp:arg1 spin:_arg1 ;
+                                  ] ;
+                              ] ;
+                          ] ;
+                        sp:arg3 spin:_arg1 ;
+                      ] ;
+                    sp:arg3 <http://blank-nodes#cannot-be-copied> ;
+                  ] ;
+              ] ;
+            sp:variable _:b157604 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      rdfs:comment "Old node"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Old namespace if IRI resource"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg3 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "New namespace if IRI resource"^^xsd:string ;
+    ] ;
+  rdfs:label "copy node"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:dataPropName
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b146661
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression "false"^^xsd:boolean ;
+            sp:variable _:b888482 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 _:b888482 ;
+                sp:arg2 [
+                    rdf:type fn:lower-case ;
+                    sp:arg1 spin:_arg1 ;
+                  ] ;
+                sp:arg3 spin:_arg1 ;
+              ] ;
+            sp:variable _:b146661 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  rdfs:label "Datatype Property Local Name"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:deriveNamespaceFromBaseURI
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b971420
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type xsd:string ;
+                sp:arg1 spin:_arg1 ;
+              ] ;
+            sp:variable _:b206706 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type sp:or ;
+                    sp:arg1 [
+                        rdf:type fn:ends-with ;
+                        sp:arg1 _:b206706 ;
+                        sp:arg2 "/" ;
+                      ] ;
+                    sp:arg2 [
+                        rdf:type fn:ends-with ;
+                        sp:arg1 _:b206706 ;
+                        sp:arg2 "#" ;
+                      ] ;
+                  ] ;
+                sp:arg2 _:b206706 ;
+                sp:arg3 [
+                    rdf:type fn:concat ;
+                    sp:arg1 _:b206706 ;
+                    sp:arg2 "#" ;
+                  ] ;
+              ] ;
+            sp:variable _:b971420 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  rdfs:comment "Ensures that a namespace has a hash or slash. If not appends a hash."^^xsd:string ;
+  rdfs:label "derive namespace from base URI"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:dtypeValueFromChainOf2
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b120164
+        ) ;
+      sp:where (
+          [
+            sp:object _:b6842 ;
+            sp:predicate spin:_arg2 ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            sp:object _:b490475 ;
+            sp:predicate spin:_arg3 ;
+            sp:subject _:b6842 ;
+          ]
+          [
+            sp:object _:b120164 ;
+            sp:predicate <http://www.linkedmodel.org/schema/dtype#value> ;
+            sp:subject _:b490475 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "subject"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType owl:ObjectProperty ;
+      rdfs:comment "first predicate"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg3 ;
+      spl:valueType owl:ObjectProperty ;
+      rdfs:comment "predicate 2"^^xsd:string ;
+    ] ;
+  rdfs:label "dtype value from chain of 2 predicates"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:exactCardinality
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b949731
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object _:b415375 ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject spin:_arg2 ;
+          ]
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate owl:onProperty ;
+            sp:subject _:b178340 ;
+          ]
+          [
+            sp:object owl:Restriction ;
+            sp:predicate rdf:type ;
+            sp:subject _:b178340 ;
+          ]
+          [
+            sp:object _:b178340 ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject _:b415375 ;
+          ]
+          [
+            sp:object _:b949731 ;
+            sp:predicate owl:cardinality ;
+            sp:subject _:b178340 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "the relevant property of a class"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "the class of the relevanr property"^^xsd:string ;
+    ] ;
+  rdfs:comment "Given a relevant property and a class determine its cardinality on the class"^^xsd:string ;
+  rdfs:label "exact cardinality"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:extractParenthesizedContent
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b162676
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "(.*)\\((.*)\\)(.*)" ;
+                sp:arg3 "$2" ;
+              ] ;
+            sp:variable _:b162676 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+    ] ;
+  rdfs:comment "Extracts a string out of parentheses occurring anywhere in the given string. Only returning the last one. For example \"Jama'atul & Mujahideen Bangladesh (JMB)\" returns \"JMB\"."^^xsd:string ;
+  rdfs:label "extract parenthesized content"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:firstPhraseOfTwo
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b310891
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "([A-z-]+) ([A-z-]+)" ;
+                sp:arg3 "$1" ;
+              ] ;
+            sp:variable _:b310891 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "qname"^^xsd:string ;
+    ] ;
+  rdfs:label "first phrase of two"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:formatHTMLreferenceForResource
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b722008
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type o2o:urlString ;
+                sp:arg1 [
+                    rdf:type xsd:string ;
+                    sp:arg1 spin:_arg1 ;
+                  ] ;
+              ] ;
+            sp:variable _:b496003 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression spin:_arg1 ;
+            sp:variable _:b812966 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 "<a href=\"" ;
+                sp:arg2 _:b496003 ;
+                sp:arg3 "\" target=\"" ;
+                sp:arg4 spin:_arg3 ;
+                sp:arg5 "\">" ;
+                sp:arg6 [
+                    rdf:type smf:qname ;
+                    sp:arg1 spin:_arg1 ;
+                  ] ;
+                sp:arg7 "</a>" ;
+              ] ;
+            sp:variable _:b270835 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 "<a href=\"" ;
+                sp:arg2 _:b496003 ;
+                sp:arg3 "\" target=\"" ;
+                sp:arg4 spin:_arg3 ;
+                sp:arg5 "\">" ;
+                sp:arg6 [
+                    rdf:type smf:qname ;
+                    sp:arg1 spin:_arg1 ;
+                  ] ;
+                sp:arg7 "</a>" ;
+              ] ;
+            sp:variable _:b899413 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 "<a href=\"../" ;
+                sp:arg2 spin:_arg5 ;
+                sp:arg3 spin:_arg2 ;
+                sp:arg4 ".html#" ;
+                sp:arg5 [
+                    rdf:type afn:localname ;
+                    sp:arg1 spin:_arg1 ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "isSomethingElse"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type sp:eq ;
+                    sp:arg1 _:b496003 ;
+                    sp:arg2 "no" ;
+                  ] ;
+                sp:arg2 _:b812966 ;
+                sp:arg3 [
+                    rdf:type smf:if ;
+                    sp:arg1 [
+                        rdf:type o2o:reachableResource ;
+                        sp:arg1 spin:_arg1 ;
+                      ] ;
+                    sp:arg2 _:b270835 ;
+                    sp:arg3 _:b899413 ;
+                  ] ;
+              ] ;
+            sp:variable _:b722008 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "An object from an s-p -o"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "suffux to form  url, e.g. \"/instances\""^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg3 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "window name for open world references"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg4 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "window name for references within the closed world"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg5 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "ontology prefix"^^xsd:string ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:comment """Example 1
+
+(o2o:formatHTMLreferenceForResource \"/instances\" \"TBC_Outside\" \"TBC_Instances\" \"o2o\"  ) o2o:formatHTMLreferenceForResource ?res
+
+generates:
+
+<a href=\"../o2o/instances.html target=\"TBC_Instances\">o2o:formatHTMLreference</a>"""^^xsd:string ;
+  rdfs:label "format HTML reference for resource"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:formatHTMLreferenceForString
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b408457
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type o2o:urlString ;
+                sp:arg1 [
+                    rdf:type xsd:string ;
+                    sp:arg1 spin:_arg1 ;
+                  ] ;
+              ] ;
+            sp:variable _:b92503 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type sp:ne ;
+                    sp:arg1 _:b92503 ;
+                    sp:arg2 "no" ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type fn:concat ;
+                    sp:arg1 "<a href=\"" ;
+                    sp:arg2 _:b92503 ;
+                    sp:arg3 "\" target=\"" ;
+                    sp:arg4 spin:_arg2 ;
+                    sp:arg5 "\">" ;
+                    sp:arg6 spin:_arg1 ;
+                    sp:arg7 "</a>" ;
+                  ] ;
+                sp:arg3 spin:_arg1 ;
+              ] ;
+            sp:variable _:b408457 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "An object from an s-p -o"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "window name for open world references"^^xsd:string ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:label "format HTML reference for string"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:getAge
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b332395
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:parseDate ;
+                arg:pattern spin:_arg2 ;
+                sp:arg1 spin:_arg1 ;
+              ] ;
+            sp:variable _:b79106 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type xsd:integer ;
+                sp:arg1 [
+                    rdf:type smf:regex ;
+                    sp:arg1 _:b79106 ;
+                    sp:arg2 "(.*)-(.*)-(.*)" ;
+                    sp:arg3 "$1" ;
+                  ] ;
+              ] ;
+            sp:variable _:b428777 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type xsd:integer ;
+                sp:arg1 [
+                    rdf:type smf:regex ;
+                    sp:arg1 [
+                        rdf:type afn:now ;
+                      ] ;
+                    sp:arg2 "(.*)-(.*)-(.*)T(.*)" ;
+                    sp:arg3 "$1" ;
+                  ] ;
+              ] ;
+            sp:variable _:b101038 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:sub ;
+                sp:arg1 _:b101038 ;
+                sp:arg2 _:b428777 ;
+              ] ;
+            sp:variable _:b332395 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Birthday"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Date format"^^xsd:string ;
+    ] ;
+  rdfs:label "get age"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getFirstLetter
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b653758
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type fn:substring ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 0 ;
+                sp:arg3 1 ;
+              ] ;
+            sp:variable _:b653758 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The input string"^^xsd:string ;
+    ] ;
+  rdfs:label "get first letter"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getInitials
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b294979
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression spin:_arg1 ;
+            sp:variable _:b926856 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type sp:eq ;
+                    sp:arg1 spin:_arg2 ;
+                    sp:arg2 "" ;
+                  ] ;
+                sp:arg2 " " ;
+                sp:arg3 spin:_arg2 ;
+              ] ;
+            sp:variable _:b581418 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:indexOf ;
+                sp:arg1 _:b926856 ;
+                sp:arg2 _:b581418 ;
+              ] ;
+            sp:variable _:b821357 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type sp:not ;
+                    sp:arg1 [
+                        rdf:type fn:starts-with ;
+                        sp:arg1 _:b926856 ;
+                        sp:arg2 _:b581418 ;
+                      ] ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type o2o:getFirstLetter ;
+                    sp:arg1 _:b926856 ;
+                  ] ;
+                sp:arg3 "" ;
+              ] ;
+            sp:variable _:b630656 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type sp:bound ;
+                    sp:arg1 _:b821357 ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type fn:substring ;
+                    sp:arg1 _:b926856 ;
+                    sp:arg2 [
+                        rdf:type sp:add ;
+                        sp:arg1 [
+                            rdf:type sp:add ;
+                            sp:arg1 _:b821357 ;
+                            sp:arg2 1 ;
+                          ] ;
+                        sp:arg2 [
+                            rdf:type fn:string-length ;
+                            sp:arg1 _:b581418 ;
+                          ] ;
+                      ] ;
+                  ] ;
+                sp:arg3 "" ;
+              ] ;
+            sp:variable _:b821157 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 _:b630656 ;
+                sp:arg2 [
+                    rdf:type smf:if ;
+                    sp:arg1 [
+                        rdf:type fn:contains ;
+                        sp:arg1 _:b821157 ;
+                        sp:arg2 _:b581418 ;
+                      ] ;
+                    sp:arg2 [
+                        rdf:type o2o:getInitials ;
+                        sp:arg1 _:b821157 ;
+                        sp:arg2 _:b581418 ;
+                      ] ;
+                    sp:arg3 [
+                        rdf:type o2o:getFirstLetter ;
+                        sp:arg1 _:b821157 ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable _:b294979 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Input string"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Separator string"^^xsd:string ;
+    ] ;
+  rdfs:label "get initials"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getLabelForNormalizedResource
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:titleCase ;
+                sp:arg1 [
+                    rdf:type smf:lowerCase ;
+                    sp:arg1 [
+                        rdf:type smf:regex ;
+                        sp:arg1 [
+                            rdf:type afn:localname ;
+                            sp:arg1 spin:_arg1 ;
+                          ] ;
+                        sp:arg2 "_" ;
+                        sp:arg3 " " ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "label"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "Normalized resource"^^xsd:string ;
+    ] ;
+  rdfs:label "get label for normalized resource"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getLongestStringLiteral
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:orderBy (
+          [
+            rdf:type sp:Desc ;
+            sp:expression _:b890702 ;
+          ]
+        ) ;
+      sp:resultVariables (
+          _:b822339
+        ) ;
+      sp:where (
+          [
+            sp:object _:b822339 ;
+            sp:predicate spin:_arg2 ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type fn:string-length ;
+                sp:arg1 _:b822339 ;
+              ] ;
+            sp:variable _:b890702 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "Subject"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "Property"^^xsd:string ;
+    ] ;
+  rdfs:label "get longest string literal"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getNamespacesForStatement
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          _:b800084
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object spin:_arg3 ;
+                    sp:predicate spin:_arg2 ;
+                    sp:subject spin:_arg1 ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression [
+                        rdf:type afn:namespace ;
+                        sp:arg1 spin:_arg1 ;
+                      ] ;
+                    sp:variable _:b800084 ;
+                  ]
+                  [
+                    rdf:type sp:Filter ;
+                    sp:expression [
+                        rdf:type sp:ne ;
+                        sp:arg1 _:b800084 ;
+                        sp:arg2 "" ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object spin:_arg3 ;
+                    sp:predicate spin:_arg2 ;
+                    sp:subject spin:_arg1 ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression [
+                        rdf:type afn:namespace ;
+                        sp:arg1 spin:_arg2 ;
+                      ] ;
+                    sp:variable _:b800084 ;
+                  ]
+                  [
+                    rdf:type sp:Filter ;
+                    sp:expression [
+                        rdf:type sp:ne ;
+                        sp:arg1 _:b800084 ;
+                        sp:arg2 "" ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object spin:_arg3 ;
+                    sp:predicate spin:_arg2 ;
+                    sp:subject spin:_arg1 ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression [
+                        rdf:type afn:namespace ;
+                        sp:arg1 spin:_arg3 ;
+                      ] ;
+                    sp:variable _:b800084 ;
+                  ]
+                  [
+                    rdf:type sp:Filter ;
+                    sp:expression [
+                        rdf:type sp:ne ;
+                        sp:arg1 _:b800084 ;
+                        sp:arg2 "" ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg3 ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:returnType rdfs:Resource ;
+  rdfs:label "get namespaces for statement"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getPrefixForNamespace
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b842355
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:buildURI ;
+                sp:arg1 [
+                    rdf:type fn:concat ;
+                    sp:arg1 spin:_arg1 ;
+                    sp:arg2 "x" ;
+                  ] ;
+              ] ;
+            sp:variable _:b95771 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:prefix ;
+                sp:arg1 _:b95771 ;
+              ] ;
+            sp:variable _:b842355 ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:ne ;
+                sp:arg1 _:b842355 ;
+                sp:arg2 "" ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:label "get prefix for namespace"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getRandomDate
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "randomDate"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression spin:_arg1 ;
+            sp:variable [
+                sp:varName "year"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:random ;
+              ] ;
+            sp:variable [
+                sp:varName "day0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:round ;
+                sp:arg1 [
+                    rdf:type sp:mul ;
+                    sp:arg1 [
+                        sp:varName "day0"^^xsd:string ;
+                      ] ;
+                    sp:arg2 28 ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "day1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:cast ;
+                arg:datatype xsd:integer ;
+                sp:arg1 [
+                    sp:varName "day1"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "randomDay1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:if ;
+                sp:arg1 [
+                    rdf:type sp:lt ;
+                    sp:arg1 [
+                        sp:varName "randomDay1"^^xsd:string ;
+                      ] ;
+                    sp:arg2 10 ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:if ;
+                    sp:arg1 [
+                        rdf:type sp:gt ;
+                        sp:arg1 [
+                            sp:varName "randomDay1"^^xsd:string ;
+                          ] ;
+                        sp:arg2 0 ;
+                      ] ;
+                    sp:arg2 [
+                        rdf:type fn:concat ;
+                        sp:arg1 "0" ;
+                        sp:arg2 [
+                            sp:varName "randomDay1"^^xsd:string ;
+                          ] ;
+                      ] ;
+                    sp:arg3 "01" ;
+                  ] ;
+                sp:arg3 [
+                    sp:varName "randomDay1"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "randomDay"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:random ;
+              ] ;
+            sp:variable [
+                sp:varName "month0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:round ;
+                sp:arg1 [
+                    rdf:type sp:mul ;
+                    sp:arg1 [
+                        sp:varName "month0"^^xsd:string ;
+                      ] ;
+                    sp:arg2 12 ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "month1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:cast ;
+                arg:datatype xsd:integer ;
+                sp:arg1 [
+                    sp:varName "month1"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "randomMonth1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:if ;
+                sp:arg1 [
+                    rdf:type sp:lt ;
+                    sp:arg1 [
+                        sp:varName "randomMonth1"^^xsd:string ;
+                      ] ;
+                    sp:arg2 10 ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:if ;
+                    sp:arg1 [
+                        rdf:type sp:gt ;
+                        sp:arg1 [
+                            sp:varName "randomMonth1"^^xsd:string ;
+                          ] ;
+                        sp:arg2 0 ;
+                      ] ;
+                    sp:arg2 [
+                        rdf:type fn:concat ;
+                        sp:arg1 "0" ;
+                        sp:arg2 [
+                            sp:varName "randomMonth1"^^xsd:string ;
+                          ] ;
+                      ] ;
+                    sp:arg3 "01" ;
+                  ] ;
+                sp:arg3 [
+                    sp:varName "randomMonth1"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "randomMonth"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 [
+                    sp:varName "year"^^xsd:string ;
+                  ] ;
+                sp:arg2 "-" ;
+                sp:arg3 [
+                    sp:varName "randomMonth"^^xsd:string ;
+                  ] ;
+                sp:arg4 "-" ;
+                sp:arg5 [
+                    sp:varName "randomDay"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "randomDate0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:cast ;
+                arg:datatype xsd:date ;
+                sp:arg1 [
+                    sp:varName "randomDate0"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "randomDate"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+      rdfs:comment "Returns a random date."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Year"^^xsd:string ;
+    ] ;
+  rdfs:label "get random date"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getRandomEnumeratedValue
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b463042
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression spin:_arg1 ;
+            sp:variable _:b680840 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:countMatches ;
+                sp:arg1 [
+                    sp:varName "enumValue"^^xsd:string ;
+                  ] ;
+                sp:arg2 rdf:type ;
+                sp:arg3 _:b680840 ;
+              ] ;
+            sp:variable _:b245803 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:random ;
+              ] ;
+            sp:variable _:b893330 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:round ;
+                sp:arg1 [
+                    rdf:type sp:mul ;
+                    sp:arg1 _:b893330 ;
+                    sp:arg2 _:b245803 ;
+                  ] ;
+              ] ;
+            sp:variable _:b151514 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:cast ;
+                arg:datatype xsd:integer ;
+                sp:arg1 _:b151514 ;
+              ] ;
+            sp:variable _:b376963 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type xsd:nonNegativeInteger ;
+                sp:arg1 _:b376963 ;
+              ] ;
+            sp:variable _:b169522 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:if ;
+                sp:arg1 [
+                    rdf:type sp:ge ;
+                    sp:arg1 _:b169522 ;
+                    sp:arg2 _:b245803 ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:sub ;
+                    sp:arg1 _:b245803 ;
+                    sp:arg2 1 ;
+                  ] ;
+                sp:arg3 _:b169522 ;
+              ] ;
+            sp:variable _:b594389 ;
+          ]
+          [
+            sp:object _:b594389 ;
+            sp:predicate <http://www.linkedmodel.org/schema/dtype#order> ;
+            sp:subject _:b463042 ;
+          ]
+          [
+            sp:object _:b680840 ;
+            sp:predicate rdf:type ;
+            sp:subject _:b463042 ;
+          ]
+        ) ;
+      rdfs:comment "Returns an instance of EnumeratedValue class randomly. The random instance is found by multiplying a random number (between 0 and 1) and the count of instances. This is rounded to the nearest non-negative integer. The number is matched to the order of an instance of the class, and this instance is returned."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "EnumeratedValue class"^^xsd:string ;
+    ] ;
+  rdfs:label "get random EnumeratedValue"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getRandomInstance
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b100703
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression spin:_arg1 ;
+            sp:variable _:b881296 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:countMatches ;
+                sp:arg1 [
+                    sp:varName "instance"^^xsd:string ;
+                  ] ;
+                sp:arg2 rdf:type ;
+                sp:arg3 _:b881296 ;
+              ] ;
+            sp:variable _:b336056 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:random ;
+              ] ;
+            sp:variable _:b937854 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:round ;
+                sp:arg1 [
+                    rdf:type sp:mul ;
+                    sp:arg1 _:b937854 ;
+                    sp:arg2 _:b336056 ;
+                  ] ;
+              ] ;
+            sp:variable _:b679670 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:cast ;
+                arg:datatype xsd:integer ;
+                sp:arg1 _:b679670 ;
+              ] ;
+            sp:variable _:b421487 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type xsd:nonNegativeInteger ;
+                sp:arg1 _:b421487 ;
+              ] ;
+            sp:variable _:b135411 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:if ;
+                sp:arg1 [
+                    rdf:type sp:ge ;
+                    sp:arg1 _:b135411 ;
+                    sp:arg2 _:b336056 ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:sub ;
+                    sp:arg1 _:b336056 ;
+                    sp:arg2 1 ;
+                  ] ;
+                sp:arg3 _:b135411 ;
+              ] ;
+            sp:variable _:b57636 ;
+          ]
+          [
+            sp:object _:b57636 ;
+            sp:predicate <http://www.linkedmodel.org/schema/dtype#order> ;
+            sp:subject _:b100703 ;
+          ]
+          [
+            sp:object _:b881296 ;
+            sp:predicate rdf:type ;
+            sp:subject _:b100703 ;
+          ]
+        ) ;
+      rdfs:comment "Returns an instance of class randomly. Instance must have dtype:order triple. The random instance is found by multiplying a random number (between 0 and 1) and the count of instances. This is rounded to the nearest non-negative integer. The number is matched to the order of an instance of the class, and this instance is returned."^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "EnumeratedValue class"^^xsd:string ;
+    ] ;
+  rdfs:label "get random EnumeratedValue"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getRandomInteger
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b435793
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:random ;
+              ] ;
+            sp:variable _:b326280 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type fn:round ;
+                sp:arg1 [
+                    rdf:type sp:mul ;
+                    sp:arg1 _:b326280 ;
+                    sp:arg2 spin:_arg1 ;
+                  ] ;
+              ] ;
+            sp:variable _:b68096 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:cast ;
+                arg:datatype xsd:integer ;
+                sp:arg1 _:b68096 ;
+              ] ;
+            sp:variable _:b435793 ;
+          ]
+        ) ;
+      rdfs:comment "Get random integer from a max number"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:integer ;
+      rdfs:comment "Random number"^^xsd:string ;
+    ] ;
+  rdfs:label "get random integer"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getRangeFromRestriction
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b975320
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression spin:_arg1 ;
+            sp:variable _:b531218 ;
+          ]
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object _:b975320 ;
+                    sp:predicate owl:allValuesFrom ;
+                    sp:subject _:b531218 ;
+                  ]
+                )
+                (
+                  [
+                    sp:object _:b975320 ;
+                    sp:predicate owl:someValuesFrom ;
+                    sp:subject _:b531218 ;
+                  ]
+                )
+                (
+                  [
+                    sp:object _:b975320 ;
+                    sp:predicate owl:onClass ;
+                    sp:subject _:b531218 ;
+                  ]
+                )
+                (
+                  [
+                    sp:object _:b975320 ;
+                    sp:predicate owl:onDataRange ;
+                    sp:subject _:b531218 ;
+                  ]
+                )
+              ) ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The restriction that contains the range"^^xsd:string ;
+    ] ;
+  rdfs:label "get range from restriction"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getRelevantPropertiesOfClass
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object _:b630309 ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            sp:object _:b630309 ;
+            sp:predicate <http://www.topbraid.org/tops#relevantPropertiesOfClass> ;
+            sp:subject [
+                sp:varName "p"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "class"^^xsd:string ;
+    ] ;
+  rdfs:label "get relevant properties of class"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getValueThruFallback
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b949127
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression spin:_arg1 ;
+            sp:variable _:b804273 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression spin:_arg2 ;
+            sp:variable _:b693630 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression spin:_arg3 ;
+            sp:variable _:b886751 ;
+          ]
+          [
+            rdf:type sp:Optional ;
+            sp:elements (
+                [
+                  sp:object _:b551191 ;
+                  sp:predicate _:b693630 ;
+                  sp:subject _:b804273 ;
+                ]
+              ) ;
+          ]
+          [
+            rdf:type sp:Optional ;
+            sp:elements (
+                [
+                  sp:object _:b435991 ;
+                  sp:predicate _:b886751 ;
+                  sp:subject _:b693630 ;
+                ]
+              ) ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type sp:bound ;
+                    sp:arg1 _:b551191 ;
+                  ] ;
+                sp:arg2 _:b551191 ;
+                sp:arg3 [
+                    rdf:type smf:if ;
+                    sp:arg1 [
+                        rdf:type sp:bound ;
+                        sp:arg1 _:b435991 ;
+                      ] ;
+                    sp:arg2 [
+                        rdf:type o2o:getValueThruFallback ;
+                        sp:arg1 _:b804273 ;
+                        sp:arg2 _:b435991 ;
+                        sp:arg3 _:b886751 ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable _:b949127 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "Subject"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "property"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg3 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "Next property property"^^xsd:string ;
+    ] ;
+  rdfs:label "get value thru fallback"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:getVersion
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b197519
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "(.*)/([\\.0-9]+[A-z]*)/(.*)" ;
+                sp:arg3 "$2" ;
+              ] ;
+            sp:variable _:b197519 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Versioned URI"^^xsd:string ;
+    ] ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:graphURI
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "graph URI"^^xsd:string ;
+.
+o2o:hasElementPropName
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b19689
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression "false"^^xsd:boolean ;
+            sp:variable _:b761518 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 _:b761518 ;
+                sp:arg2 [
+                    rdf:type smf:titleCase ;
+                    sp:arg1 spin:_arg1 ;
+                  ] ;
+                sp:arg3 spin:_arg1 ;
+              ] ;
+            sp:variable _:b609929 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 "has" ;
+                sp:arg2 _:b609929 ;
+              ] ;
+            sp:variable _:b19689 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+    ] ;
+  rdfs:label "has constructed property name for contained element"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:inPrefix
+  rdf:type owl:DatatypeProperty ;
+.
+o2o:incrementDepth
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "r"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "x"^^xsd:string ;
+              ] ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:if ;
+                sp:arg1 [
+                    rdf:type sp:eq ;
+                    sp:arg1 [
+                        sp:varName "x"^^xsd:string ;
+                      ] ;
+                    sp:arg2 spin:_arg2 ;
+                  ] ;
+                sp:arg2 1 ;
+                sp:arg3 [
+                    rdf:type sp:add ;
+                    sp:arg1 [
+                        rdf:type o2o:incrementDepth ;
+                        sp:arg1 [
+                            sp:varName "x"^^xsd:string ;
+                          ] ;
+                        sp:arg2 spin:_arg2 ;
+                      ] ;
+                    sp:arg2 1 ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "r"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  rdfs:subClassOf spin:Functions ;
+.
+o2o:inheritanceDepth
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "d"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object [
+                        sp:varName "x"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject spin:_arg1 ;
+                  ]
+                  [
+                    rdf:type sp:Filter ;
+                    sp:expression [
+                        rdf:type sp:ne ;
+                        sp:arg1 [
+                            sp:varName "x"^^xsd:string ;
+                          ] ;
+                        sp:arg2 spin:_arg2 ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "x"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdf:first ;
+                    sp:subject [
+                        sp:varName "?0"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "?1"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdf:rest ;
+                    sp:subject [
+                        sp:varName "?0"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object spin:_arg2 ;
+                    sp:predicate rdf:first ;
+                    sp:subject [
+                        sp:varName "?1"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object () ;
+                    sp:predicate rdf:rest ;
+                    sp:subject [
+                        sp:varName "?1"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "inc"^^xsd:string ;
+                      ] ;
+                    sp:predicate o2o:inheritanceDepth ;
+                    sp:subject [
+                        sp:varName "?0"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression [
+                        rdf:type sp:add ;
+                        sp:arg1 [
+                            sp:varName "inc"^^xsd:string ;
+                          ] ;
+                        sp:arg2 1 ;
+                      ] ;
+                    sp:variable [
+                        sp:varName "d"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object spin:_arg2 ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject spin:_arg1 ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression 1 ;
+                    sp:variable [
+                        sp:varName "d"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    rdf:type sp:Filter ;
+                    sp:expression [
+                        rdf:type sp:eq ;
+                        sp:arg1 spin:_arg1 ;
+                        sp:arg2 spin:_arg2 ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression 0 ;
+                    sp:variable [
+                        sp:varName "d"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "Current subclass"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "Current superclass"^^xsd:string ;
+    ] ;
+  rdfs:subClassOf o2o:ClassMagicProperties ;
+.
+o2o:isSystemResource
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Ask ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type afn:namespace ;
+                sp:arg1 spin:_arg1 ;
+              ] ;
+            sp:variable [
+                sp:varName "ns"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:or ;
+                sp:arg1 [
+                    rdf:type sp:or ;
+                    sp:arg1 [
+                        rdf:type sp:or ;
+                        sp:arg1 [
+                            rdf:type sp:eq ;
+                            sp:arg1 [
+                                sp:varName "ns"^^xsd:string ;
+                              ] ;
+                            sp:arg2 "http://www.w3.org/2002/07/owl#" ;
+                          ] ;
+                        sp:arg2 [
+                            rdf:type sp:eq ;
+                            sp:arg1 [
+                                sp:varName "ns"^^xsd:string ;
+                              ] ;
+                            sp:arg2 "http://www.w3.org/2000/01/rdf-schema#" ;
+                          ] ;
+                      ] ;
+                    sp:arg2 [
+                        rdf:type sp:eq ;
+                        sp:arg1 [
+                            sp:varName "ns"^^xsd:string ;
+                          ] ;
+                        sp:arg2 "http://www.w3.org/1999/02/22-rdf-syntax-ns#" ;
+                      ] ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:eq ;
+                    sp:arg1 [
+                        sp:varName "ns"^^xsd:string ;
+                      ] ;
+                    sp:arg2 "http://www.w3.org/2001/XMLSchema#" ;
+                  ] ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "System resource"^^xsd:string ;
+    ] ;
+  rdfs:label "is system resource"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:isXSDDatatype
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b46116
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type sp:regex ;
+                    sp:arg1 spin:_arg1 ;
+                    sp:arg2 "^xsd?:" ;
+                  ] ;
+                sp:arg2 "true"^^xsd:boolean ;
+                sp:arg3 "false"^^xsd:boolean ;
+              ] ;
+            sp:variable _:b46116 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  rdfs:label "is XML Schema Datatype"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:localNameOfQName
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b171528
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "([A-z]+):([A-z]+)" ;
+                sp:arg3 "$2" ;
+              ] ;
+            sp:variable _:b171528 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:QName ;
+      rdfs:comment "qname"^^xsd:string ;
+    ] ;
+  rdfs:label "local name of QName"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:makeUriFromName
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b609425
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type o2o:normalizeString ;
+                sp:arg1 spin:_arg2 ;
+              ] ;
+            sp:variable [
+                sp:varName "uristr"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:buildURI ;
+                sp:arg1 "{?arg1}{?uristr}" ;
+              ] ;
+            sp:variable _:b609425 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The namespace, including separator, '#' or '/'"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The name to be converted"^^xsd:string ;
+    ] ;
+  spin:returnType rdfs:Resource ;
+  rdfs:comment "Takes a string (arg2) with special characters, such as \"Jama'atul & Mujahideen/Bangladesh (JMB)\", removes special characters, replaces spaces with underscores, and returns a resource by concatenating the namespace (arg1) with the name"^^xsd:string ;
+  rdfs:label "Make URI From Name"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:maxCardinality
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b770837
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object _:b432381 ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject spin:_arg2 ;
+          ]
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate owl:onProperty ;
+            sp:subject _:b174197 ;
+          ]
+          [
+            sp:object owl:Restriction ;
+            sp:predicate rdf:type ;
+            sp:subject _:b174197 ;
+          ]
+          [
+            sp:object _:b174197 ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject _:b432381 ;
+          ]
+          [
+            sp:object _:b770837 ;
+            sp:predicate owl:maxCardinality ;
+            sp:subject _:b174197 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "the relevant property of a class"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "the class of the relevanr property"^^xsd:string ;
+    ] ;
+  rdfs:comment "Given a relevant property and a class determine its max cardinality on the class"^^xsd:string ;
+  rdfs:label "max cardinality"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:maxChild
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "maxChild"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type o2o:maxChildIndex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 spin:_arg2 ;
+              ] ;
+            sp:variable [
+                sp:varName "maxChild"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The parent"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType owl:ObjectProperty ;
+      rdfs:comment "child-parent property"^^xsd:string ;
+    ] ;
+  rdfs:label "max child"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:maxChildIndex
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            rdf:type sp:Max ;
+            sp:expression [
+                sp:varName "child"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "child"^^xsd:string ;
+              ] ;
+            sp:predicate spin:_arg2 ;
+            sp:subject spin:_arg1 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The parent"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType owl:ObjectProperty ;
+      rdfs:comment "child-parent property"^^xsd:string ;
+    ] ;
+  rdfs:label "max child index"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:maxSibling
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "maxSibling"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate spin:_arg2 ;
+            sp:subject [
+                sp:varName "parentResource"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type o2o:maxChild ;
+                sp:arg1 [
+                    sp:varName "parentResource"^^xsd:string ;
+                  ] ;
+                sp:arg2 spin:_arg2 ;
+              ] ;
+            sp:variable [
+                sp:varName "maxSibling"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The resource"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType owl:ObjectProperty ;
+      rdfs:comment "child-parent property"^^xsd:string ;
+    ] ;
+  rdfs:label "max sibling"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:minCardinality
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b766188
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object _:b799492 ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject spin:_arg2 ;
+          ]
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate owl:onProperty ;
+            sp:subject _:b62967 ;
+          ]
+          [
+            sp:object owl:Restriction ;
+            sp:predicate rdf:type ;
+            sp:subject _:b62967 ;
+          ]
+          [
+            sp:object _:b62967 ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject _:b799492 ;
+          ]
+          [
+            sp:object _:b766188 ;
+            sp:predicate owl:minCardinality ;
+            sp:subject _:b62967 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "the relevant property of a class"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "the class of the relevanr property"^^xsd:string ;
+    ] ;
+  rdfs:comment "Given a relevant property and a class determine its cardinality on the class"^^xsd:string ;
+  rdfs:label "min cardinality"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:minGreaterChild
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            rdf:type sp:Min ;
+            sp:expression [
+                sp:varName "child"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "child"^^xsd:string ;
+              ] ;
+            sp:predicate spin:_arg3 ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:gt ;
+                sp:arg1 [
+                    rdf:type xsd:string ;
+                    sp:arg1 [
+                        sp:varName "child"^^xsd:string ;
+                      ] ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type xsd:string ;
+                    sp:arg1 spin:_arg2 ;
+                  ] ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The parent"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The resource to be greater than"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg3 ;
+      spl:valueType owl:ObjectProperty ;
+      rdfs:comment "child-parent property"^^xsd:string ;
+    ] ;
+  rdfs:label "min greater child"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:minGreaterSibling
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "minGreaterSibling"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate spin:_arg2 ;
+            sp:subject [
+                sp:varName "parentResource"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type o2o:minGreaterChild ;
+                sp:arg1 [
+                    sp:varName "parentResource"^^xsd:string ;
+                  ] ;
+                sp:arg2 spin:_arg1 ;
+                sp:arg3 spin:_arg2 ;
+              ] ;
+            sp:variable [
+                sp:varName "minGreaterSibling"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "The resource"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType owl:ObjectProperty ;
+      rdfs:comment "child-parent property"^^xsd:string ;
+    ] ;
+  rdfs:label "min greater sibling"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:namePart
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b104027
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 "([A-z]+)" ;
+                sp:arg2 spin:_arg2 ;
+                sp:arg3 "(.*)" ;
+              ] ;
+            sp:variable _:b620327 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 _:b620327 ;
+                sp:arg3 "$2" ;
+              ] ;
+            sp:variable _:b524871 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type sp:eq ;
+                    sp:arg1 _:b524871 ;
+                    sp:arg2 "" ;
+                  ] ;
+                sp:arg2 _:b104027 ;
+                sp:arg3 [
+                    rdf:type o2o:tailPart ;
+                    sp:arg1 _:b524871 ;
+                    sp:arg2 spin:_arg2 ;
+                  ] ;
+              ] ;
+            sp:variable _:b104027 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "the string to pull apart"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "separator string - usually just a character"^^xsd:string ;
+    ] ;
+  rdfs:label "name part"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:namespace
+  rdf:type rdf:Property ;
+  rdfs:label "namespace"^^xsd:string ;
+  rdfs:subPropertyOf sp:arg ;
+.
+o2o:normalizeCamelCaseString
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b666648
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "\\((.*)\\)" ;
+                sp:arg3 "" ;
+              ] ;
+            sp:variable _:b190922 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:trim ;
+                sp:arg1 _:b190922 ;
+              ] ;
+            sp:variable _:b674619 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:encodeURL ;
+                sp:arg1 _:b674619 ;
+              ] ;
+            sp:variable _:b42086 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 _:b42086 ;
+                sp:arg2 "%2F" ;
+                sp:arg3 "_" ;
+              ] ;
+            sp:variable _:b558358 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 _:b558358 ;
+                sp:arg2 "%[0-9A-F][0-9A-F]" ;
+                sp:arg3 "" ;
+              ] ;
+            sp:variable _:b673130 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 _:b673130 ;
+                sp:arg2 "\\+" ;
+                sp:arg3 "_" ;
+              ] ;
+            sp:variable _:b189402 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 _:b189402 ;
+                sp:arg2 "_+" ;
+                sp:arg3 "_" ;
+              ] ;
+            sp:variable _:b673035 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 _:b673035 ;
+                sp:arg2 "\\*" ;
+                sp:arg3 "" ;
+              ] ;
+            sp:variable _:b189435 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type xsd:string ;
+                sp:arg1 [
+                    rdf:type smf:camelCase ;
+                    sp:arg1 _:b189435 ;
+                  ] ;
+              ] ;
+            sp:variable _:b666648 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Raw name"^^xsd:string ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:label "normalize camelcase string"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:normalizeResource
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b399290
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type afn:localname ;
+                sp:arg1 spin:_arg1 ;
+              ] ;
+            sp:variable _:b420005 ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:resource ;
+                sp:arg1 [
+                    rdf:type fn:concat ;
+                    sp:arg1 spin:_arg2 ;
+                    sp:arg2 [
+                        rdf:type o2o:normalizeString ;
+                        sp:arg1 _:b420005 ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable _:b399290 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "Old Resource"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Normalized resource namespace"^^xsd:string ;
+    ] ;
+  rdfs:label "normalize resource"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:normalizeString
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "normalizedStr"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type spif:replaceAll ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "([a-z])([A-Z])" ;
+                sp:arg3 "$1_$2" ;
+              ] ;
+            sp:variable [
+                sp:varName "v1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type o2o:normalizeStringNoUpperCase ;
+                sp:arg1 [
+                    sp:varName "v1"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "normalizedStrNoUpperCase"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type xsd:string ;
+                sp:arg1 [
+                    rdf:type smf:upperCase ;
+                    sp:arg1 [
+                        sp:varName "normalizedStrNoUpperCase"^^xsd:string ;
+                      ] ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "normalizedStr"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Raw name"^^xsd:string ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:label "normalize string"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:normalizeStringNoUpperCase
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          [
+            sp:varName "normalizedStrNoUpperCase"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "\\((.*)\\)" ;
+                sp:arg3 "" ;
+              ] ;
+            sp:variable [
+                sp:varName "s1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:trim ;
+                sp:arg1 [
+                    sp:varName "s1"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "s2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:encodeURL ;
+                sp:arg1 [
+                    sp:varName "s2"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "t0a"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 [
+                    sp:varName "t0a"^^xsd:string ;
+                  ] ;
+                sp:arg2 "%2F" ;
+                sp:arg3 "_" ;
+              ] ;
+            sp:variable [
+                sp:varName "t0b"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 [
+                    sp:varName "t0b"^^xsd:string ;
+                  ] ;
+                sp:arg2 "%[0-9A-F][0-9A-F]" ;
+                sp:arg3 "" ;
+              ] ;
+            sp:variable [
+                sp:varName "t1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 [
+                    sp:varName "t1"^^xsd:string ;
+                  ] ;
+                sp:arg2 "\\+" ;
+                sp:arg3 "_" ;
+              ] ;
+            sp:variable [
+                sp:varName "t2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 [
+                    sp:varName "t2"^^xsd:string ;
+                  ] ;
+                sp:arg2 "_+" ;
+                sp:arg3 "_" ;
+              ] ;
+            sp:variable [
+                sp:varName "t3"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:replaceAll ;
+                sp:arg1 [
+                    sp:varName "t3"^^xsd:string ;
+                  ] ;
+                sp:arg2 "_-_" ;
+                sp:arg3 "_" ;
+              ] ;
+            sp:variable [
+                sp:varName "t4"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type xsd:string ;
+                sp:arg1 [
+                    rdf:type smf:regex ;
+                    sp:arg1 [
+                        sp:varName "t4"^^xsd:string ;
+                      ] ;
+                    sp:arg2 "\\*" ;
+                    sp:arg3 "" ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "normalizedStrNoUpperCase"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Raw name"^^xsd:string ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:label "normalize string with no all uppercase letters"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:objPropName
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b743452
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression "false"^^xsd:boolean ;
+            sp:variable _:b517979 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 _:b517979 ;
+                sp:arg2 [
+                    rdf:type fn:lower-case ;
+                    sp:arg1 spin:_arg1 ;
+                  ] ;
+                sp:arg3 spin:_arg1 ;
+              ] ;
+            sp:variable _:b743452 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  rdfs:label "Object Property Local Name"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:ontologyInstance
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b20366
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object owl:Ontology ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject _:b522613 ;
+          ]
+          [
+            sp:object _:b522613 ;
+            sp:predicate rdf:type ;
+            sp:subject _:b20366 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type afn:namespace ;
+                sp:arg1 _:b20366 ;
+              ] ;
+            sp:variable _:b637384 ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type fn:starts-with ;
+                sp:arg1 _:b637384 ;
+                sp:arg2 spin:_arg1 ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "filter for the base URI of the ontologies"^^xsd:string ;
+    ] ;
+  rdfs:label "ontology instance"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:outNamespace
+  rdf:type owl:DatatypeProperty ;
+.
+o2o:pair
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b22594
+          _:b512878
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type o2o:constructPairedList ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 spin:_arg2 ;
+                sp:arg3 spin:_arg3 ;
+              ] ;
+            sp:variable _:b924288 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type sp:coalesce ;
+                sp:arg1 _:b924288 ;
+                sp:arg2 "" ;
+              ] ;
+            sp:variable _:b506253 ;
+          ]
+          [
+            sp:object _:b372027 ;
+            sp:predicate <http://www.topbraid.org/tops#split> ;
+            sp:subject _:b630195 ;
+          ]
+          [
+            sp:object _:b506253 ;
+            sp:predicate rdf:first ;
+            sp:subject _:b372027 ;
+          ]
+          [
+            sp:object _:b248164 ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b372027 ;
+          ]
+          [
+            sp:object spin:_arg2 ;
+            sp:predicate rdf:first ;
+            sp:subject _:b248164 ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b248164 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:buildString ;
+                sp:arg1 "(.*){?arg3}(.*)" ;
+              ] ;
+            sp:variable _:b191193 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 _:b630195 ;
+                sp:arg2 _:b191193 ;
+                sp:arg3 "$1" ;
+              ] ;
+            sp:variable _:b22594 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 _:b630195 ;
+                sp:arg2 _:b191193 ;
+                sp:arg3 "$2" ;
+              ] ;
+            sp:variable _:b512878 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "A string list"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "split delimiter"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg3 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "pair delimiter"^^xsd:string ;
+    ] ;
+  rdfs:label "pair"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:pairHyphen
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b377899
+          _:b603372
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type fn:contains ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "-" ;
+              ] ;
+          ]
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate rdf:first ;
+            sp:subject _:b974112 ;
+          ]
+          [
+            sp:object _:b119644 ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b974112 ;
+          ]
+          [
+            sp:object "-" ;
+            sp:predicate rdf:first ;
+            sp:subject _:b119644 ;
+          ]
+          [
+            sp:object _:b603277 ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b119644 ;
+          ]
+          [
+            sp:object "_p_" ;
+            sp:predicate rdf:first ;
+            sp:subject _:b603277 ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b603277 ;
+          ]
+          [
+            sp:object _:b79082 ;
+            sp:predicate o2o:pair ;
+            sp:subject _:b974112 ;
+          ]
+          [
+            sp:object _:b377899 ;
+            sp:predicate rdf:first ;
+            sp:subject _:b79082 ;
+          ]
+          [
+            sp:object _:b499526 ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b79082 ;
+          ]
+          [
+            sp:object _:b603372 ;
+            sp:predicate rdf:first ;
+            sp:subject _:b499526 ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b499526 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Source string"^^xsd:string ;
+    ] ;
+  rdfs:label "pair hyphen"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:pairHyphenIncrementally
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b574195
+          _:b898666
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type sp:if ;
+                sp:arg1 [
+                    rdf:type fn:contains ;
+                    sp:arg1 spin:_arg1 ;
+                    sp:arg2 "-" ;
+                  ] ;
+                sp:arg2 spin:_arg1 ;
+                sp:arg3 [
+                    rdf:type fn:concat ;
+                    sp:arg1 spin:_arg1 ;
+                    sp:arg2 "-" ;
+                  ] ;
+              ] ;
+            sp:variable _:b906132 ;
+          ]
+          [
+            sp:object _:b906132 ;
+            sp:predicate rdf:first ;
+            sp:subject _:b987034 ;
+          ]
+          [
+            sp:object _:b316036 ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b987034 ;
+          ]
+          [
+            sp:object "-" ;
+            sp:predicate rdf:first ;
+            sp:subject _:b316036 ;
+          ]
+          [
+            sp:object _:b784764 ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b316036 ;
+          ]
+          [
+            sp:object "_m_" ;
+            sp:predicate rdf:first ;
+            sp:subject _:b784764 ;
+          ]
+          [
+            sp:object _:b15925 ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b784764 ;
+          ]
+          [
+            sp:object "_p_" ;
+            sp:predicate rdf:first ;
+            sp:subject _:b15925 ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b15925 ;
+          ]
+          [
+            sp:object _:b322512 ;
+            sp:predicate o2o:pairIncrementally ;
+            sp:subject _:b987034 ;
+          ]
+          [
+            sp:object _:b574195 ;
+            sp:predicate rdf:first ;
+            sp:subject _:b322512 ;
+          ]
+          [
+            sp:object _:b149870 ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b322512 ;
+          ]
+          [
+            sp:object _:b898666 ;
+            sp:predicate rdf:first ;
+            sp:subject _:b149870 ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b149870 ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:not ;
+                sp:arg1 [
+                    rdf:type fn:ends-with ;
+                    sp:arg1 _:b898666 ;
+                    sp:arg2 "-" ;
+                  ] ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Source string list"^^xsd:string ;
+    ] ;
+  rdfs:label "pair hyphen incrementally"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:pairIncrementally
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b707256
+          _:b512781
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type o2o:constructIncrementallyPairedList ;
+                sp:arg1 "" ;
+                sp:arg2 spin:_arg1 ;
+                sp:arg3 spin:_arg2 ;
+                sp:arg4 spin:_arg3 ;
+                sp:arg5 spin:_arg4 ;
+              ] ;
+            sp:variable _:b886453 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type sp:coalesce ;
+                sp:arg1 _:b886453 ;
+                sp:arg2 "" ;
+              ] ;
+            sp:variable _:b223607 ;
+          ]
+          [
+            sp:object _:b372056 ;
+            sp:predicate <http://www.topbraid.org/tops#split> ;
+            sp:subject _:b630224 ;
+          ]
+          [
+            sp:object _:b223607 ;
+            sp:predicate rdf:first ;
+            sp:subject _:b372056 ;
+          ]
+          [
+            sp:object _:b754254 ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b372056 ;
+          ]
+          [
+            sp:object spin:_arg4 ;
+            sp:predicate rdf:first ;
+            sp:subject _:b754254 ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject _:b754254 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:buildString ;
+                sp:arg1 "(.*){?arg3}(.*)" ;
+              ] ;
+            sp:variable _:b290275 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 _:b630224 ;
+                sp:arg2 _:b290275 ;
+                sp:arg3 "$1" ;
+              ] ;
+            sp:variable _:b707256 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 _:b630224 ;
+                sp:arg2 _:b290275 ;
+                sp:arg3 "$2" ;
+              ] ;
+            sp:variable _:b512781 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Source string list"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Split delimiter"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg3 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Pair member delimiter"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg4 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Pair delimiter"^^xsd:string ;
+    ] ;
+  rdfs:label "pair incrementally"^^xsd:string ;
+  rdfs:subClassOf o2o:MagicProperties ;
+.
+o2o:parentsOfPropertiesAtClass
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          [
+            sp:varName "parent"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject spin:_arg2 ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "superClass"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:and ;
+                sp:arg1 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 owl:Thing ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 rdfs:Resource ;
+                  ] ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:domain ;
+                    sp:subject [
+                        sp:varName "property"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:variable [
+                        sp:varName "parent"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "property"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:onProperty ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:NotExists ;
+                    sp:elements (
+                        [
+                          sp:object [
+                              sp:varName "value"^^xsd:string ;
+                            ] ;
+                          sp:predicate owl:hasValue ;
+                          sp:subject [
+                              sp:varName "superClass"^^xsd:string ;
+                            ] ;
+                        ]
+                      ) ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject [
+                        sp:varName "parent"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "property"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:onProperty ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "value"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:hasValue ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject [
+                        sp:varName "parent"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:isIRI ;
+                sp:arg1 [
+                    sp:varName "parent"^^xsd:string ;
+                  ] ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "a property on the left"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "property"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Relevant properties at {?class}"^^xsd:string ;
+  spin:returnType rdfs:Class ;
+  rdfs:label "parents of properties at class"^^xsd:string ;
+  rdfs:subClassOf o2o:ClassMagicProperties ;
+.
+o2o:pathPart
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b98453
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 "(.*)" ;
+                sp:arg2 spin:_arg2 ;
+                sp:arg3 "([A-z0-9._]+)" ;
+              ] ;
+            sp:variable _:b840274 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 _:b840274 ;
+                sp:arg3 "$1" ;
+              ] ;
+            sp:variable _:b98453 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The namespace, including separator, '#' or '/'"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The name to be converted"^^xsd:string ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:comment """Returns the path part of a string (arg1) using the separator given in arg2.
+
+For example:
+
+LET (?x := o2o:pathPart(\"Core-Abstractions-MultiplicityExpressions-MultiplicityElement-upper.1-spec\", \"-\"))
+
+returns 'Core-Abstractions-MultiplicityExpressions-MultiplicityElement-upper.1'"""^^xsd:string ;
+  rdfs:label "path part"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:prefixOfQName
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b774103
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "([A-z]+):([A-z]+)" ;
+                sp:arg3 "$1" ;
+              ] ;
+            sp:variable _:b774103 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:QName ;
+      rdfs:comment "qname"^^xsd:string ;
+    ] ;
+  rdfs:label "prefix of QName"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:rangeOfPropertyAtClass
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          [
+            sp:varName "range"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "aProperty"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject spin:_arg2 ;
+          ]
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object [
+                        sp:varName "range"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:range ;
+                    sp:subject [
+                        sp:varName "aProperty"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "res"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject spin:_arg1 ;
+                  ]
+                  [
+                    sp:object owl:Restriction ;
+                    sp:predicate rdf:type ;
+                    sp:subject [
+                        sp:varName "res"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "aProperty"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:onProperty ;
+                    sp:subject [
+                        sp:varName "res"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "range"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:allValuesFrom ;
+                    sp:subject [
+                        sp:varName "res"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "res"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject spin:_arg1 ;
+                  ]
+                  [
+                    sp:object owl:Restriction ;
+                    sp:predicate rdf:type ;
+                    sp:subject [
+                        sp:varName "res"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "aProperty"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:onProperty ;
+                    sp:subject [
+                        sp:varName "res"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "range"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:hasValue ;
+                    sp:subject [
+                        sp:varName "res"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "false"^^xsd:boolean ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "property"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Class ;
+      rdfs:comment "The class to get the properties of"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Range(s) for {?arg2} at class {?arg1}"^^xsd:string ;
+  rdfs:comment "Gets a list of ranges for a given class and property based on all superclasses."^^xsd:string ;
+  rdfs:label "Range of property at class"^^xsd:string ;
+  rdfs:subClassOf o2o:ClassMagicProperties ;
+.
+o2o:reachableResource
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b562475
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Optional ;
+            sp:elements (
+                [
+                  sp:object _:b585560 ;
+                  sp:predicate rdf:type ;
+                  sp:subject spin:_arg1 ;
+                ]
+              ) ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type sp:bound ;
+                sp:arg1 _:b585560 ;
+              ] ;
+            sp:variable _:b562475 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+    ] ;
+  rdfs:label "reachable resource"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:relevantPropertiesAtClass
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          [
+            sp:varName "class"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "superClass"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:and ;
+                sp:arg1 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 owl:Thing ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 rdfs:Resource ;
+                  ] ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:domain ;
+                    sp:subject [
+                        sp:varName "property"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "property"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:onProperty ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:NotExists ;
+                    sp:elements (
+                        [
+                          sp:object [
+                              sp:varName "value"^^xsd:string ;
+                            ] ;
+                          sp:predicate owl:hasValue ;
+                          sp:subject [
+                              sp:varName "superClass"^^xsd:string ;
+                            ] ;
+                        ]
+                      ) ;
+                  ]
+                )
+              ) ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:isIRI ;
+                sp:arg1 [
+                    sp:varName "class"^^xsd:string ;
+                  ] ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "a property on the left"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Relevant properties at {?class}"^^xsd:string ;
+  spin:returnType rdfs:Class ;
+  rdfs:comment """Gets a list of relevant properties for a given class (arg:class), ordered by ui:labels. 
+
+A magic property that establishes a relationship between properties (left) and classes (right) to determine which properties are \"relevant\" for the class. Relevant means that they have the class in their domain and/or restrictions, including superclasses and sub-properties.
+
+Note that the performance of the body of this magic property has been optimized for the case in which the class is given, so ideally use this for queries such as  ?property o2o:relevantPropertyAtClass skos:Concept ."""^^xsd:string ;
+  rdfs:label "Relevant properties at class"^^xsd:string ;
+  rdfs:subClassOf o2o:ClassMagicProperties ;
+.
+o2o:relevantPropertiesAtClassWithParent
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          [
+            sp:varName "class"^^xsd:string ;
+          ]
+          [
+            sp:varName "parent"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "superClass"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject [
+                sp:varName "class"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:and ;
+                sp:arg1 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 owl:Thing ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 rdfs:Resource ;
+                  ] ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Union ;
+            sp:elements (
+                (
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:domain ;
+                    sp:subject [
+                        sp:varName "property"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:Bind ;
+                    sp:expression [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:variable [
+                        sp:varName "parent"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+                (
+                  [
+                    sp:object [
+                        sp:varName "property"^^xsd:string ;
+                      ] ;
+                    sp:predicate owl:onProperty ;
+                    sp:subject [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                  ]
+                  [
+                    rdf:type sp:NotExists ;
+                    sp:elements (
+                        [
+                          sp:object [
+                              sp:varName "value"^^xsd:string ;
+                            ] ;
+                          sp:predicate owl:hasValue ;
+                          sp:subject [
+                              sp:varName "superClass"^^xsd:string ;
+                            ] ;
+                        ]
+                      ) ;
+                  ]
+                  [
+                    sp:object [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:predicate rdfs:subClassOf ;
+                    sp:subject [
+                        sp:varName "parent"^^xsd:string ;
+                      ] ;
+                  ]
+                )
+              ) ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:isIRI ;
+                sp:arg1 [
+                    sp:varName "class"^^xsd:string ;
+                  ] ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Resource ;
+      rdfs:comment "a property on the left"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Relevant properties at {?class}"^^xsd:string ;
+  spin:returnType rdfs:Class ;
+  rdfs:comment """Gets a list of relevant properties for a given class (arg:class), ordered by ui:labels. 
+
+A magic property that establishes a relationship between properties (left) and classes (right) to determine which properties are \"relevant\" for the class. Relevant means that they have the class in their domain and/or restrictions, including superclasses and sub-properties.
+
+Note that the performance of the body of this magic property has been optimized for the case in which the class is given, so ideally use this for queries such as  ?property o2o:relevantPropertyAtClass skos:Concept ."""^^xsd:string ;
+  rdfs:label "Relevant properties at class with parent"^^xsd:string ;
+  rdfs:subClassOf o2o:ClassMagicProperties ;
+.
+o2o:relevantPropertyDetailsAtClass
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          [
+            sp:varName "property"^^xsd:string ;
+          ]
+          [
+            sp:varName "parent"^^xsd:string ;
+          ]
+          [
+            sp:varName "range"^^xsd:string ;
+          ]
+          [
+            sp:varName "valueRestriction"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+            sp:predicate o2o:relevantPropertiesAtClass ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "parent"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object spin:_arg1 ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?3"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?3"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?3"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?4"^^xsd:string ;
+              ] ;
+            sp:predicate o2o:rangeOfPropertyAtClass ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "range"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?4"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?5"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?4"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "valueRestriction"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?5"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?5"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Class ;
+      rdfs:comment "The class to get the properties of"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Relevant properties at {?class}"^^xsd:string ;
+  rdfs:comment "Gets a list of relevant properties for a given class (arg:class), ordered by ui:labels."^^xsd:string ;
+  rdfs:label "Relevant property details at class"^^xsd:string ;
+  rdfs:subClassOf o2o:ClassMagicProperties ;
+.
+o2o:relevantPropertyDetailsAtClassWithCardinalities
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:orderBy (
+          [
+            rdf:type fn:lower-case ;
+            sp:arg1 [
+                rdf:type ui:label ;
+                sp:arg1 [
+                    sp:varName "property"^^xsd:string ;
+                  ] ;
+              ] ;
+          ]
+        ) ;
+      sp:resultVariables (
+          [
+            sp:varName "property"^^xsd:string ;
+          ]
+          [
+            sp:varName "parent"^^xsd:string ;
+          ]
+          [
+            sp:varName "range"^^xsd:string ;
+          ]
+          [
+            sp:varName "valueRestriction"^^xsd:string ;
+          ]
+          [
+            sp:varName "min"^^xsd:string ;
+          ]
+          [
+            sp:varName "max"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            sp:object [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+            sp:predicate o2o:relevantPropertyDetailsAtClass ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            sp:object [
+                sp:varName "property"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?0"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "parent"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?1"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "range"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "?3"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?2"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "valueRestriction"^^xsd:string ;
+              ] ;
+            sp:predicate rdf:first ;
+            sp:subject [
+                sp:varName "?3"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object () ;
+            sp:predicate rdf:rest ;
+            sp:subject [
+                sp:varName "?3"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:minCardinality ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 [
+                    sp:varName "property"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "min"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Bind ;
+            sp:expression [
+                rdf:type smf:maxCardinality ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 [
+                    sp:varName "property"^^xsd:string ;
+                  ] ;
+              ] ;
+            sp:variable [
+                sp:varName "max"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Class ;
+      rdfs:comment "The class to get the properties of"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Relevant properties at {?class}"^^xsd:string ;
+  rdfs:comment "Gets a list of relevant properties for a given class (arg:class), ordered by ui:labels."^^xsd:string ;
+  rdfs:label "Relevant property details at class with cardinalities"^^xsd:string ;
+  rdfs:subClassOf o2o:ClassMagicProperties ;
+.
+o2o:secondPhraseOfTwo
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b792906
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "([A-z-]+) ([A-z-]+)" ;
+                sp:arg3 "$2" ;
+              ] ;
+            sp:variable _:b792906 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "qname"^^xsd:string ;
+    ] ;
+  rdfs:label "second phrase of two"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:sourceString
+  rdf:type rdf:Property ;
+  rdfs:label "source string"^^xsd:string ;
+  rdfs:subPropertyOf sp:arg ;
+.
+o2o:tailPart
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b311742
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type fn:concat ;
+                sp:arg1 "([A-z0-9._]+)" ;
+                sp:arg2 spin:_arg2 ;
+                sp:arg3 "(.*)" ;
+              ] ;
+            sp:variable _:b86265 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 _:b86265 ;
+                sp:arg3 "$1" ;
+              ] ;
+            sp:variable [
+                sp:varName "part"^^xsd:string ;
+              ] ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 _:b86265 ;
+                sp:arg3 "$2" ;
+              ] ;
+            sp:variable _:b194862 ;
+          ]
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:if ;
+                sp:arg1 [
+                    rdf:type fn:contains ;
+                    sp:arg1 _:b194862 ;
+                    sp:arg2 spin:_arg2 ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type o2o:tailPart ;
+                    sp:arg1 _:b194862 ;
+                    sp:arg2 spin:_arg2 ;
+                  ] ;
+                sp:arg3 _:b194862 ;
+              ] ;
+            sp:variable _:b311742 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The namespace, including separator, '#' or '/'"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg2 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "The name to be converted"^^xsd:string ;
+    ] ;
+  spin:returnType rdfs:Resource ;
+  rdfs:comment """Returns the tail part of a string (arg1) using the separator given in arg2.
+
+For example:
+
+LET (?x := o2o:tailPart(\"Core-Abstractions-MultiplicityExpressions-MultiplicityElement-upper.1-spec\", \"-\"))
+
+returns 'spec'"""^^xsd:string ;
+  rdfs:label "tail part"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:trimString
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b387129
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "^\\s+([A-Za-z0-9].*)\\s*$" ;
+                sp:arg3 "$1" ;
+              ] ;
+            sp:variable _:b387129 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+      rdfs:comment "Raw name"^^xsd:string ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:label "normalize string"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:tripleToAdd
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "triple to add"^^xsd:string ;
+.
+o2o:tripleToDelete
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "triple to delete"^^xsd:string ;
+.
+o2o:urlString
+  rdf:type spin:Function ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:resultVariables (
+          _:b93091
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:Let ;
+            sp:expression [
+                rdf:type smf:regex ;
+                sp:arg1 spin:_arg1 ;
+                sp:arg2 "<(http.*)>$|(http.*)$" ;
+                sp:arg3 "$1 $2" ;
+                sp:arg4 "no" ;
+              ] ;
+            sp:variable _:b93091 ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType xsd:string ;
+    ] ;
+  spin:returnType xsd:string ;
+  rdfs:label "url string"^^xsd:string ;
+  rdfs:subClassOf o2o:Functions ;
+.
+o2o:valueRestrictionsForPropertyAtClass
+  rdf:type spin:MagicProperty ;
+  spin:body [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          [
+            sp:varName "range"^^xsd:string ;
+          ]
+          [
+            sp:varName "superClass"^^xsd:string ;
+          ]
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "superClass"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subClassOf ;
+              ] ;
+            sp:subject spin:_arg1 ;
+          ]
+          [
+            rdf:type sp:NotExists ;
+            sp:elements (
+                [
+                  sp:object owl:Restriction ;
+                  sp:predicate rdf:type ;
+                  sp:subject [
+                      sp:varName "superClass"^^xsd:string ;
+                    ] ;
+                ]
+              ) ;
+          ]
+          [
+            rdf:type sp:Filter ;
+            sp:expression [
+                rdf:type sp:and ;
+                sp:arg1 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 owl:Thing ;
+                  ] ;
+                sp:arg2 [
+                    rdf:type sp:ne ;
+                    sp:arg1 [
+                        sp:varName "superClass"^^xsd:string ;
+                      ] ;
+                    sp:arg2 rdfs:Resource ;
+                  ] ;
+              ] ;
+          ]
+          [
+            rdf:type sp:TriplePath ;
+            sp:object [
+                sp:varName "aProperty"^^xsd:string ;
+              ] ;
+            sp:path [
+                rdf:type sp:ModPath ;
+                sp:modMax -2 ;
+                sp:modMin 0 ;
+                sp:subPath rdfs:subPropertyOf ;
+              ] ;
+            sp:subject spin:_arg2 ;
+          ]
+          [
+            sp:object [
+                sp:varName "res"^^xsd:string ;
+              ] ;
+            sp:predicate rdfs:subClassOf ;
+            sp:subject [
+                sp:varName "superClass"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "aProperty"^^xsd:string ;
+              ] ;
+            sp:predicate owl:onProperty ;
+            sp:subject [
+                sp:varName "res"^^xsd:string ;
+              ] ;
+          ]
+          [
+            sp:object [
+                sp:varName "range"^^xsd:string ;
+              ] ;
+            sp:predicate owl:hasValue ;
+            sp:subject [
+                sp:varName "res"^^xsd:string ;
+              ] ;
+          ]
+        ) ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:optional "false"^^xsd:boolean ;
+      spl:predicate sp:arg2 ;
+      spl:valueType rdf:Property ;
+      rdfs:comment "property"^^xsd:string ;
+    ] ;
+  spin:constraint [
+      rdf:type spl:Argument ;
+      spl:predicate sp:arg1 ;
+      spl:valueType rdfs:Class ;
+      rdfs:comment "The class to get the properties of"^^xsd:string ;
+    ] ;
+  spin:labelTemplate "Value restriction(s) for property {?arg2} at class {?arg1}"^^xsd:string ;
+  rdfs:comment "Gets restricted values for a given class and property based on all superclasses."^^xsd:string ;
+  rdfs:label "Value restrictions for property at class."^^xsd:string ;
+  rdfs:subClassOf o2o:ClassMagicProperties ;
+.
+owl:Thing
+  spin:query [
+      rdf:type sp:Select ;
+      sp:distinct "true"^^xsd:boolean ;
+      sp:resultVariables (
+          _:b899110
+        ) ;
+      sp:where (
+          [
+            rdf:type sp:NamedGraph ;
+            sp:elements (
+                [
+                  sp:object _:b634530 ;
+                  sp:predicate [
+                      sp:varName "p"^^xsd:string ;
+                    ] ;
+                  sp:subject _:b630573 ;
+                ]
+                [
+                  rdf:type sp:Filter ;
+                  sp:expression [
+                      rdf:type sp:eq ;
+                      sp:arg1 [
+                          rdf:type afn:namespace ;
+                          sp:arg1 _:b634530 ;
+                        ] ;
+                      sp:arg2 "http://topbraid.org/sxsd#" ;
+                    ] ;
+                ]
+                [
+                  sp:object _:b899110 ;
+                  sp:predicate rdf:first ;
+                  sp:subject _:b384760 ;
+                ]
+                [
+                  sp:object _:b415496 ;
+                  sp:predicate rdf:rest ;
+                  sp:subject _:b384760 ;
+                ]
+                [
+                  sp:object _:b630920 ;
+                  sp:predicate rdf:first ;
+                  sp:subject _:b415496 ;
+                ]
+                [
+                  sp:object _:b96061 ;
+                  sp:predicate rdf:rest ;
+                  sp:subject _:b415496 ;
+                ]
+                [
+                  sp:object [
+                      sp:varName "z"^^xsd:string ;
+                    ] ;
+                  sp:predicate rdf:first ;
+                  sp:subject _:b96061 ;
+                ]
+                [
+                  sp:object () ;
+                  sp:predicate rdf:rest ;
+                  sp:subject _:b96061 ;
+                ]
+                [
+                  sp:object _:b630573 ;
+                  sp:predicate <http://www.topbraid.org/tops#dependsOn> ;
+                  sp:subject _:b384760 ;
+                ]
+                [
+                  rdf:type sp:Filter ;
+                  sp:expression [
+                      rdf:type sp:eq ;
+                      sp:arg1 _:b630920 ;
+                      sp:arg2 spin:body ;
+                    ] ;
+                ]
+              ) ;
+            sp:graphNameNode <http://lib.topquadrant.com/owl/1.0.0/srg/o2o> ;
+          ]
+        ) ;
+      rdfs:comment "find spin bodies that need to be moved"^^xsd:string ;
+    ] ;
+.
+_:b6842
+  sp:varName "ref1"^^xsd:string ;
+.
+_:b8318
+  sp:varName "pair"^^xsd:string ;
+.
+_:b15925
+  sp:varName "?3"^^xsd:string ;
+.
+_:b19689
+  sp:varName "propname"^^xsd:string ;
+.
+_:b20366
+  sp:varName "ont"^^xsd:string ;
+.
+_:b22594
+  sp:varName "p1"^^xsd:string ;
+.
+_:b42086
+  sp:varName "t0a"^^xsd:string ;
+.
+_:b46116
+  sp:varName "ret"^^xsd:string ;
+.
+_:b48426
+  sp:varName "superClass"^^xsd:string ;
+.
+_:b57636
+  sp:varName "indexOfRandomInstance"^^xsd:string ;
+.
+_:b62967
+  sp:varName "r"^^xsd:string ;
+.
+_:b68096
+  sp:varName "index1"^^xsd:string ;
+.
+_:b79082
+  sp:varName "?3"^^xsd:string ;
+.
+_:b79106
+  sp:varName "birthdate"^^xsd:string ;
+.
+_:b86265
+  sp:varName "regex"^^xsd:string ;
+.
+_:b92503
+  sp:varName "hrefValue"^^xsd:string ;
+.
+_:b93091
+  sp:varName "url"^^xsd:string ;
+.
+_:b95771
+  sp:varName "x"^^xsd:string ;
+.
+_:b96061
+  sp:varName "?2"^^xsd:string ;
+.
+_:b98453
+  sp:varName "result"^^xsd:string ;
+.
+_:b100703
+  sp:varName "randomInstance"^^xsd:string ;
+.
+_:b101038
+  sp:varName "currentYear"^^xsd:string ;
+.
+_:b104027
+  sp:varName "result"^^xsd:string ;
+.
+_:b119644
+  sp:varName "?1"^^xsd:string ;
+.
+_:b120164
+  sp:varName "val"^^xsd:string ;
+.
+_:b135411
+  sp:varName "indexOfRandomInstance1"^^xsd:string ;
+.
+_:b146661
+  sp:varName "propname"^^xsd:string ;
+.
+_:b149870
+  sp:varName "?5"^^xsd:string ;
+.
+_:b150799
+  sp:varName "p1"^^xsd:string ;
+.
+_:b151514
+  sp:varName "index1"^^xsd:string ;
+.
+_:b157604
+  sp:varName "newNode"^^xsd:string ;
+.
+_:b162676
+  sp:varName "value"^^xsd:string ;
+.
+_:b169522
+  sp:varName "indexOfRandomEnumValue1"^^xsd:string ;
+.
+_:b171528
+  sp:varName "name"^^xsd:string ;
+.
+_:b174197
+  sp:varName "r"^^xsd:string ;
+.
+_:b178340
+  sp:varName "r"^^xsd:string ;
+.
+_:b182659
+  sp:varName "?0"^^xsd:string ;
+.
+_:b186037
+  sp:varName "classname"^^xsd:string ;
+.
+_:b189402
+  sp:varName "t2"^^xsd:string ;
+.
+_:b189435
+  sp:varName "t4"^^xsd:string ;
+.
+_:b190922
+  sp:varName "s1"^^xsd:string ;
+.
+_:b191193
+  sp:varName "pairMatch"^^xsd:string ;
+.
+_:b194711
+  sp:varName "i1"^^xsd:string ;
+.
+_:b194862
+  sp:varName "rest"^^xsd:string ;
+.
+_:b196853
+  sp:varName "r"^^xsd:string ;
+.
+_:b197519
+  sp:varName "version"^^xsd:string ;
+.
+_:b206706
+  sp:varName "inputAsString"^^xsd:string ;
+.
+_:b221594
+  sp:varName "str"^^xsd:string ;
+.
+_:b223607
+  sp:varName "pairedList2"^^xsd:string ;
+.
+_:b245803
+  sp:varName "enumValueCount"^^xsd:string ;
+.
+_:b248164
+  sp:varName "?1"^^xsd:string ;
+.
+_:b250361
+  sp:varName "class"^^xsd:string ;
+.
+_:b270835
+  sp:varName "isLocalResource"^^xsd:string ;
+.
+_:b290275
+  sp:varName "pairMatch"^^xsd:string ;
+.
+_:b292719
+  sp:varName "subClass"^^xsd:string ;
+.
+_:b294979
+  sp:varName "initials"^^xsd:string ;
+.
+_:b310891
+  sp:varName "name"^^xsd:string ;
+.
+_:b311742
+  sp:varName "result"^^xsd:string ;
+.
+_:b316036
+  sp:varName "?1"^^xsd:string ;
+.
+_:b322512
+  sp:varName "?4"^^xsd:string ;
+.
+_:b326280
+  sp:varName "rand"^^xsd:string ;
+.
+_:b332395
+  sp:varName "age"^^xsd:string ;
+.
+_:b336056
+  sp:varName "instanceCount"^^xsd:string ;
+.
+_:b372027
+  sp:varName "?0"^^xsd:string ;
+.
+_:b372056
+  sp:varName "?0"^^xsd:string ;
+.
+_:b376963
+  sp:varName "index2"^^xsd:string ;
+.
+_:b377899
+  sp:varName "p1"^^xsd:string ;
+.
+_:b384760
+  sp:varName "?0"^^xsd:string ;
+.
+_:b387129
+  sp:varName "trimmedString"^^xsd:string ;
+.
+_:b398377
+  sp:varName "pairedList"^^xsd:string ;
+.
+_:b399290
+  sp:varName "normalizedInst"^^xsd:string ;
+.
+_:b408457
+  sp:varName "htmlString"^^xsd:string ;
+.
+_:b415375
+  sp:varName "class"^^xsd:string ;
+.
+_:b415496
+  sp:varName "?1"^^xsd:string ;
+.
+_:b420005
+  sp:varName "oldLocal"^^xsd:string ;
+.
+_:b421487
+  sp:varName "index2"^^xsd:string ;
+.
+_:b428777
+  sp:varName "birthYear"^^xsd:string ;
+.
+_:b432381
+  sp:varName "class"^^xsd:string ;
+.
+_:b432848
+  sp:varName "rest"^^xsd:string ;
+.
+_:b435793
+  sp:varName "randomNumber"^^xsd:string ;
+.
+_:b435991
+  sp:varName "nextProperty"^^xsd:string ;
+.
+_:b463042
+  sp:varName "randomEnumValue"^^xsd:string ;
+.
+_:b490475
+  sp:varName "ref2"^^xsd:string ;
+.
+_:b496003
+  sp:varName "hrefValue"^^xsd:string ;
+.
+_:b499526
+  sp:varName "?4"^^xsd:string ;
+.
+_:b506253
+  sp:varName "pairedList2"^^xsd:string ;
+.
+_:b512781
+  sp:varName "p2"^^xsd:string ;
+.
+_:b512878
+  sp:varName "p2"^^xsd:string ;
+.
+_:b517979
+  sp:varName "lowercase"^^xsd:string ;
+.
+_:b522613
+  sp:varName "ontClass"^^xsd:string ;
+.
+_:b524871
+  sp:varName "rest"^^xsd:string ;
+.
+_:b530587
+  sp:varName "o"^^xsd:string ;
+.
+_:b531218
+  sp:varName "r"^^xsd:string ;
+.
+_:b551191
+  sp:varName "value"^^xsd:string ;
+.
+_:b558358
+  sp:varName "t0b"^^xsd:string ;
+.
+_:b562475
+  sp:varName "res"^^xsd:string ;
+.
+_:b574195
+  sp:varName "p1"^^xsd:string ;
+.
+_:b581418
+  sp:varName "sep"^^xsd:string ;
+.
+_:b585560
+  sp:varName "type"^^xsd:string ;
+.
+_:b594389
+  sp:varName "indexOfRandomEnumValue"^^xsd:string ;
+.
+_:b603277
+  sp:varName "?2"^^xsd:string ;
+.
+_:b603372
+  sp:varName "p2"^^xsd:string ;
+.
+_:b607741
+  sp:varName "restFirstSplitIndex"^^xsd:string ;
+.
+_:b609425
+  sp:varName "uri"^^xsd:string ;
+.
+_:b609929
+  sp:varName "name"^^xsd:string ;
+.
+_:b620327
+  sp:varName "regex"^^xsd:string ;
+.
+_:b626792
+  sp:varName "restLength"^^xsd:string ;
+.
+_:b630195
+  sp:varName "pair"^^xsd:string ;
+.
+_:b630224
+  sp:varName "pair"^^xsd:string ;
+.
+_:b630309
+  sp:varName "c"^^xsd:string ;
+.
+_:b630573
+  sp:varName "s"^^xsd:string ;
+.
+_:b630656
+  sp:varName "i"^^xsd:string ;
+.
+_:b630920
+  sp:varName "y"^^xsd:string ;
+.
+_:b634530
+  sp:varName "o"^^xsd:string ;
+.
+_:b637384
+  sp:varName "ns"^^xsd:string ;
+.
+_:b653758
+  sp:varName "firstLetter"^^xsd:string ;
+.
+_:b666648
+  sp:varName "normalizedStr"^^xsd:string ;
+.
+_:b667263
+  sp:varName "p2"^^xsd:string ;
+.
+_:b673035
+  sp:varName "t3"^^xsd:string ;
+.
+_:b673130
+  sp:varName "t1"^^xsd:string ;
+.
+_:b674619
+  sp:varName "s2"^^xsd:string ;
+.
+_:b675477
+  sp:varName "p3"^^xsd:string ;
+.
+_:b676997
+  sp:varName "o2"^^xsd:string ;
+.
+_:b678336
+  sp:varName "i2"^^xsd:string ;
+.
+_:b679670
+  sp:varName "index1"^^xsd:string ;
+.
+_:b680840
+  sp:varName "enumValueCls"^^xsd:string ;
+.
+_:b693630
+  sp:varName "property"^^xsd:string ;
+.
+_:b707256
+  sp:varName "p1"^^xsd:string ;
+.
+_:b722008
+  sp:varName "htmlString"^^xsd:string ;
+.
+_:b722009
+  sp:varName "titlecase"^^xsd:string ;
+.
+_:b743452
+  sp:varName "propname"^^xsd:string ;
+.
+_:b754254
+  sp:varName "?1"^^xsd:string ;
+.
+_:b761518
+  sp:varName "titlecase"^^xsd:string ;
+.
+_:b766188
+  sp:varName "min"^^xsd:string ;
+.
+_:b770837
+  sp:varName "max"^^xsd:string ;
+.
+_:b771609
+  sp:varName "namespace"^^xsd:string ;
+.
+_:b774103
+  sp:varName "prefix"^^xsd:string ;
+.
+_:b784764
+  sp:varName "?2"^^xsd:string ;
+.
+_:b792906
+  sp:varName "name"^^xsd:string ;
+.
+_:b799492
+  sp:varName "class"^^xsd:string ;
+.
+_:b800084
+  sp:varName "ns"^^xsd:string ;
+.
+_:b804273
+  sp:varName "subject"^^xsd:string ;
+.
+_:b812966
+  sp:varName "isLiteral"^^xsd:string ;
+.
+_:b821157
+  sp:varName "rest"^^xsd:string ;
+.
+_:b821357
+  sp:varName "sepIndex"^^xsd:string ;
+.
+_:b822339
+  sp:varName "literal"^^xsd:string ;
+.
+_:b834846
+  sp:varName "a"^^xsd:string ;
+.
+_:b840274
+  sp:varName "regex"^^xsd:string ;
+.
+_:b841569
+  sp:varName "p2"^^xsd:string ;
+.
+_:b842355
+  sp:varName "prefix"^^xsd:string ;
+.
+_:b881296
+  sp:varName "cls"^^xsd:string ;
+.
+_:b886453
+  sp:varName "pairedList"^^xsd:string ;
+.
+_:b886751
+  sp:varName "fallbackProperty"^^xsd:string ;
+.
+_:b888482
+  sp:varName "lowercase"^^xsd:string ;
+.
+_:b890702
+  sp:varName "literalLength"^^xsd:string ;
+.
+_:b893330
+  sp:varName "rand"^^xsd:string ;
+.
+_:b898666
+  sp:varName "p2"^^xsd:string ;
+.
+_:b899110
+  sp:varName "x"^^xsd:string ;
+.
+_:b899413
+  sp:varName "isExternalResource"^^xsd:string ;
+.
+_:b906132
+  sp:varName "str"^^xsd:string ;
+.
+_:b924288
+  sp:varName "pairedList"^^xsd:string ;
+.
+_:b925431
+  sp:varName "?1"^^xsd:string ;
+.
+_:b926856
+  sp:varName "str"^^xsd:string ;
+.
+_:b931822
+  sp:varName "range"^^xsd:string ;
+.
+_:b937854
+  sp:varName "rand"^^xsd:string ;
+.
+_:b949127
+  sp:varName "x"^^xsd:string ;
+.
+_:b949731
+  sp:varName "card"^^xsd:string ;
+.
+_:b971420
+  sp:varName "namespaceURI"^^xsd:string ;
+.
+_:b974112
+  sp:varName "?0"^^xsd:string ;
+.
+_:b975320
+  sp:varName "range"^^xsd:string ;
+.
+_:b977574
+  sp:varName "a"^^xsd:string ;
+.
+_:b987034
+  sp:varName "?0"^^xsd:string ;
+.
+_:b992177
+  sp:varName "r"^^xsd:string ;
+.

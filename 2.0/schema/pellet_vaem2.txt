@@ -1,0 +1,39 @@
+[Untyped object properties]
+- http://www.linkedmodel.org/schema/vaem#aspect
+- http://www.linkedmodel.org/schema/vaem#viewpoint
+- http://www.linkedmodel.org/schema/vaem#discipline
+- http://www.linkedmodel.org/schema/vaem#dimension
+- http://www.linkedmodel.org/schema/vaem#domain
+
+[Untyped annotation properties]
+- http://www.w3.org/2002/07/owl#versionIRI
+
+
+
+=========================================================
+OWL 2 DL violations found for ontology OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>)):
+Use of undeclared object property: <http://www.linkedmodel.org/schema/vaem#aspect> [SubClassOf(<http://www.linkedmodel.org/schema/vaem#GraphMetaData> ObjectAllValuesFrom(<http://www.linkedmodel.org/schema/vaem#aspect> <http://www.linkedmodel.org/schema/vaem#AspectDimension>)) in OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))]
+Use of undeclared annotation property: <http://www.linkedmodel.org/schema/vaem#aspect> [SubAnnotationPropertyOf(<http://www.linkedmodel.org/schema/vaem#aspect> <http://www.linkedmodel.org/schema/vaem#dimension>) in OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))]
+Use of undeclared object property: <http://www.linkedmodel.org/schema/vaem#viewpoint> [SubClassOf(<http://www.linkedmodel.org/schema/vaem#GraphMetaData> ObjectAllValuesFrom(<http://www.linkedmodel.org/schema/vaem#viewpoint> <http://www.linkedmodel.org/schema/vaem#ViewpointDimension>)) in OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))]
+Cannot pun between properties: <http://www.linkedmodel.org/schema/vaem#aspect>SubClassOf(<http://www.linkedmodel.org/schema/vaem#GraphMetaData> ObjectAllValuesFrom(<http://www.linkedmodel.org/schema/vaem#aspect> <http://www.linkedmodel.org/schema/vaem#AspectDimension>))
+Use of undeclared object property: <http://www.linkedmodel.org/schema/vaem#discipline> [SubClassOf(<http://www.linkedmodel.org/schema/vaem#GraphMetaData> ObjectAllValuesFrom(<http://www.linkedmodel.org/schema/vaem#discipline> <http://www.linkedmodel.org/schema/vaem#DisciplineDimension>)) in OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))]
+Use of undeclared annotation property: <http://www.linkedmodel.org/schema/vaem#dimension> [SubAnnotationPropertyOf(<http://www.linkedmodel.org/schema/vaem#domain> <http://www.linkedmodel.org/schema/vaem#dimension>) in OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))]
+Cannot pun between properties: <http://www.linkedmodel.org/schema/vaem#domain>SubClassOf(<http://www.linkedmodel.org/schema/vaem#GraphMetaData> ObjectAllValuesFrom(<http://www.linkedmodel.org/schema/vaem#domain> <http://www.linkedmodel.org/schema/vaem#DomainDimension>))
+Use of undeclared annotation property: <http://www.linkedmodel.org/schema/vaem#domain> [SubAnnotationPropertyOf(<http://www.linkedmodel.org/schema/vaem#domain> <http://www.linkedmodel.org/schema/vaem#dimension>) in OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))]
+Use of undeclared annotation property: <http://www.linkedmodel.org/schema/vaem#discipline> [SubAnnotationPropertyOf(<http://www.linkedmodel.org/schema/vaem#discipline> <http://www.linkedmodel.org/schema/vaem#dimension>) in OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))]
+Cannot pun between properties: <http://www.linkedmodel.org/schema/vaem#viewpoint>SubAnnotationPropertyOf(<http://www.linkedmodel.org/schema/vaem#viewpoint> <http://www.linkedmodel.org/schema/vaem#dimension>)
+Use of undeclared annotation property: <http://www.linkedmodel.org/schema/vaem#dimension> [SubAnnotationPropertyOf(<http://www.linkedmodel.org/schema/vaem#viewpoint> <http://www.linkedmodel.org/schema/vaem#dimension>) in OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))]
+Use of undeclared annotation property: <http://www.linkedmodel.org/schema/vaem#viewpoint> [SubAnnotationPropertyOf(<http://www.linkedmodel.org/schema/vaem#viewpoint> <http://www.linkedmodel.org/schema/vaem#dimension>) in OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))]
+Cannot pun between properties: <http://www.linkedmodel.org/schema/vaem#discipline>SubAnnotationPropertyOf(<http://www.linkedmodel.org/schema/vaem#discipline> <http://www.linkedmodel.org/schema/vaem#dimension>)
+Use of undeclared annotation property: <http://www.linkedmodel.org/schema/vaem#dimension> [SubAnnotationPropertyOf(<http://www.linkedmodel.org/schema/vaem#aspect> <http://www.linkedmodel.org/schema/vaem#dimension>) in OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))]
+Cannot pun between properties: <http://www.linkedmodel.org/schema/vaem#domain>SubAnnotationPropertyOf(<http://www.linkedmodel.org/schema/vaem#domain> <http://www.linkedmodel.org/schema/vaem#dimension>)
+Use of undeclared annotation property: <http://www.linkedmodel.org/schema/vaem#dimension> [SubAnnotationPropertyOf(<http://www.linkedmodel.org/schema/vaem#discipline> <http://www.linkedmodel.org/schema/vaem#dimension>) in OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))]
+Use of undeclared object property: <http://www.linkedmodel.org/schema/vaem#domain> [SubClassOf(<http://www.linkedmodel.org/schema/vaem#GraphMetaData> ObjectAllValuesFrom(<http://www.linkedmodel.org/schema/vaem#domain> <http://www.linkedmodel.org/schema/vaem#DomainDimension>)) in OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>))]
+Cannot pun between properties: <http://www.linkedmodel.org/schema/vaem#viewpoint>SubClassOf(<http://www.linkedmodel.org/schema/vaem#GraphMetaData> ObjectAllValuesFrom(<http://www.linkedmodel.org/schema/vaem#viewpoint> <http://www.linkedmodel.org/schema/vaem#ViewpointDimension>))
+Cannot pun between properties: <http://www.linkedmodel.org/schema/vaem#aspect>SubAnnotationPropertyOf(<http://www.linkedmodel.org/schema/vaem#aspect> <http://www.linkedmodel.org/schema/vaem#dimension>)
+Cannot pun between properties: <http://www.linkedmodel.org/schema/vaem#discipline>SubClassOf(<http://www.linkedmodel.org/schema/vaem#GraphMetaData> ObjectAllValuesFrom(<http://www.linkedmodel.org/schema/vaem#discipline> <http://www.linkedmodel.org/schema/vaem#DisciplineDimension>))
+
+
+No OWL lints found for ontology OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>)).
+
+OntologyID(OntologyIRI(<http://www.linkedmodel.org/2.0/schema/vaem>) VersionIRI(<http://www.linkedmodel.org/2.0/schema/vaem>)) does not import other ontologies.
