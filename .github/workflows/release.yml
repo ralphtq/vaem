@@ -1,19 +1,30 @@
 name: Release
 
-# Publishes a VAEM release: builds dist/ from src/ with the given version,
-# runs all release checks, updates CHANGELOG.md and release.json on main,
-# tags vX.Y.Z and creates a GitHub Release with the built files.
-# GitHub only offers this workflow once it is on the default branch.
+# Publishes a finished VAEM release from the commit the current snapshot was
+# built from: builds dist/ from src/ with the final version, runs all release
+# checks, confirms the release says the same as the snapshot (apart from the
+# version and dates), updates CHANGELOG.md and release.json on main, tags
+# vX.Y.Z, creates a GitHub Release with the built files, and then removes the
+# snapshot pre-release. GitHub only offers this workflow once it is on main.
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Release version (X.Y.Z), one step on from the last vX.Y.Z tag"
+        description: "Release version (X.Y.Z): the current snapshot's version without -SNAPSHOT"
         required: true
         type: string
+      skip_snapshot_check:
+        description: "Release without checking against the snapshot (not recommended)"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
+
+concurrency:
+  group: snapshot
+  cancel-in-progress: false
 
 jobs:
   release:
@@ -40,6 +51,25 @@ jobs:
             fi
           fi
 
+      - name: Check against the snapshot
+        if: ${{ !inputs.skip_snapshot_check }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          snap_sha="$(git rev-parse -q --verify 'refs/tags/snapshot^{commit}' || true)"
+          if [[ -z "$snap_sha" ]]; then
+            echo "There is no snapshot to release from: push to main first, or use skip_snapshot_check" >> "$GITHUB_STEP_SUMMARY"; exit 1
+          fi
+          if [[ "$snap_sha" != "$GITHUB_SHA" ]]; then
+            echo "The snapshot was built from ${snap_sha::7}, but this run is on ${GITHUB_SHA::7}. Release from the snapshot's commit, or wait for a new snapshot." >> "$GITHUB_STEP_SUMMARY"; exit 1
+          fi
+          mkdir -p snapshot
+          gh release download snapshot --pattern "vaem-${version}-SNAPSHOT.zip" --dir snapshot \
+            || { echo "The snapshot is not version ${version}-SNAPSHOT" >> "$GITHUB_STEP_SUMMARY"; exit 1; }
+          (cd snapshot && unzip -q "vaem-${version}-SNAPSHOT.zip" && rm "vaem-${version}-SNAPSHOT.zip")
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -48,12 +78,16 @@ jobs:
       - name: Build and check the release
         run: python scripts/release.py --version "${{ inputs.version }}"
 
+      - name: Compare the release with the snapshot
+        if: ${{ !inputs.skip_snapshot_check }}
+        run: python scripts/compare_snapshot.py snapshot dist "${{ inputs.version }}-SNAPSHOT" "${{ inputs.version }}"
+
       - name: Update CHANGELOG.md and release.json
         env:
           version: ${{ inputs.version }}
         run: |
           python - <<'PY'
-          import datetime, json, os, re
+          import datetime, json, os
           version = os.environ["version"]
           today = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
           path = "CHANGELOG.md"
@@ -76,15 +110,23 @@ jobs:
           git add CHANGELOG.md release.json
           git commit -m "Release $version"
           git tag "v$version"
-          git push origin HEAD "v$version"
+          git push origin "HEAD:${GITHUB_REF_NAME}" "v$version"
 
       - name: Package the release
-        run: cd dist && zip -r "../vaem-${{ inputs.version }}.zip" .
+        run: cd dist && zip -qr "../vaem-${{ inputs.version }}.zip" .
 
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ inputs.version }}
           name: VAEM ${{ inputs.version }}
+          make_latest: true
           files: |
             vaem-${{ inputs.version }}.zip
             dist/**/*.ttl
+
+      - name: Remove the snapshot pre-release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete snapshot --cleanup-tag --yes || echo "no snapshot release to remove"
+          echo "Released ${{ inputs.version }}; the snapshot pre-release has been removed until the next push." >> "$GITHUB_STEP_SUMMARY"
