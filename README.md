@@ -28,8 +28,8 @@ schema/          current (unversioned) VAEM
 1.1/schema/      v1.1 catalog schema
 2.0/schema/      v2.0 schema
 3.0/schema/      v3.0 schema (in development)
-3.0/schema/shacl/ SHACL-only version of v3.0, generated from the OWL
-scripts/         parse check and the SHACL generator
+3.0/schema/shacl/ SHACL-only version of v3.0 (the source for the 3.0 OWL)
+scripts/         parse check and the OWL/SHACL consistency check
 images/          logo
 ```
 
@@ -38,18 +38,22 @@ images/          logo
 `3.0/schema/shacl/SCHEMA_vaem_noOWL_v3.0.0.ttl` is a SHACL-only version of
 VAEM 3.0: classes are `rdfs:Class` and `sh:NodeShape`, properties are
 `rdf:Property`, and there are no OWL constructs apart from the
-`owl:Ontology` header. It is generated from the 3.0 OWL, so edit
-`3.0/schema/SCHEMA_vaem-v3.0.ttl` and regenerate rather than editing it by
-hand:
+`owl:Ontology` header.
+
+The SHACL schema is the source of VAEM 3.0. The OWL file,
+`3.0/schema/SCHEMA_vaem-v3.0.ttl`, is generated from it, so make changes in
+the SHACL schema first.
+
+`scripts/gen_vaem_shacl.py` converts OWL to SHACL. It is kept only as a check
+that the two files say the same thing. With `--check` it writes nothing,
+lists any differences and exits with status 1 if there are any:
 
 ```
 python3 scripts/gen_vaem_shacl.py 3.0/schema/SCHEMA_vaem-v3.0.ttl \
   3.0/schema/shacl/SCHEMA_vaem_noOWL_v3.0.0.ttl \
   http://www.linkedmodel.org/3.0.0/schema/shacl/vaem \
-  "SCHEMA VAEM SHACL Version 3.0.0" <date>
+  "SCHEMA VAEM SHACL Version 3.0.0" --check
 ```
-
-The last argument is written to `dcterms:modified` in the graph metadata.
 
 ## Dependencies
 

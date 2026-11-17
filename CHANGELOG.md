@@ -33,4 +33,7 @@
   `vaem:PoliciesGraph` (prefix `POLICIES`) to VAEM 3.0.
 - Added the SHACL-only schema `3.0/schema/shacl/SCHEMA_vaem_noOWL_v3.0.0.ttl`,
   generated from VAEM 3.0 by `scripts/gen_vaem_shacl.py`.
+- The SHACL schema is now the source of VAEM 3.0 and the OWL file is generated
+  from it. `scripts/gen_vaem_shacl.py` (OWL to SHACL) is kept as a check, with
+  a `--check` option that compares the two files without writing anything.
 - Added a GitHub Action that checks every `.ttl` file parses.

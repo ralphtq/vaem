@@ -1,6 +1,13 @@
-"""Generate the noOWL (SHACL-only) VAEM schema from a VAEM OWL schema.
+"""Convert a VAEM OWL schema to the noOWL (SHACL-only) form.
 
-Usage: python3 gen_vaem_shacl.py <owl.ttl> <out.ttl> <shacl-ontology-IRI> <label> <modified-date>
+The SHACL schema is the source of VAEM; this script is kept as a check that
+the OWL file and the SHACL file say the same thing.
+
+Check (writes nothing; exit status 1 if they differ):
+  python3 gen_vaem_shacl.py <owl.ttl> <shacl.ttl> <shacl-ontology-IRI> <label> --check
+
+Write a SHACL file from the OWL:
+  python3 gen_vaem_shacl.py <owl.ttl> <out.ttl> <shacl-ontology-IRI> <label> <modified-date>
 """
 import sys
 import rdflib
@@ -13,6 +20,11 @@ DCT = Namespace("http://purl.org/dc/terms/")
 VAEM_ONT_PREFIX = "http://www.linkedmodel.org/"
 
 src, out, shacl_iri, label, modified = sys.argv[1:6]
+check = modified == "--check"
+if check:
+    # compare with the existing SHACL file, taking its own dcterms:modified
+    existing = rdflib.Graph().parse(out, format="turtle")
+    modified = str(next(existing.objects(None, URIRef("http://purl.org/dc/terms/modified"))))
 S = URIRef(shacl_iri)
 g = rdflib.Graph().parse(src, format="turtle")
 h = rdflib.Graph()
@@ -110,5 +122,14 @@ for gmd in h.subjects(RDF.type, V.GraphMetaData):
 left = [(s, p, o) for s, p, o in h if s != S and any(str(t).startswith(str(OWL)) for t in (p, o) if isinstance(t, URIRef))]
 assert not left, left
 
+if check:
+    from rdflib.compare import to_isomorphic, graph_diff
+    _, only_owl, only_shacl = graph_diff(to_isomorphic(h), to_isomorphic(existing))
+    for label_, triples in (("only in the OWL", only_owl), ("only in the SHACL file", only_shacl)):
+        for t in sorted(triples, key=str):
+            print(f"{label_}: " + " ".join(h.namespace_manager.normalizeUri(x) if isinstance(x, URIRef) else repr(str(x))[:80] for x in t))
+    print(f"OWL and SHACL {'match' if not only_owl and not only_shacl else 'differ'}: "
+          f"{len(only_owl)} triples only in the OWL, {len(only_shacl)} only in the SHACL file")
+    sys.exit(1 if only_owl or only_shacl else 0)
 h.serialize(out, format="turtle")
 print(f"{len(g)} triples in -> {len(h)} triples out")
