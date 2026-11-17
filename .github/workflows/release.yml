@@ -1,0 +1,90 @@
+name: Release
+
+# Publishes a VAEM release: builds dist/ from src/ with the given version,
+# runs all release checks, updates CHANGELOG.md and release.json on main,
+# tags vX.Y.Z and creates a GitHub Release with the built files.
+# GitHub only offers this workflow once it is on the default branch.
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (X.Y.Z), one step on from the last vX.Y.Z tag"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check the version
+        env:
+          version: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "version must be X.Y.Z" >> "$GITHUB_STEP_SUMMARY"; exit 1; }
+          if git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
+            echo "tag v$version already exists" >> "$GITHUB_STEP_SUMMARY"; exit 1
+          fi
+          last="$(git tag -l 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sed 's/^v//' | sort -t. -k1,1n -k2,2n -k3,3n | tail -n1 || true)"
+          if [[ -n "$last" ]]; then
+            IFS=. read -r LM Lm Lp <<< "$last"; IFS=. read -r M m p <<< "$version"
+            if ! { [[ $M == $LM && $m == $Lm && $p == $((Lp+1)) ]] || [[ $M == $LM && $m == $((Lm+1)) && $p == 0 ]] || [[ $M == $((LM+1)) && $m == 0 && $p == 0 ]]; }; then
+              echo "$version is not one step on from the last release $last" >> "$GITHUB_STEP_SUMMARY"; exit 1
+            fi
+          fi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install rdflib pyshacl
+
+      - name: Build and check the release
+        run: python scripts/release.py --version "${{ inputs.version }}"
+
+      - name: Update CHANGELOG.md and release.json
+        env:
+          version: ${{ inputs.version }}
+        run: |
+          python - <<'PY'
+          import datetime, json, os, re
+          version = os.environ["version"]
+          today = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
+          path = "CHANGELOG.md"
+          text = open(path, encoding="utf-8").read()
+          text = text.replace("## Unreleased", f"## Unreleased\n\n## {version} ({today})", 1)
+          open(path, "w", encoding="utf-8").write(text)
+          config = json.load(open("release.json"))
+          major, minor, patch = (int(x) for x in version.split("."))
+          config["version"] = f"{major}.{minor}.{patch + 1}"
+          json.dump(config, open("release.json", "w"), indent=2)
+          open("release.json", "a").write("\n")
+          PY
+
+      - name: Commit, tag and push
+        env:
+          version: ${{ inputs.version }}
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git add CHANGELOG.md release.json
+          git commit -m "Release $version"
+          git tag "v$version"
+          git push origin HEAD "v$version"
+
+      - name: Package the release
+        run: cd dist && zip -r "../vaem-${{ inputs.version }}.zip" .
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ inputs.version }}
+          name: VAEM ${{ inputs.version }}
+          files: |
+            vaem-${{ inputs.version }}.zip
+            dist/**/*.ttl

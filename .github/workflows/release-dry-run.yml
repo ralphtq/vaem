@@ -1,0 +1,27 @@
+name: Release dry run
+
+# Builds a SNAPSHOT release from src/ and runs all release checks.
+# Nothing is tagged or published; the built files are attached to the run.
+on:
+  push:
+    branches: [release-pipeline]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install rdflib pyshacl
+      - name: Build and check a SNAPSHOT release
+        run: |
+          version="$(python -c "import json; print(json.load(open('release.json'))['version'])")-SNAPSHOT"
+          python scripts/release.py --version "$version"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vaem-dist-snapshot
+          path: dist/
