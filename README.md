@@ -1,9 +1,10 @@
 # VAEM — Vocabulary About Essential Metadata
 
-VAEM is a small OWL vocabulary for the essential metadata that an ontology or
-graph needs: dates and times, graph roles, governance, attribution, and where
-the graph is documented and registered. Other ontologies import it to give
-themselves this foundation. It is used by [DTYPE](http://www.linkedmodel.org/schema/dtype),
+VAEM is a small SHACL Schema and Vocabulary, also available in OWL, for the
+essential metadata that an ontology or graph needs: dates and times, graph
+roles, governance, attribution, and where the graph is documented and
+registered. Other ontologies import it to give themselves this foundation. It
+is used by [DTYPE](http://www.linkedmodel.org/schema/dtype),
 [VOAG](http://voag.linkedmodel.org/schema/voag) and [QUDT](https://qudt.org).
 
 ## IRIs
