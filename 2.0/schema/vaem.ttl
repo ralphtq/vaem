@@ -55,7 +55,7 @@ vaem:ConnectSetGraph
 .
 vaem:ConstraintsGraph
   a vaem:GraphRole ;
-  vaem:description "A graph that is for defining constraints using SPIN."^^rdf:HTML ;
+  vaem:description "A graph that is for defining constraints using SHACL."^^rdf:HTML ;
   vaem:filePrefix "CONSTRAINTS" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Constraints graph" ;
@@ -139,7 +139,7 @@ vaem:ExporterGraph
 .
 vaem:FunctionsGraph
   a vaem:GraphRole ;
-  vaem:description "A graph that defines SPIN functions."^^rdf:HTML ;
+  vaem:description "A graph that defines SHACL functions."^^rdf:HTML ;
   vaem:filePrefix "FUNCTIONS" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Functions graph" ;
@@ -343,7 +343,10 @@ vaem:LinkSetGraph
 .
 vaem:MappingGraph
   a vaem:GraphRole ;
-  vaem:description "A graph that specifies a transformation of a graph into another graph or graphs. Invariably this is a SPINMap graph using SPARQL Rules (SPIN) to express the transforms."^^rdf:HTML ;
+  vaem:description """
+  A graph that specifies a transformation of a graph into another graph or graphs. 
+  For example a graph using SHACL Rules (SHACL 1.2) to express the transforms.
+  """ ;
   vaem:filePrefix "MAPPINGS" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Mapping graph" ;
@@ -385,17 +388,17 @@ vaem:ReferenceDataGraph
 .
 vaem:RulesGraph
   a vaem:GraphRole ;
-  vaem:description "A graph that holds SPIN rules."^^rdf:HTML ;
+  vaem:description "A graph that holds SHACL rules."^^rdf:HTML ;
   vaem:filePrefix "RULES" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Rules Graph" ;
 .
-vaem:SPINlibraryGraph
+vaem:SHACLlibraryGraph
   a vaem:GraphRole ;
-  vaem:description "A graph that holds SPIN library code."^^rdf:HTML ;
-  vaem:filePrefix "SPIN" ;
+  vaem:description "A graph that holds SHACL library code." ;
+  vaem:filePrefix "SHACL" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "SPIN Library Graph" ;
+  rdfs:label "SHACL Library Graph" ;
 .
 vaem:SchemaGraph
   a vaem:GraphRole ;
@@ -446,7 +449,7 @@ vaem:LinkedModels
 .
 vaem:TransformsGraph
   a vaem:GraphRole ;
-  vaem:description "A graph that uses SPIN to define transforms."^^rdf:HTML ;
+  vaem:description "A graph that uses SHACL to define transforms."^^rdf:HTML ;
   vaem:filePrefix "TRANSFORMS" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Transforms graph" ;
@@ -460,31 +463,10 @@ vaem:UnknownGraphRole
 .
 vaem:UnspecifiedGraphRole
   a vaem:GraphRole ;
-  vaem:description "A graph that is for defining constraints using SPIN."^^rdf:HTML ;
-  vaem:filePrefix "CONSTRAINTS" ;
+  vaem:description "A graph that does not specify a graph role." ;
+  vaem:filePrefix "UNSPECIFIED" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "Unspecified Graph Role" ;
-.
-vaem:UtilityGraph
-  a vaem:GraphRole ;
-  vaem:description "An SWP graph that is a utiltity."^^rdf:HTML ;
-  vaem:filePrefix "UTILITY" ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "Utility Graph" ;
-.
-vaem:ViewGraph
-  a vaem:GraphRole ;
-  vaem:description "A graph that provides the access to services in an MVC-like framework."^^rdf:HTML ;
-  vaem:filePrefix "VIEW" ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "View graph" ;
-.
-vaem:ViewerGraph
-  a vaem:GraphRole ;
-  vaem:description "A graph which defines an SWA/SWP viewer"^^rdf:HTML ;
-  vaem:filePrefix "VIEWER" ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "Viewer Graph" ;
 .
 vaem:Viewpoint
   a owl:Class ;
@@ -498,11 +480,16 @@ vaem:VocabularyGraph
   vaem:description "A graph that is a controlled set of instances that define a terminology. Typically this is based on SKOS."^^rdf:HTML ;
   vaem:filePrefix "VOCAB" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
-  rdfs:label "Vocabulary graph" ;
+  rdfs:label "Vocabulary Graph" ;
 .
 vaem:applicableDiscipline
   a rdf:Property ;
-  dct:description "The property \"vaem:applicableDiscipline\" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study. Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
+  dct:description """
+  The property "vaem:applicableDiscipline" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study. 
+  Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.
+  In VAEM, the property is used as a dimension for characterizing an ontology graph.
+  The property is an "rdf:Property" to allow both scalar and object values.
+  """ ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/schema/vaem> ;
   rdfs:label "applicable discipline" ;
   rdfs:subPropertyOf vaem:hasDimension ;

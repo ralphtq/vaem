@@ -28,6 +28,13 @@ VAEM makes use of some properties from the DC terms vocabulary.
   vaem:hasGraphMetadata vaem:GMD_VAEM ;
   owl:versionIRI <http://www.linkedmodel.org/3.0/schema/vaem> ;
 .
+vaem:AIGovernanceGraph
+  a vaem:GraphRole ;
+  dcterms:description "A graph that holds the governance of AI systems and models, such as the policies, risks, controls and oversight that apply to them." ;
+  vaem:filePrefix "AIGOV" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "AI Governance Graph" ;
+.
 vaem:Aspect
   a vaem:AspectClass ;
   dcterms:description """
@@ -70,7 +77,7 @@ vaem:CodelistGraph
   dcterms:description "A graph that holds enumerations that are codelists."^^rdf:HTML ;
   vaem:filePrefix "CLTGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "Codelist graph" ;
+  rdfs:label "Codelist Graph" ;
 .
 vaem:CollectionGraph
   a vaem:GraphRole ;
@@ -80,7 +87,7 @@ statements.
 """^^rdf:HTML ;
   vaem:filePrefix "CLNGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "Collection graph" ;
+  rdfs:label "Collection Graph" ;
 .
 vaem:ConfigurationGraph
   a vaem:GraphRole ;
@@ -125,45 +132,45 @@ vaem:ElementalConstruct
 .
 vaem:HarmonizationGraph
   a vaem:GraphRole ;
-  dcterms:description "A graph that specifies mapings between external data sources and a neutral model."^^rdf:HTML ;
+  dcterms:description "A graph that specifies mappings between external data sources and a neutral model."^^rdf:HTML ;
   vaem:filePrefix "HRMGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "Harmonization Graph" ;
 .
 vaem:ConstraintsGraph
   a vaem:GraphRole ;
-  dcterms:description "A graph that is for defining constraints using SPIN."^^rdf:HTML ;
+  dcterms:description "A graph that is for defining constraints using SHACL."^^rdf:HTML ;
   vaem:filePrefix "CSTGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "Constraints graph" ;
+  rdfs:label "Constraints Graph" ;
 .
 vaem:ControllerGraph
   a vaem:GraphRole ;
   dcterms:description "A graph that acts as a controller in an MVC-like framework."^^rdf:HTML ;
   vaem:filePrefix "CTRGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "Controller graph" ;
+  rdfs:label "Controller Graph" ;
 .
 vaem:DataGraph
   a vaem:GraphRole ;
   dcterms:description "A graph that holds data instances."^^rdf:HTML ;
   vaem:filePrefix "DATGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "Data graph" ;
+  rdfs:label "Data Graph" ;
 .
 vaem:DatatypesGraph
   a vaem:GraphRole ;
   dcterms:description "A graph that holds datatype specifications."^^rdf:HTML ;
   vaem:filePrefix "DTYGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "Datatypes graph" ;
+  rdfs:label "Datatypes Graph" ;
 .
 vaem:DocumentationGraph
   a vaem:GraphRole ;
   dcterms:description "A graph for the purpose of generating documentation."^^rdf:HTML ;
   vaem:filePrefix "DOCGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "Documentation graph" ;
+  rdfs:label "Documentation Graph" ;
 .
 vaem:DynamicGraph
   a vaem:GraphRole ;
@@ -531,6 +538,13 @@ A "Party" is a generalization for an actor that may be realized as a person, org
   rdfs:label "Party" ;
   rdfs:subClassOf vaem:ElementalConstruct ;
 .
+vaem:PoliciesGraph
+  a vaem:GraphRole ;
+  dcterms:description "A graph that holds policies." ;
+  vaem:filePrefix "POLICIES" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "Policies Graph" ;
+.
 vaem:ProxyGraph
   a vaem:GraphRole ;
   dcterms:description "A graph that represents an external data source, or schema, as an ontology model."^^rdf:HTML ;
@@ -547,7 +561,7 @@ vaem:ReferenceDataGraph
 .
 vaem:RulesGraph
   a vaem:GraphRole ;
-  dcterms:description "A graph that holds SPIN rules."^^rdf:HTML ;
+  dcterms:description "A graph that holds SHACL rules."^^rdf:HTML ;
   vaem:filePrefix "RULGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "Rules Graph" ;
@@ -575,10 +589,10 @@ vaem:ServicesGraph
 .
 vaem:ShapesGraph
   a vaem:GraphRole ;
-  dcterms:description "A graph of SHAPE SHACL constraints."^^rdf:HTML ;
+  dcterms:description "A graph of SHACL shapes that define constraints."^^rdf:HTML ;
   vaem:filePrefix "SHAGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "SHAPES Graph" ;
+  rdfs:label "Shapes Graph" ;
 .
 vaem:StringOrLangStringOrHTMLorAttribution
   a rdf:List ;
@@ -668,35 +682,28 @@ vaem:SurrogateGraph
   dcterms:description "A graph that specifies minimal representation of resources from another graph so as to avoid the need to import it."^^rdf:HTML ;
   vaem:filePrefix "CONNECTSET" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "Surrogate graph" ;
+  rdfs:label "Surrogate Graph" ;
 .
 vaem:TransformsGraph
   a vaem:GraphRole ;
-  dcterms:description "A graph that uses SPIN to define transforms."^^rdf:HTML ;
+  dcterms:description "A graph that uses SHACL to define transforms."^^rdf:HTML ;
   vaem:filePrefix "TRANSFORMS" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "Transforms graph" ;
+  rdfs:label "Transforms Graph" ;
 .
 vaem:UnknownGraphRole
   a vaem:GraphRole ;
   dcterms:description "A graph whose role is unknown."^^rdf:HTML ;
   vaem:filePrefix "UNKNOWN" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "Unknown graph role" ;
+  rdfs:label "Unknown Graph Role" ;
 .
 vaem:UnspecifiedGraphRole
   a vaem:GraphRole ;
-  dcterms:description "A graph that is for defining constraints using SPIN."^^rdf:HTML ;
-  vaem:filePrefix "CONSTRAINTS" ;
+  dcterms:description "A graph that does not specify a graph role." ;
+  vaem:filePrefix "UNSPECIFIED" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "Unspecified Graph Role" ;
-.
-vaem:UtilityGraph
-  a vaem:GraphRole ;
-  dcterms:description "An SWP graph that is a utiltity."^^rdf:HTML ;
-  vaem:filePrefix "UTILITY" ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "Utility Graph" ;
 .
 vaem:Viewpoint
   a rdfs:Class ;
@@ -725,7 +732,7 @@ vaem:VocabularyGraph
   dcterms:description "A graph that is a controlled set of instances that define a terminology. Typically this is based on SKOS."^^rdf:HTML ;
   vaem:filePrefix "VOCAB" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "Vocabulary graph" ;
+  rdfs:label "Vocabulary Graph" ;
 .
 dash:reifiableBy
   a rdf:Property ;
@@ -748,7 +755,12 @@ The property "vaem:acronym" provides a common way to define a commonly used abbr
 .
 vaem:applicableDiscipline
   a rdf:Property ;
-  dcterms:description "The property \"vaem:applicableDiscipline\" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study. Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
+  dcterms:description """
+  The property "vaem:applicableDiscipline" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study. 
+  Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.
+  In VAEM, the property is used as a dimension for characterizing an ontology graph.
+  The property is an "rdf:Property" to allow both scalar and object values.
+  """ ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "applicable discipline" ;
   rdfs:subPropertyOf vaem:hasDimension ;

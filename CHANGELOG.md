@@ -22,6 +22,14 @@
   the `withAttributionTo` shape no longer rejects text attributions; added
   `acronym`, `title`, `url`, `timestamp`, `aspectScope`, `disciplineScope`,
   `domainScope` and `viewpointScope`; `dash:reifiableBy` is declared once.
+- Graph roles: descriptions that referred to SPIN now refer to SHACL;
+  `vaem:SPINlibraryGraph` is renamed `vaem:SHACLlibraryGraph` (2.0);
+  `vaem:UnspecifiedGraphRole` has its own description and the prefix
+  `UNSPECIFIED`; removed `vaem:UtilityGraph` (2.0 and 3.0) and
+  `vaem:ViewerGraph` and `vaem:ViewGraph` (2.0); graph-role labels use
+  "Graph" consistently (3.0).
+- Added the graph roles `vaem:AIGovernanceGraph` (prefix `AIGOV`) and
+  `vaem:PoliciesGraph` (prefix `POLICIES`) to VAEM 3.0.
 - Added the SHACL-only schema `3.0/schema/shacl/SCHEMA_vaem_noOWL_v3.0.0.ttl`,
   generated from VAEM 3.0 by `scripts/gen_vaem_shacl.py`.
 - Added a GitHub Action that checks every `.ttl` file parses.
