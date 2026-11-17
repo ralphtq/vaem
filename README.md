@@ -30,7 +30,7 @@ schema/          current (unversioned) VAEM
 3.0/schema/      v3.0 schema (in development)
 3.0/schema/shacl/ SHACL-only version of v3.0, generated from the OWL
 scripts/         parse check and the SHACL generator
-www/             CSS, JS and images used by the generated documentation
+images/          logo
 ```
 
 ## SHACL schema

@@ -7,8 +7,9 @@
 - `schema/vaem.ttl` brought in line with `2.0/schema/vaem.ttl` (adds the
   `rdfs:label` "VAEM Schema v2.0" and `dct:modified` 2020-03-25).
 - Removed `external/dcat.ttl` (an unused copy of the W3C DCAT vocabulary).
-- Renamed `vaem.www/` to `www/` and dropped the TopBraid logos (and the
-  unused `lm-poweredby-logo` CSS rule that referenced one of them).
+- Removed `vaem.www/`, the CSS, JS and images used by the old generated
+  documentation (including the TopBraid logos). The VAEM logo is now at
+  `images/logos/vaem_logo_300x110.png`, as in DTYPE and VOAG.
 - Removed the generated HTML documentation (`doc/2014`, `doc/2015`), the
   `debug/` folder and `test_unbound_graph.ttl`. They remain in the history.
 - Removed the 1.0 SPIN libraries and SWP test page, the 2.0 SPARQLMotion
