@@ -4,10 +4,10 @@ A release is built from the files in `src/`, which carry tokens instead of
 version numbers. Nothing in `1.1/`, `2.0/`, `3.0/` or `schema/` is changed by
 a release.
 
-| Token | Replaced by |
-|---|---|
-| `$$VERSION$$` | the release version, e.g. `3.0.0` |
-| `$$RELEASE_DATE$$` | the release date, `YYYY-MM-DD` |
+|        Token         |                              Replaced by                              |
+|----------------------|-----------------------------------------------------------------------|
+| `$$VERSION$$`        | the release version, e.g. `3.0.0`                                     |
+| `$$RELEASE_DATE$$`   | the release date, `YYYY-MM-DD`                                        |
 | `$$<NAME>_VERSION$$` | the version of an imported ontology, from `imports` in `release.json` |
 
 The version appears in every `rdfs:isDefinedBy`, the ontology IRIs,

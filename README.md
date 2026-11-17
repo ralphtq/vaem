@@ -9,13 +9,13 @@ is used by [DTYPE](http://www.linkedmodel.org/schema/dtype),
 
 ## IRIs
 
-| What | IRI | File |
-|---|---|---|
-| Ontology (current) | `http://www.linkedmodel.org/schema/vaem` | `schema/vaem.ttl` (v2.0) |
-| Namespace | `http://www.linkedmodel.org/schema/vaem#` (prefix `vaem:`) | |
-| v2.0 | `http://www.linkedmodel.org/2.0/schema/vaem` | `2.0/schema/SCHEMA_vaem-v2.0.ttl` |
-| v3.0 (draft) | `http://www.linkedmodel.org/3.0/schema/vaem` | `3.0/schema/SCHEMA_vaem-v3.0.ttl` |
-| v3.0 SHACL (no OWL) | `http://www.linkedmodel.org/3.0.0/schema/shacl/vaem` | `3.0/schema/shacl/SCHEMA_vaem_noOWL_v3.0.0.ttl` |
+|        What         |                            IRI                             |                      File                       |
+|---------------------|------------------------------------------------------------|-------------------------------------------------|
+| Ontology (current)  | `http://www.linkedmodel.org/schema/vaem`                   | `schema/vaem.ttl` (v2.0)                        |
+| Namespace           | `http://www.linkedmodel.org/schema/vaem#` (prefix `vaem:`) |                                                 |
+| v2.0                | `http://www.linkedmodel.org/2.0/schema/vaem`               | `2.0/schema/SCHEMA_vaem-v2.0.ttl`               |
+| v3.0 (draft)        | `http://www.linkedmodel.org/3.0/schema/vaem`               | `3.0/schema/SCHEMA_vaem-v3.0.ttl`               |
+| v3.0 SHACL (no OWL) | `http://www.linkedmodel.org/3.0.0/schema/shacl/vaem`       | `3.0/schema/shacl/SCHEMA_vaem_noOWL_v3.0.0.ttl` |
 
 The IRIs are unchanged by the move out of `linkedmodels`. `schema/vaem.ttl`
 is what the unversioned IRI resolves to, and is kept identical to
