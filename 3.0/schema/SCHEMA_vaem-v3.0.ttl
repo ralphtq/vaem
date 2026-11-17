@@ -84,7 +84,7 @@ statements.
 .
 vaem:ConfigurationGraph
   a vaem:GraphRole ;
-  dcterms:description "A graph that serves as a registy or provides other parameter settings."^^rdf:HTML ;
+  dcterms:description "A graph that serves as a registry or provides other parameter settings."^^rdf:HTML ;
   vaem:filePrefix "CFGGRAPH" ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "Configuration Graph" ;
