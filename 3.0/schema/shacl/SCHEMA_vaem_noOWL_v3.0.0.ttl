@@ -102,7 +102,7 @@ vaem:Party a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "Party" ;
     dcterms:description """
-    A "Party" is a generalization for an actor that may be realized as a person, organizaiton or named role.
+    A "Party" is a generalization for an actor that may be realized as a person, organization or named role.
     """^^rdf:HTML ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> .
 
@@ -112,7 +112,7 @@ vaem:Viewpoint a rdfs:Class,
     dcterms:description """
     Viewpoint is used to denote how a set of resources, or an individual resource, is relevant to a context of use.
     The term "viewpoint" is adopted from the ISO RM-ODP specifications and its more recent use in enterprise architecture descriptions.
-    The RM-ODP introducesd the concept of viewpoint to describe a system from a particular set of concerns.
+    The RM-ODP introduced the concept of viewpoint to describe a system from a particular set of concerns.
     RM-ODP defines five viewpoints.
     Together they provide a complete description of a system: enterprise viewpoint, information viewpoint, computational viewpoint, engineering viewpoint, and technology viewpoint.
     In VAEM, "Viewpoint" is used as a dimension for characterizing an ontology graph.
@@ -146,7 +146,7 @@ vaem:CollectionGraph a vaem:GraphRole ;
 vaem:ConfigurationGraph a vaem:GraphRole ;
     rdfs:label "Configuration Graph" ;
     vaem:description """
-    A graph that serves as a registy or provides other parameter settings.
+    A graph that serves as a registry or provides other parameter settings.
     """^^rdf:HTML ;
     vaem:filePrefix "CONFIG" ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> .
@@ -204,7 +204,7 @@ vaem:DatatypesGraph a vaem:GraphRole ;
 vaem:DocumentationGraph a vaem:GraphRole ;
     rdfs:label "Documentation graph" ;
     vaem:description """
-    A graph that is soley for the purpose of generating documentation.
+    A graph that is solely for the purpose of generating documentation.
     """^^rdf:HTML ;
     vaem:filePrefix "DOC" ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> .
@@ -470,7 +470,7 @@ vaem:name-range a sh:NodeShape ;
 
 vaem:ownedBy dcterms:description """
     The property "vaem:ownedBy" is a general property that in some cases could have scalar values or may refer to some concept of "Party".
-    For this reason, the type of this property is set as "rdf:Property" and the property is rangeless.
+    For this reason, the type of this property is set as "rdf:Property" and the property has no range setting.
     There are two sub-properties of "vaem:ownedBy", namely "vaem:owner" for string values and "vaem:owningParty" for referencing a party.
     Ownership applies to those ontologies that are proprietary
     """^^rdf:HTML .
