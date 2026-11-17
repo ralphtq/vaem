@@ -110,7 +110,10 @@ jobs:
               s.write("## Format trial\n\n" + "\n".join(f"- {l}" for l in lines) + "\n")
           PY
 
+      - name: Move the results into the workspace
+        run: cp -r ../trial format-trial-out
+
       - uses: actions/upload-artifact@v4
         with:
           name: vaem-format-trial
-          path: ../trial/
+          path: format-trial-out/
