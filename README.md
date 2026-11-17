@@ -26,10 +26,8 @@ schema/        current (unversioned) VAEM
 1.0/ 1.1/      earlier versions, SPIN libraries and SWP pages
 2.0/           v2.0 schema and the SWP/SMS generator scripts
 3.0/           v3.0 schema (in development)
-doc/           generated HTML documentation (2014, 2015)
-vaem.www/      CSS, JS and images used by the generated documentation
+www/           CSS, JS and images used by the generated documentation
 archive/       reasoner logs, test files and superseded copies, kept for reference
-debug/         scratch folder that tooling writes debug output to
 ```
 
 ## Dependencies

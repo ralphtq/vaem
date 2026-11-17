@@ -889,16 +889,6 @@ div.float-right { float: right }
 }
 
 
-div.lm-poweredby-logo {
-	background-image: url(../images/topbraid-live-logo.png);
-	background-repeat: no-repeat;
-	background-size: 100%;
-	width: 250px;
-	height: 35px;
-	float: left;
-    display: inline-block;
-}
-
 div.lm-abstract {
     border: 2px solid #a1a1a1;
     padding: 10px 40px; 
