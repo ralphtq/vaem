@@ -739,6 +739,14 @@ associate a property with a user-defined sub-class of "rdf:Statement".
   rdfs:isDefinedBy <http://datashapes.org/dash#> ;
   rdfs:label "reifiable by" ;
 .
+vaem:acronym
+  a rdf:Property ;
+  dcterms:description """
+The property "vaem:acronym" provides a common way to define a commonly used abbreviation on a resource.
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "acronym" ;
+.
 vaem:applicableDiscipline
   a rdf:Property ;
   dcterms:description "The property \"vaem:applicableDiscipline\" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study. Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.  In VAEM, the property is used as a dimension for characterizing an ontology graph.  The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
@@ -752,6 +760,15 @@ vaem:applicableDomain
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "apllicable domain" ;
   rdfs:subPropertyOf vaem:hasDimension ;
+.
+vaem:aspectScope
+  a rdf:Property ;
+  dcterms:description """
+The property "vaem:aspectScope" relates a graph to an aspect (a "vaem:Aspect") that is within its scope.
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "aspect scope" ;
+  rdfs:seeAlso vaem:hasAspect ;
 .
 vaem:comment
   a rdf:Property ;
@@ -772,6 +789,24 @@ dcterms:description
   a rdf:Property ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "description" ;
+.
+vaem:disciplineScope
+  a rdf:Property ;
+  dcterms:description """
+The property "vaem:disciplineScope" relates a graph to a discipline (a "vaem:Discipline") that is within its scope.
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "discipline scope" ;
+  rdfs:seeAlso vaem:hasDiscipline ;
+.
+vaem:domainScope
+  a rdf:Property ;
+  dcterms:description """
+The property "vaem:domainScope" relates a graph to a domain (a "vaem:Domain") that is within its scope.
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "domain scope" ;
+  rdfs:seeAlso vaem:hasDomain ;
 .
 vaem:filePrefix
   a rdf:Property ;
@@ -1042,6 +1077,23 @@ vaem:specificity
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "specificity" ;
 .
+vaem:timestamp
+  a rdf:Property ;
+  dcterms:description """
+The property "vaem:timestamp" records the date and time at which something happened or was recorded, for example when a provenance record was made.
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "timestamp" ;
+.
+vaem:title
+  a rdf:Property ;
+  dcterms:description """
+The property "vaem:title" is intended for general use as a title for a resource. For the title of a graph, "vaem:graphTitle" is used on its graph metadata.
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "title" ;
+  rdfs:seeAlso vaem:graphTitle ;
+.
 vaem:todo
   a rdf:Property ;
   dcterms:description "As it name implies, a way to attach an annotation about a \"todo\" task"^^rdf:HTML ;
@@ -1054,6 +1106,14 @@ vaem:turtleFileURL
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "turtle file URL" ;
 .
+vaem:url
+  a rdf:Property ;
+  dcterms:description """
+The property "vaem:url" is intended for general use as the name implies. Its values are URLs, typically given as "xsd:anyURI" literals.
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "url" ;
+.
 vaem:urlForHTML
   a rdf:Property ;
   dcterms:description "Provides a link to the location of the ontology's HTML file" ;
@@ -1065,6 +1125,15 @@ vaem:usesNonImportedResource
   dcterms:description "The property \"vaem:usesNonImportedResource\" is used to express dependencies on resources from graphs that are not imported"^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "uses non-imported resource" ;
+.
+vaem:viewpointScope
+  a rdf:Property ;
+  dcterms:description """
+The property "vaem:viewpointScope" relates a graph to a viewpoint (a "vaem:Viewpoint") that is within its scope.
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
+  rdfs:label "viewpoint scope" ;
+  rdfs:seeAlso vaem:hasViewpoint ;
 .
 vaem:website
   a rdf:Property ;
