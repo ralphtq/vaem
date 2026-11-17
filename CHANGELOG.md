@@ -6,10 +6,22 @@
   full commit history. IRIs are unchanged.
 - `schema/vaem.ttl` brought in line with `2.0/schema/vaem.ttl` (adds the
   `rdfs:label` "VAEM Schema v2.0" and `dct:modified` 2020-03-25).
-- Reasoner logs, test files and `.hide` copies moved to `archive/`.
 - Removed `external/dcat.ttl` (an unused copy of the W3C DCAT vocabulary).
 - Renamed `vaem.www/` to `www/` and dropped the TopBraid logos (and the
   unused `lm-poweredby-logo` CSS rule that referenced one of them).
 - Removed the generated HTML documentation (`doc/2014`, `doc/2015`), the
   `debug/` folder and `test_unbound_graph.ttl`. They remain in the history.
+- Removed the 1.0 SPIN libraries and SWP test page, the 2.0 SPARQLMotion
+  generator scripts, reasoner logs, test files and `.hide` copies. They
+  remain in the history.
+- Fixed spelling in the schema descriptions (registry, solely,
+  organization, introduced).
+- Linkedmodels is now the owner and steward (`vaem:LinkedModels`), replacing
+  TopQuadrant.
+- VAEM 3.0: the acronym is expanded as "Vocabulary About Essential Metadata";
+  the `withAttributionTo` shape no longer rejects text attributions; added
+  `acronym`, `title`, `url`, `timestamp`, `aspectScope`, `disciplineScope`,
+  `domainScope` and `viewpointScope`; `dash:reifiableBy` is declared once.
+- Added the SHACL-only schema `3.0/schema/shacl/SCHEMA_vaem_noOWL_v3.0.0.ttl`,
+  generated from VAEM 3.0 by `scripts/gen_vaem_shacl.py`.
 - Added a GitHub Action that checks every `.ttl` file parses.
