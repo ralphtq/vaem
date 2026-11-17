@@ -735,7 +735,6 @@ Expresses how statements in a model can be reifiable, this property is used to e
 associate a property with a user-defined sub-class of "rdf:Statement". 
 </p>
 """^^rdf:HTML ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:isDefinedBy <http://datashapes.org/dash#> ;
   rdfs:label "reifiable by" ;
 .
@@ -1045,17 +1044,6 @@ The property "vaem:rdfxmlFileURL" is used to provide a link to the location of t
 """^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
   rdfs:label "RDF/XML file URL" ;
-.
-dash:reifiableBy
-  a rdf:Property ;
-  dcterms:description """
-<p>
-Expresses how statements in a model can be reifiable, this property is used to explicitly 
-associate a property with a user-defined sub-class of "rdf:Statement". 
-</p>
-"""^^rdf:HTML ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/3.0/schema/vaem> ;
-  rdfs:label "reifiable by" ;
 .
 vaem:releaseDate
   a rdf:Property ;
