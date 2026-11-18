@@ -516,9 +516,9 @@ vaem:GMD_VAEM a vaem:GraphMetaData ;
 <p>
 VAEM stands for "<em>Vocabulary About Essential Metadata</em>". 
 What VAEM regards as empirical metadata is foundational constructs for metaclasses, 
-properties for dates and times, characterisitic qualifiers of the ontology such as dimensions, 
+properties for dates and times, characteristic qualifiers of the ontology such as dimensions, 
 governance, attribution, alon with references to where an ontology is documented and where it is 
-registrated.
+registered.
 </p>
 <p>
 VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix "dct". 
@@ -528,9 +528,9 @@ VAEM makes use of some properties from the DC terms vocabulary using the namespa
 <p>
 VAEM stands for "<em>Vocabulary About Essential Metadata</em>". 
 Essential Metadata is specified as foundational constructs for metaclasses, 
-properties for dates and times, characterisitic qualifiers of the ontology such as dimensions, 
+properties for dates and times, characteristic qualifiers of the ontology such as dimensions, 
 governance, attribution, along with references to where an ontology is documented and where it is 
-registrated.
+registered.
 </p>
 <p>
 VAEM makes use of some properties from the DC terms vocabulary and "voag:Attribution" from the "VOAG" ontology. 
@@ -976,9 +976,9 @@ The property "vaem:hasDimension" is used categorize an ontology.
 <p>
 VAEM stands for "<em>Vocabulary About Essential Metadata</em>". 
 Essential Metadata is specified as foundational constructs for metaclasses, 
-properties for dates and times, characterisitic qualifiers of the ontology such as dimensions, 
+properties for dates and times, characteristic qualifiers of the ontology such as dimensions, 
 governance, attribution, along with references to where an ontology is documented and where it is 
-registrated.
+registered.
 </p>
 <p>
 VAEM makes use of some properties from the DC terms vocabulary. 
