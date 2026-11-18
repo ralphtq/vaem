@@ -26,16 +26,21 @@ VAEM makes use of some properties from the DC terms vocabulary.
   rdfs:label "SCHEMA VAEM SHACL Version $$VERSION$$" ;
   vaem:hasGraphMetadata vaem:GMD_VAEM .
 
-vaem:AspectClass
+vaem:Aspect
   a rdfs:Class, sh:NodeShape ;
-  rdfs:comment """
-<p>An <strong>Aspect Class</strong> is the type for all "Aspect" classes.
-These serve as <strong>features</strong> or <strong>traits</strong> for reuse with a defining set of properties.
-They are equivalent to interface classes in Java, traits in Scala and type classes in other languages.</p>
+  dcterms:description """
+<p><strong>Aspect</strong> distinguishes sets of features of a domain or subject area.
+The term is borrowed from "aspect-oriented" programming, where it is used to separate concerns.
+An ontology may be characterized by this dimension so as to partition features that are orthogonal.
+For example, in a SFBI systems ontology there may be aspects for "Structure", "Function", "Behavior", "Interface" (or "Interoperability").
+A viewpoint can be distinguished by "aspects".
+For example the "information viewpoint" of an application can be partitioned into separate graphs for the "security",
+"operational", "maintenance" and "data retention" aspects.</p>
 """^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
-  rdfs:label "Aspect Class" ;
-  rdfs:subClassOf rdfs:Class .
+  rdfs:label "Aspect" ;
+  rdfs:subClassOf rdfs:Resource ;
+  sh:property vaem:Aspect-broader .
 
 vaem:CatalogEntry
   a rdfs:Class, sh:NodeShape ;
@@ -58,7 +63,8 @@ For example a graph might be about material science for civil engineering or che
 """^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "Discipline" ;
-  rdfs:subClassOf vaem:ElementalConstruct .
+  rdfs:subClassOf vaem:ElementalConstruct ;
+  sh:property vaem:Discipline-broader .
 
 vaem:Domain
   a rdfs:Class, sh:NodeShape ;
@@ -68,7 +74,8 @@ Examples of domains are "chemistry", "physics", "material science", "mechanics" 
 """^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "Domain" ;
-  rdfs:subClassOf vaem:ElementalConstruct .
+  rdfs:subClassOf vaem:ElementalConstruct ;
+  sh:property vaem:Domain-broader .
 
 vaem:ElementalConstruct
   a rdfs:Class, sh:NodeShape ;
@@ -80,6 +87,17 @@ vaem:ElementalConstruct
   rdfs:label "Elemental Construct" ;
   rdfs:subClassOf rdfs:Resource ;
   rdfs:subClassOf vaem:Narratable .
+
+vaem:FacetClass
+  a rdfs:Class, sh:NodeShape ;
+  dcterms:description """
+<p>A <strong>Facet Class</strong> is the type for all "Facet" classes.
+These serve as <strong>features</strong> or <strong>traits</strong> for reuse with a defining set of properties.
+They are equivalent to interface classes in Java, traits in Scala and type classes in other languages.</p>
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
+  rdfs:label "Facet Class" ;
+  rdfs:subClassOf rdfs:Class .
 
 vaem:GraphMetaData
   a rdfs:Class, sh:NodeShape ;
@@ -160,7 +178,8 @@ but the idea of describing a subject area of interest from distinct viewpoints i
 """^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "Viewpoint" ;
-  rdfs:subClassOf vaem:ElementalConstruct .
+  rdfs:subClassOf vaem:ElementalConstruct ;
+  sh:property vaem:Viewpoint-broader .
 
 voag:Attribution
   a rdfs:Class, sh:NodeShape ;
@@ -574,18 +593,11 @@ vaem:AIGovernanceGraph
   rdfs:label "AI Governance Graph" ;
   vaem:filePrefix "AIGOV" .
 
-vaem:Aspect
-  a sh:NodeShape, vaem:AspectClass ;
-  dcterms:description """
-<p><strong>Aspect</strong> superclass is an abstract class that has sub-classes that specify distinct sets of properties.
-These serve as <strong><strong>features</strong></strong> or <strong>traits</strong> for reuse with a defining set of properties.
-They can be considered equivalent to interface classes in Java, traits in Scala and type classes in other languages.
-All aspect classes should be of type <strong>AspectClass</strong> so that they are distinguished as "mix-ins" as opposed to classes
-in a type hierarchy.</p>
-"""^^rdf:HTML ;
+vaem:Aspect-broader
+  a sh:PropertyShape ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
-  rdfs:label "Aspect" ;
-  rdfs:subClassOf rdfs:Resource .
+  sh:class vaem:Aspect ;
+  sh:path skos:broader .
 
 vaem:CodelistGraph
   a vaem:GraphRole ;
@@ -639,6 +651,12 @@ vaem:DatatypesGraph
   rdfs:label "Datatypes Graph" ;
   vaem:filePrefix "DTYGRAPH" .
 
+vaem:Discipline-broader
+  a sh:PropertyShape ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
+  sh:class vaem:Discipline ;
+  sh:path skos:broader .
+
 vaem:DocumentationGraph
   a vaem:GraphRole ;
   dcterms:description "A graph for the purpose of generating documentation."^^rdf:HTML ;
@@ -646,12 +664,28 @@ vaem:DocumentationGraph
   rdfs:label "Documentation Graph" ;
   vaem:filePrefix "DOCGRAPH" .
 
+vaem:Domain-broader
+  a sh:PropertyShape ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
+  sh:class vaem:Domain ;
+  sh:path skos:broader .
+
 vaem:DynamicGraph
   a vaem:GraphRole ;
   dcterms:description "A graph which holds session-dependent data."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "Dynamic Graph" ;
   vaem:filePrefix "DYNGRAPH" .
+
+vaem:Facet
+  a sh:NodeShape, vaem:FacetClass ;
+  dcterms:description """
+<p>A <strong>Facet</strong> is the type for specifying <strong>features</strong> or <strong>traits</strong> for reuse with a defining set of properties.
+They are equivalent to interface classes in Java, traits in Scala and type classes in other languages.</p>
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
+  rdfs:label "Facet" ;
+  rdfs:subClassOf rdfs:Resource .
 
 vaem:FunctionsGraph
   a vaem:GraphRole ;
@@ -957,14 +991,13 @@ A graph that specifies functions for the transformation of a graph into another 
   vaem:filePrefix "MAPGRAPH" .
 
 vaem:Narratable
-  a sh:NodeShape, vaem:AspectClass ;
+  a sh:NodeShape, vaem:FacetClass ;
   dcterms:description """
-<p><strong>Narratable</strong> is an aspect for resources that carry a description and are placed among other
-resources with <em>skos:broader</em> and <em>skos:related</em>.</p>
+<p><strong>Narratable</strong> is a facet for carrying description and other textual properties.</p>
 """^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "Narratable" ;
-  rdfs:subClassOf vaem:Aspect ;
+  rdfs:subClassOf vaem:Facet ;
   sh:property vaem:Narratable-description .
 
 vaem:Narratable-description
@@ -1125,6 +1158,12 @@ vaem:UnspecifiedGraphRole
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "Unspecified Graph Role" ;
   vaem:filePrefix "UNSPECIFIED" .
+
+vaem:Viewpoint-broader
+  a sh:PropertyShape ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
+  sh:class vaem:Viewpoint ;
+  sh:path skos:broader .
 
 vaem:VocabularyGraph
   a vaem:GraphRole ;
