@@ -16,8 +16,8 @@ vaem:AspectClass a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "Aspect Class" ;
     rdfs:comment """
-<p>An <strong>Aspect Class</strong> is the type for all "Aspect" classes. 
-These serve as <strong>features</strong> or <strong>traits</strong> for reuse with a defining set of properties. 
+<p>An <strong>Aspect Class</strong> is the type for all "Aspect" classes.
+These serve as <strong>features</strong> or <strong>traits</strong> for reuse with a defining set of properties.
 They are equivalent to interface classes in Java, traits in Scala and type classes in other languages.</p>
 """^^rdf:HTML ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> ;
@@ -28,7 +28,7 @@ vaem:CatalogEntry a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "Catalog Entry" ;
     dcterms:description """
-VAEM Governed Object class is a placeholder for concepts that are fully defined by 
+VAEM Governed Object class is a placeholder for concepts that are fully defined by
 the "voag:GovernedObject" concept hierarchy for building a catalog of ontologies and graphs.
 """^^rdf:HTML ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> ;
@@ -51,7 +51,7 @@ vaem:Domain a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "Domain" ;
     dcterms:description """
-A domain is a subject area of interest. 
+A domain is a subject area of interest.
 Examples of domains are "chemistry", "physics", "material science", "mechanics" and "medicine".
 """^^rdf:HTML ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> ;
@@ -70,8 +70,8 @@ vaem:GraphMetaData a rdfs:Class,
         sh:NodeShape ;
     rdfs:label "Graph Metadata" ;
     dcterms:description """
-<p>For a graph expressed in RDF and SHACL, <em>vaem:GraphMetaData</em> defines basic metadata for the meta-ontology constructs, 
-graph metadata constructs, registration and publishing properties.  
+<p>For a graph expressed in RDF and SHACL, <em>vaem:GraphMetaData</em> defines basic metadata for the meta-ontology constructs,
+graph metadata constructs, registration and publishing properties.
 </p>
 <p>
 For specification of graph governance the vocabulary "VOAG" may be used.
@@ -131,17 +131,17 @@ vaem:Viewpoint a rdfs:Class,
     rdfs:label "Viewpoint" ;
     dcterms:description """
 <p>
-<strong>Viewpoint</strong> is used to denote how a set of resources, or an individual resource, is relevant to a context of use. 
-"Viewpoint" is adopted from the ISO RM-ODP specifications and its more recent use in enterprise architecture descriptions. 
-The RM-ODP introduced the concept of viewpoint to describe a system from a particular set of concerns. 
+<strong>Viewpoint</strong> is used to denote how a set of resources, or an individual resource, is relevant to a context of use.
+"Viewpoint" is adopted from the ISO RM-ODP specifications and its more recent use in enterprise architecture descriptions.
+The RM-ODP introduced the concept of viewpoint to describe a system from a particular set of concerns.
 RM-ODP defines five viewpoints.
-Viewpoints provide a complete description of a system: enterprise viewpoint, information viewpoint, 
-computational viewpoint, engineering viewpoint, and technology viewpoint.  
+Viewpoints provide a complete description of a system: enterprise viewpoint, information viewpoint,
+computational viewpoint, engineering viewpoint, and technology viewpoint.
 </p>
 <p>
 In VAEM, "Viewpoint" is used as a dimension for characterizing an ontology graph.
-The viewpoints of an ontology may not always correpsond directly to those of a system 
-but the idea of describing a subject area of interest from distinct viewpoints is still relevant. 
+The viewpoints of an ontology may not always correpsond directly to those of a system
+but the idea of describing a subject area of interest from distinct viewpoints is still relevant.
 </p>
 """^^rdf:HTML ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> ;
@@ -150,10 +150,10 @@ but the idea of describing a subject area of interest from distinct viewpoints i
 vaem:Aspect a vaem:AspectClass ;
     rdfs:label "Aspect" ;
     dcterms:description """
-<p><strong>Aspect</strong> superclass is an abstract class that has sub-classes that specify distinct sets of properties. 
-These serve as <strong><strong>features</strong></strong> or <strong>traits</strong> for reuse with a defining set of properties. 
-They can be considered equivalent to interface classes in Java, traits in Scala and type classes in other languages. 
-All aspect classes should be of type <strong>AspectClass</strong> so that they are distinguished as "mix-ins" as opposed to classes 
+<p><strong>Aspect</strong> superclass is an abstract class that has sub-classes that specify distinct sets of properties.
+These serve as <strong><strong>features</strong></strong> or <strong>traits</strong> for reuse with a defining set of properties.
+They can be considered equivalent to interface classes in Java, traits in Scala and type classes in other languages.
+All aspect classes should be of type <strong>AspectClass</strong> so that they are distinguished as "mix-ins" as opposed to classes
 in a type hierarchy.</p>
 """^^rdf:HTML ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> ;
@@ -174,7 +174,7 @@ vaem:CodelistGraph a vaem:GraphRole ;
 vaem:CollectionGraph a vaem:GraphRole ;
     rdfs:label "Collection Graph" ;
     dcterms:description """
-A "vaem:CollectionGraph" is a graph that aggregates other graphs using "owl:imports" 
+A "vaem:CollectionGraph" is a graph that aggregates other graphs using "owl:imports"
 statements.
 """^^rdf:HTML ;
     vaem:filePrefix "CLNGRAPH" ;
@@ -231,14 +231,14 @@ vaem:FunctionsGraph a vaem:GraphRole ;
 vaem:GraphDimensionAspect a vaem:GraphDimension ;
     rdfs:label "Aspect Graph Dimension" ;
     dcterms:description """
-<p>Aspect is used to distinguish among sets of features of a domain or subject area. 
-The term is borrowed from "aspect-oriented programming", where it is used to 
-separate concerns. 
-An ontology may be characterized by this dimension so as to parition features that 
+<p>Aspect is used to distinguish among sets of features of a domain or subject area.
+The term is borrowed from "aspect-oriented programming", where it is used to
+separate concerns.
+An ontology may be characterized by this dimension so as to parition features that
 are orthogonal.
 </p>
 <p>
-For example, in a systems ontology there may be aspects for "structure", "function", 
+For example, in a systems ontology there may be aspects for "structure", "function",
 "behavior" and "interface" or "interoperability".
 </p>
 <p>
@@ -270,7 +270,7 @@ vaem:LinkSetGraph a vaem:GraphRole ;
 vaem:MappingsGraph a vaem:GraphRole ;
     rdfs:label "Mappings Graph" ;
     dcterms:description """
-A graph that specifies functions for the transformation of a graph into another graph or graphs. 
+A graph that specifies functions for the transformation of a graph into another graph or graphs.
 """^^rdf:HTML ;
     vaem:filePrefix "MAPGRAPH" ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> .
@@ -357,11 +357,11 @@ The property "vaem:acronym" provides a common way to define a commonly used abbr
 vaem:applicableDiscipline a rdf:Property ;
     rdfs:label "applicable discipline" ;
     dcterms:description """
-  The property "vaem:applicableDiscipline" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study. 
-  Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.
-  In VAEM, the property is used as a dimension for characterizing an ontology graph.
-  The property is an "rdf:Property" to allow both scalar and object values.
-  """ ;
+The property "vaem:applicableDiscipline" is used to indicate relevance of a set of resources, or a resource itself, to a specific discipline of work or study.
+Examples of disciplines in the engineering domain are electrical engineering, mechanical engineering and, in the financial domain, risk assessment, investment analysis.
+In VAEM, the property is used as a dimension for characterizing an ontology graph.
+The property is an "rdf:Property" to allow both scalar and object values.
+""" ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> ;
     rdfs:subPropertyOf vaem:hasDimension .
 
@@ -434,14 +434,14 @@ vaem:name a rdf:Property ;
 
 vaem:ownedBy a rdf:Property ;
     dcterms:description """
-The property "vaem:ownedBy" is a general property that in some cases could have scalar values or may refer to some concept of "Party".  
-There are two sub-properties of "vaem:ownedBy": "vaem:owner" for string values and "vaem:owningParty" for referencing a party. 
+The property "vaem:ownedBy" is a general property that in some cases could have scalar values or may refer to some concept of "Party".
+There are two sub-properties of "vaem:ownedBy": "vaem:owner" for string values and "vaem:owningParty" for referencing a party.
 Ownership applies to those ontologies that are proprietary.
 """^^rdf:HTML ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> .
 
 vaem:owningParty dcterms:description """
-The property "vaem:owningParty" is used to refer to a "Party" that has the IP rights 
+The property "vaem:owningParty" is used to refer to a "Party" that has the IP rights
 on the graph.
 """^^rdf:HTML .
 
@@ -504,8 +504,8 @@ dash:reifiableBy a rdf:Property ;
     rdfs:label "reifiable by" ;
     dcterms:description """
 <p>
-Expresses how statements in a model can be reifiable, this property is used to explicitly 
-associate a property with a user-defined sub-class of "rdf:Statement". 
+Expresses how statements in a model can be reifiable, this property is used to explicitly
+associate a property with a user-defined sub-class of "rdf:Statement".
 </p>
 """^^rdf:HTML ;
     rdfs:isDefinedBy dash: .
@@ -514,26 +514,26 @@ vaem:GMD_VAEM a vaem:GraphMetaData ;
     rdfs:label "VAEM Schema Version 3.0 Metadata" ;
     dcterms:abstract """
 <p>
-VAEM stands for "<em>Vocabulary About Essential Metadata</em>". 
-What VAEM regards as empirical metadata is foundational constructs for metaclasses, 
-properties for dates and times, characterisitic qualifiers of the ontology such as dimensions, 
-governance, attribution, alon with references to where an ontology is documented and where it is 
-registrated.
+VAEM stands for "<em>Vocabulary About Essential Metadata</em>".
+What VAEM regards as empirical metadata is foundational constructs for metaclasses,
+properties for dates and times, characteristic qualifiers of the ontology such as dimensions,
+governance, attribution, alon with references to where an ontology is documented and where it is
+registered.
 </p>
 <p>
-VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix "dct". 
+VAEM makes use of some properties from the DC terms vocabulary using the namespace prefix "dct".
 """^^rdf:HTML ;
     dcterms:created "2023-09-21"^^xsd:date ;
     dcterms:description """
 <p>
-VAEM stands for "<em>Vocabulary About Essential Metadata</em>". 
-Essential Metadata is specified as foundational constructs for metaclasses, 
-properties for dates and times, characterisitic qualifiers of the ontology such as dimensions, 
-governance, attribution, along with references to where an ontology is documented and where it is 
-registrated.
+VAEM stands for "<em>Vocabulary About Essential Metadata</em>".
+Essential Metadata is specified as foundational constructs for metaclasses,
+properties for dates and times, characteristic qualifiers of the ontology such as dimensions,
+governance, attribution, along with references to where an ontology is documented and where it is
+registered.
 </p>
 <p>
-VAEM makes use of some properties from the DC terms vocabulary and "voag:Attribution" from the "VOAG" ontology. 
+VAEM makes use of some properties from the DC terms vocabulary and "voag:Attribution" from the "VOAG" ontology.
 </p>
 """^^rdf:HTML ;
     dcterms:modified "2026-11-17"^^xsd:date ;
@@ -733,8 +733,8 @@ vaem:StringOrLangStringOrHTML a rdf:List ;
     rdf:first [ sh:datatype xsd:string ] ;
     rdf:rest ( [ sh:datatype rdf:langString ] [ sh:datatype rdf:HTML ] ) ;
     rdfs:comment """
-An <em>rdf:List</em> that can be used in property constraints as value for <em>sh:or</em> to indicate 
-that all values of a property must be either <em>xsd:string</em>, <em>rdf:langString</em>  or <em>rdf:HTML</em> 
+An <em>rdf:List</em> that can be used in property constraints as value for <em>sh:or</em> to indicate
+that all values of a property must be either <em>xsd:string</em>, <em>rdf:langString</em> or <em>rdf:HTML</em>
 (in that order of preference).
 """^^rdf:HTML .
 
@@ -743,8 +743,8 @@ vaem:StringOrLangStringOrHTMLorAttribution a rdf:List ;
     rdf:first [ sh:datatype xsd:string ] ;
     rdf:rest ( [ sh:datatype rdf:langString ] [ sh:datatype rdf:HTML ] [ sh:class voag:Attribution ] ) ;
     rdfs:comment """
-An <em>rdf:List</em> that can be used in property constraints as value for <em>sh:or</em> to indicate 
-that all values of a property must be either <em>xsd:string</em>, <em>rdf:langString</em>  or <em>rdf:HTML</em> 
+An <em>rdf:List</em> that can be used in property constraints as value for <em>sh:or</em> to indicate
+that all values of a property must be either <em>xsd:string</em>, <em>rdf:langString</em> or <em>rdf:HTML</em>
 (in that order of preference).
 """^^rdf:HTML .
 
@@ -753,8 +753,8 @@ vaem:StringOrLangStringOrHTMLorParty a rdf:List ;
     rdf:first [ sh:datatype xsd:string ] ;
     rdf:rest ( [ sh:datatype rdf:langString ] [ sh:datatype rdf:HTML ] [ sh:class voag:Party ] ) ;
     rdfs:comment """
-An <em>rdf:List</em> that can be used in property constraints as value for <em>sh:or</em> to indicate 
-that all values of a property must be either <em>xsd:string</em>, <em>rdf:langString</em>  or <em>rdf:HTML</em> 
+An <em>rdf:List</em> that can be used in property constraints as value for <em>sh:or</em> to indicate
+that all values of a property must be either <em>xsd:string</em>, <em>rdf:langString</em> or <em>rdf:HTML</em>
 (in that order of preference).
 """^^rdf:HTML .
 
@@ -770,9 +770,9 @@ vaem:graphName a rdf:Property ;
 vaem:hasAspect a rdf:Property ;
     rdfs:label "has aspect " ;
     dcterms:description """
-The property "vaem:hasAspect" is used to specify the defined traits of a graph. 
-<em>Aspect</em> is borrowed from "aspect-oriented" programming, where it is used to separate concerns. 
-An ontology may be characterized by this dimension so as to partition features that are orthogonal. 
+The property "vaem:hasAspect" is used to specify the defined traits of a graph.
+<em>Aspect</em> is borrowed from "aspect-oriented" programming, where it is used to separate concerns.
+An ontology may be characterized by this dimension so as to partition features that are orthogonal.
 """^^rdf:HTML ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> ;
     rdfs:subPropertyOf vaem:hasDimension .
@@ -799,7 +799,7 @@ vaem:hasOwner a rdf:Property ;
 vaem:hasSteward a rdf:Property ;
     rdfs:label "has steward" ;
     dcterms:description """
-A property that is used to refer to a "Steward", that is, the party or role that is responsible for maintaining an asset, 
+A property that is used to refer to a "Steward", that is, the party or role that is responsible for maintaining an asset,
 in the case of VAEM, an ontology graph.
 """^^rdf:HTML ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> .
@@ -807,7 +807,7 @@ in the case of VAEM, an ontology graph.
 vaem:intent a rdf:Property ;
     rdfs:label "intent" ;
     dcterms:description """
-The property "vaem:intent" is used to outline  a statement of purpose. 
+The property "vaem:intent" is used to outline a statement of purpose.
 This typically expresses one or more desired outcomes.
 """^^rdf:HTML ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> .
@@ -821,20 +821,20 @@ vaem:namespace a rdf:Property ;
     rdfs:label "namespace" ;
     dcterms:description """
 <p>
-The property "vaem:namespace" is the onotlogy URI with which a graph is primarily associated. 
-The intent is to allow multiple graphs to define statements for resources in the same Ontology 
+The property "vaem:namespace" is the onotlogy URI with which a graph is primarily associated.
+The intent is to allow multiple graphs to define statements for resources in the same Ontology
 namespace.
 </p>
 <p>
-For example, a foundation level graph with the base URI of "http://www.somesite.com/1.0/schema/OurOntology" 
-may define general concepts for "OurOntology". 
-Another graph with the base URI "http://www.somesite.com/1.0/schema/level2/OurOntology" may add more 
+For example, a foundation level graph with the base URI of "http://www.somesite.com/1.0/schema/OurOntology"
+may define general concepts for "OurOntology".
+Another graph with the base URI "http://www.somesite.com/1.0/schema/level2/OurOntology" may add more
 specific details to the same "OurOntology".
 </p>
 <p>
 Each of these two graphs would carry the same value for "vaem:namespace", that is, "http://www.somesite.com/schema/OurOntology".
-In other words, an ontology URI is the URI associated with the resources of a controlled namespace. 
-On the other hand the graph URIs (the base URIs) identify the graphs that hold resources that make 
+In other words, an ontology URI is the URI associated with the resources of a controlled namespace.
+On the other hand the graph URIs (the base URIs) identify the graphs that hold resources that make
 up an ontology.
 </p>
 """^^rdf:HTML ;
@@ -844,14 +844,14 @@ vaem:namespacePrefix a rdf:Property ;
     rdfs:label "namespace prefix" ;
     dcterms:description """
 <p>
-The property "vaem:namespacePrefix" is the onotlogy URI with which a graph is primarily associated. 
-The intent is to allow multiple graphs to define statements for resources in the same Ontology 
+The property "vaem:namespacePrefix" is the onotlogy URI with which a graph is primarily associated.
+The intent is to allow multiple graphs to define statements for resources in the same Ontology
 namespace.
 </p>
 <p>
-For example, a foundation level graph with the base URI of "http://www.somesite.com/1.0/schema/OurOntology" 
-may define general concepts for "OurOntology". 
-Another graph with the base URI "http://www.somesite.com/1.0/schema/level2/OurOntology" may add more 
+For example, a foundation level graph with the base URI of "http://www.somesite.com/1.0/schema/OurOntology"
+may define general concepts for "OurOntology".
+Another graph with the base URI "http://www.somesite.com/1.0/schema/level2/OurOntology" may add more
 specific details to the same "OurOntology".
 </p>
 """^^rdf:HTML ;
@@ -891,7 +891,7 @@ vaem:turtleFileURL a rdf:Property ;
 vaem:withAttributionTo a rdf:Property ;
     rdfs:label "with attribution to" ;
     dcterms:description """
-The property "vaem:withAttributionTo" is an annotation property that is either used to hold either a string 
+The property "vaem:withAttributionTo" is an annotation property that is either used to hold either a string
 or a reference to an instance of "voag:Attribution", from the VOAG ontology.
 """^^rdf:HTML ;
     rdfs:isDefinedBy <http://www.linkedmodel.org/3.0.0/schema/shacl/vaem> .
@@ -931,8 +931,8 @@ The property "vaem:hasDomain" is used categorize an ontology.
 vaem:hasViewpoint a rdf:Property ;
     rdfs:label "has viewpoint" ;
     dcterms:description """
-The property "vaem:hasViewpoint" is used to denote how a set of resources, or an 
-individual resource, is relevant to a context of use. 
+The property "vaem:hasViewpoint" is used to denote how a set of resources, or an
+individual resource, is relevant to a context of use.
 The term "viewpoint" is adopted from the ISO RM-ODP specifications and its more recent use in enterprise architecture descriptions.
 In VAEM, the property is used as a dimension for characterizing an ontology graph.
 """^^rdf:HTML ;
@@ -958,8 +958,8 @@ vaem:StringOrLangString a rdf:List ;
     rdf:first [ sh:datatype xsd:string ] ;
     rdf:rest ( [ sh:datatype rdf:langString ] ) ;
     rdfs:comment """
-An <em>rdf:List</em> that can be used in property constraints as value for <em>sh:or</em> to indicate 
-that all values of a property must be either <em>xsd:string</em>, or <em>rdf:langString</em> 
+An <em>rdf:List</em> that can be used in property constraints as value for <em>sh:or</em> to indicate
+that all values of a property must be either <em>xsd:string</em>, or <em>rdf:langString</em>
 (in that order of preference).
 """^^rdf:HTML .
 
@@ -974,14 +974,14 @@ The property "vaem:hasDimension" is used categorize an ontology.
     rdfs:label "SCHEMA VAEM SHACL Version 3.0.0" ;
     dcterms:description """
 <p>
-VAEM stands for "<em>Vocabulary About Essential Metadata</em>". 
-Essential Metadata is specified as foundational constructs for metaclasses, 
-properties for dates and times, characterisitic qualifiers of the ontology such as dimensions, 
-governance, attribution, along with references to where an ontology is documented and where it is 
-registrated.
+VAEM stands for "<em>Vocabulary About Essential Metadata</em>".
+Essential Metadata is specified as foundational constructs for metaclasses,
+properties for dates and times, characteristic qualifiers of the ontology such as dimensions,
+governance, attribution, along with references to where an ontology is documented and where it is
+registered.
 </p>
 <p>
-VAEM makes use of some properties from the DC terms vocabulary. 
+VAEM makes use of some properties from the DC terms vocabulary.
 </p>
 """^^rdf:HTML ;
     vaem:hasGraphMetadata vaem:GMD_VAEM .

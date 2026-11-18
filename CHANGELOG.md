@@ -37,3 +37,4 @@
   from it. `scripts/gen_vaem_shacl.py` (OWL to SHACL) is kept as a check, with
   a `--check` option that compares the two files without writing anything.
 - Added a GitHub Action that checks every `.ttl` file parses.
+
