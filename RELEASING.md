@@ -26,8 +26,8 @@ python3 scripts/release.py --version 3.0.0
 ```
 
 This writes `dist/<version>/…` and fails if a token is left over, a file does
-not parse, a construct has more than one `rdfs:isDefinedBy`, the SHACL schema
-does not conform to its own shapes, or the OWL and SHACL files differ.
+not parse, a construct has more than one `rdfs:isDefinedBy`, or the SHACL
+schema does not conform to its own shapes.
 `--version` defaults to `release.json` and `--date` to today.
 
 ## Snapshots

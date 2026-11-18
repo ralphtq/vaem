@@ -5,9 +5,5 @@
   "files": [
     {"src": "src/owl/SCHEMA_vaem.ttl", "dist": "{version}/schema/SCHEMA_vaem-v{version}.ttl", "role": "owl"},
     {"src": "src/shacl/SCHEMA_vaem.ttl", "dist": "{version}/schema/shacl/SCHEMA_vaem_noOWL_v{version}.ttl", "role": "shacl"}
-  ],
-  "shacl": {
-    "ontology": "http://www.linkedmodel.org/{version}/schema/shacl/vaem",
-    "label": "SCHEMA VAEM SHACL Version {version}"
-  }
+  ]
 }
