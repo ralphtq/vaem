@@ -10,6 +10,7 @@ on:
     paths:
       - "src/**"
       - "*.md"
+      - "pom.xml"
       - ".github/workflows/format-trial.yml"
 
 jobs:
@@ -32,51 +33,8 @@ jobs:
           cp -r src ../before/src
           cp *.md ../before/
 
-      - name: Write a Spotless-only pom.xml with QUDT's settings
-        run: |
-          cat > pom.xml <<'POM'
-          <project xmlns="http://maven.apache.org/POM/4.0.0">
-            <modelVersion>4.0.0</modelVersion>
-            <groupId>org.linkedmodel</groupId>
-            <artifactId>vaem-format-trial</artifactId>
-            <version>0</version>
-            <build>
-              <plugins>
-                <plugin>
-                  <groupId>com.diffplug.spotless</groupId>
-                  <artifactId>spotless-maven-plugin</artifactId>
-                  <version>3.9.0</version>
-                  <configuration>
-                    <rdf>
-                      <includes><include>src/**/*.ttl</include></includes>
-                      <format>
-                        <failOnWarning>false</failOnWarning>
-                        <verify>true</verify>
-                        <turtleFormatterVersion>2.0.1</turtleFormatterVersion>
-                        <turtle>
-                          <preserveBlankNodeLabelsAndOrdering>false</preserveBlankNodeLabelsAndOrdering>
-                          <predicateOrder>rdf:type,owl:imports</predicateOrder>
-                          <firstPredicateInNewLine>true</firstPredicateInNewLine>
-                        </turtle>
-                      </format>
-                    </rdf>
-                    <markdown>
-                      <includes>
-                        <include>README.md</include>
-                        <include>CHANGELOG.md</include>
-                        <include>RELEASING.md</include>
-                      </includes>
-                      <flexmark />
-                    </markdown>
-                  </configuration>
-                </plugin>
-              </plugins>
-            </build>
-          </project>
-          POM
-
       - name: Run spotless:apply
-        run: mvn -B -ntp com.diffplug.spotless:spotless-maven-plugin:3.9.0:apply
+        run: mvn -B -ntp spotless:apply
 
       - name: Compare before and after
         run: |
