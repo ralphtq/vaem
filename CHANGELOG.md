@@ -17,8 +17,7 @@
   remain in the history.
 - Fixed spelling in the schema descriptions (registry, solely,
   organization, introduced).
-- Linkedmodels is now the owner and steward (`vaem:LinkedModels`), replacing
-  TopQuadrant.
+- Linkedmodels is now the owner and steward (`vaem:LinkedModels`).
 - VAEM 3.0: the acronym is expanded as "Vocabulary About Essential Metadata";
   the `withAttributionTo` shape no longer rejects text attributions; added
   `acronym`, `title`, `url`, `timestamp`, `aspectScope`, `disciplineScope`,
