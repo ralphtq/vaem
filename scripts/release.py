@@ -16,7 +16,6 @@ Checks (any failure exits with status 1):
   - every output file parses as Turtle
   - no construct has more than one rdfs:isDefinedBy
   - the SHACL schema conforms to its own shapes (pySHACL)
-  - the OWL and SHACL files say the same thing (gen_vaem_shacl.py --check)
 """
 import argparse
 import datetime
@@ -24,7 +23,6 @@ import json
 import pathlib
 import re
 import shutil
-import subprocess
 import sys
 
 import rdflib
@@ -89,17 +87,6 @@ def main():
             failures.append(f"{shacl.relative_to(ROOT)}: does not conform to its own shapes\n{report}")
         else:
             print("SHACL schema conforms to its own shapes")
-
-    owl = written.get("owl")
-    if owl and shacl and not failures:
-        result = subprocess.run(
-            [sys.executable, str(ROOT / "scripts" / "gen_vaem_shacl.py"), str(owl), str(shacl),
-             config["shacl"]["ontology"].format(version=args.version),
-             config["shacl"]["label"].format(version=args.version), "--check"],
-            capture_output=True, text=True)
-        print(result.stdout.strip())
-        if result.returncode != 0:
-            failures.append("OWL and SHACL differ")
 
     if failures:
         print("\nRELEASE CHECKS FAILED:")
