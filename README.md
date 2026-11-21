@@ -88,8 +88,12 @@ mvn spotless:apply
 
 Formatting does not change the triples, but it removes `#` comments from
 Turtle files. Review the result with `git diff`, and undo it with
-`git restore <files>` if needed. The Format trial workflow on GitHub runs
-the same formatter on each push and reports any file it would change.
+`git restore <files>` if needed.
+
+The **Format** workflow on GitHub runs `spotless:check` on every push and
+pull request, and fails if a file is not formatted. To format on GitHub
+instead, run it from the Actions tab with "apply" ticked: it formats the
+files, checks that no triples changed, and commits the result to the branch.
 
 ## Dependencies
 

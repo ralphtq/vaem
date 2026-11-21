@@ -32,7 +32,7 @@ schema does not conform to its own shapes.
 
 ## Snapshots
 
-Every push to `main` (and, during the trial, to `release-pipeline`) runs the
+Every push to `main` runs the
 **Snapshot** workflow. It builds `<version>-SNAPSHOT`, where `<version>` is the
 next release in `release.json`, runs all the checks, and replaces the rolling
 **snapshot** pre-release on GitHub: the `snapshot` tag moves to the pushed

@@ -1,0 +1,78 @@
+name: Format
+
+# Spotless formatting of the Turtle sources (src/**/*.ttl) and the Markdown
+# files, with QUDT's settings (pom.xml).
+#
+# On every push and pull request: spotless:check, which fails if a file is
+# not formatted.
+# Run by hand with "apply" ticked: spotless:apply, a check that no file's
+# triples changed, and a commit of the formatted files to the branch.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Format the files and commit them to this branch"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+
+      - name: Check formatting
+        if: ${{ !inputs.apply }}
+        run: mvn -B -ntp spotless:check
+
+      - uses: actions/setup-python@v5
+        if: ${{ inputs.apply }}
+        with:
+          python-version: "3.12"
+      - if: ${{ inputs.apply }}
+        run: pip install rdflib
+
+      - name: Apply formatting
+        if: ${{ inputs.apply }}
+        run: |
+          mkdir -p ../before && cp -r src ../before/src
+          mvn -B -ntp spotless:apply
+
+      - name: Check that no triples changed
+        if: ${{ inputs.apply }}
+        run: |
+          python - <<'PY'
+          import pathlib, sys, rdflib
+          from rdflib.compare import to_isomorphic
+          changed = []
+          for after in sorted(pathlib.Path("src").rglob("*.ttl")):
+              before = pathlib.Path("../before") / after
+              if to_isomorphic(rdflib.Graph().parse(before)) != to_isomorphic(rdflib.Graph().parse(after)):
+                  changed.append(str(after))
+          for f in changed:
+              print(f"::error title=Format::{f}: formatting changed the triples")
+          sys.exit(1 if changed else 0)
+          PY
+
+      - name: Commit the formatted files
+        if: ${{ inputs.apply }}
+        run: |
+          if git diff --quiet; then
+            echo "Already formatted; nothing to commit." >> "$GITHUB_STEP_SUMMARY"; exit 0
+          fi
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git commit -am "Apply Spotless formatting"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          git diff --stat HEAD~1 >> "$GITHUB_STEP_SUMMARY"

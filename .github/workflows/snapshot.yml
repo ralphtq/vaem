@@ -7,7 +7,7 @@ name: Snapshot
 # Pull requests are dry runs: build and check only, nothing is published.
 on:
   push:
-    branches: [main, release-pipeline]
+    branches: [main]
   pull_request:
   workflow_dispatch:
 
