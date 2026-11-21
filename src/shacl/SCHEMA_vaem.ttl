@@ -262,6 +262,15 @@ The property is also the parent of all dates so that queries can be made for any
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "date" .
 
+vaem:dateCreated
+  a rdf:Property ;
+  dcterms:description """
+The property "vaem:dateCreated" is intended for general use as the name implies.
+The range of the property is set as "vaem:dateUnion" so as to allow a value to have a number of forms from a year only to a full timestamp.
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
+  rdfs:label "date created" .
+
 vaem:disciplineScope
   a rdf:Property ;
   dcterms:description """
@@ -390,6 +399,15 @@ In VAEM, the property is used as a dimension for characterizing an ontology grap
   rdfs:label "has viewpoint" ;
   rdfs:subPropertyOf vaem:hasDimension .
 
+vaem:idString
+  a rdf:Property ;
+  dcterms:description """
+The property "vaem:idString" is intended for general use as a means to specify a unique reference to something.
+This is a data property with a string range and is a sub-property of "vaem:id".
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
+  rdfs:label "identifier" .
+
 vaem:intent
   a rdf:Property ;
   dcterms:description """
@@ -411,6 +429,15 @@ vaem:isMetadataFor
   dcterms:description "An annotation used to reference the graph that is being described with metadata."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "is metadata for" .
+
+vaem:lastUpdated
+  a rdf:Property ;
+  dcterms:description """
+The property "vaem:lastUpdated" is intended for general use as the name implies.
+The range of the property is set as "vaem:dateUnion" so as to allow a value to have a number of forms from a year only to a full timestamp.
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
+  rdfs:label "last updated" .
 
 vaem:latestPublishedVersion
   a rdf:Property ;
@@ -486,6 +513,15 @@ vaem:owner
   a rdf:Property ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "owner" .
+
+vaem:owningParty
+  a rdf:Property ;
+  dcterms:description """
+The property "vaem:owningParty" is used to refer to a "Party" that has the IP rights
+on the graph.
+"""^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
+  rdfs:label "owning party" .
 
 vaem:previousPublishedVersion
   a rdf:Property ;
@@ -1097,7 +1133,6 @@ vaem:ShapesGraph
 
 vaem:StringOrLangString
   a rdf:List ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdf:first [
     sh:datatype xsd:string ;
   ] ;
@@ -1109,11 +1144,11 @@ An <em>rdf:List</em> that can be used in property constraints as value for <em>s
 that all values of a property must be either <em>xsd:string</em>, or <em>rdf:langString</em>
 (in that order of preference).
 """^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "string or langString" .
 
 vaem:StringOrLangStringOrHTML
   a rdf:List ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdf:first [
     sh:datatype xsd:string ;
   ] ;
@@ -1127,11 +1162,11 @@ An <em>rdf:List</em> that can be used in property constraints as value for <em>s
 that all values of a property must be either <em>xsd:string</em>, <em>rdf:langString</em> or <em>rdf:HTML</em>
 (in that order of preference).
 """^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "string or langString or HTML" .
 
 vaem:StringOrLangStringOrHTMLorAttribution
   a rdf:List ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdf:first [
     sh:datatype xsd:string ;
   ] ;
@@ -1147,11 +1182,11 @@ An <em>rdf:List</em> that can be used in property constraints as value for <em>s
 that all values of a property must be either <em>xsd:string</em>, <em>rdf:langString</em> or <em>rdf:HTML</em>
 (in that order of preference).
 """^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "string or langString or HTML" .
 
 vaem:StringOrLangStringOrHTMLorParty
   a rdf:List ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdf:first [
     sh:datatype xsd:string ;
   ] ;
@@ -1167,6 +1202,7 @@ An <em>rdf:List</em> that can be used in property constraints as value for <em>s
 that all values of a property must be either <em>xsd:string</em>, <em>rdf:langString</em> or <em>rdf:HTML</em>
 (in that order of preference).
 """^^rdf:HTML ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "string or langString or HTML" .
 
 vaem:SurrogateGraph
@@ -1212,41 +1248,5 @@ Typically this is based on SKOS.
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "Vocabulary Graph" ;
   vaem:filePrefix "VOCAB" .
-
-vaem:dateCreated
-  a rdf:Property ;
-  dcterms:description """
-The property "vaem:dateCreated" is intended for general use as the name implies.
-The range of the property is set as "vaem:dateUnion" so as to allow a value to have a number of forms from a year only to a full timestamp.
-"""^^rdf:HTML ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
-  rdfs:label "date created" .
-
-vaem:idString
-  a rdf:Property ;
-  dcterms:description """
-The property "vaem:idString" is intended for general use as a means to specify a unique reference to something.
-This is a data property with a string range and is a sub-property of "vaem:id".
-"""^^rdf:HTML ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
-  rdfs:label "identifier" .
-
-vaem:lastUpdated
-  a rdf:Property ;
-  dcterms:description """
-The property "vaem:lastUpdated" is intended for general use as the name implies.
-The range of the property is set as "vaem:dateUnion" so as to allow a value to have a number of forms from a year only to a full timestamp.
-"""^^rdf:HTML ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
-  rdfs:label "last updated" .
-
-vaem:owningParty
-  a rdf:Property ;
-  dcterms:description """
-The property "vaem:owningParty" is used to refer to a "Party" that has the IP rights
-on the graph.
-"""^^rdf:HTML ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
-  rdfs:label "owning party" .
 
 
