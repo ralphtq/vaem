@@ -205,9 +205,14 @@ The property is an "rdf:Property" to allow both scalar and object values.
 
 vaem:applicableDomain
   a rdf:Property ;
-  dcterms:description "The property \"vaem:applicableDomain\" is used to specify how  a set of resources, or an individual resource is grounded in a domain, that is, a subject area of interest. Examples of domains are \"enterprise\", \"process\", \"organization\" and \"system\". In VAEM, the property is used as a dimension for characterizing an ontology graph. The property is an \"rdf:Property\" to allow both scalar and object values"^^rdf:HTML ;
+  dcterms:description """
+The property "vaem:applicableDomain" is used to specify how a set of resources, or an individual resource is grounded in a domain, that is, a subject area of interest.
+Examples of domains are "enterprise", "process", "organization" and "system".
+In VAEM, the property is used as a dimension for characterizing an ontology graph.
+The property is an "rdf:Property" to allow both scalar and object values.
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
-  rdfs:label "apllicable domain" ;
+  rdfs:label "applicable domain" ;
   rdfs:subPropertyOf vaem:hasDimension .
 
 vaem:aspectScope
@@ -221,13 +226,20 @@ The property "vaem:aspectScope" relates a graph to an aspect (a "vaem:Aspect") t
 
 vaem:comment
   a rdf:Property ;
-  dcterms:description "An annotation property that can be freely used on any kind of resource. The range of the property is \"xsd:string\""^^rdf:HTML ;
+  dcterms:description """
+An annotation property that can be freely used on any kind of resource.
+The range of the property is "xsd:string".
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "comment" .
 
 vaem:date
   a rdf:Property ;
-  dcterms:description "The property \"vaem:date\" is intended for general use as the name implies.  The range of the property is set as \"vaem:dateUnion\" so as to allow a value to have a number of forms from a  year only to a full timestamp. The property is also the parent of all dates so that queries can be made for any date on an ontology"^^rdf:HTML ;
+  dcterms:description """
+The property "vaem:date" is intended for general use as the name implies.
+The range of the property is set as "vaem:dateUnion" so as to allow a value to have a number of forms from a year only to a full timestamp.
+The property is also the parent of all dates so that queries can be made for any date on an ontology.
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "date" .
 
@@ -251,7 +263,10 @@ The property "vaem:domainScope" relates a graph to a domain (a "vaem:Domain") th
 
 vaem:filePrefix
   a rdf:Property ;
-  dcterms:description "The property \"vaem:filePrefix\" is for specifying a preferred file prefix for a graph. For example a schema graph may be given the file prefix \"SCHEMA\" followed by an underscore \"_\"."^^rdf:HTML ;
+  dcterms:description """
+The property "vaem:filePrefix" is for specifying a preferred file prefix for a graph.
+For example a schema graph may be given the file prefix "SCHEMA" followed by an underscore "_".
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "file prefix" .
 
@@ -308,19 +323,25 @@ vaem:hasGraphMetadata
 
 vaem:hasGraphRole
   a rdf:Property ;
-  dcterms:description "The property \"lms:hasGraphRole\" is used to characterize how a resource participates in an ontology set.  The property is used to specify the role that a graph plays, for example, an ontology graph can be a schema, vocabulary, dataset, script, or ruleset"^^rdf:HTML ;
+  dcterms:description """
+The property "vaem:hasGraphRole" is used to characterize how a resource participates in an ontology set.
+The property is used to specify the role that a graph plays, for example, an ontology graph can be a schema, vocabulary, dataset, script, or ruleset.
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "has graph role" .
 
 vaem:hasIdentifier
   a rdf:Property ;
-  dcterms:description "The property \"vaemhasIdentifier\" is intended for general use as a means to specifiy a unique reference to something. This is an object property that is a sub-property of \"vame:id\""^^rdf:HTML ;
+  dcterms:description """
+The property "vaem:hasIdentifier" is intended for general use as a means to specify a unique reference to something.
+This is an object property that is a sub-property of "vaem:id".
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "has identifier" .
 
 vaem:hasLicenseType
   a rdf:Property ;
-  dcterms:description "The property \"vaem:hasLicenseType\" points to an entry in the VOAG ontology for licenses"^^rdf:HTML ;
+  dcterms:description "The property \"vaem:hasLicenseType\" points to an entry in the VOAG ontology for licenses."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "has license type"@en-US .
 
@@ -361,7 +382,7 @@ This typically expresses one or more desired outcomes.
 
 vaem:isElaboratedIn
   a rdf:Property ;
-  dcterms:description "An annotation used to reference a graph that elaborates (adds properties and axioms to) a resource"^^rdf:HTML ;
+  dcterms:description "An annotation used to reference a graph that elaborates (adds properties and axioms to) a resource."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "is elaborated in" ;
   rdfs:subPropertyOf rdfs:isDefinedBy .
@@ -455,7 +476,10 @@ vaem:previousPublishedVersion
 
 vaem:publishedDate
   a rdf:Property ;
-  dcterms:description "The property \"vaem:publishedDate\" specifies the date and time that the ontology was published. This is distinct from a release date in the sense that \"release\" may not imply being published."^^rdf:HTML ;
+  dcterms:description """
+The property "vaem:publishedDate" specifies the date and time that the ontology was published.
+This is distinct from a release date in the sense that "release" may not imply being published.
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "published date" ;
   rdfs:seeAlso vaem:releaseDate ;
@@ -463,7 +487,7 @@ vaem:publishedDate
 
 vaem:rationale
   a rdf:Property ;
-  dcterms:description "A description of a justification for some other assertion or value"^^rdf:HTML ;
+  dcterms:description "A description of a justification for some other assertion or value."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "rationale" .
 
@@ -477,7 +501,10 @@ The property "vaem:rdfxmlFileURL" is used to provide a link to the location of t
 
 vaem:releaseDate
   a rdf:Property ;
-  dcterms:description "The property \"vaem:releaseDate\" specifies the date and time that the ontology was released. This is distinct from a publication date in the sense that \"release\" may not imply being published."^^rdf:HTML ;
+  dcterms:description """
+The property "vaem:releaseDate" specifies the date and time that the ontology was released.
+This is distinct from a publication date in the sense that "release" may not imply being published.
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "release date" ;
   rdfs:seeAlso vaem:publishedDate ;
@@ -491,7 +518,12 @@ vaem:revision
 
 vaem:specificity
   a rdf:Property ;
-  dcterms:description "The property \"vaem:specificity\" is intended to specify the level of detail of an ontology.  The values that can be set for this property are restriced to an integer from 1 to 5. An ontology at level 1 has concepts of more general applicability than one at level 5. By having graphs at different levels of specificity it is possible to support greater modularity for selective imports"^^rdf:HTML ;
+  dcterms:description """
+The property "vaem:specificity" is intended to specify the level of detail of an ontology.
+The values that can be set for this property are restricted to an integer from 1 to 5.
+An ontology at level 1 has concepts of more general applicability than one at level 5.
+By having graphs at different levels of specificity it is possible to support greater modularity for selective imports.
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "specificity" .
 
@@ -514,13 +546,13 @@ The property "vaem:title" is intended for general use as a title for a resource.
 
 vaem:todo
   a rdf:Property ;
-  dcterms:description "As it name implies, a way to attach an annotation about a \"todo\" task"^^rdf:HTML ;
+  dcterms:description "As it name implies, a way to attach an annotation about a \"todo\" task."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "todo" .
 
 vaem:turtleFileURL
   a rdf:Property ;
-  dcterms:description "The property \"vaem:turtleFileURL\" is used to provide a link to the location of the ontology's turtle file"^^rdf:HTML ;
+  dcterms:description "The property \"vaem:turtleFileURL\" is used to provide a link to the location of the ontology's turtle file."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "turtle file URL" .
 
@@ -534,13 +566,13 @@ The property "vaem:url" is intended for general use as the name implies. Its val
 
 vaem:urlForHTML
   a rdf:Property ;
-  dcterms:description "Provides a link to the location of the ontology's HTML file" ;
+  dcterms:description "Provides a link to the location of the ontology's HTML file." ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "URL for HTML" .
 
 vaem:usesNonImportedResource
   a rdf:Property ;
-  dcterms:description "The property \"vaem:usesNonImportedResource\" is used to express dependencies on resources from graphs that are not imported"^^rdf:HTML ;
+  dcterms:description "The property \"vaem:usesNonImportedResource\" is used to express dependencies on resources from graphs that are not imported."^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "uses non-imported resource" .
 
@@ -711,6 +743,7 @@ VAEM makes use of some properties from the DC terms vocabulary and "voag:Attribu
   vaem:usesNonImportedResource dcterms:abstract ;
   vaem:usesNonImportedResource dcterms:author ;
   vaem:usesNonImportedResource dcterms:created ;
+  vaem:usesNonImportedResource dcterms:description ;
   vaem:usesNonImportedResource dcterms:modified ;
   vaem:usesNonImportedResource dcterms:title ;
   vaem:usesNonImportedResource voag:Attribution ;
@@ -1117,26 +1150,38 @@ vaem:UnspecifiedGraphRole
 
 vaem:VocabularyGraph
   a vaem:GraphRole ;
-  dcterms:description "A graph that is a controlled set of instances that define a terminology. Typically this is based on SKOS."^^rdf:HTML ;
+  dcterms:description """
+A graph that is a controlled set of instances that define a terminology.
+Typically this is based on SKOS.
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "Vocabulary Graph" ;
   vaem:filePrefix "VOCAB" .
 
 vaem:dateCreated
   a rdf:Property ;
-  dcterms:description "The property \"vaem:dateCreated\" is intended for general use as the name implies.  The range of the property is set as \"vaem:dateUnion\" so as to allow a value to have a number of forms from a  year only to a full timestamp"^^rdf:HTML ;
+  dcterms:description """
+The property "vaem:dateCreated" is intended for general use as the name implies.
+The range of the property is set as "vaem:dateUnion" so as to allow a value to have a number of forms from a year only to a full timestamp.
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "date created" .
 
 vaem:idString
   a rdf:Property ;
-  dcterms:description "The property \"vaem:idString\" is intended for general use as a means to specifiy a unique reference to something. This is a data property with a string range and is a sub-property of \"vame:id\""^^rdf:HTML ;
+  dcterms:description """
+The property "vaem:idString" is intended for general use as a means to specify a unique reference to something.
+This is a data property with a string range and is a sub-property of "vaem:id".
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "identifier" .
 
 vaem:lastUpdated
   a rdf:Property ;
-  dcterms:description "The property \"vaem:lastUpdated\" is intended for general use as the name implies.  The range of the property is set as \"vaem:dateUnion\" so as to allow a value to have a number of forms from a  year only to a full timestamp"^^rdf:HTML ;
+  dcterms:description """
+The property "vaem:lastUpdated" is intended for general use as the name implies.
+The range of the property is set as "vaem:dateUnion" so as to allow a value to have a number of forms from a year only to a full timestamp.
+"""^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "last updated" .
 
