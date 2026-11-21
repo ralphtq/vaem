@@ -1,11 +1,11 @@
 ---
 name: ontology-design
-description: Design rules for the SHACL/RDF graphs in VAEM, DEONA, NRMDOC and TROM — property shape naming, rdfs:isDefinedBy on every resource with vaem:isElaboratedIn for additions to other ontologies, one GMD_ graph metadata resource per graph, multi-line dcterms:description strings, and vaem:usesNonImportedResource for every elaborated resource from another namespace. Use when adding, renaming, reviewing or fixing classes, node shapes, property shapes or graph metadata in src/.
+description: Design rules for the SHACL/RDF graphs — property shape naming, rdfs:isDefinedBy on every resource with vaem:isElaboratedIn for additions to other ontologies, one GMD_ graph metadata resource per graph, multi-line dcterms:description strings, and vaem:usesNonImportedResource for every elaborated resource from another namespace. Use when adding, renaming, reviewing or fixing classes, node shapes, property shapes or graph metadata in src/.
 ---
 
 # Ontology design rules
 
-These rules apply to every graph in `src/` of VAEM, DEONA, NRMDOC and TROM. Apply
+These rules apply to every graph in `src/`. Apply
 them when you add or change resources, and check them when you review a change.
 The files in `src/` carry release tokens (`$$VERSION$$` and others; see
 `RELEASING.md`): write graph IRIs with the token, never with a version number.
@@ -19,8 +19,8 @@ The files in `src/` carry release tokens (`$$VERSION$$` and others; see
 - Graph IRIs: `http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem` and
   `http://www.linkedmodel.org/$$VERSION$$/schema/vaem`; graph metadata
   `vaem:GMD_VAEM`.
-- The examples below come from DEONA, which uses the same rules; apply them to
-  `vaem:` resources in the same way.
+- The examples below use VAEM resources, and VOAG's `voag:Attribution` where a
+  resource from another namespace is needed.
 
 ## Rule 1: property shape names
 
@@ -36,46 +36,46 @@ where `<NodeShape>` is the local name of the node shape that refers to it with
 `sh:path`.
 
 ```turtle
-deona:Compliance
-  a trom:TraitClass, sh:NodeShape ;
-  sh:property deona:Compliance-regulatedParty .
+vaem:GraphMetaData
+  a rdfs:Class, sh:NodeShape ;
+  sh:property vaem:GraphMetaData-graphTitle .
 
-deona:Compliance-regulatedParty
+vaem:GraphMetaData-graphTitle
   a sh:PropertyShape ;
-  rdfs:isDefinedBy <https://w3id.org/deona/$$VERSION$$/schema> ;
-  sh:path deona:regulatedParty ;
-  sh:class deona:RegulatedParty .
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
+  sh:maxCount 1 ;
+  sh:or vaem:StringOrLangString ;
+  sh:path vaem:graphTitle .
 ```
 
-Wrong: `deona:RegulatedPartyShape`, `deona:Compliance_regulatedParty`, or an
-inline `sh:property [ sh:path deona:regulatedParty ]`.
+Wrong: `vaem:GraphTitleShape`, `vaem:GraphMetaData_graphTitle`, or an inline
+`sh:property [ sh:path vaem:graphTitle ]`.
 
 When renaming a property shape, rename every `sh:property` that points at it,
-in this repository and in the repositories that use this one (DEONA uses NRMDOC
-and TROM).
+in both sources (`src/shacl/` and `src/owl/`) and in the ontologies that use
+VAEM (VOAG, DTYPE, DEONA, NRMDOC, TROM and others).
 
 ### Current practice, not yet decided
 
 The repositories handle these cases as described. Follow current practice, and
 ask the maintainer before applying a different reading:
 
-- **Inverse paths** (`sh:path [ sh:inversePath p ]`): `<NodeShape>-<p>-inverse`,
-  e.g. `deona:PermissionKind-subsumingNormKind-inverse`.
+- **A property from another namespace:** VAEM names the shape with the
+  property's local name only, e.g. `vaem:Aspect-broader` for
+  `sh:path skos:broader`, and `vaem:GraphMetaData-description` for
+  `sh:path dcterms:description`.
+- **Inverse paths** (`sh:path [ sh:inversePath p ]`): `<NodeShape>-<p>-inverse`.
+  VAEM has none at present.
 - **A shape shared by several node shapes:** named after the most general one
-  (the superclass), e.g. `nrmdoc:DocumentPart-fullText`, used by `Article` and
-  others.
-- **A property from another namespace:** prefix and local name joined by `_`,
-  e.g. `deona:Norm-skos_broader` for `sh:path skos:broader`.
-- **Property shapes no node shape uses:** some exist (for example
-  `trom:Identifiable-title`); whether each must be attached to the node shape in
-  its name is open.
+  (the superclass). VAEM has none at present.
+- **Property shapes no node shape uses:** whether each must be attached to the
+  node shape in its name is open. VAEM has none at present.
 
 ## Rule 2: rdfs:isDefinedBy on every resource; vaem:isElaboratedIn outside the graph's namespace
 
 For every IRI that is the subject of triples in a graph:
 
-- **In the graph's own namespace** (the namespace of its prefix: `vaem:`,
-  `deona:`, `deona.rc:`, `nrmdoc:`, `trom:`): exactly one `rdfs:isDefinedBy`, pointing
+- **In the graph's own namespace** (here the namespace of `vaem:`): exactly one `rdfs:isDefinedBy`, pointing
   at the graph's ontology IRI. This covers classes, node shapes, property
   shapes, properties, property groups, RDF lists, individuals and the graph
   metadata.
@@ -83,22 +83,22 @@ For every IRI that is the subject of triples in a graph:
   graph adds to): exactly one `rdfs:isDefinedBy`, pointing at the
   **unversioned** graph IRI of the ontology whose namespace it is in (no
   `$$…$$` token and no version number, e.g.
-  `<https://w3id.org/nrmdoc/schema>`); **and** a `vaem:isElaboratedIn`
+  `<http://voag.linkedmodel.org/schema/voag>` for a `voag:` resource); **and** a
+  `vaem:isElaboratedIn`
   pointing at the containing graph's ontology IRI.
 
 ```turtle
-# In DEONA's schema graph: a DEONA resource
-deona:Paragraph-regulatedParty
+# In VAEM's SHACL schema graph: a VAEM resource
+vaem:GraphMetaData-graphTitle
   a sh:PropertyShape ;
-  rdfs:isDefinedBy <https://w3id.org/deona/$$VERSION$$/schema> ;
-  sh:path deona:regulatedParty .
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
+  sh:path vaem:graphTitle .
 
-# In DEONA's schema graph: additions to an NRMDOC resource
-nrmdoc:Paragraph
-  a sh:NodeShape ;
-  rdfs:isDefinedBy <https://w3id.org/nrmdoc/schema> ;
-  sh:property deona:Paragraph-regulatedParty ;
-  vaem:isElaboratedIn <https://w3id.org/deona/$$VERSION$$/schema> .
+# In VAEM's SHACL schema graph: additions to a VOAG resource
+voag:Attribution
+  a rdfs:Class, sh:NodeShape ;
+  rdfs:isDefinedBy <http://voag.linkedmodel.org/schema/voag> ;
+  vaem:isElaboratedIn <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> .
 ```
 
 - Blank nodes are not resources in this sense and need neither.
@@ -106,16 +106,8 @@ nrmdoc:Paragraph
 - `scripts/release.py` fails when a resource has more than one
   `rdfs:isDefinedBy` in a file, so add it once per resource.
 - The unversioned IRI is the "latest" form of the other ontology's graph
-  IRI (`https://w3id.org/nrmdoc/schema`, `https://w3id.org/trom/schema`); the
-  ontology's own graph uses the versioned form. No entry in `release.json`
-  is needed for it.
-
-Open case: the DEONA taxonomy shares the `deona:` namespace with the DEONA
-schema, and adds to `deona:Norm`, which the schema defines. Read as "in the
-graph's namespace", it would get the taxonomy's `rdfs:isDefinedBy`, a second
-one; read as "defined by another graph", it would get the schema's
-`rdfs:isDefinedBy` plus `vaem:isElaboratedIn` for the taxonomy. Today it has
-only `vaem:isElaboratedIn`. Ask the maintainer before changing it.
+  IRI (for VOAG, `http://voag.linkedmodel.org/schema/voag`); the ontology's own
+  graph uses the versioned form. No entry in `release.json` is needed for it.
 
 ## Rule 3: one GMD_ graph metadata resource per graph
 
@@ -128,28 +120,22 @@ Every graph has exactly one `vaem:GraphMetaData` resource:
 
 | Graph | Prefix | Graph metadata |
 |---|---|---|
-| TROM schema | `trom:` | `trom:GMD_TROM` |
-| NRMDOC schema | `nrmdoc:` | `nrmdoc:GMD_NRMDOC` |
-| DEONA schema | `deona:` | `deona:GMD_DEONA` |
+| VAEM schema (SHACL and OWL) | `vaem:` | `vaem:GMD_VAEM` |
 
 ```turtle
-<https://w3id.org/trom/$$VERSION$$/schema>
+<http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem>
   a owl:Ontology ;
-  vaem:hasGraphMetadata trom:GMD_TROM .
+  vaem:hasGraphMetadata vaem:GMD_VAEM .
 
-trom:GMD_TROM
+vaem:GMD_VAEM
   a vaem:GraphMetaData ;
-  rdfs:isDefinedBy <https://w3id.org/trom/$$VERSION$$/schema> ;
-  vaem:isMetadataFor <https://w3id.org/trom/$$VERSION$$/schema> ;
-  vaem:namespace "https://w3id.org/trom/" ;
-  vaem:namespacePrefix "trom" ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
+  vaem:hasGraphRole vaem:SchemaGraph ;
+  vaem:isMetadataFor <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
+  vaem:namespacePrefix "vaem" ;
   vaem:revision "$$VERSION$$" ;
   vaem:releaseDate "$$RELEASE_DATE$$"^^xsd:date .
 ```
-
-Open case: the DEONA taxonomy shares the `deona:` prefix with the DEONA
-schema, so the rule gives both graphs `deona:GMD_DEONA`. Ask the maintainer how
-to name the taxonomies' graph metadata before adding it.
 
 ## Rule 4: multi-sentence descriptions are multi-line strings
 
@@ -158,17 +144,17 @@ multi-line string: triple quotes, with a line break inside the literal (start
 each sentence on a new line). A single sentence stays an ordinary string.
 
 ```turtle
-deona:Grant
+vaem:Domain
   dcterms:description """
-A Grant is a kind of obligation.
-An example of its use can be found when modeling policies.
-"""@en ;
+A domain is a subject area of interest.
+Examples of domains are "chemistry", "physics", "material science", "mechanics" and "medicine".
+"""^^rdf:HTML .
 ```
 
 Wrong:
 
 ```turtle
-  dcterms:description "A Grant is a kind of obligation. An example of its use can be found when modeling policies."@en ;
+  dcterms:description "A domain is a subject area of interest. Examples of domains are \"chemistry\", \"physics\", \"material science\", \"mechanics\" and \"medicine\"."^^rdf:HTML ;
 ```
 
 The line break inside the literal is what keeps the string multi-line:
@@ -184,16 +170,15 @@ marked with `vaem:isElaboratedIn` under rule 2) is listed in the graph's
 `GMD_` resource (rule 3) with `vaem:usesNonImportedResource`.
 
 ```turtle
-# In DEONA's schema graph
-nrmdoc:Paragraph
-  a sh:NodeShape ;
-  rdfs:isDefinedBy <https://w3id.org/nrmdoc/schema> ;
-  sh:property deona:Paragraph-regulatedParty ;
-  vaem:isElaboratedIn <https://w3id.org/deona/$$VERSION$$/schema> .
+# In VAEM's SHACL schema graph
+voag:Attribution
+  a rdfs:Class, sh:NodeShape ;
+  rdfs:isDefinedBy <http://voag.linkedmodel.org/schema/voag> ;
+  vaem:isElaboratedIn <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> .
 
-deona:GMD_DEONA
+vaem:GMD_VAEM
   a vaem:GraphMetaData ;
-  vaem:usesNonImportedResource nrmdoc:Paragraph .
+  vaem:usesNonImportedResource voag:Attribution .
 ```
 
 When you add an elaboration, add its `vaem:usesNonImportedResource` in the
@@ -204,5 +189,5 @@ entry too.
 
 Before committing, run the release build (`python3 scripts/release.py
 --version <next>-SNAPSHOT --out target/check`) and look at each changed
-resource against the three rules. When renaming, search the other two
-repositories for the old name.
+resource against the five rules. When renaming, search the ontologies that use
+VAEM for the old name.
