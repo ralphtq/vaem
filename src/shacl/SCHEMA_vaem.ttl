@@ -1064,6 +1064,7 @@ vaem:ShapesGraph
 
 vaem:StringOrLangString
   a rdf:List ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdf:first [
     sh:datatype xsd:string ;
   ] ;
@@ -1079,6 +1080,7 @@ that all values of a property must be either <em>xsd:string</em>, or <em>rdf:lan
 
 vaem:StringOrLangStringOrHTML
   a rdf:List ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdf:first [
     sh:datatype xsd:string ;
   ] ;
@@ -1096,6 +1098,7 @@ that all values of a property must be either <em>xsd:string</em>, <em>rdf:langSt
 
 vaem:StringOrLangStringOrHTMLorAttribution
   a rdf:List ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdf:first [
     sh:datatype xsd:string ;
   ] ;
@@ -1115,6 +1118,7 @@ that all values of a property must be either <em>xsd:string</em>, <em>rdf:langSt
 
 vaem:StringOrLangStringOrHTMLorParty
   a rdf:List ;
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdf:first [
     sh:datatype xsd:string ;
   ] ;
@@ -1174,15 +1178,19 @@ vaem:VocabularyGraph
   vaem:filePrefix "VOCAB" .
 
 vaem:dateCreated
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   dcterms:description "The property \"vaem:dateCreated\" is intended for general use as the name implies.  The range of the property is set as \"vaem:dateUnion\" so as to allow a value to have a number of forms from a  year only to a full timestamp"^^rdf:HTML .
 
 vaem:idString
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   dcterms:description "The property \"vaem:idString\" is intended for general use as a means to specifiy a unique reference to something. This is a data property with a string range and is a sub-property of \"vame:id\""^^rdf:HTML .
 
 vaem:lastUpdated
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   dcterms:description "The property \"vaem:lastUpdated\" is intended for general use as the name implies.  The range of the property is set as \"vaem:dateUnion\" so as to allow a value to have a number of forms from a  year only to a full timestamp"^^rdf:HTML .
 
 vaem:owningParty
+  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   dcterms:description """
 The property "vaem:owningParty" is used to refer to a "Party" that has the IP rights
 on the graph.
