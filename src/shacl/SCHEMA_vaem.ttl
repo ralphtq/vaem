@@ -183,7 +183,8 @@ but the idea of describing a subject area of interest from distinct viewpoints i
 
 voag:Attribution
   a rdfs:Class, sh:NodeShape ;
-  rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> .
+  rdfs:isDefinedBy <http://voag.linkedmodel.org/schema/voag> ;
+  vaem:isElaboratedIn <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> .
 
 dash:reifiableBy
   a rdf:Property ;
