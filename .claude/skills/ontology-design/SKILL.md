@@ -163,6 +163,21 @@ line break inside can come back as an ordinary one-line string. The same
 applies whatever the literal's language tag or datatype (`@en`, `rdf:HTML`):
 keep the existing tag or datatype when converting.
 
+Inside a triple-quoted string, write a double quote as a plain `"`, never as
+`\"`: Turtle needs the escape only in an ordinary one-line string. When you
+convert a one-line string to a multi-line one, remove the backslashes. The only
+exceptions are a `"` immediately before the closing `"""` and three `"` in a
+row, which still need `\"`.
+
+```turtle
+  dcterms:description """
+The property "vaem:owningParty" is used to refer to a "Party" that has the IP rights
+on the graph.
+"""^^rdf:HTML ;
+```
+
+Wrong, inside a triple-quoted string: `The property \"vaem:owningParty\" is used to refer to a \"Party\"`.
+
 ## Rule 5: list elaborated resources from other namespaces in the graph metadata
 
 Every resource from another namespace that the graph elaborates (adds to,
