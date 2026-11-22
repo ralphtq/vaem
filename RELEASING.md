@@ -8,7 +8,6 @@ a release.
 |----------------------|-----------------------------------------------------------------------|
 | `$$VERSION$$`        | the release version, e.g. `3.0.0`                                     |
 | `$$RELEASE_DATE$$`   | the release date, `YYYY-MM-DD`                                        |
-| `$$<NAME>_VERSION$$` | the version of an imported ontology, from `imports` in `release.json` |
 
 The version appears in every `rdfs:isDefinedBy`, the ontology IRIs,
 `owl:versionIRI`, `vaem:isMetadataFor`, `vaem:revision`, `vaem:turtleFileURL`

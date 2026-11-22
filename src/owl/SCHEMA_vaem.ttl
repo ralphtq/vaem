@@ -70,7 +70,7 @@ For specification of graph governance the vocabulary "VOAG" may be used.
 """^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> ;
   rdfs:label "Graph Metadata" ;
-  rdfs:seeAlso <http://voag.linkedmodel.org/vocab/voag> ;
+  rdfs:seeAlso <https://w3id.org/voag/schema> ;
   rdfs:subClassOf vaem:ElementalConstruct ;
   sh:property vaem:GraphMetaData-description ;
   sh:property vaem:GraphMetaData-graphName ;
@@ -141,7 +141,7 @@ but the idea of describing a subject area of interest from distinct viewpoints i
 
 voag:Attribution
   a rdfs:Class, sh:NodeShape ;
-  rdfs:isDefinedBy <http://voag.linkedmodel.org/schema/voag> ;
+  rdfs:isDefinedBy <https://w3id.org/voag/schema> ;
   vaem:isElaboratedIn <http://www.linkedmodel.org/$$VERSION$$/schema/vaem> .
 
 vaem:Discipline

@@ -9,12 +9,13 @@ under dist/, then checks them. Nothing outside dist/ is written.
 Tokens:
   $$VERSION$$       the release version, e.g. 3.0.0
   $$RELEASE_DATE$$  the release date, YYYY-MM-DD
-  $$<NAME>_VERSION$$ the version of an imported ontology, from "imports" in release.json
 
 Checks (any failure exits with status 1):
   - no $$TOKEN$$ is left in the output
   - every output file parses as Turtle
   - no construct has more than one rdfs:isDefinedBy
+  - no owl:imports names a versioned graph IRI: an import names the latest
+    (unversioned) IRI, e.g. http://www.linkedmodel.org/schema/vaem
   - the SHACL schema conforms to its own shapes (pySHACL)
 """
 import argparse
@@ -26,10 +27,11 @@ import shutil
 import sys
 
 import rdflib
-from rdflib import RDFS
+from rdflib import OWL, RDFS
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TOKEN = re.compile(r"\$\$[A-Z_]+\$\$")
+VERSIONED = re.compile(r"/\d+\.\d+(\.\d+)?(-SNAPSHOT)?/")
 
 
 def main():
@@ -45,8 +47,6 @@ def main():
     datetime.date.fromisoformat(args.date)
 
     values = {"VERSION": args.version, "RELEASE_DATE": args.date}
-    for name, version in config.get("imports", {}).items():
-        values[f"{name.upper()}_VERSION"] = version
 
     out = ROOT / args.out
     if out.exists():
@@ -72,6 +72,10 @@ def main():
         except Exception as exc:  # noqa: BLE001
             failures.append(f"{rel}: does not parse: {exc}")
             continue
+        versioned = sorted(str(o) for o in graph.objects(None, OWL.imports) if VERSIONED.search(str(o)))
+        if versioned:
+            failures.append(f"{rel}: owl:imports names a versioned graph IRI (import the latest, "
+                            f"unversioned IRI): {', '.join(versioned)}")
         multi = [s for s in set(graph.subjects(RDFS.isDefinedBy, None))
                  if len(set(graph.objects(s, RDFS.isDefinedBy))) > 1]
         if multi:

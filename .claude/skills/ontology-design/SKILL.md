@@ -1,6 +1,6 @@
 ---
 name: ontology-design
-description: Design rules for the SHACL/RDF graphs — property shape naming, rdfs:isDefinedBy on every resource with vaem:isElaboratedIn for additions to other ontologies, one GMD_ graph metadata resource per graph, multi-line dcterms:description strings, and vaem:usesNonImportedResource for every elaborated resource from another namespace. Use when adding, renaming, reviewing or fixing classes, node shapes, property shapes or graph metadata in src/.
+description: Design rules for the SHACL/RDF graphs — property shape naming, rdfs:isDefinedBy on every resource with vaem:isElaboratedIn for additions to other ontologies, one GMD_ graph metadata resource per graph, multi-line dcterms:description strings, and vaem:usesNonImportedResource for every elaborated resource from another namespace, and owl:imports of unversioned graph IRIs. Use when adding, renaming, reviewing or fixing classes, node shapes, property shapes or graph metadata in src/.
 ---
 
 # Ontology design rules
@@ -83,7 +83,7 @@ For every IRI that is the subject of triples in a graph:
   graph adds to): exactly one `rdfs:isDefinedBy`, pointing at the
   **unversioned** graph IRI of the ontology whose namespace it is in (no
   `$$…$$` token and no version number, e.g.
-  `<http://voag.linkedmodel.org/schema/voag>` for a `voag:` resource); **and** a
+  `<https://w3id.org/voag/schema>` for a `voag:` resource); **and** a
   `vaem:isElaboratedIn`
   pointing at the containing graph's ontology IRI.
 
@@ -97,7 +97,7 @@ vaem:GraphMetaData-graphTitle
 # In VAEM's SHACL schema graph: additions to a VOAG resource
 voag:Attribution
   a rdfs:Class, sh:NodeShape ;
-  rdfs:isDefinedBy <http://voag.linkedmodel.org/schema/voag> ;
+  rdfs:isDefinedBy <https://w3id.org/voag/schema> ;
   vaem:isElaboratedIn <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> .
 ```
 
@@ -106,7 +106,7 @@ voag:Attribution
 - `scripts/release.py` fails when a resource has more than one
   `rdfs:isDefinedBy` in a file, so add it once per resource.
 - The unversioned IRI is the "latest" form of the other ontology's graph
-  IRI (for VOAG, `http://voag.linkedmodel.org/schema/voag`); the ontology's own
+  IRI (for VOAG, `https://w3id.org/voag/schema`); the ontology's own
   graph uses the versioned form. No entry in `release.json` is needed for it.
 
 ## Rule 3: one GMD_ graph metadata resource per graph
@@ -188,7 +188,7 @@ marked with `vaem:isElaboratedIn` under rule 2) is listed in the graph's
 # In VAEM's SHACL schema graph
 voag:Attribution
   a rdfs:Class, sh:NodeShape ;
-  rdfs:isDefinedBy <http://voag.linkedmodel.org/schema/voag> ;
+  rdfs:isDefinedBy <https://w3id.org/voag/schema> ;
   vaem:isElaboratedIn <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> .
 
 vaem:GMD_VAEM
@@ -199,6 +199,30 @@ vaem:GMD_VAEM
 When you add an elaboration, add its `vaem:usesNonImportedResource` in the
 same change; when you remove the last elaboration of a resource, remove the
 entry too.
+
+## Rule 6: owl:imports names the latest, unversioned graph IRI
+
+Every `owl:imports` names the **unversioned** IRI of the graph it imports: the
+graph IRI without its version segment, which stands for the latest version.
+This applies to imports of other ontologies and to imports between graphs of
+the same ontology. No `$$…$$` token appears in an import.
+
+Graph IRIs themselves (the `owl:Ontology` IRI, and `rdfs:isDefinedBy`,
+`vaem:isMetadataFor` and `vaem:isElaboratedIn` for the graph's own resources)
+keep the full version, `$$VERSION$$`.
+
+```turtle
+# In VOAG's SHACL schema graph
+<https://w3id.org/voag/$$VERSION$$/schema/shacl>
+  a owl:Ontology ;
+  owl:imports <http://www.linkedmodel.org/schema/dtype> ;
+  owl:imports <http://www.linkedmodel.org/schema/vaem> .
+```
+
+Wrong: `owl:imports <http://www.linkedmodel.org/3.0.0/schema/vaem>` or `owl:imports <http://www.linkedmodel.org/$$VAEM_VERSION$$/schema/vaem>`.
+
+`scripts/release.py` fails when an `owl:imports` in a built file carries a
+version.
 
 ## Checking
 
