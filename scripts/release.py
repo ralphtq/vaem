@@ -14,8 +14,9 @@ Checks (any failure exits with status 1):
   - no $$TOKEN$$ is left in the output
   - every output file parses as Turtle
   - no construct has more than one rdfs:isDefinedBy
-  - no owl:imports names a versioned graph IRI: an import names the latest
-    (unversioned) IRI, e.g. http://www.linkedmodel.org/schema/vaem
+  - an owl:imports of a graph of this repository carries the version being
+    built ($$VERSION$$); an import of another repository's graph names its
+    latest, unversioned IRI (e.g. http://www.linkedmodel.org/schema/vaem)
   - the SHACL schema conforms to its own shapes (pySHACL)
 """
 import argparse
@@ -27,11 +28,30 @@ import shutil
 import sys
 
 import rdflib
-from rdflib import OWL, RDFS
+from rdflib import OWL, RDF, RDFS
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TOKEN = re.compile(r"\$\$[A-Z_]+\$\$")
 VERSIONED = re.compile(r"/\d+\.\d+(\.\d+)?(-SNAPSHOT)?/")
+
+
+def unversioned(iri):
+    """The IRI without its version segment, e.g. https://w3id.org/trom/schema."""
+    return VERSIONED.sub("/", iri, count=1)
+
+
+def check_imports(imports, own, version):
+    """Imports of this repository's graphs carry the version being built; others carry none."""
+    wrong = []
+    for rel, iri in imports:
+        if unversioned(iri) in own:
+            if f"/{version}/" not in iri:
+                wrong.append(f"{rel}: owl:imports <{iri}> is a graph of this repository: "
+                             f"import it with the version being built, /{version}/")
+        elif VERSIONED.search(iri):
+            wrong.append(f"{rel}: owl:imports <{iri}> is a graph of another repository: "
+                         f"import its latest, unversioned IRI, <{unversioned(iri)}>")
+    return wrong
 
 
 def main():
@@ -53,6 +73,7 @@ def main():
         shutil.rmtree(out)
 
     failures = []
+    imports, own = [], set()
     written = {}
     for f in config["files"]:
         text = (ROOT / f["src"]).read_text(encoding="utf-8")
@@ -72,15 +93,15 @@ def main():
         except Exception as exc:  # noqa: BLE001
             failures.append(f"{rel}: does not parse: {exc}")
             continue
-        versioned = sorted(str(o) for o in graph.objects(None, OWL.imports) if VERSIONED.search(str(o)))
-        if versioned:
-            failures.append(f"{rel}: owl:imports names a versioned graph IRI (import the latest, "
-                            f"unversioned IRI): {', '.join(versioned)}")
+        imports.extend((rel, str(o)) for o in graph.objects(None, OWL.imports))
+        own.update(unversioned(str(s)) for s in graph.subjects(RDF.type, OWL.Ontology))
         multi = [s for s in set(graph.subjects(RDFS.isDefinedBy, None))
                  if len(set(graph.objects(s, RDFS.isDefinedBy))) > 1]
         if multi:
             failures.append(f"{rel}: {len(multi)} constructs with more than one rdfs:isDefinedBy")
         print(f"built {rel} ({len(graph)} triples)")
+
+    failures.extend(check_imports(imports, own, args.version))
 
     shacl = written.get("shacl")
     if shacl and not failures:

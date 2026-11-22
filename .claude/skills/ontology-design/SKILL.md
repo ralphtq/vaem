@@ -1,6 +1,6 @@
 ---
 name: ontology-design
-description: Design rules for the SHACL/RDF graphs — property shape naming, rdfs:isDefinedBy on every resource with vaem:isElaboratedIn for additions to other ontologies, one GMD_ graph metadata resource per graph, multi-line dcterms:description strings, and vaem:usesNonImportedResource for every elaborated resource from another namespace, and owl:imports of unversioned graph IRIs. Use when adding, renaming, reviewing or fixing classes, node shapes, property shapes or graph metadata in src/.
+description: Design rules for the SHACL/RDF graphs — property shape naming, rdfs:isDefinedBy on every resource with vaem:isElaboratedIn for additions to other ontologies, one GMD_ graph metadata resource per graph, multi-line dcterms:description strings, and vaem:usesNonImportedResource for every elaborated resource from another namespace, and versioned owl:imports within a repository, unversioned across repositories. Use when adding, renaming, reviewing or fixing classes, node shapes, property shapes or graph metadata in src/.
 ---
 
 # Ontology design rules
@@ -200,29 +200,33 @@ When you add an elaboration, add its `vaem:usesNonImportedResource` in the
 same change; when you remove the last elaboration of a resource, remove the
 entry too.
 
-## Rule 6: owl:imports names the latest, unversioned graph IRI
+## Rule 6: owl:imports: versioned within the repository, unversioned across repositories
 
-Every `owl:imports` names the **unversioned** IRI of the graph it imports: the
-graph IRI without its version segment, which stands for the latest version.
-This applies to imports of other ontologies and to imports between graphs of
-the same ontology. No `$$…$$` token appears in an import.
-
-Graph IRIs themselves (the `owl:Ontology` IRI, and `rdfs:isDefinedBy`,
-`vaem:isMetadataFor` and `vaem:isElaboratedIn` for the graph's own resources)
-keep the full version, `$$VERSION$$`.
+- An `owl:imports` of a graph **in the same repository** names its versioned
+  IRI, with the same `$$VERSION$$` as the importing graph, so a release imports
+  its own graphs at that release.
+- An `owl:imports` of a graph **from another repository** names that graph's
+  unversioned IRI (the graph IRI without its version segment), which stands
+  for the latest version. No other `$$…$$` token appears in an import.
 
 ```turtle
-# In VOAG's SHACL schema graph
+# In a license graph: VOAG's SHACL schema, from this repository
+<https://w3id.org/voag/$$VERSION$$/refdata/license-ccby-4pt0>
+  a owl:Ontology ;
+  owl:imports <https://w3id.org/voag/$$VERSION$$/schema/shacl> .
+
+# In VOAG's SHACL schema graph: VAEM and DTYPE, from other repositories
 <https://w3id.org/voag/$$VERSION$$/schema/shacl>
   a owl:Ontology ;
   owl:imports <http://www.linkedmodel.org/schema/dtype> ;
   owl:imports <http://www.linkedmodel.org/schema/vaem> .
 ```
 
-Wrong: `owl:imports <http://www.linkedmodel.org/3.0.0/schema/vaem>` or `owl:imports <http://www.linkedmodel.org/$$VAEM_VERSION$$/schema/vaem>`.
+Wrong: `owl:imports <http://www.linkedmodel.org/3.0.0/schema/vaem>` or
+`owl:imports <http://www.linkedmodel.org/$$VAEM_VERSION$$/schema/vaem>` (another
+repository: no version).
 
-`scripts/release.py` fails when an `owl:imports` in a built file carries a
-version.
+`scripts/release.py` checks both cases and fails on a wrong import.
 
 ## Checking
 
