@@ -80,7 +80,7 @@ target/dist/<version>/schema/shacl/SCHEMA_vaem_noOWL_v<version>.ttl
 It also writes an unversioned ("latest") copy of each graph, in which this
 repository's graph IRIs and file URLs have no version (the version stays in
 labels and `vaem:revision`), and checks that it differs from the versioned
-graph only in those IRIs:
+graph only in those IRIs (see the section on unversioned graphs below):
 
 ```
 target/dist/latest/schema/SCHEMA_vaem.ttl
@@ -92,6 +92,32 @@ another release date. Without `--out` the graphs go to `dist/`; `--out` must be
 a folder inside the repository, and `target/` is git-ignored. The build fails
 if a token is left over, a graph does not parse, or a check fails; see
 [RELEASING.md](RELEASING.md) for the checks.
+
+## Unversioned ("latest") graphs
+
+Every build also makes an unversioned copy of each graph, for anyone who wants
+"the latest VAEM" rather than a particular release. Other repositories
+import VAEM by its unversioned IRI (design rule 6), e.g. `http://www.linkedmodel.org/schema/vaem`.
+
+- **What changes:** in the copy, VAEM's own versioned graph IRIs lose their
+  version: the ontology IRI, `rdfs:isDefinedBy`, imports of VAEM's own graphs,
+  `vaem:isMetadataFor`, and file URLs and names. `http://www.linkedmodel.org/<version>/schema/vaem` becomes
+  `http://www.linkedmodel.org/schema/vaem`. The version stays in labels, titles and `vaem:revision`, so a copy
+  still says which release it came from. Imports of other repositories are
+  unversioned already and do not change.
+- **How it is checked:** `scripts/release.py` fails if a copy does not parse,
+  still has a versioned IRI of VAEM, or differs from its versioned graph in
+  anything but those IRIs. Two output files with the same name also fail the
+  build, because GitHub release files need unique names.
+- **Where it is published:** every push to `main` attaches the copies to the
+  rolling `snapshot` pre-release, and the Release workflow attaches them to
+  each release. The files have no version in their names, so these URLs always
+  serve the newest release:
+
+```
+https://github.com/ralphtq/vaem/releases/latest/download/SCHEMA_vaem.ttl
+https://github.com/ralphtq/vaem/releases/latest/download/SCHEMA_vaem_noOWL.ttl
+```
 
 ## Formatting
 
