@@ -10,10 +10,16 @@ Tokens:
   $$VERSION$$       the release version, e.g. 3.0.0
   $$RELEASE_DATE$$  the release date, YYYY-MM-DD
 
+Each graph is also written without its version, as <out>/latest/...: an
+unversioned ("latest") copy whose graph IRIs have no version segment, e.g.
+<out>/latest/schema/SCHEMA_x.ttl, published with the release.
+
 Checks (any failure exits with status 1):
   - no $$TOKEN$$ is left in the output
   - every output file parses as Turtle
   - no construct has more than one rdfs:isDefinedBy
+  - each unversioned copy parses, has no versioned IRI of this repository
+    left, and differs from its versioned graph only in those IRIs
   - an owl:imports of a graph of this repository carries the version being
     built ($$VERSION$$); an import of another repository's graph names its
     latest, unversioned IRI (e.g. http://www.linkedmodel.org/schema/vaem)
@@ -28,11 +34,79 @@ import shutil
 import sys
 
 import rdflib
-from rdflib import OWL, RDF, RDFS
+from rdflib import OWL, RDF, RDFS, Literal, URIRef
+from rdflib.compare import to_isomorphic
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TOKEN = re.compile(r"\$\$[A-Z_]+\$\$")
 VERSIONED = re.compile(r"/\d+\.\d+(\.\d+)?(-SNAPSHOT)?/")
+
+
+def latest_path(dist, version):
+    """Where the unversioned copy of a graph goes: latest/..., with no version in the file name."""
+    path = dist.replace("{version}/", "latest/", 1)
+    return re.sub(r"[-_]?v\{version\}", "", path).format(version=version)
+
+
+def write_latest(built, out, version):
+    """Write and check the unversioned ("latest") copy of every graph.
+
+    In each copy, this repository's versioned graph IRIs and file URLs lose
+    their version, e.g. https://w3id.org/trom/0.0.1/schema becomes
+    https://w3id.org/trom/schema, and .../SCHEMA_trom-v0.0.1.ttl becomes
+    .../SCHEMA_trom.ttl. The version stays in labels, titles and
+    vaem:revision. A copy must parse, have no versioned IRI of this repository
+    left, and say exactly what the versioned graph says with those IRIs mapped.
+    """
+    failures = []
+    bases = sorted({iri[:iri.index(f"/{version}/") + 1]
+                    for _, _, graph in built
+                    for iri in map(str, graph.subjects(RDF.type, OWL.Ontology)) if f"/{version}/" in iri})
+    versioned_prefixes = [f"{base}{version}/" for base in bases]
+
+    file_version = re.compile(r"[-_]?v" + re.escape(version) + r"(?=\.(?:ttl|rdf|zip)\b)")
+
+    def unversion(value):
+        for base, prefix in zip(bases, versioned_prefixes):
+            value = value.replace(prefix, base)
+        if any(base in value for base in bases):
+            value = file_version.sub("", value)
+        return value
+
+    def mapped(term):
+        if isinstance(term, URIRef):
+            return URIRef(unversion(str(term)))
+        if isinstance(term, Literal):
+            return Literal(unversion(str(term)), lang=term.language, datatype=term.datatype)
+        return term
+
+    names = {}
+    for f, text, graph in built:
+        names.setdefault(pathlib.PurePath(f["dist"].format(version=version)).name, []).append(f["dist"])
+        target = out / latest_path(f["dist"], version)
+        names.setdefault(target.name, []).append(str(target))
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(unversion(text), encoding="utf-8")
+        rel = target.relative_to(ROOT)
+        try:
+            latest = rdflib.Graph().parse(target, format="turtle")
+        except Exception as exc:  # noqa: BLE001
+            failures.append(f"{rel}: does not parse: {exc}")
+            continue
+        left = sorted({str(t) for triple in latest for t in triple
+                       if isinstance(t, URIRef) and any(str(t).startswith(p) for p in versioned_prefixes)})
+        if left:
+            failures.append(f"{rel}: versioned IRIs left: {', '.join(left[:5])}")
+        expected = rdflib.Graph()
+        for triple in graph:
+            expected.add(tuple(mapped(t) for t in triple))
+        if to_isomorphic(expected) != to_isomorphic(latest):
+            failures.append(f"{rel}: differs from the versioned graph by more than its IRIs")
+        print(f"built {rel} ({len(latest)} triples, unversioned)")
+    for name, paths in names.items():
+        if len(paths) > 1:
+            failures.append(f"two output files are both named {name} (release assets need unique names)")
+    return failures
 
 
 def unversioned(iri):
@@ -73,7 +147,7 @@ def main():
         shutil.rmtree(out)
 
     failures = []
-    imports, own = [], set()
+    imports, own, built = [], set(), []
     written = {}
     for f in config["files"]:
         text = (ROOT / f["src"]).read_text(encoding="utf-8")
@@ -93,6 +167,7 @@ def main():
         except Exception as exc:  # noqa: BLE001
             failures.append(f"{rel}: does not parse: {exc}")
             continue
+        built.append((f, text, graph))
         imports.extend((rel, str(o)) for o in graph.objects(None, OWL.imports))
         own.update(unversioned(str(s)) for s in graph.subjects(RDF.type, OWL.Ontology))
         multi = [s for s in set(graph.subjects(RDFS.isDefinedBy, None))
@@ -102,6 +177,8 @@ def main():
         print(f"built {rel} ({len(graph)} triples)")
 
     failures.extend(check_imports(imports, own, args.version))
+    if not failures:
+        failures.extend(write_latest(built, out, args.version))
 
     shacl = written.get("shacl")
     if shacl and not failures:

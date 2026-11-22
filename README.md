@@ -77,6 +77,16 @@ target/dist/<version>/schema/SCHEMA_vaem-v<version>.ttl
 target/dist/<version>/schema/shacl/SCHEMA_vaem_noOWL_v<version>.ttl
 ```
 
+It also writes an unversioned ("latest") copy of each graph, in which this
+repository's graph IRIs and file URLs have no version (the version stays in
+labels and `vaem:revision`), and checks that it differs from the versioned
+graph only in those IRIs:
+
+```
+target/dist/latest/schema/SCHEMA_vaem.ttl
+target/dist/latest/schema/shacl/SCHEMA_vaem_noOWL.ttl
+```
+
 Add `--version <version>-SNAPSHOT` for a snapshot, or `--date YYYY-MM-DD` for
 another release date. Without `--out` the graphs go to `dist/`; `--out` must be
 a folder inside the repository, and `target/` is git-ignored. The build fails

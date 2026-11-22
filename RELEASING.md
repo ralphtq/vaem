@@ -24,7 +24,10 @@ Change `src/shacl/SCHEMA_vaem.ttl` (the source) and make the same change in
 python3 scripts/release.py --version 3.0.0
 ```
 
-This writes `dist/<version>/…` and fails if a token is left over, a file does
+This writes `dist/<version>/…`, and an unversioned ("latest") copy of each
+graph in `dist/latest/…` (graph IRIs and file names without the version).
+It fails if an unversioned copy differs from its versioned graph by more
+than those IRIs, or if a token is left over, a file does
 not parse, a construct has more than one `rdfs:isDefinedBy`, or the SHACL
 schema does not conform to its own shapes.
 `--version` defaults to `release.json` and `--date` to today.
