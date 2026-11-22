@@ -55,6 +55,34 @@ python3 scripts/gen_vaem_shacl.py 3.0/schema/SCHEMA_vaem-v3.0.ttl \
   "SCHEMA VAEM SHACL Version 3.0.0" --check
 ```
 
+## Build the graphs locally
+
+`scripts/release.py` builds VAEM's graphs from `src/`, with the version and
+release date filled in, and checks them. It needs Python 3 with `rdflib` and
+`pyshacl`; a virtual environment in `.venv/` (git-ignored) keeps them apart
+from other projects. From the top of the repository:
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install rdflib pyshacl
+python3 scripts/release.py --out target/dist
+```
+
+Next time, only `source .venv/bin/activate` and the last line are needed. The
+build uses the version in `release.json` and today's date, and writes:
+
+```
+target/dist/<version>/schema/SCHEMA_vaem-v<version>.ttl
+target/dist/<version>/schema/shacl/SCHEMA_vaem_noOWL_v<version>.ttl
+```
+
+Add `--version <version>-SNAPSHOT` for a snapshot, or `--date YYYY-MM-DD` for
+another release date. Without `--out` the graphs go to `dist/`; `--out` must be
+a folder inside the repository, and `target/` is git-ignored. The build fails
+if a token is left over, a graph does not parse, or a check fails; see
+[RELEASING.md](RELEASING.md) for the checks.
+
 ## Formatting
 
 The source schemas in `src/` and the Markdown files are formatted with
