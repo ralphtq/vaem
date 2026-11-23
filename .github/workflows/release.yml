@@ -10,9 +10,10 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Release version (X.Y.Z): the current snapshot's version without -SNAPSHOT"
-        required: true
+        description: "Release version (X.Y.Z). Leave blank to use the version in release.json, which is the current snapshot's version without -SNAPSHOT"
+        required: false
         type: string
+        default: ""
       skip_snapshot_check:
         description: "Release without checking against the snapshot (not recommended)"
         required: false
@@ -35,10 +36,16 @@ jobs:
           fetch-depth: 0
 
       - name: Check the version
+        id: version
         env:
           version: ${{ inputs.version }}
         run: |
           set -euo pipefail
+          if [[ -z "$version" ]]; then
+            version="$(python3 -c 'import json; print(json.load(open("release.json"))["version"])')"
+            echo "No version given: using $version from release.json" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
           [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "version must be X.Y.Z" >> "$GITHUB_STEP_SUMMARY"; exit 1; }
           if git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
             echo "tag v$version already exists" >> "$GITHUB_STEP_SUMMARY"; exit 1
@@ -55,7 +62,7 @@ jobs:
         if: ${{ !inputs.skip_snapshot_check }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          version: ${{ inputs.version }}
+          version: ${{ steps.version.outputs.version }}
         run: |
           set -euo pipefail
           snap_sha="$(git rev-parse -q --verify 'refs/tags/snapshot^{commit}' || true)"
@@ -76,15 +83,15 @@ jobs:
       - run: pip install rdflib pyshacl
 
       - name: Build and check the release
-        run: python scripts/release.py --version "${{ inputs.version }}"
+        run: python scripts/release.py --version "${{ steps.version.outputs.version }}"
 
       - name: Compare the release with the snapshot
         if: ${{ !inputs.skip_snapshot_check }}
-        run: python scripts/compare_snapshot.py snapshot dist "${{ inputs.version }}-SNAPSHOT" "${{ inputs.version }}"
+        run: python scripts/compare_snapshot.py snapshot dist "${{ steps.version.outputs.version }}-SNAPSHOT" "${{ steps.version.outputs.version }}"
 
       - name: Update CHANGELOG.md and release.json
         env:
-          version: ${{ inputs.version }}
+          version: ${{ steps.version.outputs.version }}
         run: |
           python - <<'PY'
           import datetime, json, os
@@ -103,7 +110,7 @@ jobs:
 
       - name: Commit, tag and push
         env:
-          version: ${{ inputs.version }}
+          version: ${{ steps.version.outputs.version }}
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
@@ -113,15 +120,15 @@ jobs:
           git push origin "HEAD:${GITHUB_REF_NAME}" "v$version"
 
       - name: Package the release
-        run: cd dist && zip -qr "../vaem-${{ inputs.version }}.zip" .
+        run: cd dist && zip -qr "../vaem-${{ steps.version.outputs.version }}.zip" .
 
       - uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ inputs.version }}
-          name: VAEM ${{ inputs.version }}
+          tag_name: v${{ steps.version.outputs.version }}
+          name: VAEM ${{ steps.version.outputs.version }}
           make_latest: true
           files: |
-            vaem-${{ inputs.version }}.zip
+            vaem-${{ steps.version.outputs.version }}.zip
             dist/**/*.ttl
 
       - name: Remove the snapshot pre-release
@@ -129,4 +136,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release delete snapshot --cleanup-tag --yes || echo "no snapshot release to remove"
-          echo "Released ${{ inputs.version }}; the snapshot pre-release has been removed until the next push." >> "$GITHUB_STEP_SUMMARY"
+          echo "Released ${{ steps.version.outputs.version }}; the snapshot pre-release has been removed until the next push." >> "$GITHUB_STEP_SUMMARY"

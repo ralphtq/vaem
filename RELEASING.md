@@ -50,8 +50,9 @@ only: the files are attached to the workflow run, nothing is published.
 A release is the snapshot you have checked, rebuilt with the final version:
 
 1. Check the current snapshot (Releases → snapshot).
-2. Run the **Release** workflow (Actions → Release → Run workflow) on `main`
-   with the snapshot's version without `-SNAPSHOT`, e.g. `3.0.0`.
+2. Run the **Release** workflow (Actions → Release → Run workflow) on `main`.
+   Leave the version blank to release the version in `release.json` (the
+   snapshot's version without `-SNAPSHOT`), or enter it, e.g. `3.0.0`.
 
 The workflow refuses to publish unless the version is one step on from the
 last `vX.Y.Z` tag, the run is on the commit the snapshot was built from, and
