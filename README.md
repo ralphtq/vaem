@@ -32,7 +32,8 @@ schema/          current (unversioned) VAEM
 src/shacl/       SHACL source of the next release (the OWL schema is derived
                  from it at build time)
 archive/         the hand-made OWL schema the derivation replaced
-releases/        built files of each release (written by the Release workflow)
+releases/        built files of each release, and the unversioned ones of the
+                 latest in releases/latest/ (written by the Release workflow)
 scripts/         parse check, release build (with the OWL derivation) and
                  snapshot comparison
 images/          logo
