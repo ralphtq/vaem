@@ -15,8 +15,11 @@ and the metadata labels and titles.
 
 ## Edit
 
-Change `src/shacl/SCHEMA_vaem.ttl` (the source) and make the same change in
-`src/owl/SCHEMA_vaem.ttl`. Write versions as tokens, never as numbers.
+Change `src/shacl/SCHEMA_vaem.ttl`, which is the source. The OWL schema is not
+edited: `scripts/release.py` derives it from the SHACL schema at build time
+(see `scripts/owl-derivation/README.md`). Write versions as tokens, never as
+numbers. `archive/SCHEMA_vaem.ttl` is the hand-made OWL schema the derivation
+replaced; nothing reads it.
 
 ## Try a release locally
 

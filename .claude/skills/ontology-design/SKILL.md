@@ -14,8 +14,10 @@ The files in `src/` carry release tokens (`$$VERSION$$` and others; see
 
 - Namespace: `http://www.linkedmodel.org/schema/vaem#` (prefix `vaem:`, a hash
   namespace: local names follow the `#`).
-- Two sources, changed together: `src/shacl/SCHEMA_vaem.ttl` (the source) and
-  `src/owl/SCHEMA_vaem.ttl`. See `RELEASING.md`.
+- Source: `src/shacl/SCHEMA_vaem.ttl`. The OWL schema is derived from it at
+  build time by `scripts/derive_owl.py`: never edit OWL by hand; change the
+  SHACL, a step in `scripts/owl-derivation/steps/`, or
+  `scripts/owl-derivation/overlay.ttl`. See `RELEASING.md`.
 - Graph IRIs: `http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem` and
   `http://www.linkedmodel.org/$$VERSION$$/schema/vaem`; graph metadata
   `vaem:GMD_VAEM`.
@@ -52,7 +54,7 @@ Wrong: `vaem:GraphTitleShape`, `vaem:GraphMetaData_graphTitle`, or an inline
 `sh:property [ sh:path vaem:graphTitle ]`.
 
 When renaming a property shape, rename every `sh:property` that points at it,
-in both sources (`src/shacl/` and `src/owl/`) and in the ontologies that use
+in `src/shacl/` and in the ontologies that use
 VAEM (VOAG, DTYPE, DEONA, NRMDOC, TROM and others).
 
 ### Current practice, not yet decided

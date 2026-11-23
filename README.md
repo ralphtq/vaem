@@ -29,7 +29,11 @@ schema/          current (unversioned) VAEM
 2.0/schema/      v2.0 schema
 3.0/schema/      v3.0 schema (in development)
 3.0/schema/shacl/ SHACL-only version of v3.0 (the source for the 3.0 OWL)
-scripts/         parse check and the OWL/SHACL consistency check
+src/shacl/       SHACL source of the next release (the OWL schema is derived
+                 from it at build time)
+archive/         the hand-made OWL schema the derivation replaced
+scripts/         parse check, release build (with the OWL derivation) and
+                 snapshot comparison
 images/          logo
 ```
 

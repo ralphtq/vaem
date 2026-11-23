@@ -14,10 +14,16 @@ Each graph is also written without its version, as <out>/latest/...: an
 unversioned ("latest") copy whose graph IRIs have no version segment, e.g.
 <out>/latest/schema/SCHEMA_x.ttl, published with the release.
 
+A release.json entry with "derive_from" is not read from src/: it is derived
+from the built graph of that role by scripts/derive_owl.py (an OWL schema from
+the SHACL schema), with "graph" as its graph IRI and an optional "overlay".
+
 Checks (any failure exits with status 1):
   - no $$TOKEN$$ is left in the output
   - every output file parses as Turtle
   - no construct has more than one rdfs:isDefinedBy
+  - a derived OWL graph has no SHACL left, an owl:Class for every class with
+    shapes, well-formed restrictions, and types for the properties it restricts
   - each unversioned copy parses, has no versioned IRI of this repository
     left, and differs from its versioned graph only in those IRIs
   - an owl:imports of a graph of this repository carries the version being
@@ -128,6 +134,25 @@ def check_imports(imports, own, version):
     return wrong
 
 
+def derived_owl(f, texts, values):
+    """The OWL graph derived from an already built SHACL graph, and its problems."""
+    from derive_owl import check_owl, derive  # scripts/derive_owl.py
+
+    def fill(text):
+        for key, value in values.items():
+            text = text.replace(f"$${key}$$", value)
+        return text
+
+    shacl = rdflib.Graph().parse(data=texts[f["derive_from"]], format="turtle")
+    shacl_iri = str(next(iter(shacl.subjects(RDF.type, OWL.Ontology))))
+    owl_iri = fill(f["graph"])
+    overlay = None
+    if f.get("overlay"):
+        overlay = rdflib.Graph().parse(data=fill((ROOT / f["overlay"]).read_text(encoding="utf-8")), format="turtle")
+    owl = derive(shacl, shacl_iri, owl_iri, overlay)
+    return owl.serialize(format="turtle"), check_owl(owl, shacl, shacl_iri, owl_iri)
+
+
 def main():
     config = json.loads((ROOT / "release.json").read_text(encoding="utf-8"))
     parser = argparse.ArgumentParser()
@@ -149,10 +174,18 @@ def main():
     failures = []
     imports, own, built = [], set(), []
     written = {}
-    for f in config["files"]:
-        text = (ROOT / f["src"]).read_text(encoding="utf-8")
-        for key, value in values.items():
-            text = text.replace(f"$${key}$$", value)
+    texts = {}
+    # Derived graphs ("derive_from") are built after the graphs they come from.
+    for f in sorted(config["files"], key=lambda f: "derive_from" in f):
+        if "derive_from" in f:
+            text, problems = derived_owl(f, texts, values)
+            rel_name = f["dist"].format(version=args.version)
+            failures.extend(f"{rel_name}: {problem}" for problem in problems)
+        else:
+            text = (ROOT / f["src"]).read_text(encoding="utf-8")
+            for key, value in values.items():
+                text = text.replace(f"$${key}$$", value)
+        texts[f["role"]] = text
         target = out / f["dist"].format(version=args.version)
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(text, encoding="utf-8")
