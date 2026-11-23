@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 3.0.0 (2026-11-23)
+
 - Moved VAEM out of `ralphtq/linkedmodels` into its own repository, with its
   full commit history. IRIs are unchanged.
 - `schema/vaem.ttl` brought in line with `2.0/schema/vaem.ttl` (adds the
