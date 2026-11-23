@@ -29,7 +29,11 @@ schema/          current (unversioned) VAEM
 2.0/schema/      v2.0 schema
 3.0/schema/      v3.0 schema (in development)
 3.0/schema/shacl/ SHACL-only version of v3.0 (the source for the 3.0 OWL)
-scripts/         parse check and the OWL/SHACL consistency check
+src/shacl/       SHACL source of the next release (the OWL schema is derived
+                 from it at build time)
+archive/         the hand-made OWL schema the derivation replaced
+scripts/         parse check, release build (with the OWL derivation) and
+                 snapshot comparison
 images/          logo
 ```
 
@@ -40,20 +44,10 @@ VAEM 3.0: classes are `rdfs:Class` and `sh:NodeShape`, properties are
 `rdf:Property`, and there are no OWL constructs apart from the
 `owl:Ontology` header.
 
-The SHACL schema is the source of VAEM 3.0. The OWL file,
-`3.0/schema/SCHEMA_vaem-v3.0.ttl`, is generated from it, so make changes in
-the SHACL schema first.
-
-`scripts/gen_vaem_shacl.py` converts OWL to SHACL. It is kept only as a check
-that the two files say the same thing. With `--check` it writes nothing,
-lists any differences and exits with status 1 if there are any:
-
-```
-python3 scripts/gen_vaem_shacl.py 3.0/schema/SCHEMA_vaem-v3.0.ttl \
-  3.0/schema/shacl/SCHEMA_vaem_noOWL_v3.0.0.ttl \
-  http://www.linkedmodel.org/3.0.0/schema/shacl/vaem \
-  "SCHEMA VAEM SHACL Version 3.0.0" --check
-```
+The SHACL schema in `src/shacl/` is the source of VAEM. The build derives the
+OWL schema from it with `scripts/derive_owl.py` (see
+[scripts/owl-derivation/README.md](scripts/owl-derivation/README.md)), so
+make changes in the SHACL schema only.
 
 ## Build the graphs locally
 

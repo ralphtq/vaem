@@ -1,0 +1,7 @@
+# Statements the SHACL schema cannot supply for the derived OWL schema.
+# For each subject and predicate here, the derived values are replaced by these.
+# $$VERSION$$ and $$RELEASE_DATE$$ are filled in as in src/.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://www.linkedmodel.org/$$VERSION$$/schema/vaem>
+  rdfs:label "SCHEMA VAEM Version $$VERSION$$" .
