@@ -83,8 +83,11 @@ def check_owl(owl, shacl, shacl_iri, owl_iri):
     if (URIRef(owl_iri), RDF.type, OWL.Ontology) not in owl:
         problems.append(f"<{owl_iri}> is not an owl:Ontology")
     shaped = {c for c in shacl.subjects(SH.property, None) if isinstance(c, URIRef)}
-    classes = {c for c in shaped if (c, RDF.type, RDFS.Class) in shacl or any(
-        (t, RDFS.subClassOf, RDFS.Class) in shacl for t in shacl.objects(c, RDF.type))}
+    trait_class = URIRef("http://www.linkedmodel.org/schema/trom#TraitClass")
+    classes = {c for c in shaped
+               if (c, RDF.type, RDFS.Class) in shacl or (c, RDF.type, trait_class) in shacl
+               or (c, RDF.type, SH.NodeShape) in shacl and (c, RDFS.subClassOf, None) in shacl
+               or any((t, RDFS.subClassOf, RDFS.Class) in shacl for t in shacl.objects(c, RDF.type))}
     missing = sorted(name(c) for c in classes if (c, RDF.type, OWL.Class) not in owl)
     if missing:
         problems.append(f"classes with shapes but no owl:Class: {', '.join(missing[:10])}")

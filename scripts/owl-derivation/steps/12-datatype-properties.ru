@@ -11,7 +11,7 @@ INSERT { ?p a owl:DatatypeProperty }
 WHERE {
   ?p a rdf:Property .
   FILTER EXISTS { ?ps sh:path ?p . { ?ps sh:datatype ?x } UNION { ?ps sh:nodeKind sh:Literal }
-                  UNION { ?ps sh:or ?alts . FILTER NOT EXISTS { ?alts rdf:rest*/rdf:first ?m . FILTER NOT EXISTS { ?m sh:datatype ?d } } } }
+                  UNION { ?ps sh:or ?alts . ?alts rdf:first ?first . FILTER NOT EXISTS { ?alts rdf:rest*/rdf:first ?m . FILTER NOT EXISTS { ?m sh:datatype ?d } } } }
   FILTER NOT EXISTS {
     ?ps2 sh:path ?p .
     { ?ps2 sh:class ?y } UNION { ?ps2 sh:qualifiedValueShape/sh:class ?y }

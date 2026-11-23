@@ -15,7 +15,7 @@ WHERE {
     ?ps sh:path ?p .
     { ?ps sh:class ?x } UNION { ?ps sh:qualifiedValueShape/sh:class ?x } UNION { ?ps sh:node ?x . ?x a owl:Class }
     UNION { ?ps sh:nodeKind ?k . FILTER(?k IN (sh:IRI, sh:BlankNodeOrIRI, sh:BlankNode)) }
-    UNION { ?ps sh:or ?alts . FILTER NOT EXISTS { ?alts rdf:rest*/rdf:first ?m . FILTER NOT EXISTS { ?m sh:class ?c } } }
+    UNION { ?ps sh:or ?alts . ?alts rdf:first ?first . FILTER NOT EXISTS { ?alts rdf:rest*/rdf:first ?m . FILTER NOT EXISTS { ?m sh:class ?c } } }
   }
   FILTER NOT EXISTS {
     ?ps2 sh:path ?p .

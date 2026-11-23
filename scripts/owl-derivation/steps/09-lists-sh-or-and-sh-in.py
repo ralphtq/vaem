@@ -27,6 +27,8 @@ def apply(graph, shacl_iri, owl_iri):
             alternatives = graph.value(ps, SH["or"])
             if alternatives is not None:
                 members = list(Collection(graph, alternatives))
+                if not members:  # a list defined in another graph, e.g. dash:HTMLOrStringOrLangString
+                    continue
                 classes = [graph.value(m, SH["class"]) for m in members]
                 datatypes = [graph.value(m, SH.datatype) for m in members]
                 if all(classes):
@@ -40,7 +42,7 @@ def apply(graph, shacl_iri, owl_iri):
                     graph.add((union, OWL.unionOf, Collection(graph, BNode(), datatypes).uri))
                     restrict(graph, cls, prop, union)
             values = graph.value(ps, SH["in"])
-            if values is not None:
+            if values is not None and list(Collection(graph, values)):
                 one_of = BNode()
                 graph.add((one_of, OWL.oneOf, Collection(graph, BNode(), list(Collection(graph, values))).uri))
                 restrict(graph, cls, prop, one_of)
