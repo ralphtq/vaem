@@ -58,7 +58,8 @@ The workflow refuses to publish unless the version is one step on from the
 last `vX.Y.Z` tag, the run is on the commit the snapshot was built from, and
 the rebuilt files say the same as the snapshot apart from the version and
 release dates (`scripts/compare_snapshot.py`). It then adds the version to
-`CHANGELOG.md`, sets `release.json` to the next patch version, tags `vX.Y.Z`,
+`CHANGELOG.md`, sets `release.json` to the next patch version, commits the
+built files to `releases/<version>/` (the same layout as `dist/<version>/`), tags `vX.Y.Z`,
 creates the GitHub Release with the files and a zip, and removes the snapshot
 pre-release until the next push. The workflow is only offered once it is on
 the default branch.

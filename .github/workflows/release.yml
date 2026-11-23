@@ -3,7 +3,8 @@ name: Release
 # Publishes a finished VAEM release from the commit the current snapshot was
 # built from: builds dist/ from src/ with the final version, runs all release
 # checks, confirms the release says the same as the snapshot (apart from the
-# version and dates), updates CHANGELOG.md and release.json on main, tags
+# version and dates), updates CHANGELOG.md and release.json and commits the
+# built files to releases/<version>/ on main, tags
 # vX.Y.Z, creates a GitHub Release with the built files, and then removes the
 # snapshot pre-release. GitHub only offers this workflow once it is on main.
 on:
@@ -114,7 +115,11 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
-          git add CHANGELOG.md release.json
+          # Keep the released files in the repository too, in releases/<version>/.
+          mkdir -p releases
+          rm -rf "releases/$version"
+          cp -r "dist/$version" "releases/$version"
+          git add CHANGELOG.md release.json "releases/$version"
           git commit -m "Release $version"
           git tag "v$version"
           git push origin "HEAD:${GITHUB_REF_NAME}" "v$version"
