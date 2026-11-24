@@ -3,20 +3,23 @@
   python3 scripts/split_descriptions.py src/<folder>/*.ttl           # dry run
   python3 scripts/split_descriptions.py --write src/<folder>/*.ttl   # rewrite the files
 
-Only one-line strings ("...") are changed. A description of two or more
-sentences becomes a triple-quoted string with one sentence per line, with
-\" written as a plain " (as rule 4 requires inside triple quotes); its
-language tag or datatype is kept, and its text is otherwise unchanged. Strings
-that are already triple-quoted are left alone. The dry run prints every split
-point ("...end of one sentence || start of the next...") so it can be checked
-before writing.
+A one-line string ("...") of two or more sentences becomes a triple-quoted
+string with one sentence per line, with \" written as a plain " (as rule 4
+requires inside triple quotes). In a string that is already triple-quoted,
+each line of more than one sentence is split in the same way; blank lines and
+the line structure (paragraphs, numbered items) are kept, and the string is
+made to start and end with a line break. Language tags and datatypes are kept,
+and the text is otherwise unchanged. The dry run prints every split point
+("...end of one sentence || start of the next...") so it can be checked before
+writing.
 
 What ends a sentence is set out under rule 4 in
 .claude/skills/ontology-design/SKILL.md: ".", "!" or "?" (with any closing
 quote or bracket), a space, then a capital letter, a digit or an opening quote
 or bracket; but not after an abbreviation (ABBREV), initials ("U.S.",
 "C.F.R."), or a clause number ("3. All copies"). A company suffix (COMPANY)
-ends a sentence only before an ordinary sentence opener (OPENERS). Add to these
+ends a sentence only before an ordinary sentence opener (OPENERS). A
+bracketed cross-reference ("(See Section 2)") stays with the sentence before it. Add to these
 sets when a dry run shows a wrong split.
 """
 import pathlib
@@ -37,7 +40,8 @@ COMPANY = {"inc", "ltd", "corp", "co", "llc"}
 OPENERS = re.compile(r"(For|No|If|The|This|These|You|Your|Any|Each|In|Such|Licensee|Nothing)\b")
 
 BOUNDARY = re.compile(r'[.!?](?:\\"|["\')\]])*\s+(?=(?:\\"|["(\[])*[A-Z0-9])')
-ONE_LINE = re.compile(r'(dcterms:description\s+)"((?:[^"\\\n]|\\.)*)"((?:\^\^\S+|@[\w-]+)?)')
+ONE_LINE = re.compile(r'(dcterms:description\s+)"(?!"")((?:[^"\\\n]|\\.)*)"((?:\^\^\S+|@[\w-]+)?)')
+LONG = re.compile(r'(dcterms:description\s+)"""((?:[^"\\]|\\.|"(?!""))*)"""((?:\^\^\S+|@[\w-]+)?)', re.S)
 
 
 def sentences(text):
@@ -47,10 +51,14 @@ def sentences(text):
         last = re.search(r"(\S+)$", text[: m.start()])
         word = last.group(1).lower().strip('("\\') if last else ""
         stem = word.rstrip(".")
+        if re.match(r"\(See\b", text[m.end():]):                  # "...a Modification. (See Section 2)"
+            continue
         if text[m.start()] == "." and not (stem in COMPANY and OPENERS.match(text[m.end():])):
             if (stem in ABBREV
                     or re.fullmatch(r"[a-z]", word)                # a single initial
-                    or re.fullmatch(r"\d+(\.\d+)*", word)          # clause number: "3." "3.1."
+                    or re.fullmatch(r"\d+[a-z]?(\.\d+)*", word)    # clause number: "3." "3.1." "3a."
+                    or re.fullmatch(r"[ivxlc]+(\.\d+)*", word)      # roman clause number: "IV." "V.1."
+                    or re.fullmatch(r"[a-z](\.\d+)+", word)         # lettered clause number: "A.1."
                     or re.fullmatch(r"([a-z]\.)+[a-z]", word)):    # initials: "U.S", "C.F.R"
                 continue
         out.append(text[start: m.end()].rstrip())
@@ -84,7 +92,22 @@ def main():
             body = "\n".join(parts).replace('\\"', '"').replace('"""', '\\"""')
             return f'{m.group(1)}"""\n{body}\n"""{m.group(3)}'
 
-        new = ONE_LINE.sub(replace, text)
+        def replace_long(m):
+            nonlocal n_strings
+            lines = []
+            for line in m.group(2).strip("\n").split("\n"):
+                parts = sentences(line) if line.strip() else []
+                if len(parts) > 1 and not write:
+                    for a, b in zip(parts, parts[1:]):
+                        print(f"{path.name}: ...{a[-40:]} || {b[:40]}...")
+                lines.extend(parts if len(parts) > 1 else [line.rstrip()])
+            body = "\n".join(lines).replace('\\"', '"').replace('"""', '\\"""')
+            new_string = f'{m.group(1)}"""\n{body}\n"""{m.group(3)}'
+            if new_string != m.group(0):
+                n_strings += 1
+            return new_string
+
+        new = LONG.sub(replace_long, ONE_LINE.sub(replace, text))
         if new != text:
             n_files += 1
             if write:
