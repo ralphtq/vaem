@@ -1,0 +1,97 @@
+"""Design rule 4: put each sentence of a multi-sentence dcterms:description on its own line.
+
+  python3 scripts/split_descriptions.py src/<folder>/*.ttl           # dry run
+  python3 scripts/split_descriptions.py --write src/<folder>/*.ttl   # rewrite the files
+
+Only one-line strings ("...") are changed. A description of two or more
+sentences becomes a triple-quoted string with one sentence per line, with
+\" written as a plain " (as rule 4 requires inside triple quotes); its
+language tag or datatype is kept, and its text is otherwise unchanged. Strings
+that are already triple-quoted are left alone. The dry run prints every split
+point ("...end of one sentence || start of the next...") so it can be checked
+before writing.
+
+What ends a sentence is set out under rule 4 in
+.claude/skills/ontology-design/SKILL.md: ".", "!" or "?" (with any closing
+quote or bracket), a space, then a capital letter, a digit or an opening quote
+or bracket; but not after an abbreviation (ABBREV), initials ("U.S.",
+"C.F.R."), or a clause number ("3. All copies"). A company suffix (COMPANY)
+ends a sentence only before an ordinary sentence opener (OPENERS). Add to these
+sets when a dry run shows a wrong split.
+"""
+import pathlib
+import re
+import sys
+
+ABBREV = {
+    "e.g", "i.e", "etc", "inc", "ltd", "co", "corp", "llc", "no", "nos", "sec", "secs",
+    "art", "para", "v", "vs", "mr", "mrs", "ms", "dr", "st", "jr", "sr", "cf", "fig",
+    "approx", "viz", "al", "ver", "rev", "pp", "ed", "eds", "dept", "govt", "ch", "cl",
+    "ref", "est", "op", "ibid", "u.s", "u.s.a", "u.k", "e.u",
+    "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "sept", "oct", "nov", "dec",
+}
+# A company suffix ends the sentence before a usual sentence opener
+# ("...Zend Technologies Ltd. For written permission"), not otherwise
+# ("Unicode, Inc. License Agreement", "SILICON GRAPHICS, INC. BE LIABLE").
+COMPANY = {"inc", "ltd", "corp", "co", "llc"}
+OPENERS = re.compile(r"(For|No|If|The|This|These|You|Your|Any|Each|In|Such|Licensee|Nothing)\b")
+
+BOUNDARY = re.compile(r'[.!?](?:\\"|["\')\]])*\s+(?=(?:\\"|["(\[])*[A-Z0-9])')
+ONE_LINE = re.compile(r'(dcterms:description\s+)"((?:[^"\\\n]|\\.)*)"((?:\^\^\S+|@[\w-]+)?)')
+
+
+def sentences(text):
+    """The sentences of text, in order."""
+    out, start = [], 0
+    for m in BOUNDARY.finditer(text):
+        last = re.search(r"(\S+)$", text[: m.start()])
+        word = last.group(1).lower().strip('("\\') if last else ""
+        stem = word.rstrip(".")
+        if text[m.start()] == "." and not (stem in COMPANY and OPENERS.match(text[m.end():])):
+            if (stem in ABBREV
+                    or re.fullmatch(r"[a-z]", word)                # a single initial
+                    or re.fullmatch(r"\d+(\.\d+)*", word)          # clause number: "3." "3.1."
+                    or re.fullmatch(r"([a-z]\.)+[a-z]", word)):    # initials: "U.S", "C.F.R"
+                continue
+        out.append(text[start: m.end()].rstrip())
+        start = m.end()
+    out.append(text[start:].strip())
+    return [s for s in out if s]
+
+
+def main():
+    args = sys.argv[1:]
+    write = "--write" in args
+    files = [a for a in args if a != "--write"]
+    if not files:
+        sys.exit(__doc__)
+    n_strings = n_files = 0
+    for name in files:
+        path = pathlib.Path(name)
+        text = path.read_text(encoding="utf-8")
+
+        def replace(m):
+            nonlocal n_strings
+            parts = sentences(m.group(2))
+            if len(parts) < 2:
+                return m.group(0)
+            n_strings += 1
+            if not write:
+                for a, b in zip(parts, parts[1:]):
+                    print(f"{path.name}: ...{a[-40:]} || {b[:40]}...")
+            # Inside a triple-quoted string a double quote is written plain (rule 4):
+            # drop the backslash, but keep one where three quotes would meet.
+            body = "\n".join(parts).replace('\\"', '"').replace('"""', '\\"""')
+            return f'{m.group(1)}"""\n{body}\n"""{m.group(3)}'
+
+        new = ONE_LINE.sub(replace, text)
+        if new != text:
+            n_files += 1
+            if write:
+                path.write_text(new, encoding="utf-8")
+    verb = "rewritten" if write else "to rewrite (dry run; add --write)"
+    print(f"{n_strings} descriptions in {n_files} files {verb}", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()
