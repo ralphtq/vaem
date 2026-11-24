@@ -141,6 +141,19 @@ vaem:GMD_VAEM
 
 ## Rule 4: multi-sentence descriptions are multi-line HTML strings
 
+**First, before any other description rule:** in a triple-quoted
+`dcterms:description`, if anything follows the opening `"""` on the same line,
+break the line there, so the text starts on the next line. Then apply the rest
+of this rule to the text.
+
+```turtle
+  dcterms:description """
+"This License" refers to version 3 of the GNU Affero General Public License.
+```
+
+Wrong: `dcterms:description """"This License" refers to…` (text, here a quote,
+straight after the opening `"""`).
+
 A `dcterms:description` with more than one sentence is written as a Turtle
 multi-line string: triple quotes, with a line break inside the literal (start
 each sentence on a new line), typed `rdf:HTML` with its paragraphs in
@@ -201,7 +214,9 @@ quote or bracket. These do not end a sentence:
 - abbreviations: `e.g.`, `i.e.`, `etc.`, `Inc.`, `Ltd.`, `Corp.`, `No.`,
   `Sec.`, `v.`, `vs.`, month names such as `Oct.` and `Sept.`;
 - initials and acronyms with stops: `U.S.`, `C.F.R.`;
-- clause numbers at the start of the text: `3. All copies …`, `1.1 "Copyright Holder" …`.
+- clause numbers at the start of the text or line: `3. All copies …`,
+  `1.1 "Copyright Holder" …`. A number at the end of a sentence does end it:
+  "…issued under Section 6.1. For legal entities…" is two sentences.
 
 A company suffix does end a sentence when an ordinary sentence opener follows
 it ("…Zend Technologies Ltd. For written permission…"), but not before a name
@@ -217,7 +232,8 @@ line break after the opening `"""`, so a text that begins with a quote or a
 tag does not run into it (`""""This License"…`).
 
 `scripts/split_descriptions.py` applies this rule to one-line and triple-quoted
-strings, including the HTML steps above. Run it
+strings, in the order given here: the line break after the opening `"""`
+first, then the sentence splitting, then the HTML steps above. Run it
 without `--write` first: it lists every split point
 (`…end of one sentence || start of the next…`); check them, add any
 abbreviation it splits wrongly to its `ABBREV` set, then run it again with

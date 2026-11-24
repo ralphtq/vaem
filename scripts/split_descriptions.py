@@ -3,7 +3,12 @@
   python3 scripts/split_descriptions.py src/<folder>/*.ttl           # dry run
   python3 scripts/split_descriptions.py --write src/<folder>/*.ttl   # rewrite the files
 
-A one-line string ("...") of two or more sentences becomes a triple-quoted
+First, before any other step: a triple-quoted description with text after the
+opening triple quote on the same line is broken there, so the text starts on
+the next line (four quotes before "This License" become three, a line break,
+and "This License").
+
+Then a one-line string ("...") of two or more sentences becomes a triple-quoted
 string with one sentence per line, with \" written as a plain " (as rule 4
 requires inside triple quotes). In a string that is already triple-quoted,
 each line of more than one sentence is split in the same way; blank lines and
@@ -47,6 +52,8 @@ COMPANY = {"inc", "ltd", "corp", "co", "llc"}
 OPENERS = re.compile(r"(For|No|If|The|This|These|You|Your|Any|Each|In|Such|Licensee|Nothing)\b")
 
 BOUNDARY = re.compile(r'[.!?](?:\\"|["\')\]])*\s+(?=(?:\\"|["(\[])*[A-Z0-9])')
+# Step 1: text after the opening """ on the same line.
+OPENING = re.compile(r'(dcterms:description\s+""")(?!\n)')
 ONE_LINE = re.compile(r'(dcterms:description\s+)"(?!"")((?:[^"\\\n]|\\.)*)"((?:\^\^\S+|@[\w-]+)?)')
 LONG = re.compile(r'(dcterms:description\s+)"""((?:[^"\\]|\\.|"(?!""))*)"""((?:\^\^\S+|@[\w-]+)?)', re.S)
 
@@ -58,14 +65,17 @@ def sentences(text):
         last = re.search(r"(\S+)$", text[: m.start()])
         word = re.sub(r"<[^>]*>", "", last.group(1)).lower().strip('("\\') if last else ""
         stem = word.rstrip(".")
+        # A clause number only counts at the start of the text (after any tags):
+        # "3. All copies", not "...refers to version 3. Copyright".
+        at_start = not re.sub(r"<[^>]*>", "", text[start: last.start()] if last else "").strip()
         if re.match(r"\(See\b", text[m.end():]):                  # "...a Modification. (See Section 2)"
             continue
         if text[m.start()] == "." and not (stem in COMPANY and OPENERS.match(text[m.end():])):
             if (stem in ABBREV
                     or re.fullmatch(r"[a-z]", word)                # a single initial
-                    or re.fullmatch(r"\d+[a-z]?(\.\d+)*", word)    # clause number: "3." "3.1." "3a."
-                    or re.fullmatch(r"[ivxlc]+(\.\d+)*", word)      # roman clause number: "IV." "V.1."
-                    or re.fullmatch(r"[a-z](\.\d+)+", word)         # lettered clause number: "A.1."
+                    or (at_start and (re.fullmatch(r"\d+[a-z]?(\.\d+)*", word)  # clause number: "3." "3.1." "3a."
+                                      or re.fullmatch(r"[ivxlc]+(\.\d+)*", word)  # roman: "IV." "V.1."
+                                      or re.fullmatch(r"[a-z](\.\d+)+", word)))   # lettered: "A.1."
                     or re.fullmatch(r"([a-z]\.)+[a-z]", word)):    # initials: "U.S", "C.F.R"
                 continue
         out.append(text[start: m.end()].rstrip())
@@ -99,7 +109,7 @@ def main():
     files = [a for a in args if a != "--write"]
     if not files:
         sys.exit(__doc__)
-    n_strings = n_files = 0
+    n_strings = n_files = n_openings = 0
     for name in files:
         path = pathlib.Path(name)
         text = path.read_text(encoding="utf-8")
@@ -135,13 +145,17 @@ def main():
                 n_strings += 1
             return new_string
 
+        text, n = OPENING.subn(lambda m: m.group(1) + "\n", text)   # step 1, before the other rules
+        n_openings += n
         new = LONG.sub(replace_long, ONE_LINE.sub(replace, text))
+        text = path.read_text(encoding="utf-8")                   # compare with the file as it was
         if new != text:
             n_files += 1
             if write:
                 path.write_text(new, encoding="utf-8")
     verb = "rewritten" if write else "to rewrite (dry run; add --write)"
-    print(f"{n_strings} descriptions in {n_files} files {verb}", file=sys.stderr)
+    print(f"{n_strings} descriptions in {n_files} files {verb}"
+          f" ({n_openings} with text after the opening \"\"\" broken onto the next line)", file=sys.stderr)
 
 
 if __name__ == "__main__":
