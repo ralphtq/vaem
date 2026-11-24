@@ -8,8 +8,15 @@ string with one sentence per line, with \" written as a plain " (as rule 4
 requires inside triple quotes). In a string that is already triple-quoted,
 each line of more than one sentence is split in the same way; blank lines and
 the line structure (paragraphs, numbered items) are kept, and the string is
-made to start and end with a line break. Language tags and datatypes are kept,
-and the text is otherwise unchanged. The dry run prints every split point
+made to start and end with a line break. The text is otherwise unchanged.
+
+A description that ends up on more than one line is then made HTML (rule 4):
+each paragraph (text between blank lines; the whole text if there are none)
+is wrapped in <p>...</p> unless it already starts with a block element
+(<p>, <div>, <ol>, <ul>, <table>, ...), the blank lines are removed, and the
+string is typed ^^rdf:HTML (any language tag is dropped). In text that was not
+HTML before, &, < and > are escaped as &amp;, &lt; and &gt;. One-line
+descriptions are left as they are. The dry run prints every split point
 ("...end of one sentence || start of the next...") so it can be checked before
 writing.
 
@@ -49,7 +56,7 @@ def sentences(text):
     out, start = [], 0
     for m in BOUNDARY.finditer(text):
         last = re.search(r"(\S+)$", text[: m.start()])
-        word = last.group(1).lower().strip('("\\') if last else ""
+        word = re.sub(r"<[^>]*>", "", last.group(1)).lower().strip('("\\') if last else ""
         stem = word.rstrip(".")
         if re.match(r"\(See\b", text[m.end():]):                  # "...a Modification. (See Section 2)"
             continue
@@ -65,6 +72,25 @@ def sentences(text):
         start = m.end()
     out.append(text[start:].strip())
     return [s for s in out if s]
+
+
+BLOCK = re.compile(r"<(p|div|ol|ul|dl|table|h[1-6]|pre|blockquote|section|hr)\b", re.I)
+HTML = "^^rdf:HTML"
+
+
+def as_html(body, suffix):
+    """body (the lines of a multi-line description) as rule 4's HTML; returns (body, suffix)."""
+    lines = body.split("\n")
+    if len([l for l in lines if l.strip()]) < 2:
+        return body, suffix
+    was_html = suffix.endswith("HTML")
+    paragraphs = [p.strip("\n") for p in re.split(r"\n[ \t]*\n+", body) if p.strip()]
+    out = []
+    for para in paragraphs:
+        if not was_html:
+            para = para.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        out.append(para if BLOCK.match(para.lstrip()) else f"<p>{para}</p>")
+    return "\n".join(out), HTML
 
 
 def main():
@@ -90,7 +116,8 @@ def main():
             # Inside a triple-quoted string a double quote is written plain (rule 4):
             # drop the backslash, but keep one where three quotes would meet.
             body = "\n".join(parts).replace('\\"', '"').replace('"""', '\\"""')
-            return f'{m.group(1)}"""\n{body}\n"""{m.group(3)}'
+            body, suffix = as_html(body, m.group(3))
+            return f'{m.group(1)}"""\n{body}\n"""{suffix}'
 
         def replace_long(m):
             nonlocal n_strings
@@ -102,7 +129,8 @@ def main():
                         print(f"{path.name}: ...{a[-40:]} || {b[:40]}...")
                 lines.extend(parts if len(parts) > 1 else [line.rstrip()])
             body = "\n".join(lines).replace('\\"', '"').replace('"""', '\\"""')
-            new_string = f'{m.group(1)}"""\n{body}\n"""{m.group(3)}'
+            body, suffix = as_html(body, m.group(3))
+            new_string = f'{m.group(1)}"""\n{body}\n"""{suffix}'
             if new_string != m.group(0):
                 n_strings += 1
             return new_string

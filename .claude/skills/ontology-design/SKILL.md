@@ -1,6 +1,6 @@
 ---
 name: ontology-design
-description: Design rules for the SHACL/RDF graphs — property shape naming, rdfs:isDefinedBy on every resource with vaem:isElaboratedIn for additions to other ontologies, one GMD_ graph metadata resource per graph, multi-line dcterms:description strings, and vaem:usesNonImportedResource for every elaborated resource from another namespace, and versioned owl:imports within a repository, unversioned across repositories. Use when adding, renaming, reviewing or fixing classes, node shapes, property shapes or graph metadata in src/.
+description: Design rules for the SHACL/RDF graphs — property shape naming, rdfs:isDefinedBy on every resource with vaem:isElaboratedIn for additions to other ontologies, one GMD_ graph metadata resource per graph, multi-line rdf:HTML dcterms:description strings with <p> paragraphs, and vaem:usesNonImportedResource for every elaborated resource from another namespace, and versioned owl:imports within a repository, unversioned across repositories. Use when adding, renaming, reviewing or fixing classes, node shapes, property shapes or graph metadata in src/.
 ---
 
 # Ontology design rules
@@ -139,17 +139,18 @@ vaem:GMD_VAEM
   vaem:releaseDate "$$RELEASE_DATE$$"^^xsd:date .
 ```
 
-## Rule 4: multi-sentence descriptions are multi-line strings
+## Rule 4: multi-sentence descriptions are multi-line HTML strings
 
 A `dcterms:description` with more than one sentence is written as a Turtle
 multi-line string: triple quotes, with a line break inside the literal (start
-each sentence on a new line). A single sentence stays an ordinary string.
+each sentence on a new line), typed `rdf:HTML` with its paragraphs in
+`<p>` elements (below). A single sentence stays an ordinary string.
 
 ```turtle
 vaem:Domain
   dcterms:description """
-A domain is a subject area of interest.
-Examples of domains are "chemistry", "physics", "material science", "mechanics" and "medicine".
+<p>A domain is a subject area of interest.
+Examples of domains are "chemistry", "physics", "material science", "mechanics" and "medicine".</p>
 """^^rdf:HTML .
 ```
 
@@ -162,8 +163,36 @@ Wrong:
 The line break inside the literal is what keeps the string multi-line:
 Spotless rewrites the file from its triples, so a triple-quoted string with no
 line break inside can come back as an ordinary one-line string. The same
-applies whatever the literal's language tag or datatype (`@en`, `rdf:HTML`):
-keep the existing tag or datatype when converting.
+applies whatever the literal's datatype.
+
+A description on more than one line is HTML:
+
+1. Each paragraph (the text before a blank line, and the text after the last
+   one; the whole text if there are no blank lines) is wrapped in
+   `<p>…</p>`, still one sentence per line inside it. A paragraph that already
+   starts with a block element (`<p>`, `<div>`, `<ol>`, `<ul>`, `<table>` …)
+   is left as it is.
+2. The blank lines are removed.
+3. The string is typed `^^rdf:HTML`; a language tag such as `@en` is dropped,
+   because an `rdf:HTML` literal cannot carry one.
+
+In text that was not HTML before, escape `&`, `<` and `>` as `&amp;`, `&lt;`
+and `&gt;` (`<maintainer@vim.org>` becomes `&lt;maintainer@vim.org&gt;`,
+`R&D` becomes `R&amp;D`). A one-line description stays an ordinary string,
+with no markup.
+
+```turtle
+voag:CLS_AGPL_V3PT0-00
+  dcterms:description """
+<p>"This License" refers to version 3 of the GNU Affero General Public License.</p>
+<p>"The Program" refers to any copyrightable work licensed under this License.
+Each licensee is addressed as "you".
+"Licensees" and "recipients" may be individuals or organizations.</p>
+"""^^rdf:HTML ;
+```
+
+Wrong: the same text as plain lines with a blank line between the paragraphs
+and no `^^rdf:HTML`.
 
 What counts as a sentence end: `.`, `!` or `?` (with any closing quote or
 bracket) followed by a space and a capital letter, a digit or an opening
@@ -180,15 +209,15 @@ it ("…Zend Technologies Ltd. For written permission…"), but not before a nam
 GRAPHICS, INC. BE LIABLE").
 
 A long text that is already triple-quoted, such as a license clause, keeps
-its layout: blank lines between paragraphs and numbered or lettered items stay
-as they are; only a line holding more than one sentence is split. A heading
-run into its text ("2.2. Contributor Grant. Subject to…") is split like a
-sentence, so the heading gets its own line. Start the string with a line break
-after the opening `"""`, so a text that begins with a quote does not run into
-it (`""""This License"…`).
+its layout: its paragraphs (now `<p>` elements) and numbered or lettered
+items stay as they are; only a line holding more than one sentence is split.
+A heading run into its text ("2.2. Contributor Grant. Subject to…") is split
+like a sentence, so the heading gets its own line. Start the string with a
+line break after the opening `"""`, so a text that begins with a quote or a
+tag does not run into it (`""""This License"…`).
 
 `scripts/split_descriptions.py` applies this rule to one-line and triple-quoted
-strings. Run it
+strings, including the HTML steps above. Run it
 without `--write` first: it lists every split point
 (`…end of one sentence || start of the next…`); check them, add any
 abbreviation it splits wrongly to its `ABBREV` set, then run it again with
@@ -207,8 +236,8 @@ row, which still need `\"`.
 
 ```turtle
   dcterms:description """
-The property "vaem:owningParty" is used to refer to a "Party" that has the IP rights
-on the graph.
+<p>The property "vaem:owningParty" is used to refer to a "Party" that has the IP rights
+on the graph.</p>
 """^^rdf:HTML ;
 ```
 
