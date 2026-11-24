@@ -3,15 +3,15 @@
 The SHACL schema (`src/shacl/SCHEMA_vaem.ttl`) is the source. The OWL schema
 is derived from it at build time: `scripts/release.py` builds the SHACL graph,
 then `scripts/derive_owl.py` applies the steps below to a copy of it and
-writes the result as `dist/<version>/schema/SCHEMA_vaem-v<version>.ttl`, with
-the graph IRI `http://www.linkedmodel.org/<version>/schema/vaem` (the `derive_from`
-entry in `release.json`). Nothing in `src/` is OWL, so the two cannot drift
+writes the result as `dist/<version>/owl/SCHEMA_vaem_OWL-v<version>.ttl`, with
+the graph IRI `http://www.linkedmodel.org/<version>/schema/vaem` (`derive_owl` in
+`release.json`). Nothing in `src/` is OWL, so the two cannot drift
 apart. The method follows QUDT's SHACL-to-OWL derivation, with far fewer steps.
 
 To derive from a built SHACL file by hand:
 
 ```
-python3 scripts/derive_owl.py dist/<version>/schema/shacl/SCHEMA_vaem_noOWL_v<version>.ttl \
+python3 scripts/derive_owl.py dist/<version>/shacl/SCHEMA_vaem-v<version>.ttl \
   http://www.linkedmodel.org/<version>/schema/vaem --overlay scripts/owl-derivation/overlay.ttl > owl.ttl
 ```
 

@@ -2,6 +2,11 @@
 # For each subject and predicate here, the derived values are replaced by these.
 # $$VERSION$$ and $$RELEASE_DATE$$ are filled in as in src/.
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://www.linkedmodel.org/$$VERSION$$/schema/vaem>
   rdfs:label "SCHEMA VAEM Version $$VERSION$$" .
+
+vaem:GMD_VAEM
+  vaem:turtleFileURL "http://www.linkedmodel.org/$$VERSION$$/owl/SCHEMA_vaem_OWL-v$$VERSION$$.ttl"^^xsd:anyURI .

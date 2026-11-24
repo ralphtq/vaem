@@ -3,7 +3,7 @@
   python3 scripts/derive_owl.py <shacl.ttl> <owl-graph-IRI> [--overlay <overlay.ttl>] > owl.ttl
 
 The SHACL schema is the source; the OWL schema is derived from it at build time
-by scripts/release.py (a release.json entry with "derive_from"). The steps are
+by scripts/release.py ("derive_owl" in release.json). The steps are
 the files in scripts/owl-derivation/steps/, applied in file-name order to a copy
 of the SHACL graph:
 

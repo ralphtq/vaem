@@ -21,6 +21,16 @@ edited: `scripts/release.py` derives it from the SHACL schema at build time
 numbers. `archive/SCHEMA_vaem.ttl` is the hand-made OWL schema the derivation
 replaced; nothing reads it.
 
+## Where the built graphs go
+
+The build has no list of files. Every `src/<folder>/<name>.ttl` is built to
+`dist/<version>/<folder>/<name>-v<version>.ttl` and, unversioned, to
+`dist/latest/<folder>/<name>.ttl`. The OWL schema derived from the graph in
+`src/shacl/` (`derive_owl` in `release.json`) goes to
+`dist/<version>/owl/<name>_OWL-v<version>.ttl` and `dist/latest/owl/<name>_OWL.ttl`.
+Graph IRIs are set in the sources and do not follow the file layout. See
+`.claude/skills/release-build/SKILL.md`.
+
 ## Try a release locally
 
 ```

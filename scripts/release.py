@@ -14,9 +14,12 @@ Each graph is also written without its version, as <out>/latest/...: an
 unversioned ("latest") copy whose graph IRIs have no version segment, e.g.
 <out>/latest/schema/SCHEMA_x.ttl, published with the release.
 
-A release.json entry with "derive_from" is not read from src/: it is derived
-from the built graph of that role by scripts/derive_owl.py (an OWL schema from
-the SHACL schema), with "graph" as its graph IRI and an optional "overlay".
+The graphs come from the layout of src/: every src/<folder>/<name>.ttl is
+built to <version>/<folder>/<name>-v<version>.ttl and, unversioned, to
+latest/<folder>/<name>.ttl. "derive_owl" in release.json ("from": a src/
+folder holding one graph, "graph": the OWL graph IRI, "overlay") adds the OWL
+schema derived from it by scripts/derive_owl.py, as
+<version>/owl/<name>_OWL-v<version>.ttl.
 
 Checks (any failure exits with status 1):
   - no $$TOKEN$$ is left in the output
@@ -153,6 +156,33 @@ def derived_owl(f, texts, values):
     return owl.serialize(format="turtle"), check_owl(owl, shacl, shacl_iri, owl_iri)
 
 
+def discover(config):
+    """The graphs to build, from the layout of src/.
+
+    Every src/<folder>/<name>.ttl is a graph, written to
+    <version>/<folder>/<name>-v<version>.ttl (and, unversioned, to
+    latest/<folder>/<name>.ttl); its role is the folder's name. If release.json
+    has "derive_owl", the OWL schema derived from the one graph in
+    src/<derive_owl.from>/ is written to <version>/owl/<name>_OWL-v<version>.ttl.
+    """
+    files = []
+    for folder in sorted(p for p in (ROOT / "src").iterdir() if p.is_dir()):
+        for src in sorted(folder.glob("*.ttl")):
+            files.append({"src": str(src.relative_to(ROOT)), "role": folder.name,
+                          "dist": f"{{version}}/{folder.name}/{src.stem}-v{{version}}.ttl"})
+    derive = config.get("derive_owl")
+    if derive:
+        sources = [f for f in files if f["role"] == derive["from"]]
+        if len(sources) != 1:
+            sys.exit(f"derive_owl: src/{derive['from']}/ must hold exactly one .ttl file")
+        if (ROOT / "src" / "owl").is_dir():
+            sys.exit("derive_owl: src/owl/ would clash with the derived OWL schema's folder")
+        stem = pathlib.PurePath(sources[0]["src"]).stem
+        files.append({"derive_from": derive["from"], "graph": derive["graph"], "overlay": derive.get("overlay"),
+                      "role": "owl", "dist": f"{{version}}/owl/{stem}_OWL-v{{version}}.ttl"})
+    return files
+
+
 def main():
     config = json.loads((ROOT / "release.json").read_text(encoding="utf-8"))
     parser = argparse.ArgumentParser()
@@ -176,7 +206,7 @@ def main():
     written = {}
     texts = {}
     # Derived graphs ("derive_from") are built after the graphs they come from.
-    for f in sorted(config["files"], key=lambda f: "derive_from" in f):
+    for f in sorted(discover(config), key=lambda f: "derive_from" in f):
         if "derive_from" in f:
             text, problems = derived_owl(f, texts, values)
             rel_name = f["dist"].format(version=args.version)
@@ -185,7 +215,7 @@ def main():
             text = (ROOT / f["src"]).read_text(encoding="utf-8")
             for key, value in values.items():
                 text = text.replace(f"$${key}$$", value)
-        texts[f["role"]] = text
+        texts.setdefault(f["role"], text)
         target = out / f["dist"].format(version=args.version)
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(text, encoding="utf-8")
@@ -213,7 +243,7 @@ def main():
     if not failures:
         failures.extend(write_latest(built, out, args.version))
 
-    shacl = written.get("shacl")
+    shacl = written.get(config.get("derive_owl", {}).get("from", "shacl"))
     if shacl and not failures:
         from pyshacl import validate
         graph = rdflib.Graph().parse(shacl, format="turtle")

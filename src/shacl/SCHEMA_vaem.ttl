@@ -804,7 +804,7 @@ VAEM makes use of some properties from the DC terms vocabulary and "voag:Attribu
   vaem:previousPublishedVersion "http://linkedmodel.org/doc/vaem/1.2/"^^xsd:anyURI ;
   vaem:releaseDate "$$RELEASE_DATE$$"^^xsd:date ;
   vaem:revision "$$VERSION$$" ;
-  vaem:turtleFileURL "http://www.linkedmodel.org/$$VERSION$$/schema/SCHEMA_vaem-v$$VERSION$$.ttl"^^xsd:anyURI ;
+  vaem:turtleFileURL "http://www.linkedmodel.org/$$VERSION$$/shacl/SCHEMA_vaem-v$$VERSION$$.ttl"^^xsd:anyURI ;
   vaem:usesNonImportedResource dash:reifiableBy ;
   vaem:usesNonImportedResource dcterms:abstract ;
   vaem:usesNonImportedResource dcterms:author ;

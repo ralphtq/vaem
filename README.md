@@ -66,11 +66,15 @@ python3 scripts/release.py --out target/dist
 ```
 
 Next time, only `source .venv/bin/activate` and the last line are needed. The
-build uses the version in `release.json` and today's date, and writes:
+build uses the version in `release.json` and today's date. Each folder of
+`src/` is a folder of graphs: every `src/<folder>/<name>.ttl` is written to
+`<version>/<folder>/<name>-v<version>.ttl`, and the OWL schema derived from
+the `src/shacl/` schema to `<version>/owl/<name>_OWL-v<version>.ttl` (see
+[the release-build skill](.claude/skills/release-build/SKILL.md)). It writes:
 
 ```
-target/dist/<version>/schema/SCHEMA_vaem-v<version>.ttl
-target/dist/<version>/schema/shacl/SCHEMA_vaem_noOWL_v<version>.ttl
+target/dist/<version>/shacl/SCHEMA_vaem-v<version>.ttl
+target/dist/<version>/owl/SCHEMA_vaem_OWL-v<version>.ttl
 ```
 
 It also writes an unversioned ("latest") copy of each graph, in which this
@@ -79,8 +83,8 @@ labels and `vaem:revision`), and checks that it differs from the versioned
 graph only in those IRIs (see the section on unversioned graphs below):
 
 ```
-target/dist/latest/schema/SCHEMA_vaem.ttl
-target/dist/latest/schema/shacl/SCHEMA_vaem_noOWL.ttl
+target/dist/latest/shacl/SCHEMA_vaem.ttl
+target/dist/latest/owl/SCHEMA_vaem_OWL.ttl
 ```
 
 Add `--version <version>-SNAPSHOT` for a snapshot, or `--date YYYY-MM-DD` for
