@@ -589,7 +589,8 @@ The property "vaem:timestamp" records the date and time at which something happe
 vaem:title
   a rdf:Property ;
   dcterms:description """
-The property "vaem:title" is intended for general use as a title for a resource. For the title of a graph, "vaem:graphTitle" is used on its graph metadata.
+The property "vaem:title" is intended for general use as a title for a resource.
+For the title of a graph, "vaem:graphTitle" is used on its graph metadata.
 """^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "title" ;
@@ -610,7 +611,8 @@ vaem:turtleFileURL
 vaem:url
   a rdf:Property ;
   dcterms:description """
-The property "vaem:url" is intended for general use as the name implies. Its values are URLs, typically given as "xsd:anyURI" literals.
+The property "vaem:url" is intended for general use as the name implies.
+Its values are URLs, typically given as "xsd:anyURI" literals.
 """^^rdf:HTML ;
   rdfs:isDefinedBy <http://www.linkedmodel.org/$$VERSION$$/schema/shacl/vaem> ;
   rdfs:label "url" .
