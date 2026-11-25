@@ -41,7 +41,9 @@ This writes `dist/<version>/…`, and an unversioned ("latest") copy of each
 graph in `dist/latest/…` (graph IRIs and file names without the version).
 It fails if an unversioned copy differs from its versioned graph by more
 than those IRIs, or if a token is left over, a file does
-not parse, a construct has more than one `rdfs:isDefinedBy`, or the SHACL
+not parse, a construct has more than one `rdfs:isDefinedBy`,
+an `rdf:HTML` literal (such as a multi-line description) is not well-formed
+HTML, or the SHACL
 schema does not conform to its own shapes.
 `--version` defaults to `release.json` and `--date` to today.
 

@@ -52,7 +52,9 @@ The release workflow updates `version` (and `CHANGELOG.md`) itself.
 ## Checks
 
 The build fails if a token is left over, a graph does not parse, a resource
-has more than one `rdfs:isDefinedBy`, two graphs would be written to the same
+has more than one `rdfs:isDefinedBy`, an `rdf:HTML` literal is not well-formed
+HTML (the message names the resource and the line, e.g. `unexpected-end-tag p`
+for `<p><li>` or `</ol></p>`), two graphs would be written to the same
 unversioned file, an unversioned copy differs from its versioned graph by more
 than the version in IRIs, or validation fails.
 

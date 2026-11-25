@@ -25,6 +25,8 @@ Checks (any failure exits with status 1):
   - no $$TOKEN$$ is left in the output
   - every output file parses as Turtle
   - no construct has more than one rdfs:isDefinedBy
+  - every rdf:HTML literal (e.g. a multi-line dcterms:description) parses as
+    HTML without errors: no stray or unclosed tags such as <p><li> or </ol></p>
   - a derived OWL graph has no SHACL left, an owl:Class for every class with
     shapes, well-formed restrictions, and types for the properties it restricts
   - each unversioned copy parses, has no versioned IRI of this repository
@@ -40,13 +42,18 @@ import json
 import pathlib
 import re
 import shutil
+import logging
 import sys
 
+import html5rdf  # installed with rdflib; parses rdf:HTML literals
 import rdflib
 from rdflib import OWL, RDF, RDFS, Literal, URIRef
 from rdflib.compare import to_isomorphic
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
+# rdflib logs a traceback for each rdf:HTML literal it cannot parse; check_html()
+# reports those as build failures instead.
+logging.getLogger("rdflib.term").setLevel(logging.ERROR)
 TOKEN = re.compile(r"\$\$[A-Z_]+\$\$")
 VERSIONED = re.compile(r"/\d+\.\d+(\.\d+)?(-SNAPSHOT)?/")
 
@@ -156,6 +163,24 @@ def derived_owl(f, texts, values):
     return owl.serialize(format="turtle"), check_owl(owl, shacl, shacl_iri, owl_iri)
 
 
+def check_html(graph):
+    """Problems with the rdf:HTML literals in graph: each must parse as HTML
+    (html5rdf, the parser rdflib uses for rdf:HTML) without errors."""
+    problems = []
+    for s, p, o in graph:
+        if isinstance(o, Literal) and o.datatype == RDF.HTML:
+            parser = html5rdf.HTMLParser()
+            parser.parseFragment(str(o))
+            if parser.errors:
+                (line, col), code, data = parser.errors[0]
+                name = graph.namespace_manager.normalizeUri(s) if isinstance(s, URIRef) else str(s)
+                detail = f" {data['name']}" if isinstance(data, dict) and "name" in data else ""
+                more = f" (and {len(parser.errors) - 1} more)" if len(parser.errors) > 1 else ""
+                problems.append(f"{name} {graph.namespace_manager.normalizeUri(p)}: rdf:HTML is not "
+                                f"well-formed: line {line} of the literal: {code}{detail}{more}")
+    return sorted(problems)
+
+
 def discover(config):
     """The graphs to build, from the layout of src/.
 
@@ -237,6 +262,7 @@ def main():
                  if len(set(graph.objects(s, RDFS.isDefinedBy))) > 1]
         if multi:
             failures.append(f"{rel}: {len(multi)} constructs with more than one rdfs:isDefinedBy")
+        failures.extend(f"{rel}: {problem}" for problem in check_html(graph))
         print(f"built {rel} ({len(graph)} triples)")
 
     failures.extend(check_imports(imports, own, args.version))
