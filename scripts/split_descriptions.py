@@ -86,6 +86,8 @@ def sentences(text):
 
 BLOCK = re.compile(r"<(p|div|ol|ul|dl|table|h[1-6]|pre|blockquote|section|hr)\b", re.I)
 HTML = "^^rdf:HTML"
+CONTAINER_OPEN = re.compile(r"<(ol|ul|dl|div|table|blockquote|section)\b", re.I)
+CONTAINER_CLOSE = re.compile(r"</(ol|ul|dl|div|table|blockquote|section)\s*>", re.I)
 
 
 def as_html(body, suffix):
@@ -95,11 +97,19 @@ def as_html(body, suffix):
         return body, suffix
     was_html = suffix.endswith("HTML")
     paragraphs = [p.strip("\n") for p in re.split(r"\n[ \t]*\n+", body) if p.strip()]
-    out = []
+    out, depth = [], 0
     for para in paragraphs:
         if not was_html:
             para = para.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-        out.append(para if BLOCK.match(para.lstrip()) else f"<p>{para}</p>")
+        # In text that was already HTML, a paragraph that starts with a tag (<li>,
+        # </ol>, <p class=...>) or lies inside an open list, div or table is
+        # never wrapped: "<p><li>" and "</ol></p>" are not valid HTML.
+        if (was_html and (para.lstrip().startswith("<") or depth > 0)) or BLOCK.match(para.lstrip()):
+            out.append(para)
+        else:
+            out.append(f"<p>{para}</p>")
+        if was_html:
+            depth += len(CONTAINER_OPEN.findall(para)) - len(CONTAINER_CLOSE.findall(para))
     return "\n".join(out), HTML
 
 
