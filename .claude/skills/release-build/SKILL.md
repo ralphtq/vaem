@@ -1,6 +1,6 @@
 ---
 name: release-build
-description: How scripts/release.py turns the folders of src/ into the versioned and unversioned (latest) graphs in dist/, and what release.json holds. Use when adding a src/ folder or graph, renaming one, changing release.json, or explaining where a built or released file comes from.
+description: How scripts/release.py turns the folders of src/ into the versioned and unversioned (latest) graphs in dist/, and what release.json holds. Use when adding a src/ folder or graph, renaming one, changing release.json, or explaining where a built or released file comes from, or building a release locally.
 ---
 
 # Release build: from `src/` folders to `dist/` graphs
@@ -76,6 +76,59 @@ than the version in IRIs, or validation fails.
   python3 scripts/release.py --version <version>-SNAPSHOT --out target/check
   find target/check -name '*.ttl' | sort
   ```
+
+## Building locally
+
+Run these from the repository's folder on your own computer.
+
+**Once per repository:** the build needs `rdflib` and `pyshacl`. Install them
+in a virtual environment in `.venv/` (git-ignored; each repository has its own):
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install rdflib pyshacl
+```
+
+**Each time:**
+
+```
+source .venv/bin/activate
+python3 scripts/release.py --out target/dist
+```
+
+While `.venv` is active, the prompt starts with `(.venv)`; activate it again in
+each new Terminal session.
+
+This builds the version in `release.json` (now 3.0.1), dated today, into
+`target/dist/<version>/…` and, unversioned, `target/dist/latest/…` (see the
+table above). Options:
+
+- `--version <version>-SNAPSHOT` for a snapshot; `--date YYYY-MM-DD` for another
+  release date.
+- `--out` must be a folder inside the repository. Use `target/…`, which is
+  git-ignored; without `--out` the build writes to `dist/`, which is not.
+
+**Reading the result.** A good build ends with
+`release <version> (<date>) built in target/dist/; all checks passed`.
+The build prints no warnings when all is well.
+A failed build ends with `RELEASE CHECKS FAILED:` and one line per problem,
+naming the file and, where there is one, the resource (see Checks above), and
+exits with status 1.
+
+**Common problems:**
+
+- `ModuleNotFoundError: No module named 'rdflib'`: the virtual environment is
+  missing or not active. Run `source .venv/bin/activate`; if `.venv/` does not
+  exist yet, do the once-per-repository steps first.
+- `... is not in the subpath of ...`: `--out` points outside the repository;
+  use `target/…`.
+- `rdf:HTML is not well-formed`: a description's HTML has a stray or unclosed
+  tag (for example `<p><li>` or `</ol></p>`); fix it in `src/` (rule 4 in the
+  ontology-design skill).
+
+A local build only writes files on your computer. To publish a release, run
+the **Release** workflow on GitHub (see `RELEASING.md`).
 
 ## Where the graphs end up
 
