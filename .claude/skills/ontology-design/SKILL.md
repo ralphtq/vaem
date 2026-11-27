@@ -313,5 +313,5 @@ repository: no version).
 
 Before committing, run the release build (`python3 scripts/release.py
 --version <next>-SNAPSHOT --out target/check`) and look at each changed
-resource against the five rules. When renaming, search the ontologies that use
+resource against the rules. When renaming, search the ontologies that use
 VAEM for the old name.
